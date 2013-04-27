@@ -1,0 +1,925 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Shell commands - chapter31 &raquo;</title>
+	<meta name="author" content="Michael Sharman">
+
+	
+	<meta name="description" content="The following is a resource for shell commands (including ssh) that I&#8217;ve accumulated. It is growing so if you can&#8217;t find something, drop &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="chapter31 &raquo;" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">chapter31 &raquo;</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:chapter31.github.io">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/michaelsharman" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/michaelsharman" title="GitHub">GitHub</a>
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:chapter31.github.io">
+	</form>
+</nav>
+
+</header>
+	
+		
+<div id="banner" class="inner">
+	<div class="container">
+		<ul class="feed"></ul>
+	</div>
+	<small><a href="http://twitter.com/michaelsharman">michaelsharman</a> @ <a href="http://twitter.com">Twitter</a></small>
+	<div class="loading">Loading...</div>
+</div>
+<script src="/javascripts/twitter.js"></script>
+<script type="text/javascript">
+	(function($){
+		$('#banner').getTwitterFeed('michaelsharman', 4, false);
+	})(jQuery);
+</script>
+
+	
+	<div id="content" class="inner"><article class="page">
+    
+    <h1 class="title">Shell Commands</h1>
+    
+    <div class="entry-content"><p>The following is a resource for shell commands (including ssh) that I&#8217;ve accumulated. It is growing so if you can&#8217;t find something, drop me a line.</p>
+
+<p>You can find miscellaneous shell commands, Apache, MySQL and nano commands. More can be found <a href="http://www.ss64.com/osx/">here</a>.</p>
+
+<p>Command
+Example
+Notes</p>
+
+<p>/bin/pwd</p>
+
+<p>/bin/pwd</p>
+
+<p>Prints the absolute working directory when you&#8217;re in a symlinked directory</p>
+
+<h1>!/bin/bash -ex</h1>
+
+<p>e == stop on error, x == print an execution trace</p>
+
+<p>cat</p>
+
+<p>cat filename.txt</p>
+
+<p>Prints contents of a file to the screen (shell)</p>
+
+<p>cat /dev/null > myfilename</p>
+
+<p>Deletes the contents of <em>myfilename</em> without having to delete and recreate the actual file</p>
+
+<p>cat file | pbcopy</p>
+
+<p>Copy contents of the file to the clipboard</p>
+
+<p>cd</p>
+
+<p>cd /usr/local/apache</p>
+
+<p>change directory, go to /usr/local/apache/ directory</p>
+
+<p>cd ~ (or just cd)</p>
+
+<p>go to your home directory</p>
+
+<p>cd -</p>
+
+<p>go to the last directory you were in</p>
+
+<p>cd ..</p>
+
+<p>go up a directory</p>
+
+<p>checksum</p>
+
+<p>/usr/bin/openssl sha1 /path/to/.app file/</p>
+
+<p>Compares the checksum of a downloaded file</p>
+
+<p>chown</p>
+
+<p>Changes file ownership permissions. The set of 2 go in this order from left to right:USER - GROUP</p>
+
+<p>chown root myfile.txt</p>
+
+<p>Changes the owner of the file to root</p>
+
+<p>chown root.root myfile.txt</p>
+
+<p>Changes the owner and group of the file to root</p>
+
+<p><a href="http://www.ss64.com/osx/chmod.html">chmod</a></p>
+
+<p>Changes file access permissions. The set of 3 go in this order from left to right:0 = &#8212; No permission
+1 = &#8211;X Execute only
+2 = -W- Write only
+3 = -WX Write and execute
+4 = R&#8211; Read only
+5 = R-X Read and execute
+6 = RW- Read and write
+7 = RWX Read, write and execute</p>
+
+<p>chmod 000 index.html</p>
+
+<p>No one can access</p>
+
+<p>chmod g+w index.html</p>
+
+<p>Adding write access for the &#8220;group&#8221;</p>
+
+<p>clear</p>
+
+<p>Clears the terminal screen</p>
+
+<p>cmp</p>
+
+<p>cmp file1.html file2.html</p>
+
+<p>Compares 2 files and writes the result to the standard output.
+0 = identical
+1 = different</p>
+
+<p>cp</p>
+
+<p>cp filename filename.backup</p>
+
+<p>copies filename to filename.backup</p>
+
+<p>cp -a /home/burst/new_design/* /home/burst/public_html/</p>
+
+<p>copies all files, retaining permissions form one directory to another.</p>
+
+<p>cp -av * ../newdir</p>
+
+<p>Copies all files and directories recurrsively in the current directory INTO newdir</p>
+
+<p>du</p>
+
+<p>du -hs ./path</p>
+
+<p>Size of directory with all sub-directories in a human readable format</p>
+
+<p>echo</p>
+
+<p>echo &#8220;My text here&#8221; > mynewfile</p>
+
+<p>Creates a file called &#8216;mynewfile&#8217; with the contents of &#8216;My text here&#8217;</p>
+
+<p>echo -n > ./myfile</p>
+
+<p>Empties an existing file</p>
+
+<p>echo $PATH | tr &#8216;:&#8217; &#8216;\n&#8217;</p>
+
+<p>Print your environment path values, one for each line</p>
+
+<p>find</p>
+
+<p>find -mtime 7</p>
+
+<p>&#8220;Finds&#8221; files modified in the last 7 days</p>
+
+<p>find . -mtime -1 -ls</p>
+
+<p>Finds file modified in the last day</p>
+
+<p>find / -name &#8216;my.cnf&#8217;</p>
+
+<p>Finds a file called &#8220;my.cnf&#8221; from the root dir</p>
+
+<p>find . -maxdepth 2 -name &#8220;myfile*&#8221; -exec cp {} temp.txt \;</p>
+
+<p>Finds all files from the current location, going to a max depth of 2 where the name is LIKE myfile*. The executes a command (in this case copy), the braces indicate each file/directory found. Then renaming to temp.txt. This is of course a silly example.
+Note you need the final \;</p>
+
+<p>git</p>
+
+<p><code>git checkout-index -a -f --prefix=/destination/path/</code></p>
+
+<p><code>git config --global core.excludesfile ~/.gitignore_global</code></p>
+
+<p>grep</p>
+
+<p>looks for patterns in files</p>
+
+<p>grep root /etc/passwd</p>
+
+<p>shows all matches of root in /etc/passwd</p>
+
+<p>grep -c mystring myfile.txt</p>
+
+<p>shows how many matching lines have &#8220;mystring&#8221; in the file</p>
+
+<p>grep -o &#8220;mystring&#8221; myfile.txt | wc -w</p>
+
+<p>shows how many occurrences of &#8220;mystring&#8221; are in the file (regardless of line)</p>
+
+<p>grep -v root /etc/passwd</p>
+
+<p>shows all lines that do not match root</p>
+
+<p>history</p>
+
+<p>looks up previously entered commands</p>
+
+<p>!n</p>
+
+<p>executes line &#8216;n&#8217; of the history record</p>
+
+<p>java</p>
+
+<p>java -version</p>
+
+<p>Provides information on your current java version</p>
+
+<p>kill</p>
+
+<p>kill -9 PID</p>
+
+<p>Terminate a system process</p>
+
+<p>less <strong>filename</strong></p>
+
+<p>Shift+f</p>
+
+<p>less a file, then hit Shift-f it will tail the file, but you can scroll back up through the file. Good for scanning recent log file entries without having to grep.</p>
+
+<p>ls</p>
+
+<p>ls -lSrh $(find . -type f -name &#8216;*.flv&#8217;)</p>
+
+<p>find a file type ordering by filesize (smallest first)</p>
+
+<p>ls -R -1 . | wc -l</p>
+
+<p>counts the number of files and directories (recursive)</p>
+
+<p>ls *.pdf | wc -l</p>
+
+<p>How many files are in a directory</p>
+
+<p>locate</p>
+
+<p>sudo /usr/libexec/locate.updatedb</p>
+
+<p>Manually updates the database</p>
+
+<p>ln</p>
+
+<p>ln -s /usr/local/apache/conf/httpd.conf /etc/httpd.conf</p>
+
+<p>Creates links between files and directories. Now you can edit /etc/httpd.conf rather than the original. changes will affect the orginal, however you can delete the link and it will not delete the original.</p>
+
+<p>ls</p>
+
+<p>ls</p>
+
+<p>list files/directories in a directory, comparable to dir in windows/dos.</p>
+
+<p>ls -al</p>
+
+<p>shows all files (including ones that start with a period), directories, and details attributes for each file.</p>
+
+<p>ls -ld */</p>
+
+<p>shows all directories (in long format) from the current position</p>
+
+<p>ls | wc -l</p>
+
+<p>Count of files in a directory</p>
+
+<p>ls -lSrh $(find . -type f -name &#8216;*.flv&#8217;)</p>
+
+<p>List all files (flv in this case) ordered by size, smallest to largest</p>
+
+<p>mkdir</p>
+
+<p>mkdir <em>mydirname</em></p>
+
+<p>Creates new directories</p>
+
+<p>mkdir -p /dir/subdir/subsubdir</p>
+
+<p>Creates intermediate directories as required.</p>
+
+<p>mkdir -v</p>
+
+<p>Be verbose when creating directories, listing them as they are created.</p>
+
+<p>more</p>
+
+<p>like cat, but opens the file one screen at a time rather than all at once</p>
+
+<p>more /etc/userdomains</p>
+
+<p>browse through the userdomains file. hit Spaceto go to the next page, q to quit</p>
+
+<p>mv</p>
+
+<p>mv oldfilename newfilename</p>
+
+<p>Move a file or directory from oldfilename to newfilename</p>
+
+<p>ps</p>
+
+<p>short for process status, which is similar to the top command. It&#8217;s used to show currently running processes and their PID.A process ID is a unique number that identifies a process, with that you can kill or terminate a running program on your server (see kill command).</p>
+
+<p>ps U username</p>
+
+<p>ps aux</p>
+
+<p>shows all system processes</p>
+
+<p>ps aux &#8211;forest</p>
+
+<p>shows all system processes like the above but organizes in a hierarchy that&#8217;s very useful!</p>
+
+<p>pwd</p>
+
+<p>pwd</p>
+
+<p>&#8220;Print Working Directory&#8221;, outputs the path to the current folder location. See &#8220;/bin/pwd&#8221;</p>
+
+<p>pwd -P</p>
+
+<p>Prints the absolute working directory when you&#8217;re in a symlinked directory</p>
+
+<p>openssl</p>
+
+<p>openssl md5 [filename]</p>
+
+<p>Verify a file checksum. Replace md5 with &#8220;sha1&#8221; if the hash is sha-1</p>
+
+<p>rm</p>
+
+<p>rm filename.txt</p>
+
+<p>deletes filename.txt, will more than likely ask if you really want to delete it.
+rm -rf <code>find . -name .svn</code></p>
+
+<p>rm -f filename.txt</p>
+
+<p>deletes filename.txt, will not ask for confirmation before deleting.</p>
+
+<p>rm -rf tmp/</p>
+
+<p>recursively deletes the directory tmp, and all files in it, including subdirectories. BE VERY CAREFULL WITH THIS COMMAND!!</p>
+
+<p>scutil</p>
+
+<p>scutil &#8211;dns</p>
+
+<p>View local DNS configuration (mac)</p>
+
+<p>ssh</p>
+
+<p>create a new key, specifying the name (good if you already have default keys):</p>
+
+<p><code>ssh-keygen -f ~/.ssh/mykey_rsa</code></p>
+
+<p>See if the ssh-agent is running:</p>
+
+<p><code>ps aux | grep [s]sh-agent</code></p>
+
+<p>See which keys are loaded:</p>
+
+<p><code>ssh-add -l</code></p>
+
+<p>If your key isn&#8217;t there, load it:</p>
+
+<p><code>ssh-add ~/.ssh/mykey_rsa</code></p>
+
+<p>Set the correct identity file (if you use more than 1) in your .ssh/config:</p>
+
+<p><code>Host myhostname
+HostName domain.com
+PreferredAuthentications publickey
+IdentityFile ~/.ssh/mykey_rsa</code></p>
+
+<p>Also note above to set <em>PreferredAuthentications</em> to only accept publickey.</p>
+
+<p>Permissions:</p>
+
+<p>755 on ~/.ssh
+600 on your public and private keys
+644 on known_hosts and config</p>
+
+<p>svn</p>
+
+<p>svn delete &#8211;keep-local .project</p>
+
+<p>Removes file from repo but keeps local copy</p>
+
+<p>svn diff -r HEAD</p>
+
+<p>Compare local working copy to HEAD</p>
+
+<p>svn add &#8211;force ./path</p>
+
+<p>Forces svn to add new files in a &#8220;path&#8221; that is already under version control</p>
+
+<p>svn propedit svn:ignore .</p>
+
+<p>Opens a system editor to edit</p>
+
+<p>svn log</p>
+
+<p>Provides basic audit of activity in the repository (best to pipe into less etc as it will get quite long)</p>
+
+<p>svn log -v</p>
+
+<p>As above except this time you get a full list of files committed by the user</p>
+
+<p>svn log -v -r HEAD:1000</p>
+
+<p>As above except this time you get a full verbose output, from the most recent change (HEAD) to revision number 1000. Again, best to pipe into <em>less</em> etc</p>
+
+<p>svn log -v &#8211;limit 5</p>
+
+<p>Limit the log to the last 5 commits</p>
+
+<p>svn log -r {2012-02-02}:{2012-02-03}</p>
+
+<p>Show a log between certain dates</p>
+
+<p>svn log &#8211;xml -v -r 25311:25230 | xsltproc svn2cl.xsl - > ChangeLog</p>
+
+<p>Retrieves the svn log (in xml) between revisions, passes to <a href="http://arthurdejong.org/svn2cl/">svn2cl</a> for formatting</p>
+
+<p>svn st -u</p>
+
+<p>Shows you what&#8217;s changed in the repo, handy before updating your local copy</p>
+
+<p>svn diff -r head myfile.html</p>
+
+<p>Shows you a diff between your local copy and HEAD</p>
+
+<p>sudo -l</p>
+
+<p>sudo -l</p>
+
+<p>What commands can the current user run on this host?</p>
+
+<p>sudo !!</p>
+
+<p>sudo !!</p>
+
+<p>Executes the last command with &#8220;sudo&#8221; added</p>
+
+<p>tail</p>
+
+<p>like cat, but only reads the end of the file</p>
+
+<p>tail /var/log/messages</p>
+
+<p>see the last 20 (by default) lines of /var/log/messages</p>
+
+<p>tail -f /var/log/messages</p>
+
+<p>watch the file continuously, while it&#8217;s being updated</p>
+
+<p>tail -200 /var/log/messages</p>
+
+<p>print the last 200 lines of the file to the screen</p>
+
+<p>tar</p>
+
+<p>Creating and Extracting .tar.gz and .tar files</p>
+
+<p>tar -zxvf file.tar.gz</p>
+
+<p>Extracts the file</p>
+
+<p>tar -cf archive.tar contents/</p>
+
+<p>Takes everything from contents/ and puts it into archive.tar</p>
+
+<p>gzip -d filename.gz</p>
+
+<p>Decompress the file, extract it</p>
+
+<p>zip</p>
+
+<p>zip -r archivename.zip filestozip</p>
+
+<p>Compresses file(s) to a zip</p>
+
+<p>top</p>
+
+<p>shows live system processes in a nice table, memory information, uptime and other useful info. This is excellent for managing your system processes, resources and ensure everything is working fine and your server isn&#8217;t bogged down.
+top then type Shift + M to sort by memory usage or Shift + P to sort by CPU usage</p>
+
+<p>touch</p>
+
+<p>creates an empty file</p>
+
+<p>touch index.html</p>
+
+<p>create an empty file called index.html in the current directory</p>
+
+<p>unzip</p>
+
+<p>unzip file.zip</p>
+
+<p>Extracting .zip files shell command</p>
+
+<p>wc</p>
+
+<p>wc -l filename.txt</p>
+
+<p>tells how many lines are in filename.txt</p>
+
+<p>wget</p>
+
+<p>wget &#8211;recursive &#8211;no-clobber &#8211;page-requisites &#8211;html-extension &#8211;convert-links &#8211;restrict-file-names=windows &#8211;domains intranet.bosw2k.com http://intranet.bosw2k.com/</p>
+
+<p>scrapes an entire site, doesn&#8217;t follow external links</p>
+
+<p>wget -O - www.mysite.com</p>
+
+<p>Retrieves a single page via GET</p>
+
+<p>wget &#8211;post-data &#8216;param1=value&#8217; -O - www.mysite.com</p>
+
+<p>Retrieves a single page via POST and sends parameters</p>
+
+<p>wget &#8211;server-response &#8211;spider http://www.mysite.com/</p>
+
+<p>Retrieves the HTTP headers only</p>
+
+<p> </p>
+
+<h3>Apache commands</h3>
+
+<p>httpd</p>
+
+<p>httpd -v</p>
+
+<p>Outputs the build date and version of the Apache server.</p>
+
+<p>httpd -l</p>
+
+<p>Lists compiled in Apache modules</p>
+
+<p>httpd status</p>
+
+<p>Only works if mod_status is enabled and shows a page of active connections</p>
+
+<p>httpd</p>
+
+<p>sudo apachectl graceful</p>
+
+<p>If Apache is not already running it will be started. If it is already running then it will reload with the new changes but will not abort active connections, meaning that anyone who is in the middle of downloading something will continue to be able to download it.</p>
+
+<p>sudo apachectl configtest</p>
+
+<p>Check your config syntax</p>
+
+<p>apachectl -M</p>
+
+<p>what static and shared modules are loaded</p>
+
+<p>apachectl -l</p>
+
+<p>what compiled in modules are installed</p>
+
+<h3>MySQL commands</h3>
+
+<p>mysqladmin</p>
+
+<p>mysqladmin processlist</p>
+
+<p>Shows active mysql connections and queries</p>
+
+<p>mysqladmin -uroot -p shutdown</p>
+
+<p>Shut down the mysql service</p>
+
+<p>mysqladmin -uroot -p variables</p>
+
+<p>Shows global vars</p>
+
+<p>mysqladmin create databasenamehere</p>
+
+<p>Creates a mysql database</p>
+
+<p>mysql</p>
+
+<p>mysql -uroot -p</p>
+
+<p>Connects to mysql in the terminal</p>
+
+<p>mysql &#8211;print-defaults</p>
+
+<p>mysql would have been started with the following arguments:
+<code>--port=3306 --socket=/tmp/mysql.sock --default-character-set=utf8
+--no-auto-rehash --default-character-set=utf8</code></p>
+
+<p>mysql> show databases;</p>
+
+<p>Shows all databases on the server (once connected)</p>
+
+<p>mysql> use [database];</p>
+
+<p>Connects you to a particular database</p>
+
+<p>mysql> show tables;</p>
+
+<p>Displays all tables once you have connected to a database</p>
+
+<p>mysql> show table status;</p>
+
+<p>Displays table metadata including sizes</p>
+
+<p>mysql> show variables like &#8220;%character%&#8221;;
+show variables like &#8220;%collation%&#8221;;</p>
+
+<p>Shows the server collation and characterset, e.g.
++&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8211;+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-+
+| Variable_name | Value |
++&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8211;+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-+
+| character_set_client | utf8 |
+| character_set_connection | utf8 |
+| character_set_database | utf8 |
+| character_set_filesystem | binary |
+| character_set_results | utf8 |
+| character_set_server | utf8 |
+| character_set_system | utf8 |
+| character_sets_dir | /usr/share/mysql/charsets/ |
++&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8211;+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-++&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-+&#8212;&#8212;&#8212;&#8212;&#8212;&#8211;+
+| Variable_name | Value |
++&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-+&#8212;&#8212;&#8212;&#8212;&#8212;&#8211;+
+| collation_connection | utf8_general_ci |
+| collation_database | utf8_general_ci |
+| collation_server | utf8_general_ci |
++&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-+&#8212;&#8212;&#8212;&#8212;&#8212;&#8211;+</p>
+
+<p>mysql> show create table tablename;Shows create statement with keys and indexes</p>
+
+<p>mysql> show variables like &#8220;character_set_database&#8221;;</p>
+
+<p>Shows characterset of a specific database+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;-+
+| Variable_name | Value |
++&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;-+
+| character_set_database | utf8 |
++&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;-+</p>
+
+<p>mysql> show full columns from vocab_scot;</p>
+
+<p>+&#8212;&#8212;-+&#8212;&#8212;&#8212;&#8212;&#8211;+&#8212;&#8212;&#8212;&#8212;&#8212;&#8211;+&#8212;&#8212;+&#8212;&#8211;+&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;-+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;+
+| Field | Type | Collation | Null | Key | Default | Extra | Privileges | Comment |
++&#8212;&#8212;-+&#8212;&#8212;&#8212;&#8212;&#8211;+&#8212;&#8212;&#8212;&#8212;&#8212;&#8211;+&#8212;&#8212;+&#8212;&#8211;+&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;-+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;+
+| id | int(11) | NULL | NO | PRI | NULL | auto_increment | select,insert,update,references | |
+| term | varchar(200) | utf8_general_ci | NO | UNI | NULL | | select,insert,update,references | |
+| uri | varchar(200) | utf8_general_ci | NO | | NULL | | select,insert,update,references | |
++&#8212;&#8212;-+&#8212;&#8212;&#8212;&#8212;&#8211;+&#8212;&#8212;&#8212;&#8212;&#8212;&#8211;+&#8212;&#8212;+&#8212;&#8211;+&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;-+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;+</p>
+
+<p>mysqldump</p>
+
+<p>mysqldump -hdb.example.com -uusername -p mydbname | gzip > mydbname.sql.gz</p>
+
+<p>Back&#8217;s up a database and compresses to a .gz file</p>
+
+<p>mysqldump &#8211;no-data -h db.example.com -u username -p mydbname > myschema.sql</p>
+
+<p>Generates schema, no data</p>
+
+<p>mysqldump -d -h db.example.com -u username -p mydbname > myschema.sql</p>
+
+<p>As above, generates schema only</p>
+
+<p>mysqldump -h 127.0.0.1 -u myusername -p &#8211;single-transaction mydatabase | gzip > mydatabase.sql.gz</p>
+
+<p>Back&#8217;s up a database without locking tables (innoDB only)</p>
+
+<p>mysqldump -h 127.0.0.1 -u myusername -p &#8211;lock-tables=false mydatabase | gzip > mydatabase.sql.gz</p>
+
+<p>Back&#8217;s up a database without locking tables (MyISAM only)</p>
+
+<p>mysqldump &#8211;compatible=ansi -h127.0.0.1 -umyuser -p mydatabase | gzip > mydatabase.sql.gz</p>
+
+<p>Back&#8217;s up a database with ansi compatibility, meaning syntax will hopefully be more consistent and less likely to barf</p>
+
+<p>mysqldump -umsharman -p &#8211;ignore-table=mydatabase.tablename mydatabase | gzip > mydatabase.sql.gz</p>
+
+<p>Dumps a database ignoring a specific table</p>
+
+<p>gunzip</p>
+
+<p>gunzip &lt; [mydbname.sql.gz] | mysql -u[uname] -p[pass] mydbname</p>
+
+<p>Restores a database</p>
+
+<p>mysql -uroot dbname &lt; &lt;(cat *sql)</p>
+
+<p>Restores a database if you have an sql file per table</p>
+
+<p>cat &lt; mydb.sql | mysql -uroot dbname</p>
+
+<p>Runs sql file against a database</p>
+
+<p>To set the default to UTF-8, you want to add the following to my.cnf<code>
+[client]
+default-character-set=utf8</code>[mysql]
+default-character-set=utf8[mysqld]
+default-character-set = utf8
+collation-server = utf8_unicode_ci
+init-connect=&#8217;SET NAMES utf8&#8217;
+character-set-server = utf8</p>
+
+<h3>Nano commands</h3>
+
+<p>ctrl + space</p>
+
+<p>or ctrl + shift + alt</p>
+
+<p>Moves forward 1 word</p>
+
+<p>ctrl + j</p>
+
+<p>justifies the current paragraph</p>
+
+<p>ctrl + a</p>
+
+<p>moves to start of line</p>
+
+<p>ctrl + o</p>
+
+<p>saves file to disk</p>
+
+<p>ctrl + e</p>
+
+<p>moves to end of line</p>
+
+<p>ctrl + v</p>
+
+<p>moves down a screen</p>
+
+<p>ctrl + y</p>
+
+<p>moves up a screen</p>
+
+<p>ctrl + c</p>
+
+<p>shows where cursor is (handy if you&#8217;ve moved down pages etc)</p>
+
+<p>ctrl + k</p>
+
+<p>deletes current line</p>
+
+<p>ctrl + shift + _ (or ctrl + _)</p>
+
+<p>go to line</p>
+
+<p>ctrl + \</p>
+
+<p>find and replace</p>
+
+<p>ctrl + g</p>
+
+<p>help</p>
+
+<p>ctrl + w (or F6)</p>
+
+<p>search</p>
+
+<p>ctrl + ^</p>
+
+<p>&#8220;marks&#8221; a spot for selecting text (to copy etc) up to where you move your cursor. If you mess up, hit ctrl + ^ again to &#8220;unmark&#8221; your selection</p>
+
+<p>ctrl + k</p>
+
+<p>Cutting text (selected with ctrl + ^)</p>
+
+<p>ctrl + u</p>
+
+<p>Pastes text cut with ctrl + k</p>
+</div>
+</article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2013
+
+    Michael Sharman
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'chapter31';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://chapter31.github.io/shell-commands/index.html';
+        var disqus_url = 'http://chapter31.github.io/shell-commands/index.html';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-306772-2']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

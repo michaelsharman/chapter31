@@ -1,0 +1,225 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>To delete or not to delete - chapter31 &raquo;</title>
+	<meta name="author" content="Michael Sharman">
+
+	
+	<meta name="description" content="As a web developer you are constantly faced with building functionality to remove an object from an application. The object could be anything from a &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="chapter31 &raquo;" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">chapter31 &raquo;</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:chapter31.github.io">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/michaelsharman" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/michaelsharman" title="GitHub">GitHub</a>
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:chapter31.github.io">
+	</form>
+</nav>
+
+</header>
+	
+		
+<div id="banner" class="inner">
+	<div class="container">
+		<ul class="feed"></ul>
+	</div>
+	<small><a href="http://twitter.com/michaelsharman">michaelsharman</a> @ <a href="http://twitter.com">Twitter</a></small>
+	<div class="loading">Loading...</div>
+</div>
+<script src="/javascripts/twitter.js"></script>
+<script type="text/javascript">
+	(function($){
+		$('#banner').getTwitterFeed('michaelsharman', 4, false);
+	})(jQuery);
+</script>
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">To Delete or Not to Delete</h2>
+	<div class="entry-content"><p>As a web developer you are constantly faced with building functionality to remove an object from an application. The object could be anything from a web page in a CMS to a user in a CRM, but generally involves a record(s) stored in a database.</p>
+
+<p>For a user &#8216;using&#8217; the application whenever they access the functionality to remove the object it disappears from view&#8230;but what happens behind the scenes?</p>
+
+<p>There are a couple of standard options available to developers:</p>
+
+<ol>
+<li><p>To actually delete the object from the database via a DELETE statement</p></li>
+<li><p>To flag the object as deleted (via an UPDATE statement) and have code to handle the &#8216;removal&#8217; in a view accordingly</p></li>
+</ol>
+
+
+<p>Deleting the record(s) is nice and easy and most likely no other code will be needed in your &#8216;view&#8217;, but there are schools of thought where people never (or rarely) physically delete a record from the database even if you do have backups to access at a later date. The main reason for this is that somebody (particularly an administrator) might be interested in all sorts of information on the history of that object, who removed it (and when) and the ability to rollback that object to an active state.</p>
+
+<p>It&#8217;s this approach to web applications which I almost always follow. I rarely delete objects from the database, opting to flag the record instead. But this <em>can</em> lead to a lot more time spent completing the project, which could mean a later &#8216;go live&#8217; date.</p>
+
+<p>Consider that a HUGE portion of your application code is (or should) be taken up by defensive programming like exception handling and safety from malicious intent etc, how much extra code might you spend on keeping these removed (so presumably no longer relevant) objects?</p>
+
+<p>Of course each scenario is different as are the business requirements of a client, but even if a client assuring you that &#8220;we&#8217;ll never need it again!&#8221;, I&#8217;d have a long and hard think before actually physically deleting anything. After all, we are professionals and need to think ahead to what the client may need in the future. Your &#8216;expert&#8217; advise should always be considered and put forward, even if it is the unpopular view.</p>
+
+<p>How much extra time spent will of course differ in each scenario but you&#8217;ll clearly need to have your SQL statements to filter out these records (eg. WHERE IsDeleted Is Null). This will most likely need to be done on any gateway type query which is run on the table(s) in question.</p>
+
+<p>Do you need to build in an audit trail for tracking which user deleted the object, when they deleted it and have mandatory comments on why they deleted it?</p>
+
+<p>Do you need to have the ability to rollback to an active state?</p>
+
+<p>In the above 2 scenarios you&#8217;ll probably need an interface to access this data as well.</p>
+
+<p>Business logic might also add another layer of complexity (the catalyst for this post) to the question which is &#8220;to delete or not to delete&#8221;.</p>
+
+<p>I&#8217;m still a fan of storing the data for most operations, but in an age of agile/extreme programming, more and more pressure to get the job done in half the time and a great mantra of &#8220;release early, release often&#8221;&#8230;sometimes you may need to ask yourself if you really need to keep this data :)</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-01-11T23:19:57+11:00" pubdate data-updated="true">Jan 11<span>th</span>, 2007</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/databases/'>Databases</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2007/01/11/to-delete-or-not-to-delete/#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2013
+
+    Michael Sharman
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'chapter31';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://chapter31.github.io/2007/01/11/to-delete-or-not-to-delete/';
+        var disqus_url = 'http://chapter31.github.io/2007/01/11/to-delete-or-not-to-delete/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-306772-2']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

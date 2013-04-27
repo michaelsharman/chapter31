@@ -1,0 +1,938 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>chapter31 &raquo;</title>
+	<meta name="author" content="Michael Sharman">
+
+	
+	<meta name="description" content="* Note: These examples reference the Prototype JavaScript framework. Often I find that I want to load content onto a page but have its default view &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="chapter31 &raquo;" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">chapter31 &raquo;</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:chapter31.github.io">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/michaelsharman" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/michaelsharman" title="GitHub">GitHub</a>
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:chapter31.github.io">
+	</form>
+</nav>
+
+</header>
+	
+		
+<div id="banner" class="inner">
+	<div class="container">
+		<ul class="feed"></ul>
+	</div>
+	<small><a href="http://twitter.com/michaelsharman">michaelsharman</a> @ <a href="http://twitter.com">Twitter</a></small>
+	<div class="loading">Loading...</div>
+</div>
+<script src="/javascripts/twitter.js"></script>
+<script type="text/javascript">
+	(function($){
+		$('#banner').getTwitterFeed('michaelsharman', 4, false);
+	})(jQuery);
+</script>
+
+	
+	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/03/11/showing-and-hiding-elements-with-css-and-javascript/">
+		
+			Showing and Hiding Elements With CSS and JavaScript</a>
+	</h2>
+	<div class="entry-content">
+		<p><em><strong>* Note:</strong> These examples reference the <a href="http://www.prototypejs.org/">Prototype</a> JavaScript framework.</em></p>
+
+<p>Often I find that I want to load content onto a page but have its default view state as hidden until a user defined event makes it appear.</p>
+
+<p>The problem is if I hide an element using a linked CSS file (with a class or Id style of {display:none;}) it seems I cannot show that element using either of the following JavaScript options:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c1">//uses Prototype to display:block a previously hidden element</span>
+</span><span class='line'><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;myEl&#39;</span><span class="p">).</span><span class="nx">show</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//adds a CSS classname to the element</span>
+</span><span class='line'><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;myEl&#39;</span><span class="p">).</span><span class="nx">addClassName</span><span class="p">(</span><span class="s1">&#39;showElement&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Where the CSS class &#8216;showElement&#8217; above is basically {display:block;}</p>
+
+<p>Now if I add the CSS to hide the element inline like so:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">div</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;myEl&quot;</span> <span class="nx">style</span><span class="o">=</span><span class="s2">&quot;display:none;&quot;</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then everything works great, except now I have CSS embedded in my markup which I really don&#8217;t want there.</p>
+
+<p>The Prototype API for <a href="http://www.prototypejs.org/api/element/show">Element.show()</a> suggests that:</p>
+
+<blockquote><p>Element.show cannot display elements hidden via CSS stylesheets. Note that this is not a Prototype limitation but a consequence of how the CSS display property works.</p></blockquote>
+
+<p>A user on the Prototype google group <a href="http://tobielangel.com/2006/12/31/why-the-css-display-property-sucks">sent me this link</a> as an explanation. A quote from that page:</p>
+
+<blockquote><p>The problem actually only arises when you want some elements to be hidden when the page loads: there is no possible way to find out what there display should be when you show them.</p></blockquote>
+
+<p>The solution I used? Well something that I&#8217;ve been doing with Prototype and jQuery for a while (it&#8217;s just that I wanted to know if there was a cleaner solution in this case) is the <a href="http://www.chapter31.com/2008/01/23/taking-advantage-of-dom-on-ready-and-event-observers-using-prototypejs/">dom:loaded observer function</a> which will run as soon as the Dom is loaded (and before all &#8216;assets&#8217; are loaded so it&#8217;s super quick).</p>
+
+<p>Basically I use JavaScript to hide the element(s) I want hidden instead of CSS. This has the following benefits:</p>
+
+<ul>
+<li>Clean markup (no inline CSS)</li>
+<li>Being able to modify the &#8216;display&#8217; state from a user event</li>
+<li>Works if the user has no JavaScript enabled (the elements will simply always be there which is better than them not!)</li>
+</ul>
+
+
+<p>Example of the dom:loaded function:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">Event</span><span class="p">.</span><span class="nx">observe</span><span class="p">(</span><span class="nb">document</span><span class="p">,</span> <span class="s1">&#39;dom:loaded&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">//uses Prototype to hide the element</span>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;myEl&#39;</span><span class="p">).</span><span class="nx">hide</span><span class="p">();</span>  
+</span><span class='line'>  
+</span><span class='line'>  <span class="c1">//Alternative to the above example - attach a CSS class called &#39;hide&#39; (with has {display:none;}) to the element</span>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;myEl&#39;</span><span class="p">).</span><span class="nx">addClassName</span><span class="p">(</span><span class="s1">&#39;hide&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-03-11T09:41:02+11:00" pubdate data-updated="true">Mar 11<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/javascript/'>Javascript</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/03/11/showing-and-hiding-elements-with-css-and-javascript//page/13/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/03/06/better-youtube-firefox-extension/">
+		
+			Better YouTube Firefox Extension</a>
+	</h2>
+	<div class="entry-content">
+		<p>This is cool, a <a href="http://lifehacker.com/software/exclusive-lifehacker-download/better-youtube-firefox-extension-319925.php">little Firefox addon</a> from the guys at <a href="http://www.lifehacker.com/">lifehacker</a> to make your <a href="http://www.youtube.com/">youtube</a> experience a little richer :)</p>
+
+<p>It basically combines several Greasemonkey scripts together into a single package.</p>
+
+<p>Features include:</p>
+
+<ul>
+<li>smartly enlarges videos for better viewing</li>
+<li>hides user comments</li>
+<li>declutters the page</li>
+<li>disables autoplay</li>
+</ul>
+
+
+<p><a href="http://ginatrapani.org/workshop/firefox/betteryoutube_0.4.1.xpi">Download</a> and install the addon, restart Firefox and you&#8217;re set to go. To edit the preferences you need to go to:</p>
+
+<p>Tools -> Add-ons</p>
+
+<p>And choose &#8216;preferences&#8217; for the &#8220;Better YouTube&#8221; extension.</p>
+
+<p>Some nice options there, I added a screenshot below of the &#8220;Theater View&#8221;</p>
+
+<p><a href="http://www.chapter31.com/wp-content/uploads/2008/03/screenshot-youtube.jpg"><img src="http://www.chapter31.com/wp-content/uploads/2008/03/screenshot-youtube.thumbnail.jpg" alt="Better YouTube Firefox Extension" /></a></p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-03-06T14:21:39+11:00" pubdate data-updated="true">Mar 6<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/misc/'>Misc</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/03/06/better-youtube-firefox-extension//page/13/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/03/03/always-add-the-cfimport-tag-when-using-cfimport-style-syntax/">
+		
+			Always Add the <cfimport> Tag When Using Cfimport Style Syntax</a>
+	</h2>
+	<div class="entry-content">
+		<p>Using <a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=Tags_i_04.html">cfimport</a> is a great way to add custom tag functionality to your applications.</p>
+
+<p>One thing you need to do of course is add a <cfimport> tag to <em>every template</em> where you want to use the cfimport syntax. However, a couple of times when I&#8217;ve been creating new templates I&#8217;ve forgotten this rule and <strong>not</strong> added <cfimport> and subsequently gotten confused when my results aren&#8217;t as expected.</p>
+
+<p>I think the annoying thing is that ColdFusion does not throw an error in these situations, it just does nothing. So I can go to any template and add the following (without a <cfimport> on my template):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">tags</span><span class="o">:</span><span class="nx">myNonExistentTag</span> <span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And the template runs without an error being thrown :(</p>
+
+<p>So my reminder to myself before looking everywhere else is:</p>
+
+<p><em>&#8220;Michael&#8230;for the love of <a href="http://www.benji.com/">Benji</a> please check that you&#8217;ve added <cfimport> before doing any other debugging!&#8221;</em></p>
+
+<p>Now my question (which I&#8217;m sure someone out there knows) is why does this not throw an  error (missing template/include/tag etc)?</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-03-03T11:32:45+11:00" pubdate data-updated="true">Mar 3<span>rd</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/03/03/always-add-the-cfimport-tag-when-using-cfimport-style-syntax//page/13/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/03/03/converting-boolean-values-to-numeric-equivalents/">
+		
+			Converting Boolean Values to Numeric Equivalents</a>
+	</h2>
+	<div class="entry-content">
+		<p>Today I had a situation where I wanted to convert a boolean value (true or false) to a numeric equivalent (1 or 0) for insertion into a database table field which had a &#8220;tinyint&#8221; data type.</p>
+
+<p>The value was coming from a form checkbox, so the actual element may or may not exist in the form struct depending on whether the user &#8220;checked&#8221; the box or not.</p>
+
+<p>I found a few ways to do this, some &#8220;better&#8221; than others but all using <a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=functions_s_27.html">structKeyExists()</a> to look for the form element. The result of which will of course return a boolean &#8220;true&#8221; if the key exists within the form struct (meaning the user has checked the checkbox) or &#8220;false&#8221; which tells me the checkbox was unchecked (or simply not checked in the first place).</p>
+
+<p>The long way round, arguably less elegant:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">structKeyExists</span><span class="p">(</span><span class="nx">form</span><span class="p">,</span> <span class="s1">&#39;minimised&#39;</span><span class="p">)</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="mi">1</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfelse</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="mi">0</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfif&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Using the ColdFusion <a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=functions_h-im_05.html">iif()</a> equivalent of a conditional &#8220;ternary operator&#8221;</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="err">#</span><span class="nx">iif</span><span class="p">((</span><span class="nx">structKeyExists</span><span class="p">(</span><span class="nx">form</span><span class="p">,</span> <span class="s1">&#39;minimised&#39;</span><span class="p">)),</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="err">#</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Casting the value using <a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=functions_in-k_45.html">javaCast()</a>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="err">#</span><span class="nx">javaCast</span><span class="p">(</span><span class="s1">&#39;int&#39;</span><span class="p">,</span> <span class="nx">structKeyExists</span><span class="p">(</span><span class="nx">form</span><span class="p">,</span> <span class="s1">&#39;minimised&#39;</span><span class="p">))</span><span class="err">#</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Doing a <a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=functions_m-r_08.html">numberFormat()</a>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="err">#</span><span class="nx">numberFormat</span><span class="p">(</span><span class="nx">structKeyExists</span><span class="p">(</span><span class="nx">form</span><span class="p">,</span> <span class="s1">&#39;minimised&#39;</span><span class="p">))</span><span class="err">#</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The last 2 examples seem like the best approach to me as they are more succinct than using an <cfif>/<cfelse> combination, and most people shy away from <a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=functions_h-im_05.html">iif()</a> because it will <a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=functions_e-g_03.html">evaluate()</a> either of the string expressions (in this case 1 or 0) which is irrelevant for your needs in many cases including this one.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-03-03T10:32:32+11:00" pubdate data-updated="true">Mar 3<span>rd</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/03/03/converting-boolean-values-to-numeric-equivalents//page/13/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/02/28/cant-access-shared-music-with-rhythmbox-ubuntu/">
+		
+			Can&#8217;t Access Shared Music With Rhythmbox (Ubuntu)?</a>
+	</h2>
+	<div class="entry-content">
+		<p>Probably quite old news for those in the know, but if you&#8217;re using Rhythmbox to play music on Ubuntu and want to listen to shared music over a network where people are using iTunes version 7+&#8230;.it ain&#8217;t going to work :(</p>
+
+<p>You can view who is sharing music, but their actual libraries won&#8217;t load into Rhythmbox. In this case it&#8217;s not a compatibility between OS&#8217;s etc, it&#8217;s purely proprietary :(</p>
+
+<p>The only way to access iTunes shares is by (yep) using iTunes. I guess that counts out Ubuntu users.</p>
+
+<blockquote><p>With the release of iTunes 7.0, Apple changed their implementation of DAAP. This change prevents any third-party client, such as a computer running Linux, a modified Xbox, or any computer without iTunes installed, from connecting to a remote iTunes repository. iTunes will still connect as a client to other iTunes servers and to third-party servers</p></blockquote>
+
+<p>Go Apple! You rock :)</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-02-28T17:21:14+11:00" pubdate data-updated="true">Feb 28<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/ubuntu/'>Ubuntu</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/02/28/cant-access-shared-music-with-rhythmbox-ubuntu//page/13/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/02/28/changing-the-cfeclipse-tag-insight-delay-time/">
+		
+			Changing the Cfeclipse &#8216;Tag Insight&#8217; Delay Time</a>
+	</h2>
+	<div class="entry-content">
+		<p>Having &#8216;tag insight&#8217; is a great part of any IDE, one which almost every developer takes advantage of irrespective of which editor they use. Tag insight of course being when your IDE provides information (attribute or return information etc) about the tag or function you are currently typing.</p>
+
+<p>Normally when writing a function or tag like <cfhttp>, when you hit the space bar and wait a second a little popup appears detailing exactly what you can do with this tag.</p>
+
+<p><a href="http://www.chapter31.com/wp-content/uploads/2008/02/cfhttp_insight.jpg"><img src="http://www.chapter31.com/wp-content/uploads/2008/02/cfhttp_insight.thumbnail.jpg" alt="cfhttp tag insight" /></a></p>
+
+<p>Now this is all lovely except I find that the <em>default time</em> it takes for this to appear (which is 500ms in cfeclipse) is just a little too short for me so that it is more annoying than helpful as it constantly appears when I don&#8217;t want it to (like after pasting some code it pops up to display all local variables etc).</p>
+
+<p><a href="http://www.chapter31.com/wp-content/uploads/2008/02/taginsight.jpg"><img src="http://www.chapter31.com/wp-content/uploads/2008/02/taginsight.thumbnail.jpg" alt="tag insight" /></a></p>
+
+<p>Luckily it&#8217;s a snap to change these little things :)</p>
+
+<p>Window -> Preferences -> CFEclipse -> Editor</p>
+
+<p><a href="http://www.chapter31.com/wp-content/uploads/2008/02/preferences.jpg"><img src="http://www.chapter31.com/wp-content/uploads/2008/02/preferences.thumbnail.jpg" alt="cfeclipse preferences" /></a></p>
+
+<p>Then change the <em>Insight Delay</em> value. I now have 1500 which is working nicely.</p>
+
+<p>Don&#8217;t forget if this is too slow for you (when you actually DO want the tag insight and you find yourself waiting for it) then you can simply hit ctrl + space to launch the tag insight immediately.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-02-28T11:56:02+11:00" pubdate data-updated="true">Feb 28<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/cfeclipse/'>cfeclipse</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/02/28/changing-the-cfeclipse-tag-insight-delay-time//page/13/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/02/26/code-tip-how-to-structure-your-queryparams/">
+		
+			Code Tip: How to Structure Your Queryparams</a>
+	</h2>
+	<div class="entry-content">
+		<p>If I were a betting man I&#8217;d bet a LOT of money (and perhaps even the house!) that you&#8217;ve done this before.</p>
+
+<p>Try to spot the error in the query below:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfquery</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;qCreate&quot;</span> <span class="nx">datasource</span><span class="o">=</span><span class="s2">&quot;#getDSN()#&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="nx">INSERT</span> <span class="nx">INTO</span> <span class="nx">myTable</span>
+</span><span class='line'>      <span class="p">(</span>
+</span><span class='line'>          <span class="nx">ObjectId</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">Country</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">DateOfBirth</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">Email</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">FirstName</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">Gender</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">LastName</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">MainSchoolId</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">PhoneHome</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">PhoneMobile</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">PostCode</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">State</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">Street</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">StudentId</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">StudentPassword</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">StudentPodId</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">Suburb</span>
+</span><span class='line'>      <span class="p">)</span>
+</span><span class='line'>  <span class="nx">VALUES</span>
+</span><span class='line'>      <span class="p">(</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#createUUID()#&quot;</span> <span class="o">/&gt;</span><span class="p">,</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;country&#39;)#&quot;</span> <span class="o">/&gt;</span><span class="p">,</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_date&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#createODBCDate(arguments.oUser.get(&#39;dateOfBirth&#39;))#&quot;</span> <span class="o">/&gt;</span><span class="p">,</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;email&#39;)#&quot;</span> <span class="o">/&gt;</span><span class="p">,</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;firstName&#39;)#&quot;</span> <span class="o">/&gt;</span><span class="p">,</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;gender&#39;)#&quot;</span> <span class="o">/&gt;</span><span class="p">,</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;lastName&#39;)#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_integer&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;mainSchoolId&#39;)#&quot;</span> <span class="o">/&gt;</span><span class="p">,</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;phoneHome&#39;)#&quot;</span> <span class="o">/&gt;</span><span class="p">,</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;phoneMobile&#39;)#&quot;</span> <span class="o">/&gt;</span><span class="p">,</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;postCode&#39;)#&quot;</span> <span class="o">/&gt;</span><span class="p">,</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;state&#39;)#&quot;</span> <span class="o">/&gt;</span><span class="p">,</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;street&#39;)#&quot;</span> <span class="o">/&gt;</span><span class="p">,</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_integer&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.getStudentId()#&quot;</span> <span class="o">/&gt;</span><span class="p">,</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#hash(arguments.oUser.get(&#39;studentPassword&#39;))#&quot;</span> <span class="o">/&gt;</span><span class="p">,</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#createUUID()#&quot;</span> <span class="o">/&gt;</span><span class="p">,</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;suburb&#39;)#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>      <span class="p">)</span>            
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfquery&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Spot it? It&#8217;s one of those &#8220;Where&#8217;s Wally&#8221; errors where some people spot it straight away and some people (like me today) spend FAR too long searching for what went wrong.</p>
+
+<p>Ok&#8230;if you haven&#8217;t spotted it there is a missing comma in the SQL (after the 7th argument &#8216;lastName&#8217;).</p>
+
+<p>Even though in hindsight the error returned from MySQL was telling me exactly what was wrong:</p>
+
+<blockquote><p>&#8220;You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &#8216;MainSchoolId = 8459, PhoneHome = &#8221;, PhoneMobile = &#8221;, Post&#8217; at line 9&#8221;</p></blockquote>
+
+<p>Still took me longer than 5 minutes to debug. So&#8230;</p>
+
+<p>A new rule for me is going back to what I used to do all the time for this exact reason (no idea why I didn&#8217;t in this case).</p>
+
+<p>Putting the comma at the START of any argument like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#createUUID()#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;country&#39;)#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_date&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#createODBCDate(arguments.oUser.get(&#39;dateOfBirth&#39;))#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;email&#39;)#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;firstName&#39;)#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;gender&#39;)#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;lastName&#39;)#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_integer&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;mainSchoolId&#39;)#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;phoneHome&#39;)#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;phoneMobile&#39;)#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;postCode&#39;)#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;state&#39;)#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;street&#39;)#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_integer&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.getStudentId()#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#hash(arguments.oUser.get(&#39;studentPassword&#39;))#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#createUUID()#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;suburb&#39;)#&quot;</span> <span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now it&#8217;s EASY to spot this all too common syntax error, especially if you&#8217;re copying and pasting from somewhere else :)</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-02-26T15:16:49+11:00" pubdate data-updated="true">Feb 26<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/02/26/code-tip-how-to-structure-your-queryparams//page/13/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/02/22/cfdocs-on-air-livedocs-for-cf8/">
+		
+			Cfdocs on Air (Livedocs for CF8)</a>
+	</h2>
+	<div class="entry-content">
+		<p><a href="http://brianflove.com/">Brian Love</a> recently <a href="http://blog.brianflove.com/articles/2008/02/19/cfdocs-on-air">released an AIR application</a> he wrote which wraps up the <a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/index.html">ColdFusion 8 &#8216;livedocs&#8217;</a>.</p>
+
+<p>This is a great idea and a fantastic tool to add to your list. I&#8217;m sure most developers use livedocs as a reference (I do all the time) but historically the are SO slow (not to mention that I think Adobe needs to invest in a little SEO as I often get CF6 livedocs at the top of Google results!).</p>
+
+<p>The CF8 online docs were given a much needed face lift but still are a little slow and the initial page always reloads into a frameset.</p>
+
+<p>While we do have tools like <a href="http://www.cfquickdocs.com/">cfquickdocs</a> which are great, having everything as a local resource on your file system makes life a lot easier :)</p>
+
+<p>Now I just need to wait until Adobe releases AIR for Linux so I can use this at work :(</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-02-22T09:33:59+11:00" pubdate data-updated="true">Feb 22<span>nd</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/air/'>AIR</a>, <a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/02/22/cfdocs-on-air-livedocs-for-cf8//page/13/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/02/21/using-mysql-administrator-to-view-real-time-stats/">
+		
+			Using MySQL Administrator to View Real Time Stats</a>
+	</h2>
+	<div class="entry-content">
+		<p>I was working on piece of code today which was sending an Ajax request to the server. The result of this request could have been 0 - 5 database UPDATE statements.</p>
+
+<p>What I needed was a way to test my code to make sure the correct number of database statements were being executed based on the user event which fired the request.</p>
+
+<p>There are of course a number of ways I could have done this including:</p>
+
+<ul>
+<li>Returning a &#8216;count&#8217; or equivalent from the server to my Ajax callback</li>
+<li>Manually checking the relevant records in the database via a query</li>
+<li>Logging the results etc</li>
+</ul>
+
+
+<p>While all of these are fine, they all involved a bit more effort so I wanted to find another way to simply see how many UPDATES where being run.</p>
+
+<p>Enter <a href="http://www.mysql.com/products/tools/administrator/">MySQL Administrator</a> :)</p>
+
+<p>There are a BUNCH of useful operations you can perform using this free tool as well as viewing real time performance stats including the current server health (such as memory usage and current traffic) and the number of cached queries vs actual queries which are being accessed.</p>
+
+<p>The one I was interested in resides in the &#8216;Health&#8217; area and allows you to view a real time count of all DDL and DML statements which hit the server. Perfect!</p>
+
+<p><a href="http://www.chapter31.com/wp-content/uploads/2008/02/mysql_admin.jpg"><img src="http://www.chapter31.com/wp-content/uploads/2008/02/mysql_admin.thumbnail.jpg" alt="mysql administrator" /></a></p>
+
+<p>All I needed to do was run my page, fire the Ajax event and then &#8216;refresh&#8217; the Health view in MySQL Admin.</p>
+
+<p>For those that use MySQL and don&#8217;t really know this tool, take the time&#8230;it&#8217;s well worth it!</p>
+
+<p>I&#8217;m sure MSSQL has similar tools like the Profiler etc, but I&#8217;m really not using it these days.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-02-21T17:49:15+11:00" pubdate data-updated="true">Feb 21<span>st</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/databases/'>Databases</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/02/21/using-mysql-administrator-to-view-real-time-stats//page/13/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/02/19/a-couple-more-cool-firefox-tips/">
+		
+			A Couple More Cool Firefox Tips</a>
+	</h2>
+	<div class="entry-content">
+		<p>Another couple of cool Firefox features which most people probably already know about.</p>
+
+<p>How many times have you closed a tab only to realise &#8221;<em>Damn&#8230;I still wanted that open!</em>&#8221;? Well I do that about everyday and although you have the general history manager&#8230;if you&#8217;ve visited 100 sites that day it&#8217;s a pain to wade through to find the tab you just closed.</p>
+
+<p>Instead you can visit the History menu and see the item &#8220;Recently Closed Tabs&#8221; for a list of the last 10 viewed tabs. From memory there is also an addon which allows you to &#8220;undo&#8221; a close operation on a tab, but this menu option is cool!</p>
+
+<p>Another thing is making sure you get alerted whenever there is a JavaScript error, I think this is quite important as a developer and although you do have the &#8220;console&#8221; it&#8217;s nice to have an &#8220;in your face&#8221; reminder that there is an error on your page.</p>
+
+<p>To turn this on using the invaluable <a href="http://chrispederick.com/work/web-developer/">Web Developer Toolbar</a> addon, click Tools -> Web Developer -> Options -> Options and under &#8220;Miscellaneous&#8221; you can choose up to 3 options for opening the console (you can also get to this from Options -> Options on the actual Web Developer Toolbar):</p>
+
+<ul>
+<li>When there is a CSS error</li>
+<li>When there is a JavaScript warning</li>
+<li>When there is a JavaScript error</li>
+</ul>
+
+
+<p>It&#8217;s this last option that I turn on during development to get an error popup. Note that it is sometimes best to turn this off when surfing the web as there are SO many sites which have little JavaScript errors, causing popup hell :(</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-02-19T07:50:05+11:00" pubdate data-updated="true">Feb 19<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/misc/'>Misc</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/02/19/a-couple-more-cool-firefox-tips//page/13/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+<nav id="pagenavi">
+    
+        <a href="/page/12/" class="prev">Prev</a>
+    
+    
+        <a href="/page/14/" class="next">Next</a>
+    
+    <div class="center"><a href="/blog/archives">Blog Archives</a></div>
+</nav></div>
+	<footer id="footer" class="inner">Copyright &copy; 2013
+
+    Michael Sharman
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'chapter31';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-306772-2']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

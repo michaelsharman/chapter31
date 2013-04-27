@@ -1,0 +1,251 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>FarCry 5 running on Railo 3 (Windows) - chapter31 &raquo;</title>
+	<meta name="author" content="Michael Sharman">
+
+	
+	<meta name="description" content="The CFML market is hotting up with Railo going open source (in version 3.1) and joining forces with JBoss for an end of 2008 release! With that in &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="chapter31 &raquo;" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">chapter31 &raquo;</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:chapter31.github.io">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/michaelsharman" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/michaelsharman" title="GitHub">GitHub</a>
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:chapter31.github.io">
+	</form>
+</nav>
+
+</header>
+	
+		
+<div id="banner" class="inner">
+	<div class="container">
+		<ul class="feed"></ul>
+	</div>
+	<small><a href="http://twitter.com/michaelsharman">michaelsharman</a> @ <a href="http://twitter.com">Twitter</a></small>
+	<div class="loading">Loading...</div>
+</div>
+<script src="/javascripts/twitter.js"></script>
+<script type="text/javascript">
+	(function($){
+		$('#banner').getTwitterFeed('michaelsharman', 4, false);
+	})(jQuery);
+</script>
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">FarCry 5 Running on Railo 3 (Windows)</h2>
+	<div class="entry-content"><p>The CFML market is hotting up with <a href="http://www.railo-technologies.com/">Railo</a> going open source (in version 3.1) and joining forces with <a href="http://www.jboss.org/railo/">JBoss</a> for an end of 2008 release! With that in mind I figured it was time to check out Railo with the latest version of FarCry.</p>
+
+<p>My environment:</p>
+
+<ul>
+<li>Windows XP</li>
+<li>Railo 3.0.0.003</li>
+<li><del>FarCry 5.0.0 (although 5.0.2 is out, the latest distro from the site offers only 5.0.0)</del></li>
+<li>FarCry 5.0.2</li>
+<li>MySQL 5</li>
+</ul>
+
+
+<p>I&#8217;m using the &#8220;express&#8221; version of Railo which bundles with Jetty Application Server, so no need for any apache configurations as everything runs off port 8888. This is not how you would have things running in a production environment of course, but is great for evaluation purposes as you can just put the Railo files anywhere you want with no actual installation required.</p>
+
+<p>I already had MySQL installed, so I got a <a href="http://www.farcrycore.org/go/code-branch/5-0-2">fresh zip of FarCry 5.0.2</a> and the latest <a href="http://www.railo-technologies.com/en/index.cfm?treeID=361">release candidate for Railo</a>.</p>
+
+<p>I unpacked Railo into D:/ (this could be anywhere on your system) then unpacked FarCry into the &#8220;webroot&#8221; folder of Railo following the <a href="http://docs.farcrycms.org/display/FCDEV50/FarCry+Installation">standard FarCry 5 installation instructions</a>.</p>
+
+<p>Next was starting Railo, on Windows open a command prompt (cmd) and run the start.bat file which is in the Railo root directory:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">start</span><span class="p">.</span><span class="nx">bat</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now that Railo is running I needed to create a datasource to point to a fresh database created for my new FarCry app. To do this visit the admin area of Railo at http://localhost:8888/railo-context/.</p>
+
+<p>The first time you do this you&#8217;ll be asked to enter a password which will be used in the future to access the admin area.</p>
+
+<p><a href="http://www.chapter31.com/wp-content/uploads/2008/08/newpassword2.png"><img src="http://www.chapter31.com/wp-content/uploads/2008/08/newpassword2-300x173.png" alt="" /></a></p>
+
+<p>Create and verify a datasource just as you would in ColdFusion Administrator and you&#8217;re ready for the FarCry install.</p>
+
+<p>To install FarCry visit http://localhost:8888/farcry/ and follow the instructions. As mentioned above you first have to create an empty database for your FarCry site.</p>
+
+<p><a href="http://www.chapter31.com/wp-content/uploads/2008/08/installingfarcry2.png"><img src="http://www.chapter31.com/wp-content/uploads/2008/08/installingfarcry2-300x267.png" alt="" /></a></p>
+
+<p>After FarCry installed (without a hitch!) it was time to look around my new site to see if everything is working as normal (well, as it would normally under ColdFusion). Upon initial inspection everything is working fine with just a few exceptions (pun intended!).</p>
+
+<p>Firstly it seems there is a reserved word conflict with the FarCry core codebase and Railo which prevented me from viewing one of the pages (support) in the mollio skeleton site FarCry installs by default (and also some pages from the webtop).</p>
+
+<p>Railo threw the following error:</p>
+
+<p><em>invalid argument for function query, only array as value are allowed</em></p>
+
+<p>The code in question was calling a FarCry method called <em>query()</em>. I renamed the method to <em>execQuery()</em> and updated the calls to it and everything started working as expected.</p>
+
+<p>I also added this as a <a href="http://bugs.farcrycms.org/browse/FC-1459">FarCry bug</a> so hopefully it will be resolved by the <a href="http://www.daemon.com.au/">Daemon</a> guys in the next FarCry release.</p>
+
+<p>There were a couple of other small issues (with containers/publishing rules and a permission problem in the webtop) which I&#8217;ve contacted Daemon about. Hopefully they will be resolved quickly.</p>
+
+<p>All in all it looks as though FarCry is a success on Railo which great news!</p>
+
+<p>Although I was only looking at the express version of Railo, I was extremely impressed with just how simple everything was. Comparing CF8 and Railo (browsing the FarCry admin console), Railo looks a lot faster to me. Of course I did no actual load/performance testing. But it was interesting that I noticed the speed difference by simply browsing.</p>
+
+<p>I&#8217;m looking forward to playing with it further, particularly when 3.1 comes out :)</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-08-16T18:15:50+10:00" pubdate data-updated="true">Aug 16<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/farcry/'>Farcry</a>, <a class='category' href='/categories/railo/'>Railo</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/08/16/farcry-5-running-on-railo-3-windows/#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2013
+
+    Michael Sharman
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'chapter31';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://chapter31.github.io/2008/08/16/farcry-5-running-on-railo-3-windows/';
+        var disqus_url = 'http://chapter31.github.io/2008/08/16/farcry-5-running-on-railo-3-windows/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-306772-2']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

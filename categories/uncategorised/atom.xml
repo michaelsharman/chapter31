@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Uncategorised | chapter31 &raquo;]]></title>
+  <link href="http://chapter31.github.io/categories/uncategorised/atom.xml" rel="self"/>
+  <link href="http://chapter31.github.io/"/>
+  <updated>2013-04-27T22:42:07+10:00</updated>
+  <id>http://chapter31.github.io/</id>
+  <author>
+    <name><![CDATA[Michael Sharman]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Wordpress RSS feed validation]]></title>
+    <link href="http://chapter31.github.io/2006/11/15/wordpress-rss-feed-validation/"/>
+    <updated>2006-11-15T09:15:29+11:00</updated>
+    <id>http://chapter31.github.io/2006/11/15/wordpress-rss-feed-validation</id>
+    <content type="html"><![CDATA[<p>I've been using <a href="http://wordpress.org/">Wordpress</a> for a while now and I'm really happy with it. Only recently have I tried to validate my RSS feed using <a href="http://www.feedvalidator.org/">feedvalidator</a>.</p>
+
+<p>Unfortunately even though the feed validated I received the following warning:</p>
+
+<blockquote><p>wfw:commentRSS should be wfw:commentRss</p></blockquote>
+
+<p>The explanation given on the site was:</p>
+
+<blockquote><p>Due to a clerical error, the element Chris Sells originally spec'ed as wfw:commentRss appeared as wfw:commentRSS (note the difference in case) on Joe Gregorio's site. At least one product (WordPress) has implemented and deployed feeds using the spelling originally present on Joe's site.</p></blockquote>
+
+<p>And the solution:</p>
+
+<blockquote><p>Change wfw:commentRSS to wfw:commentRss</p>
+
+<p>Wordpress users can find this in the wp-rss2.php file.</p></blockquote>
+
+<p>Gotta love nice and easy fixes :)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Broken image on Google search results page]]></title>
+    <link href="http://chapter31.github.io/2006/10/05/broken-image-on-google-search-results-page/"/>
+    <updated>2006-10-05T12:01:19+10:00</updated>
+    <id>http://chapter31.github.io/2006/10/05/broken-image-on-google-search-results-page</id>
+    <content type="html"><![CDATA[<p>Funny when the big guys get something wrong :)</p>
+
+<p>I noticed this today on the google.com.au search results page; a nice little broken image!</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2006/10/google.jpg" alt="Google broken image" /></p>
+
+<p>Bugger!</p>
+]]></content>
+  </entry>
+  
+</feed>

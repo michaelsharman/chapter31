@@ -1,0 +1,328 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>FarCry - Finding a page by 'typename' somewhere above the current page - chapter31 &raquo;</title>
+	<meta name="author" content="Michael Sharman">
+
+	
+	<meta name="description" content="Note: This is for FarCry v3 which is a bit old now but should work for v5 :) Sometimes when using FarCry I have a need to find an occurance of a page &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="chapter31 &raquo;" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">chapter31 &raquo;</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:chapter31.github.io">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/michaelsharman" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/michaelsharman" title="GitHub">GitHub</a>
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:chapter31.github.io">
+	</form>
+</nav>
+
+</header>
+	
+		
+<div id="banner" class="inner">
+	<div class="container">
+		<ul class="feed"></ul>
+	</div>
+	<small><a href="http://twitter.com/michaelsharman">michaelsharman</a> @ <a href="http://twitter.com">Twitter</a></small>
+	<div class="loading">Loading...</div>
+</div>
+<script src="/javascripts/twitter.js"></script>
+<script type="text/javascript">
+	(function($){
+		$('#banner').getTwitterFeed('michaelsharman', 4, false);
+	})(jQuery);
+</script>
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">FarCry - Finding a Page by 'Typename' Somewhere Above the Current Page</h2>
+	<div class="entry-content"><p><strong>Note:</strong> This is for FarCry v3 which is a bit old now but should work for v5 :)</p>
+
+<p>Sometimes when using FarCry I have a need to find an occurance of a page &#8220;type&#8221; which sits somewhere above where I currently am in the the navigation hierachy.</p>
+
+<p>Say I want to find the &#8220;VehicleType&#8221; page (which could be Car or Bike etc) above where I am in the navigation hierachy as listed below (when I&#8217;m on the &#8220;Models&#8221; page):</p>
+
+<ul>
+<li>Home
+
+<ul>
+<li>Vehicles
+
+<ul>
+<li>Bike</li>
+<li>Car
+
+<ul>
+<li>Sedans
+
+<ul>
+<li><strong><em>Models</em></strong></li>
+</ul>
+</li>
+<li>Wagons</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<p>I want to know whether I&#8217;m in the &#8220;Car&#8221; or &#8220;Bike&#8221; part of the navigation tree and I want the content object of that page.</p>
+
+<p>There are a couple of ways to do this, using categories (tags) would be one way. Another is to simply look for an occurance of my type (VehicleType) in the tree <em>above</em> the current page you&#8217;re on.</p>
+
+<p>The following function will do just that, just pass in the <strong>request.navId</strong> of the page you&#8217;re on (Models), the <strong>typename</strong> and <strong>displayMethod</strong> you&#8217;re looking for (VehicleType).</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cffunction</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;getParentPageByTypename&quot;</span> <span class="nx">access</span><span class="o">=</span><span class="s2">&quot;public&quot;</span> <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="nx">returnType</span><span class="o">=</span><span class="s2">&quot;struct&quot;</span> <span class="nx">hint</span><span class="o">=</span><span class="s2">&quot;Returns the first tree occurance of a page &#39;typename&#39; based on an ancestor search.&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;objectId&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;string&quot;</span> <span class="nx">required</span><span class="o">=</span><span class="s2">&quot;true&quot;</span> <span class="nx">hint</span><span class="o">=</span><span class="s2">&quot;Current nav id of the page we want to search above in the tree&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;typename&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;string&quot;</span> <span class="nx">required</span><span class="o">=</span><span class="s2">&quot;true&quot;</span> <span class="nx">hint</span><span class="o">=</span><span class="s2">&quot;Which page typename are we looking for&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;displayMethod&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;string&quot;</span> <span class="nx">required</span><span class="o">=</span><span class="s2">&quot;true&quot;</span> <span class="nx">hint</span><span class="o">=</span><span class="s2">&quot;Which page display method are we looking for&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;nLevel&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;numeric&quot;</span> <span class="nx">required</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="k">default</span><span class="o">=</span><span class="s2">&quot;1&quot;</span> <span class="nx">hint</span><span class="o">=</span><span class="s2">&quot;Which nLevel to start looking in the ancestor query. Usually we can start at 3 or higher (1 being &#39;Root&#39; and 2 being &#39;Home&#39;)&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;oTree&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;any&quot;</span> <span class="nx">required</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="k">default</span><span class="o">=</span><span class="s2">&quot;#application.factory.oTree#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfscript</span><span class="o">&gt;</span>
+</span><span class='line'>  
+</span><span class='line'>      <span class="kd">var</span> <span class="nx">qAncestors</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+</span><span class='line'>      <span class="kd">var</span> <span class="nx">lAncestorIds</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+</span><span class='line'>      <span class="kd">var</span> <span class="nx">aLeafNodes</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+</span><span class='line'>      <span class="kd">var</span> <span class="nx">iArrayLength</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>      <span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>      <span class="kd">var</span> <span class="nx">stCurrentSubject</span> <span class="o">=</span> <span class="nx">structNew</span><span class="p">();</span>   <span class="c1">//Default here in case we don&#39;t find anything, an empty struct will be returned</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cfscript&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c">&lt;!--</span><span class="o">-</span> <span class="nx">Get</span> <span class="nx">the</span> <span class="nx">ancestor</span> <span class="nx">nav</span> <span class="nx">nodes</span> <span class="k">for</span> <span class="nx">the</span> <span class="nx">object</span> <span class="nx">argument</span> <span class="o">---&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">qAncestors</span> <span class="o">=</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">oTree</span><span class="p">.</span><span class="nx">getAncestors</span><span class="p">(</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">objectId</span><span class="p">)</span> <span class="o">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c">&lt;!--</span><span class="o">-</span> <span class="nx">Put</span> <span class="nx">the</span> <span class="nx">objectIds</span> <span class="nx">of</span> <span class="nx">the</span> <span class="nx">parent</span> <span class="nx">nav</span> <span class="nx">nodes</span> <span class="nx">into</span> <span class="nx">a</span> <span class="nx">list</span> <span class="nx">so</span> <span class="nx">we</span> <span class="nx">can</span> <span class="nx">retrieve</span> <span class="nx">their</span> <span class="s1">&#39;leaf&#39;</span> <span class="nx">values</span><span class="p">.</span> <span class="nx">Using</span> <span class="nx">nLevel</span> <span class="nx">we</span> <span class="nx">can</span> <span class="nx">skip</span> <span class="nx">nodes</span> <span class="nx">we</span> <span class="nx">know</span> <span class="nx">we</span><span class="s1">&#39;re not interested in ---&gt;</span>
+</span><span class='line'><span class="s1"> &lt;cfloop query=&quot;qAncestors&quot; startrow=&quot;#arguments.nLevel#&quot;&gt;</span>
+</span><span class='line'><span class="s1">     &lt;cfset lAncestorIds = listAppend(lAncestorIds, qAncestors.objectId) /&gt;</span>
+</span><span class='line'><span class="s1"> &lt;/cfloop&gt;</span>
+</span><span class='line'><span class="s1"> </span>
+</span><span class='line'><span class="s1"> &lt;!--- Retrieve an array of leaf node information from a list of ancestor nav Id&#39;</span><span class="nx">s</span> <span class="o">---&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">aLeafNodes</span> <span class="o">=</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">oTree</span><span class="p">.</span><span class="nx">getLeaves</span><span class="p">(</span><span class="nx">lAncestorIds</span><span class="p">)</span><span class="o">&gt;</span>     
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">iArrayLength</span> <span class="o">=</span> <span class="nx">arrayLen</span><span class="p">(</span><span class="nx">aLeafNodes</span><span class="p">)</span> <span class="o">/&gt;</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="c">&lt;!--</span><span class="o">-</span> <span class="nx">Loop</span> <span class="nx">over</span> <span class="nx">the</span> <span class="nx">leaf</span> <span class="nx">nodes</span> <span class="nx">returned</span> <span class="nx">and</span> <span class="nx">look</span> <span class="k">for</span> <span class="nx">the</span> <span class="nx">typename</span> <span class="nx">we</span><span class="err">&#39;</span><span class="nx">re</span> <span class="nx">after</span> <span class="o">---&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfloop</span> <span class="nx">from</span><span class="o">=</span><span class="s2">&quot;1&quot;</span> <span class="nx">to</span><span class="o">=</span><span class="s2">&quot;#iArrayLength#&quot;</span> <span class="nx">index</span><span class="o">=</span><span class="s2">&quot;i&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">aLeafNodes</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="s2">&quot;typename&quot;</span><span class="p">]</span> <span class="nx">EQ</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">typename</span> <span class="nx">AND</span> <span class="nx">aLeafNodes</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="s2">&quot;displayMethod&quot;</span><span class="p">]</span> <span class="nx">EQ</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">displayMethod</span><span class="o">&gt;</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">stCurrentSubject</span> <span class="o">=</span> <span class="nx">aLeafNodes</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">/&gt;</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfbreak</span> <span class="o">/&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="err">/cfif&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cfloop&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfreturn</span> <span class="nx">stCurrentSubject</span> <span class="o">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cffunction&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>For example:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">stVehicleType</span> <span class="o">=</span> <span class="nx">getParentPageByTypename</span><span class="p">(</span><span class="nx">objectId</span><span class="o">=</span><span class="nx">request</span><span class="p">.</span><span class="nx">navId</span><span class="p">,</span> <span class="nx">typeName</span><span class="o">=</span><span class="s2">&quot;vehicleType&quot;</span><span class="p">,</span> <span class="nx">displayMethod</span><span class="o">=</span><span class="s2">&quot;displayPageStandard&quot;</span><span class="p">,</span> <span class="nx">nLevel</span><span class="o">=</span><span class="mi">3</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note that the &#8220;nLevel&#8221; argument in the function allows you to skip the ancestor nodes you know you&#8217;re not interested in such as &#8220;Root&#8221; and &#8220;Home&#8221;.</p>
+
+<p>Hope this helps some people.</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-06-19T10:47:06+10:00" pubdate data-updated="true">Jun 19<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/farcry/'>Farcry</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/06/19/farcry-finding-a-page-by-typename-somewhere-above-the-current-page/#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2013
+
+    Michael Sharman
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'chapter31';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://chapter31.github.io/2008/06/19/farcry-finding-a-page-by-typename-somewhere-above-the-current-page/';
+        var disqus_url = 'http://chapter31.github.io/2008/06/19/farcry-finding-a-page-by-typename-somewhere-above-the-current-page/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-306772-2']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

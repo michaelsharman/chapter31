@@ -1,0 +1,217 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Don't forget the ColdFusion site-wide error handler - chapter31 &raquo;</title>
+	<meta name="author" content="Michael Sharman">
+
+	
+	<meta name="description" content="Most developers know and use exception handling techniques when building web apps. One of the important reasons to do this is so that the end user &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="chapter31 &raquo;" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">chapter31 &raquo;</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:chapter31.github.io">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/michaelsharman" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/michaelsharman" title="GitHub">GitHub</a>
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:chapter31.github.io">
+	</form>
+</nav>
+
+</header>
+	
+		
+<div id="banner" class="inner">
+	<div class="container">
+		<ul class="feed"></ul>
+	</div>
+	<small><a href="http://twitter.com/michaelsharman">michaelsharman</a> @ <a href="http://twitter.com">Twitter</a></small>
+	<div class="loading">Loading...</div>
+</div>
+<script src="/javascripts/twitter.js"></script>
+<script type="text/javascript">
+	(function($){
+		$('#banner').getTwitterFeed('michaelsharman', 4, false);
+	})(jQuery);
+</script>
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">Don't Forget the ColdFusion Site-wide Error Handler</h2>
+	<div class="entry-content"><p>Most developers know and use exception handling techniques when building web apps. One of the important reasons to do this is so that the end user isn&#8217;t presented with an ugly server error message, but instead a nice &#8220;skinned&#8221; template advising them that something&#8217;s gone wrong and an administrator has been notified etc. (Of course another reason for this is not to give away sensitive server configuration information to prying eyes!)</p>
+
+<p><a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=Tags_t_12.html">try</a>/<a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=Tags_c_04.html">catch</a> blocks are great for fine grained control to catch and handle exceptions as they occur at runtime.</p>
+
+<p><a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=AppEvents_06.html">onError()</a> inside Application.cfc is the next place ColdFusion will look to handle thrown exceptions and is often used as a catch-all.</p>
+
+<p>This all works great&#8230;most of the time.</p>
+
+<p>Most of us don&#8217;t have every conceivable piece of code wrapped around a try/catch block, so what happens when the actual <em>server</em> throws an exception like a template timeout (cfoutput and cfloop can often timeout depending on server settings and what you&#8217;re doing) etc and we&#8217;re not catching the exception in our code? In this case users see a nice phat ColdFusion error message. Not happy Jan.</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2008/07/bos-error-300x170.gif" alt="Naughty error" /></p>
+
+<p>Enter the &#8220;site-wide error handler&#8221; which you can set in the &#8220;Settings&#8221; area of ColdFusion administrator.</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2008/07/error-handlers-300x79.gif" alt="" /></p>
+
+<p>This is the 3rd and final way to &#8220;catch&#8221; errors and display a custom template to the end user. Note that this template will look the same across all sites running on that JRun instance.</p>
+
+<p>The cool this is that you get the &#8220;error&#8221; struct of detailed exception information (think <a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=Tags_d-e_11.html">cferror</a>) so you can log the error as you see fit.</p>
+
+<p>Bottom line is, you should always have a template in the site-wide error handler so the end user (whether malicious or not) never sees the default ColdFusion error message in the event that you aren&#8217;t handling <em>everything</em> in your code.</p>
+
+<p>Of course you may not (read almost definitely will not) be able to define your own template if you&#8217;re running in a shared hosting environment. In which case you would assume (and hope) that the hosting provider had a generic template for such situations.</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-07-08T12:55:55+10:00" pubdate data-updated="true">Jul 8<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/07/08/dont-forget-the-coldfusion-site-wide-error-handler/#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2013
+
+    Michael Sharman
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'chapter31';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://chapter31.github.io/2008/07/08/dont-forget-the-coldfusion-site-wide-error-handler/';
+        var disqus_url = 'http://chapter31.github.io/2008/07/08/dont-forget-the-coldfusion-site-wide-error-handler/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-306772-2']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

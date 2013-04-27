@@ -1,0 +1,246 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Robots META tag - chapter31 &raquo;</title>
+	<meta name="author" content="Michael Sharman">
+
+	
+	<meta name="description" content="The Robots META tag is a way you can tell &#8216;Robots&#8217; or &#8216;Spiders&#8217; whether a page (or pages) on your site should be indexed, or &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="chapter31 &raquo;" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">chapter31 &raquo;</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:chapter31.github.io">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/michaelsharman" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/michaelsharman" title="GitHub">GitHub</a>
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:chapter31.github.io">
+	</form>
+</nav>
+
+</header>
+	
+		
+<div id="banner" class="inner">
+	<div class="container">
+		<ul class="feed"></ul>
+	</div>
+	<small><a href="http://twitter.com/michaelsharman">michaelsharman</a> @ <a href="http://twitter.com">Twitter</a></small>
+	<div class="loading">Loading...</div>
+</div>
+<script src="/javascripts/twitter.js"></script>
+<script type="text/javascript">
+	(function($){
+		$('#banner').getTwitterFeed('michaelsharman', 4, false);
+	})(jQuery);
+</script>
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">Robots META Tag</h2>
+	<div class="entry-content"><p>The Robots META tag is a way you can tell &#8216;Robots&#8217; or &#8216;Spiders&#8217; whether a page (or pages) on your site should be indexed, or if links on the page should be followed.</p>
+
+<p>At this stage I don&#8217;t believe all &#8216;robots&#8217; out there support the use of this META tag, but some do so in the right situation it&#8217;s worth using.</p>
+
+<p>The most common examples for the robots META tags are:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">content</span><span class="o">=</span><span class="s2">&quot;index,follow&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;robots&quot;</span><span class="o">&gt;&lt;</span><span class="err">/meta&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">content</span><span class="o">=</span><span class="s2">&quot;noindex,follow&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;robots&quot;</span><span class="o">&gt;&lt;</span><span class="err">/meta&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">content</span><span class="o">=</span><span class="s2">&quot;index,nofollow&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;robots&quot;</span><span class="o">&gt;&lt;</span><span class="err">/meta&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">content</span><span class="o">=</span><span class="s2">&quot;noindex,nofollow&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;robots&quot;</span><span class="o">&gt;&lt;</span><span class="err">/meta&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">content</span><span class="o">=</span><span class="s2">&quot;noimageindex&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;robots&quot;</span><span class="o">&gt;&lt;</span><span class="err">/meta&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">content</span><span class="o">=</span><span class="s2">&quot;noimageclick&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;robots&quot;</span><span class="o">&gt;&lt;</span><span class="err">/meta&gt;&lt;/code&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&#8220;noimageindex&#8221; prevents the images on the page from being indexed but the text on the page can still be indexed.</p>
+
+<p>&#8220;noimageclick&#8221; prevents the use of links directly to the images, instead there will only be a link to the page.</p>
+
+<p>In addition to the robots META tag above, Google supports a GOOGLEBOT command. With it, you can tell Google that you do not want the page archived, but allow other search engines to do so. If you specify this command, Google will not save the page and the page will be unavailable via its cache.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">content</span><span class="o">=</span><span class="s2">&quot;noarchive&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;googlebot&quot;</span><span class="o">&gt;&lt;</span><span class="err">/meta&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A formal syntax for the Robots META tag content is:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">content</span>    <span class="o">=</span> <span class="nx">all</span> <span class="o">|</span> <span class="nx">none</span> <span class="o">|</span> <span class="nx">directives</span>
+</span><span class='line'><span class="nx">all</span>        <span class="o">=</span> <span class="s2">&quot;ALL&quot;</span>
+</span><span class='line'><span class="nx">none</span>       <span class="o">=</span> <span class="s2">&quot;NONE&quot;</span>
+</span><span class='line'><span class="nx">directives</span> <span class="o">=</span> <span class="nx">directive</span> <span class="p">[</span><span class="s2">&quot;,&quot;</span> <span class="nx">directives</span><span class="p">]</span>
+</span><span class='line'><span class="nx">directive</span>  <span class="o">=</span> <span class="nx">index</span> <span class="o">|</span> <span class="nx">follow</span>
+</span><span class='line'><span class="nx">index</span>      <span class="o">=</span> <span class="s2">&quot;INDEX&quot;</span> <span class="o">|</span> <span class="s2">&quot;NOINDEX&quot;</span>
+</span><span class='line'><span class="nx">follow</span>     <span class="o">=</span> <span class="s2">&quot;FOLLOW&quot;</span> <span class="o">|</span> <span class="s2">&quot;NOFOLLOW&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-09-13T09:35:52+10:00" pubdate data-updated="true">Sep 13<span>th</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/x-html/'>(X)HTML</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2006/09/13/robots-meta-tag/#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2013
+
+    Michael Sharman
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'chapter31';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://chapter31.github.io/2006/09/13/robots-meta-tag/';
+        var disqus_url = 'http://chapter31.github.io/2006/09/13/robots-meta-tag/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-306772-2']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>
