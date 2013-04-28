@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Javascript | chapter31 &raquo;]]></title>
-  <link href="http://michaelsharman.github.io/chapter31/categories/javascript/atom.xml" rel="self"/>
-  <link href="http://michaelsharman.github.io/chapter31/"/>
-  <updated>2013-04-28T21:58:49+10:00</updated>
-  <id>http://michaelsharman.github.io/chapter31/</id>
+  <link href="http://chapter31.com/categories/javascript/atom.xml" rel="self"/>
+  <link href="http://chapter31.com/"/>
+  <updated>2013-04-28T22:11:56+10:00</updated>
+  <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[JSON undefined issues on IE8 and IE9]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2012/11/21/json-undefined-issues-on-ie8-and-ie9/"/>
+    <link href="http://chapter31.com/2012/11/21/json-undefined-issues-on-ie8-and-ie9/"/>
     <updated>2012-11-21T16:48:57+11:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2012/11/21/json-undefined-issues-on-ie8-and-ie9</id>
+    <id>http://chapter31.com/2012/11/21/json-undefined-issues-on-ie8-and-ie9</id>
     <content type="html"><![CDATA[<p>I had some issues today while testing in IE, where "JSON" was undefined. This was happening in IE8 and IE9, which is strange because the JSON functions are in those IE versions. The problem was IE's compatibility view, which triggers rendering in sort-of-IE7 mode. Classy. This was making JSON undefined ;(</p>
 
 <p>The usual fix for this is to add a meta tag to force IE to use "edge" (or a specific version if you like):</p>
@@ -61,9 +61,9 @@ http://ajax.cdnjs.com/ajax/libs/json2/20110223/json2.min.js
   
   <entry>
     <title type="html"><![CDATA[jQuery UI dialog focus on first tabable element]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2012/09/14/jquery-ui-dialog-focus-on-first-tabable-element/"/>
+    <link href="http://chapter31.com/2012/09/14/jquery-ui-dialog-focus-on-first-tabable-element/"/>
     <updated>2012-09-14T16:27:29+10:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2012/09/14/jquery-ui-dialog-focus-on-first-tabable-element</id>
+    <id>http://chapter31.com/2012/09/14/jquery-ui-dialog-focus-on-first-tabable-element</id>
     <content type="html"><![CDATA[<p>I've been using the <a href="http://jqueryui.com/demos/dialog/">jQuery UI dialog</a> for a project recently, one thing that bugged me though, was that upon opening a dialog the first tabable element always gets focussed. This can be:</p>
 
 <ul>
@@ -110,9 +110,9 @@ $('#dialog').dialog({
   
   <entry>
     <title type="html"><![CDATA[Timing synchronous JavaScript operations]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2012/08/14/timing-synchronous-javascript-operations/"/>
+    <link href="http://chapter31.com/2012/08/14/timing-synchronous-javascript-operations/"/>
     <updated>2012-08-14T07:24:05+10:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2012/08/14/timing-synchronous-javascript-operations</id>
+    <id>http://chapter31.com/2012/08/14/timing-synchronous-javascript-operations</id>
     <content type="html"><![CDATA[<p>There's a cool little method on the <em>console</em> object that allows you to track how long an operation took to run. It's called <a href="https://developer.mozilla.org/en-US/docs/DOM/console.time">console.time</a>.</p>
 
 <p>Basically you just start a timer at the top of the code you want to time, like so:</p>
@@ -166,9 +166,9 @@ console.timeEnd = function(name){
   
   <entry>
     <title type="html"><![CDATA[jQuery tinyMCE issue with $.attr();]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2012/07/05/jquery-tinymce-issue-with-attr/"/>
+    <link href="http://chapter31.com/2012/07/05/jquery-tinymce-issue-with-attr/"/>
     <updated>2012-07-05T09:05:02+10:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2012/07/05/jquery-tinymce-issue-with-attr</id>
+    <id>http://chapter31.com/2012/07/05/jquery-tinymce-issue-with-attr</id>
     <content type="html"><![CDATA[<p>I had some strange behaviour with the jQuery verion of tinyMCE (3.4.6). Basically I was <a href="http://harvesthq.github.com/chosen/">integrating the chosen library</a> (which is build as a jQuery plugin), but it seems the $.attr('id') from within chosen.js was returning a JavaScript element reference instead of the value of the "id" field.</p>
 
 <p><a href="http://www.chapter31.com/wp-content/uploads/2012/07/tiny_error.png"><img src="http://www.chapter31.com/wp-content/uploads/2012/07/tiny_error.png" alt="" /></a></p>
@@ -183,9 +183,9 @@ console.timeEnd = function(name){
   
   <entry>
     <title type="html"><![CDATA[Adding Prototype methods to jQuery]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2010/12/08/adding-prototype-methods-to-jquery/"/>
+    <link href="http://chapter31.com/2010/12/08/adding-prototype-methods-to-jquery/"/>
     <updated>2010-12-08T09:41:50+11:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2010/12/08/adding-prototype-methods-to-jquery</id>
+    <id>http://chapter31.com/2010/12/08/adding-prototype-methods-to-jquery</id>
     <content type="html"><![CDATA[<p>We recently upgraded a project which was using the Prototype JavaScript framework to use jQuery and ran into a few methods which didn't exist in jQuery at all.</p>
 
 <p>A quick search gave us an easy solution; by adding a prototype property (not related to the Prototype framework) to String.prototype we can give every <code>string</code> in our codebase access to these methods as if they were part of the JavaScript spec (or the jQuery library).</p>

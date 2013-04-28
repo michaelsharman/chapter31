@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: (X)HTML | chapter31 &raquo;]]></title>
-  <link href="http://michaelsharman.github.io/chapter31/categories/x-html/atom.xml" rel="self"/>
-  <link href="http://michaelsharman.github.io/chapter31/"/>
-  <updated>2013-04-28T21:58:49+10:00</updated>
-  <id>http://michaelsharman.github.io/chapter31/</id>
+  <link href="http://chapter31.com/categories/x-html/atom.xml" rel="self"/>
+  <link href="http://chapter31.com/"/>
+  <updated>2013-04-28T22:11:56+10:00</updated>
+  <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Problems submitting a form via 'enter' in IE]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2008/10/22/problems-submitting-a-form-via-enter-in-ie/"/>
+    <link href="http://chapter31.com/2008/10/22/problems-submitting-a-form-via-enter-in-ie/"/>
     <updated>2008-10-22T13:35:25+11:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2008/10/22/problems-submitting-a-form-via-enter-in-ie</id>
+    <id>http://chapter31.com/2008/10/22/problems-submitting-a-form-via-enter-in-ie</id>
     <content type="html"><![CDATA[<p>Like many things, handling form submissions with <a href="http://www.adobe.com/products/coldfusion/">ColdFusion</a> can be done many many ways. A preferred method which I've been using for years now is looking for a specific element in the form struct. Something like:</p>
 
 <p>``` javascript
@@ -139,9 +139,9 @@
   
   <entry>
     <title type="html"><![CDATA[Kotatsu - a simple html table generator]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2008/07/08/kotatsu-a-simple-html-table-generator/"/>
+    <link href="http://chapter31.com/2008/07/08/kotatsu-a-simple-html-table-generator/"/>
     <updated>2008-07-08T19:53:23+10:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2008/07/08/kotatsu-a-simple-html-table-generator</id>
+    <id>http://chapter31.com/2008/07/08/kotatsu-a-simple-html-table-generator</id>
     <content type="html"><![CDATA[<p>Sometimes you want to create an HTML table by hand and don't have the luxury (if you consider it a luxury!) of having Dreamweaver around. Of course, creating HTML tables really isn't all that difficult or time consuming, but considering we use snippets for just about everything else why not have a tool to generate these tables for us?</p>
 
 <p><a href="http://www.askthecssguy.com/kotatsu/index.html">Kotatsu</a> is an online tool to do just that, sure it is very simple (doesn't support col/rowspans or accessibility attributes etc) but when you want to churn out a basic custom table it just might save you some time.</p>
@@ -156,9 +156,9 @@
   
   <entry>
     <title type="html"><![CDATA[When to use form POST vs GET?]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2008/01/24/when-to-use-form-post-vs-get/"/>
+    <link href="http://chapter31.com/2008/01/24/when-to-use-form-post-vs-get/"/>
     <updated>2008-01-24T14:01:30+11:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2008/01/24/when-to-use-form-post-vs-get</id>
+    <id>http://chapter31.com/2008/01/24/when-to-use-form-post-vs-get</id>
     <content type="html"><![CDATA[<p>I read <a href="http://www.coldfusionmuse.com/index.cfm/2008/1/23/web.logs.security">a post</a> today from <a href="http://www.coldfusionmuse.com/">Mark Kruger</a> where he was warning against the possible side effects when using GET as a form submit <em>method</em>.</p>
 
 <p>I think I (unintentionally) offended Mark with my comment where I asked <em>why would anyone EVER use GET?</em> because I pretty much always use POST so was wondering why you would use GET.</p>
@@ -197,9 +197,9 @@
   
   <entry>
     <title type="html"><![CDATA[The 'coolest' DHTML calendar]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2007/03/25/the-coolest-dhtml-calendar/"/>
+    <link href="http://chapter31.com/2007/03/25/the-coolest-dhtml-calendar/"/>
     <updated>2007-03-25T17:25:13+10:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2007/03/25/the-coolest-dhtml-calendar</id>
+    <id>http://chapter31.com/2007/03/25/the-coolest-dhtml-calendar</id>
     <content type="html"><![CDATA[<p>As web developers we are often some of the first people to see the newer techniques and tools available for use in web applications. This can be great as we can then hurry off and implement these things into our new projects.</p>
 
 <p>But of course there are still millions of older sites (which will no doubt still be around for years to come!) using <em>old</em> techniques and tools. Ugh!</p>
@@ -229,9 +229,9 @@
   
   <entry>
     <title type="html"><![CDATA[Including js files from within js files]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2006/12/08/including-js-files-from-within-js-files/"/>
+    <link href="http://chapter31.com/2006/12/08/including-js-files-from-within-js-files/"/>
     <updated>2006-12-08T10:05:24+11:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2006/12/08/including-js-files-from-within-js-files</id>
+    <id>http://chapter31.com/2006/12/08/including-js-files-from-within-js-files</id>
     <content type="html"><![CDATA[<p>I'm working on an application which stores a lot of data in the application scope. Part of the data stored is a config CFC that has a method which loads 'external assets' (javascript and css files etc) into the <head> of the html document via <a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/wwhelp/wwhimpl/common/html/wwhelp.htm?context=ColdFusion_Documentation&amp;file=00000271.htm"><cfhtmlhead></a>. I love that tag :)</p>
 
 <p>My part in this application development is limited to a particular section only, but there was already a lot of external assets present in the header and things were getting very messy. I was looking for a way to simulate <cfinclude> but from within a .js file so I could clean up my output a bit, fortunately there is a way!</p>

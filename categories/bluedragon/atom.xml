@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: BlueDragon | chapter31 &raquo;]]></title>
-  <link href="http://michaelsharman.github.io/chapter31/categories/bluedragon/atom.xml" rel="self"/>
-  <link href="http://michaelsharman.github.io/chapter31/"/>
-  <updated>2013-04-28T21:58:49+10:00</updated>
-  <id>http://michaelsharman.github.io/chapter31/</id>
+  <link href="http://chapter31.com/categories/bluedragon/atom.xml" rel="self"/>
+  <link href="http://chapter31.com/"/>
+  <updated>2013-04-28T22:11:56+10:00</updated>
+  <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Vince Bonfanti and the differences between BlueDragon versions?]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2008/03/16/vince-bonfanti-and-the-differences-between-bluedragon-versions/"/>
+    <link href="http://chapter31.com/2008/03/16/vince-bonfanti-and-the-differences-between-bluedragon-versions/"/>
     <updated>2008-03-16T15:47:42+11:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2008/03/16/vince-bonfanti-and-the-differences-between-bluedragon-versions</id>
+    <id>http://chapter31.com/2008/03/16/vince-bonfanti-and-the-differences-between-bluedragon-versions</id>
     <content type="html"><![CDATA[<p>More news on the differences between the commercial and open source offerings for Blue Dragon on <a href="http://blog.newatlanta.com/index.cfm?mode=entry&amp;entry=721992F3-B1B8-4975-8E3A1D3EB33AA435">Vince Bonfanti's blog</a> as well as the <a href="http://forums.newatlanta.com/messages.cfm?threadid=B46928CD-9285-40B6-A9661BE30A4E512D">New Atlanta forums</a>;</p>
 
 <p>"The free open source edition of BlueDragon/J2EE will be fully featured, with only minor differences to remove dependencies on commercial libraries."</p>

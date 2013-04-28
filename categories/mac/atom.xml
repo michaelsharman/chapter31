@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Mac | chapter31 &raquo;]]></title>
-  <link href="http://michaelsharman.github.io/chapter31/categories/mac/atom.xml" rel="self"/>
-  <link href="http://michaelsharman.github.io/chapter31/"/>
-  <updated>2013-04-28T21:58:49+10:00</updated>
-  <id>http://michaelsharman.github.io/chapter31/</id>
+  <link href="http://chapter31.com/categories/mac/atom.xml" rel="self"/>
+  <link href="http://chapter31.com/"/>
+  <updated>2013-04-28T22:11:56+10:00</updated>
+  <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Apache permission denied on Mac OSX Lion]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2012/06/06/apache-permission-denied-on-mac-osx-lion/"/>
+    <link href="http://chapter31.com/2012/06/06/apache-permission-denied-on-mac-osx-lion/"/>
     <updated>2012-06-06T00:52:49+10:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2012/06/06/apache-permission-denied-on-mac-osx-lion</id>
+    <id>http://chapter31.com/2012/06/06/apache-permission-denied-on-mac-osx-lion</id>
     <content type="html"><![CDATA[<p>I've just upgraded to OSX Lion and had some trouble getting Apache to load a vhost. I kept getting a 403 permission denied error, but all my vhosts had the correct permission directives set.</p>
 
 <p>Now by default your webserver document root is located in <em>/Library/WebServer/Documents</em>. I don't really like that for my local machine, I'd rather store web files under my user account. Just tends to make things easier.</p>
@@ -40,9 +40,9 @@
   
   <entry>
     <title type="html"><![CDATA[Strange linefeed characters appearing on Mac]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2012/05/24/strange-linefeed-characters-appearing-on-mac/"/>
+    <link href="http://chapter31.com/2012/05/24/strange-linefeed-characters-appearing-on-mac/"/>
     <updated>2012-05-24T14:14:47+10:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2012/05/24/strange-linefeed-characters-appearing-on-mac</id>
+    <id>http://chapter31.com/2012/05/24/strange-linefeed-characters-appearing-on-mac</id>
     <content type="html"><![CDATA[<p>Had a funny situation today where I was emailed a bash program file, but simply downloading the attachment from gmail (in Chrome) added a linefeed (\r) to the file.</p>
 
 <p>This is strange because I never actually opened the file to edit, so I'm not sure what was writing those chars to the file. I'm on a Mac (OSX 10.6.8), so I get the line feed character in general, but just not in this case as the file was never opened.</p>
@@ -91,9 +91,9 @@ dos2unix: converting file processPDF to file processPDF_2 in UNIX format ...
   
   <entry>
     <title type="html"><![CDATA[Turning voice over off permanently on Max OSX]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2012/03/14/turning-voice-over-off-permanently-on-max-osx/"/>
+    <link href="http://chapter31.com/2012/03/14/turning-voice-over-off-permanently-on-max-osx/"/>
     <updated>2012-03-14T16:41:04+11:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2012/03/14/turning-voice-over-off-permanently-on-max-osx</id>
+    <id>http://chapter31.com/2012/03/14/turning-voice-over-off-permanently-on-max-osx</id>
     <content type="html"><![CDATA[<p>One of the keyboard shortcuts I often use is command-F6, but I seem to accidentally hit command-F5 on most occasions :(</p>
 
 <p>Problem with this is that the god awful "voice over" starts yapping away. Well if you're like me and know that you'll pretty much never want this enabled (at least for now!) then here's how you turn it off permanently.</p>
@@ -117,9 +117,9 @@ dos2unix: converting file processPDF to file processPDF_2 in UNIX format ...
   
   <entry>
     <title type="html"><![CDATA[Importing a csv into MySQL using the command line]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2010/11/15/importing-a-csv-into-mysql-using-the-command-line/"/>
+    <link href="http://chapter31.com/2010/11/15/importing-a-csv-into-mysql-using-the-command-line/"/>
     <updated>2010-11-15T10:38:10+11:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2010/11/15/importing-a-csv-into-mysql-using-the-command-line</id>
+    <id>http://chapter31.com/2010/11/15/importing-a-csv-into-mysql-using-the-command-line</id>
     <content type="html"><![CDATA[<p><strong><em>UPDATE 16th Nov 2010: I had some issues with the import which I noted in the first code example below</em></strong></p>
 
 <p>Today I had to import csv into a single mysql table. The destination table only had 5 columns and the csv was around 22MB (around 400,000 records). The csv also contained more columns that I needed for the import. Sometimes I'll use a GUI to do this as I usually have one open, but it never ceases to amaze me how much slower GUI tools are compared to the command line.</p>
@@ -166,9 +166,9 @@ mysql -uroot -p [production_database] &lt; mytable.sql
   
   <entry>
     <title type="html"><![CDATA[Case sensitive development on Mac OS X]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2010/10/05/case-sensitive-development-on-mac-os-x/"/>
+    <link href="http://chapter31.com/2010/10/05/case-sensitive-development-on-mac-os-x/"/>
     <updated>2010-10-05T09:36:56+11:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2010/10/05/case-sensitive-development-on-mac-os-x</id>
+    <id>http://chapter31.com/2010/10/05/case-sensitive-development-on-mac-os-x</id>
     <content type="html"><![CDATA[<p><a href="http://www.learnosity.com/">At work</a> most of the developers are on Mac OS X but our staging and production environments are Linux based. This means development is case insensitive but stage/production is case sensitive. Although we have development guidelines/standards which dictate file and database naming conventions etc, human error can still occur (in terms of referencing files with a different "case"). We also use a few open source packages where we obviously don't have control over the naming of files or the references to database tables within those files.</p>
 
 <p>Why is this an issue?</p>

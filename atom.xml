@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[chapter31 &raquo;]]></title>
-  <link href="http://michaelsharman.github.io/chapter31/atom.xml" rel="self"/>
-  <link href="http://michaelsharman.github.io/chapter31/"/>
-  <updated>2013-04-28T21:58:49+10:00</updated>
-  <id>http://michaelsharman.github.io/chapter31/</id>
+  <link href="http://chapter31.com/atom.xml" rel="self"/>
+  <link href="http://chapter31.com/"/>
+  <updated>2013-04-28T22:11:56+10:00</updated>
+  <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Managing pathnames on OSX]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2013/03/31/managing-pathnames-on-osx/"/>
+    <link href="http://chapter31.com/2013/03/31/managing-pathnames-on-osx/"/>
     <updated>2013-03-31T20:37:00+11:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2013/03/31/managing-pathnames-on-osx</id>
+    <id>http://chapter31.com/2013/03/31/managing-pathnames-on-osx</id>
     <content type="html"><![CDATA[<p>You can set environment variables on your Mac in several different ways.</p>
 
 <p>If you want to set a PATH variable just for the current user, you can edit your ~/.bash_profile file. Eg</p>
@@ -32,9 +32,9 @@
   
   <entry>
     <title type="html"><![CDATA[Adding a global ignore file for git]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2013/01/21/adding-a-global-ignore-file-for-git/"/>
+    <link href="http://chapter31.com/2013/01/21/adding-a-global-ignore-file-for-git/"/>
     <updated>2013-01-21T23:02:46+11:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2013/01/21/adding-a-global-ignore-file-for-git</id>
+    <id>http://chapter31.com/2013/01/21/adding-a-global-ignore-file-for-git</id>
     <content type="html"><![CDATA[<p>Quick setup of ignore files for Git. You can of course set these up per repo, but that gets a little old. Instead you can setup a single ignore file and link to it so that every repo refers to it.</p>
 
 <p>For example, create a git ignore file in your home directory:</p>
@@ -128,9 +128,9 @@
   
   <entry>
     <title type="html"><![CDATA[Showing hidden files in Finder on mac osx]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2013/01/21/showing-hidden-files-in-finder-on-mac-osx/"/>
+    <link href="http://chapter31.com/2013/01/21/showing-hidden-files-in-finder-on-mac-osx/"/>
     <updated>2013-01-21T22:37:37+11:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2013/01/21/showing-hidden-files-in-finder-on-mac-osx</id>
+    <id>http://chapter31.com/2013/01/21/showing-hidden-files-in-finder-on-mac-osx</id>
     <content type="html"><![CDATA[<p>Short and sweet, MAC OSX has this annoying trait where hidden files (dotfiles) are not visible by default in Finder. No probs, I&#8217;ll just go to the &#8220;View&#8221; menu and turn them on. Nope&#8230;nada, zip.</p>
 
 <p>Turns out you have to enter a command in the terminal, nice. Here it is for future reference:</p>
@@ -155,9 +155,9 @@
   
   <entry>
     <title type="html"><![CDATA[Downloading youtube videos]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2013/01/01/downloading-youtube-videos/"/>
+    <link href="http://chapter31.com/2013/01/01/downloading-youtube-videos/"/>
     <updated>2013-01-01T13:48:27+11:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2013/01/01/downloading-youtube-videos</id>
+    <id>http://chapter31.com/2013/01/01/downloading-youtube-videos</id>
     <content type="html"><![CDATA[<p>I wanted to grab some youtube videos for the kids and found this cool <a href="http://rg3.github.com/youtube-dl/">CLI utility called youtube-dl</a> to handle it. I downloaded it from the website (you may need to chmod 755):</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -243,9 +243,9 @@
   
   <entry>
     <title type="html"><![CDATA[JSON undefined issues on IE8 and IE9]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2012/11/21/json-undefined-issues-on-ie8-and-ie9/"/>
+    <link href="http://chapter31.com/2012/11/21/json-undefined-issues-on-ie8-and-ie9/"/>
     <updated>2012-11-21T16:48:57+11:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2012/11/21/json-undefined-issues-on-ie8-and-ie9</id>
+    <id>http://chapter31.com/2012/11/21/json-undefined-issues-on-ie8-and-ie9</id>
     <content type="html"><![CDATA[<p>I had some issues today while testing in IE, where &#8220;JSON&#8221; was undefined. This was happening in IE8 and IE9, which is strange because the JSON functions are in those IE versions. The problem was IE&#8217;s compatibility view, which triggers rendering in sort-of-IE7 mode. Classy. This was making JSON undefined ;(</p>
 
 <p>The usual fix for this is to add a meta tag to force IE to use &#8220;edge&#8221; (or a specific version if you like):</p>
@@ -302,9 +302,9 @@
   
   <entry>
     <title type="html"><![CDATA[Generating a powerset in ColdFusion]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2012/10/04/generating-a-powerset-in-coldfusion/"/>
+    <link href="http://chapter31.com/2012/10/04/generating-a-powerset-in-coldfusion/"/>
     <updated>2012-10-04T21:20:46+10:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2012/10/04/generating-a-powerset-in-coldfusion</id>
+    <id>http://chapter31.com/2012/10/04/generating-a-powerset-in-coldfusion</id>
     <content type="html"><![CDATA[<p>I recently needed to generate a <a href="http://en.wikipedia.org/wiki/Power_set">powerset</a> (a set of all subsets) of 3 HTML select boxes. The idea was that a user could choose 1-many options from each box, and they had to choose a value from all 3 boxes (none could be empty).</p>
 
 <p>Select #1 had 4 values<br/>
@@ -385,9 +385,9 @@ Select #3 had 8192* possible combinations</p>
   
   <entry>
     <title type="html"><![CDATA[Modifying FW/1 variables.framework properties]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2012/09/30/modifying-fw1-variables-framework-properties/"/>
+    <link href="http://chapter31.com/2012/09/30/modifying-fw1-variables-framework-properties/"/>
     <updated>2012-09-30T16:54:59+10:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2012/09/30/modifying-fw1-variables-framework-properties</id>
+    <id>http://chapter31.com/2012/09/30/modifying-fw1-variables-framework-properties</id>
     <content type="html"><![CDATA[<p><a href="https://github.com/seancorfield/fw1/">FW/1</a> gives you a nice, clean way to manage framework configuration properties. They&#8217;re all wrapped up inside Application.cfc in a structure called <em>variables.framework</em>, <a href="https://github.com/seancorfield/fw1/wiki/Developing-Applications-Manual">you can read more about them here</a> under <em>Configuring FW/1 Applications</em>.</p>
 
 <p><a href="http://www.learnosity.com">Our applications</a> often have a need to use different values for these properties, depending on which environment the application is running in (development, testing, staging, production etc). An example of this might be <em>reloadApplicationOnEveryRequest</em>, which we want as <em>true</em> in development, but <em>false</em> elsewhere else.</p>
@@ -450,9 +450,9 @@ Select #3 had 8192* possible combinations</p>
   
   <entry>
     <title type="html"><![CDATA[Preventing FW/1 from reinitialising an app via the URL]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2012/09/27/preventing-fw1-from-reinitialising-an-app-via-the-url/"/>
+    <link href="http://chapter31.com/2012/09/27/preventing-fw1-from-reinitialising-an-app-via-the-url/"/>
     <updated>2012-09-27T22:57:23+10:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2012/09/27/preventing-fw1-from-reinitialising-an-app-via-the-url</id>
+    <id>http://chapter31.com/2012/09/27/preventing-fw1-from-reinitialising-an-app-via-the-url</id>
     <content type="html"><![CDATA[<p>One of the things that <a href="https://github.com/seancorfield/fw1">FW/1</a> allows you to do is configure a reload &#8220;key&#8221; and &#8220;password&#8221; which you can use to reinit your application via URL.</p>
 
 <p>So inside your Application.cfc you might have:</p>
@@ -523,9 +523,9 @@ Select #3 had 8192* possible combinations</p>
   
   <entry>
     <title type="html"><![CDATA[Adding a mail server to a Railo instance]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2012/09/27/adding-a-mail-server-to-a-railo-instance/"/>
+    <link href="http://chapter31.com/2012/09/27/adding-a-mail-server-to-a-railo-instance/"/>
     <updated>2012-09-27T08:04:33+10:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2012/09/27/adding-a-mail-server-to-a-railo-instance</id>
+    <id>http://chapter31.com/2012/09/27/adding-a-mail-server-to-a-railo-instance</id>
     <content type="html"><![CDATA[<p>We turn off all GUI based administration consoles in our production environments, this includes Railo&#8217;s admin area.</p>
 
 <p>If you need to configure your Railo instance to include an SMTP server, you can add a line in WEB-INF/railo/railo-web.xml.cfm</p>
@@ -572,9 +572,9 @@ Select #3 had 8192* possible combinations</p>
   
   <entry>
     <title type="html"><![CDATA[Installing new fonts on Ubuntu server]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2012/09/24/installing-new-fonts-on-ubuntu-server/"/>
+    <link href="http://chapter31.com/2012/09/24/installing-new-fonts-on-ubuntu-server/"/>
     <updated>2012-09-24T13:41:55+10:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2012/09/24/installing-new-fonts-on-ubuntu-server</id>
+    <id>http://chapter31.com/2012/09/24/installing-new-fonts-on-ubuntu-server</id>
     <content type="html"><![CDATA[<p>I had some new fonts to install on our test server that runs Ubuntu server. Pretty simple really, just noting it down here for next time:</p>
 
 <ul>
@@ -598,9 +598,9 @@ Select #3 had 8192* possible combinations</p>
   
   <entry>
     <title type="html"><![CDATA[Whitespace issues in cfscript based functions]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2012/09/20/whitespace-issues-in-cfscript-based-functions/"/>
+    <link href="http://chapter31.com/2012/09/20/whitespace-issues-in-cfscript-based-functions/"/>
     <updated>2012-09-20T17:28:08+10:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2012/09/20/whitespace-issues-in-cfscript-based-functions</id>
+    <id>http://chapter31.com/2012/09/20/whitespace-issues-in-cfscript-based-functions</id>
     <content type="html"><![CDATA[<p>Ok now we all know that ColdFusion is kind of lame when it comes to whitespace management, unless you specifically have &#8220;whitespace management&#8221; turned on for your server.</p>
 
 <p>I have a function that is used to build the <em>href</em> value of a hyperlink. Nothing special there. However when I viewed the source of the page I was a little surprised to see a mountain of whitespace coming back from the function.</p>
@@ -666,9 +666,9 @@ Select #3 had 8192* possible combinations</p>
   
   <entry>
     <title type="html"><![CDATA[jQuery UI dialog focus on first tabable element]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2012/09/14/jquery-ui-dialog-focus-on-first-tabable-element/"/>
+    <link href="http://chapter31.com/2012/09/14/jquery-ui-dialog-focus-on-first-tabable-element/"/>
     <updated>2012-09-14T16:27:29+10:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2012/09/14/jquery-ui-dialog-focus-on-first-tabable-element</id>
+    <id>http://chapter31.com/2012/09/14/jquery-ui-dialog-focus-on-first-tabable-element</id>
     <content type="html"><![CDATA[<p>I&#8217;ve been using the <a href="http://jqueryui.com/demos/dialog/">jQuery UI dialog</a> for a project recently, one thing that bugged me though, was that upon opening a dialog the first tabable element always gets focussed. This can be:</p>
 
 <ul>
@@ -724,9 +724,9 @@ Select #3 had 8192* possible combinations</p>
   
   <entry>
     <title type="html"><![CDATA[Timing synchronous JavaScript operations]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2012/08/14/timing-synchronous-javascript-operations/"/>
+    <link href="http://chapter31.com/2012/08/14/timing-synchronous-javascript-operations/"/>
     <updated>2012-08-14T07:24:05+10:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2012/08/14/timing-synchronous-javascript-operations</id>
+    <id>http://chapter31.com/2012/08/14/timing-synchronous-javascript-operations</id>
     <content type="html"><![CDATA[<p>There&#8217;s a cool little method on the <em>console</em> object that allows you to track how long an operation took to run. It&#8217;s called <a href="https://developer.mozilla.org/en-US/docs/DOM/console.time">console.time</a>.</p>
 
 <p>Basically you just start a timer at the top of the code you want to time, like so:</p>
@@ -807,9 +807,9 @@ Select #3 had 8192* possible combinations</p>
   
   <entry>
     <title type="html"><![CDATA[Setting font MIME types in apache]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2012/08/10/setting-font-mime-types-in-apache/"/>
+    <link href="http://chapter31.com/2012/08/10/setting-font-mime-types-in-apache/"/>
     <updated>2012-08-10T09:40:00+10:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2012/08/10/setting-font-mime-types-in-apache</id>
+    <id>http://chapter31.com/2012/08/10/setting-font-mime-types-in-apache</id>
     <content type="html"><![CDATA[<p>If your website is using custom fonts, you may see this line in your Chrome console:</p>
 
 <blockquote><p>Resource interpreted as Font but transferred with MIME type application/octet-stream</p></blockquote>
@@ -833,9 +833,9 @@ Select #3 had 8192* possible combinations</p>
   
   <entry>
     <title type="html"><![CDATA[Turning off sessions for non-https traffic]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2012/08/06/turning-off-sessions-for-non-https-traffic/"/>
+    <link href="http://chapter31.com/2012/08/06/turning-off-sessions-for-non-https-traffic/"/>
     <updated>2012-08-06T17:05:22+10:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2012/08/06/turning-off-sessions-for-non-https-traffic</id>
+    <id>http://chapter31.com/2012/08/06/turning-off-sessions-for-non-https-traffic</id>
     <content type="html"><![CDATA[<p>Today I wanted to configure an application to only set <em>secure</em> cookies. Those are cookies that are only sent back to the server if over a secure (https) connection.</p>
 
 <p>The main reason for this is to prevent session hijacking, where a bad guy might sniff the cookie values which links a user to the session &#8220;state&#8221; on the server. If they managed to do that, (which they could if the session was started on an <em>http://</em> connection, then if/when the user logged on and was transferred to <em>https://</em>) the bad guy would still have their cookie values and thus would be able to visit the website as the logged in user. No good. You can read more on <a href="http://www.12robots.com/index.cfm/2009/1/5/mmmmMMmmmmmmm-Cookies--Security-Series-12">Jason Dean&#8217;s great series on security</a></p>
@@ -921,9 +921,9 @@ Select #3 had 8192* possible combinations</p>
   
   <entry>
     <title type="html"><![CDATA[Editing svn:ignore on the terminal]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2012/07/10/editing-svnignore-on-the-terminal/"/>
+    <link href="http://chapter31.com/2012/07/10/editing-svnignore-on-the-terminal/"/>
     <updated>2012-07-10T22:49:19+10:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2012/07/10/editing-svnignore-on-the-terminal</id>
+    <id>http://chapter31.com/2012/07/10/editing-svnignore-on-the-terminal</id>
     <content type="html"><![CDATA[<p><em>svn:ignore</em> is a great way to exclude certain files or folders from being added to your subversion repository. Typically I&#8217;ll manage this via an IDE plugin like subclipse (in Eclipse), but if you want to do it via the terminal instead (bash)&#8230;here&#8217;s how.</p>
 
 <h2>Crappy way</h2>
@@ -995,9 +995,9 @@ htdocs/WEB-INF
   
   <entry>
     <title type="html"><![CDATA[Concatenating values into a single column with MySQL group_concat]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2012/07/06/concatenating-values-into-a-single-column-with-mysql-group_concat/"/>
+    <link href="http://chapter31.com/2012/07/06/concatenating-values-into-a-single-column-with-mysql-group_concat/"/>
     <updated>2012-07-06T07:15:31+10:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2012/07/06/concatenating-values-into-a-single-column-with-mysql-group_concat</id>
+    <id>http://chapter31.com/2012/07/06/concatenating-values-into-a-single-column-with-mysql-group_concat</id>
     <content type="html"><![CDATA[<p>How many times have you wanted to return a list of grouped values from a database, in a single column, per row of your recordset? Actually I&#8217;ve wanted to do that a few times! Most of the time I&#8217;ll let the application layer handle that, but sometimes letting the database do the hard work fits the bill.</p>
 
 <p>My not-so-theoretical example is <em>course subjects</em> (think English, Maths etc) that have 1-<em>n</em> &#8220;stages&#8221; (think categories) attached to them. If I want to return a recordset of all courses, with the attached stages, I might write a query like this:</p>
@@ -1075,9 +1075,9 @@ htdocs/WEB-INF
   
   <entry>
     <title type="html"><![CDATA[jQuery tinyMCE issue with $.attr();]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2012/07/05/jquery-tinymce-issue-with-attr/"/>
+    <link href="http://chapter31.com/2012/07/05/jquery-tinymce-issue-with-attr/"/>
     <updated>2012-07-05T09:05:02+10:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2012/07/05/jquery-tinymce-issue-with-attr</id>
+    <id>http://chapter31.com/2012/07/05/jquery-tinymce-issue-with-attr</id>
     <content type="html"><![CDATA[<p>I had some strange behaviour with the jQuery verion of tinyMCE (3.4.6). Basically I was <a href="http://harvesthq.github.com/chosen/">integrating the chosen library</a> (which is build as a jQuery plugin), but it seems the $.attr(&#8216;id&#8217;) from within chosen.js was returning a JavaScript element reference instead of the value of the &#8220;id&#8221; field.</p>
 
 <p><a href="http://www.chapter31.com/wp-content/uploads/2012/07/tiny_error.png"><img src="http://www.chapter31.com/wp-content/uploads/2012/07/tiny_error.png" alt="" /></a></p>
@@ -1092,9 +1092,9 @@ htdocs/WEB-INF
   
   <entry>
     <title type="html"><![CDATA[Apache permission denied on Mac OSX Lion]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2012/06/06/apache-permission-denied-on-mac-osx-lion/"/>
+    <link href="http://chapter31.com/2012/06/06/apache-permission-denied-on-mac-osx-lion/"/>
     <updated>2012-06-06T00:52:49+10:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2012/06/06/apache-permission-denied-on-mac-osx-lion</id>
+    <id>http://chapter31.com/2012/06/06/apache-permission-denied-on-mac-osx-lion</id>
     <content type="html"><![CDATA[<p>I&#8217;ve just upgraded to OSX Lion and had some trouble getting Apache to load a vhost. I kept getting a 403 permission denied error, but all my vhosts had the correct permission directives set.</p>
 
 <p>Now by default your webserver document root is located in <em>/Library/WebServer/Documents</em>. I don&#8217;t really like that for my local machine, I&#8217;d rather store web files under my user account. Just tends to make things easier.</p>
@@ -1117,9 +1117,9 @@ htdocs/WEB-INF
   
   <entry>
     <title type="html"><![CDATA[Strange linefeed characters appearing on Mac]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2012/05/24/strange-linefeed-characters-appearing-on-mac/"/>
+    <link href="http://chapter31.com/2012/05/24/strange-linefeed-characters-appearing-on-mac/"/>
     <updated>2012-05-24T14:14:47+10:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2012/05/24/strange-linefeed-characters-appearing-on-mac</id>
+    <id>http://chapter31.com/2012/05/24/strange-linefeed-characters-appearing-on-mac</id>
     <content type="html"><![CDATA[<p>Had a funny situation today where I was emailed a bash program file, but simply downloading the attachment from gmail (in Chrome) added a linefeed (\r) to the file.</p>
 
 <p>This is strange because I never actually opened the file to edit, so I&#8217;m not sure what was writing those chars to the file. I&#8217;m on a Mac (OSX 10.6.8), so I get the line feed character in general, but just not in this case as the file was never opened.</p>

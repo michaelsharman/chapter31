@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Uncategorised | chapter31 &raquo;]]></title>
-  <link href="http://michaelsharman.github.io/chapter31/categories/uncategorised/atom.xml" rel="self"/>
-  <link href="http://michaelsharman.github.io/chapter31/"/>
-  <updated>2013-04-28T21:58:49+10:00</updated>
-  <id>http://michaelsharman.github.io/chapter31/</id>
+  <link href="http://chapter31.com/categories/uncategorised/atom.xml" rel="self"/>
+  <link href="http://chapter31.com/"/>
+  <updated>2013-04-28T22:11:56+10:00</updated>
+  <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Wordpress RSS feed validation]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2006/11/15/wordpress-rss-feed-validation/"/>
+    <link href="http://chapter31.com/2006/11/15/wordpress-rss-feed-validation/"/>
     <updated>2006-11-15T09:15:29+11:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2006/11/15/wordpress-rss-feed-validation</id>
+    <id>http://chapter31.com/2006/11/15/wordpress-rss-feed-validation</id>
     <content type="html"><![CDATA[<p>I've been using <a href="http://wordpress.org/">Wordpress</a> for a while now and I'm really happy with it. Only recently have I tried to validate my RSS feed using <a href="http://www.feedvalidator.org/">feedvalidator</a>.</p>
 
 <p>Unfortunately even though the feed validated I received the following warning:</p>
@@ -40,9 +40,9 @@
   
   <entry>
     <title type="html"><![CDATA[Broken image on Google search results page]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2006/10/05/broken-image-on-google-search-results-page/"/>
+    <link href="http://chapter31.com/2006/10/05/broken-image-on-google-search-results-page/"/>
     <updated>2006-10-05T12:01:19+10:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2006/10/05/broken-image-on-google-search-results-page</id>
+    <id>http://chapter31.com/2006/10/05/broken-image-on-google-search-results-page</id>
     <content type="html"><![CDATA[<p>Funny when the big guys get something wrong :)</p>
 
 <p>I noticed this today on the google.com.au search results page; a nice little broken image!</p>

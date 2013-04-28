@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Farcry | chapter31 &raquo;]]></title>
-  <link href="http://michaelsharman.github.io/chapter31/categories/farcry/atom.xml" rel="self"/>
-  <link href="http://michaelsharman.github.io/chapter31/"/>
-  <updated>2013-04-28T21:58:49+10:00</updated>
-  <id>http://michaelsharman.github.io/chapter31/</id>
+  <link href="http://chapter31.com/categories/farcry/atom.xml" rel="self"/>
+  <link href="http://chapter31.com/"/>
+  <updated>2013-04-28T22:11:56+10:00</updated>
+  <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[FarCry Plugin - Webtop Tools]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2011/08/17/farcry-plugin-webtop-tools/"/>
+    <link href="http://chapter31.com/2011/08/17/farcry-plugin-webtop-tools/"/>
     <updated>2011-08-17T10:38:33+10:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2011/08/17/farcry-plugin-webtop-tools</id>
+    <id>http://chapter31.com/2011/08/17/farcry-plugin-webtop-tools</id>
     <content type="html"><![CDATA[<p>We're starting to compile a list of internal tools used when developing a FarCry application. I thought it might be simpler to create a small FarCry plugin to keep them all in the same place, makes it easier to use across multiple projects.</p>
 
 <p><a href="https://github.com/michaelsharman/lcwebtoptools">The plugin</a> currently contains 2 scripts:</p>
@@ -77,9 +77,9 @@ MySQL 5+</p>
   
   <entry>
     <title type="html"><![CDATA[Label vs Title in FarCry]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2011/08/01/label-vs-title-in-farcry/"/>
+    <link href="http://chapter31.com/2011/08/01/label-vs-title-in-farcry/"/>
     <updated>2011-08-01T09:16:01+10:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2011/08/01/label-vs-title-in-farcry</id>
+    <id>http://chapter31.com/2011/08/01/label-vs-title-in-farcry</id>
     <content type="html"><![CDATA[<p>All system content objects (and those custom types which extend "types" or "versions" etc) in FarCry have the "label" and "title" properties. Most of the time the value of these are identical, I find myself typically using the "title" property in formtools as well as any display methods. The question of course is why have both these if they're always exactly the same?</p>
 
 <p>A note on the FarCry forums suggested that this was a handy way split what you might want to use in a display method vs an admin screen or any other scenario etc. Well today I had need to do exactly this, and combined with some of the custom metadata for your <em>type components</em> I've found that this is yet another simple but powerful feature of FarCry core.</p>
@@ -108,9 +108,9 @@ MySQL 5+</p>
   
   <entry>
     <title type="html"><![CDATA[FarCry Tip - Enable cfc's in your Railo ProxyPassMatch]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2011/07/01/farcry-tip-enable-cfcs-in-your-railo-proxypassmatch/"/>
+    <link href="http://chapter31.com/2011/07/01/farcry-tip-enable-cfcs-in-your-railo-proxypassmatch/"/>
     <updated>2011-07-01T14:04:20+10:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2011/07/01/farcry-tip-enable-cfcs-in-your-railo-proxypassmatch</id>
+    <id>http://chapter31.com/2011/07/01/farcry-tip-enable-cfcs-in-your-railo-proxypassmatch</id>
     <content type="html"><![CDATA[<p>I ran into an issue today while working on a FarCry project, basically when I opened up the "Related Content" popup from the WYSIWYG editor it was blank. Nothing. Not the usual tabs for Images, File, Flash etc.</p>
 
 <p><img src="http://www.chapter31.com/wp-content/uploads/2011/07/relatedcontent.png" alt="" /></p>
@@ -145,9 +145,9 @@ MySQL 5+</p>
   
   <entry>
     <title type="html"><![CDATA[FarCry - grouping formtool category items]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2011/07/01/farcry-grouping-formtool-category-items/"/>
+    <link href="http://chapter31.com/2011/07/01/farcry-grouping-formtool-category-items/"/>
     <updated>2011-07-01T10:51:52+10:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2011/07/01/farcry-grouping-formtool-category-items</id>
+    <id>http://chapter31.com/2011/07/01/farcry-grouping-formtool-category-items</id>
     <content type="html"><![CDATA[<p>A new project we're working has the need to categorise each new content object, for this we use the built in FarCry category/keyword formtool.</p>
 
 <p>By default the render type is a multi-select tree, I wanted a single select dropdown. Luckily formtools makes this oh so simple.</p>
@@ -362,9 +362,9 @@ MySQL 5+</p>
   
   <entry>
     <title type="html"><![CDATA[FarCry Tip - remove install directory]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2011/06/30/farcry-tip-remove-install-directory/"/>
+    <link href="http://chapter31.com/2011/06/30/farcry-tip-remove-install-directory/"/>
     <updated>2011-06-30T10:39:14+10:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2011/06/30/farcry-tip-remove-install-directory</id>
+    <id>http://chapter31.com/2011/06/30/farcry-tip-remove-install-directory</id>
     <content type="html"><![CDATA[<p>After you install FarCry you must make sure to delete the "install" folder(s) that FarCry leaves behind. Otherwise it's possible for anyone to access the installer wizard again from your production website, and as it's the installer they don't even need to be logged in to cause real havoc. Not good.</p>
 
 <p>By default, as of FarCry 6.1.x, there are 2 install folders to delete:</p>

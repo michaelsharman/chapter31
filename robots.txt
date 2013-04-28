@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: 
 
-Sitemap: http://michaelsharman.github.io/chapter31/sitemap.xml 
+Sitemap: http://chapter31.com/sitemap.xml 

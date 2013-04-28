@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: cfeclipse | chapter31 &raquo;]]></title>
-  <link href="http://michaelsharman.github.io/chapter31/categories/cfeclipse/atom.xml" rel="self"/>
-  <link href="http://michaelsharman.github.io/chapter31/"/>
-  <updated>2013-04-28T21:58:49+10:00</updated>
-  <id>http://michaelsharman.github.io/chapter31/</id>
+  <link href="http://chapter31.com/categories/cfeclipse/atom.xml" rel="self"/>
+  <link href="http://chapter31.com/"/>
+  <updated>2013-04-28T22:11:56+10:00</updated>
+  <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Development configuration tips for Ubuntu]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2008/12/13/development-configuration-tips-for-ubuntu/"/>
+    <link href="http://chapter31.com/2008/12/13/development-configuration-tips-for-ubuntu/"/>
     <updated>2008-12-13T13:28:20+11:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2008/12/13/development-configuration-tips-for-ubuntu</id>
+    <id>http://chapter31.com/2008/12/13/development-configuration-tips-for-ubuntu</id>
     <content type="html"><![CDATA[<p>I just setup my machine at home with Ubuntu 8.10 (desktop) which was so easy think I saved hours off the time it would normally take with Windows. So much is already installed and ready to go and with apt (or the Synaptic package manager) it's super quick to download and install extra things things like MySQL, PHP, Apache, Java etc</p>
 
 <p>Here are some notes which helped me out when configuring some of these development tools.</p>
@@ -74,9 +74,9 @@ sudo apt-get install subversion
   
   <entry>
     <title type="html"><![CDATA[Changing the cfeclipse 'tag insight' delay time]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2008/02/28/changing-the-cfeclipse-tag-insight-delay-time/"/>
+    <link href="http://chapter31.com/2008/02/28/changing-the-cfeclipse-tag-insight-delay-time/"/>
     <updated>2008-02-28T11:56:02+11:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2008/02/28/changing-the-cfeclipse-tag-insight-delay-time</id>
+    <id>http://chapter31.com/2008/02/28/changing-the-cfeclipse-tag-insight-delay-time</id>
     <content type="html"><![CDATA[<p>Having 'tag insight' is a great part of any IDE, one which almost every developer takes advantage of irrespective of which editor they use. Tag insight of course being when your IDE provides information (attribute or return information etc) about the tag or function you are currently typing.</p>
 
 <p>Normally when writing a function or tag like <cfhttp>, when you hit the space bar and wait a second a little popup appears detailing exactly what you can do with this tag.</p>
@@ -101,9 +101,9 @@ sudo apt-get install subversion
   
   <entry>
     <title type="html"><![CDATA[My Aptana IDE is busted]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2007/08/14/my-aptana-ide-is-busted/"/>
+    <link href="http://chapter31.com/2007/08/14/my-aptana-ide-is-busted/"/>
     <updated>2007-08-14T15:45:39+10:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2007/08/14/my-aptana-ide-is-busted</id>
+    <id>http://chapter31.com/2007/08/14/my-aptana-ide-is-busted</id>
     <content type="html"><![CDATA[<p>Hmm, running with my past history of having that 'special' touch with computers...my version of Aptana (Aptana IDE (build 0.2.8.15637)) has busted.</p>
 
 <p>Kaput.</p>

@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Apache/IIS | chapter31 &raquo;]]></title>
-  <link href="http://michaelsharman.github.io/chapter31/categories/apache-slash-iis/atom.xml" rel="self"/>
-  <link href="http://michaelsharman.github.io/chapter31/"/>
-  <updated>2013-04-28T21:58:49+10:00</updated>
-  <id>http://michaelsharman.github.io/chapter31/</id>
+  <link href="http://chapter31.com/categories/apache-slash-iis/atom.xml" rel="self"/>
+  <link href="http://chapter31.com/"/>
+  <updated>2013-04-28T22:11:56+10:00</updated>
+  <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Setting font MIME types in apache]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2012/08/10/setting-font-mime-types-in-apache/"/>
+    <link href="http://chapter31.com/2012/08/10/setting-font-mime-types-in-apache/"/>
     <updated>2012-08-10T09:40:00+10:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2012/08/10/setting-font-mime-types-in-apache</id>
+    <id>http://chapter31.com/2012/08/10/setting-font-mime-types-in-apache</id>
     <content type="html"><![CDATA[<p>If your website is using custom fonts, you may see this line in your Chrome console:</p>
 
 <blockquote><p>Resource interpreted as Font but transferred with MIME type application/octet-stream</p></blockquote>
@@ -37,9 +37,9 @@ AddType application/x-font-woff .woff
   
   <entry>
     <title type="html"><![CDATA[Apache permission denied on Mac OSX Lion]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2012/06/06/apache-permission-denied-on-mac-osx-lion/"/>
+    <link href="http://chapter31.com/2012/06/06/apache-permission-denied-on-mac-osx-lion/"/>
     <updated>2012-06-06T00:52:49+10:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2012/06/06/apache-permission-denied-on-mac-osx-lion</id>
+    <id>http://chapter31.com/2012/06/06/apache-permission-denied-on-mac-osx-lion</id>
     <content type="html"><![CDATA[<p>I've just upgraded to OSX Lion and had some trouble getting Apache to load a vhost. I kept getting a 403 permission denied error, but all my vhosts had the correct permission directives set.</p>
 
 <p>Now by default your webserver document root is located in <em>/Library/WebServer/Documents</em>. I don't really like that for my local machine, I'd rather store web files under my user account. Just tends to make things easier.</p>
@@ -62,9 +62,9 @@ AddType application/x-font-woff .woff
   
   <entry>
     <title type="html"><![CDATA[Development configuration tips for Ubuntu]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2008/12/13/development-configuration-tips-for-ubuntu/"/>
+    <link href="http://chapter31.com/2008/12/13/development-configuration-tips-for-ubuntu/"/>
     <updated>2008-12-13T13:28:20+11:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2008/12/13/development-configuration-tips-for-ubuntu</id>
+    <id>http://chapter31.com/2008/12/13/development-configuration-tips-for-ubuntu</id>
     <content type="html"><![CDATA[<p>I just setup my machine at home with Ubuntu 8.10 (desktop) which was so easy think I saved hours off the time it would normally take with Windows. So much is already installed and ready to go and with apt (or the Synaptic package manager) it's super quick to download and install extra things things like MySQL, PHP, Apache, Java etc</p>
 
 <p>Here are some notes which helped me out when configuring some of these development tools.</p>
@@ -121,9 +121,9 @@ sudo apt-get install subversion
   
   <entry>
     <title type="html"><![CDATA[Careful when sharing code sent from an IM client]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2008/06/20/careful-when-copying-code-sent-from-an-im-client/"/>
+    <link href="http://chapter31.com/2008/06/20/careful-when-copying-code-sent-from-an-im-client/"/>
     <updated>2008-06-20T17:28:11+10:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2008/06/20/careful-when-copying-code-sent-from-an-im-client</id>
+    <id>http://chapter31.com/2008/06/20/careful-when-copying-code-sent-from-an-im-client</id>
     <content type="html"><![CDATA[<p>Ok this is a warning to all those who get sent commands to use via IM.</p>
 
 <p>Scenario:</p>
@@ -142,9 +142,9 @@ sudo apt-get install subversion
   
   <entry>
     <title type="html"><![CDATA[Apache, are you secure?]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2006/07/16/apache-are-you-secure/"/>
+    <link href="http://chapter31.com/2006/07/16/apache-are-you-secure/"/>
     <updated>2006-07-16T15:15:47+10:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2006/07/16/apache-are-you-secure</id>
+    <id>http://chapter31.com/2006/07/16/apache-are-you-secure</id>
     <content type="html"><![CDATA[<p><a href="http://www.petefreitag.com/">Peter Freitag</a> has a great post on <a href="http://www.petefreitag.com/item/505.cfm">'20 ways to secure your Apache Configuration'</a></p>
 
 <p>Seeing as Apache is a rather popular web server, this is invaluable information for any developer particularly those who are involved with configuring production boxes.</p>

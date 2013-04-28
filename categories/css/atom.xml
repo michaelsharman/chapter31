@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: CSS | chapter31 &raquo;]]></title>
-  <link href="http://michaelsharman.github.io/chapter31/categories/css/atom.xml" rel="self"/>
-  <link href="http://michaelsharman.github.io/chapter31/"/>
-  <updated>2013-04-28T21:58:49+10:00</updated>
-  <id>http://michaelsharman.github.io/chapter31/</id>
+  <link href="http://chapter31.com/categories/css/atom.xml" rel="self"/>
+  <link href="http://chapter31.com/"/>
+  <updated>2013-04-28T22:11:56+10:00</updated>
+  <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Reading blogs on a mac using Firefox]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2007/06/14/reading-blogs-on-a-mac-using-firefox/"/>
+    <link href="http://chapter31.com/2007/06/14/reading-blogs-on-a-mac-using-firefox/"/>
     <updated>2007-06-14T09:54:27+10:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2007/06/14/reading-blogs-on-a-mac-using-firefox</id>
+    <id>http://chapter31.com/2007/06/14/reading-blogs-on-a-mac-using-firefox</id>
     <content type="html"><![CDATA[<p>I've been on a Mac (OSX) for a little while now and generally I'm having a nice time, except when it comes to reading some (but only some) blogs!</p>
 
 <p>We all know that font sizes are different across browser and platform, but Firefox on a mac occasionally makes life a little difficult particularly when it comes to reading comments and code snippets.</p>
@@ -36,9 +36,9 @@
   
   <entry>
     <title type="html"><![CDATA[Firefox Web Developer Toolbar]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2006/09/29/firefox-web-developer-toolbar/"/>
+    <link href="http://chapter31.com/2006/09/29/firefox-web-developer-toolbar/"/>
     <updated>2006-09-29T11:11:11+10:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2006/09/29/firefox-web-developer-toolbar</id>
+    <id>http://chapter31.com/2006/09/29/firefox-web-developer-toolbar</id>
     <content type="html"><![CDATA[<p><a href="http://www.boyzoid.com/blog/index.cfm">Scott Stroz</a> (aka boyzoid) has a <a href="http://www.boyzoid.com/blog/index.cfm/2006/9/28/Web-Developer-Toolbar">nice little post</a> on the <a href="https://addons.mozilla.org/firefox/60/">Firefox Web Developer Toolbar</a> by Chris Pederick.</p>
 
 <p>The toolbar (which has been around for ages) is a must have for any web developer, I thought I'd post some of the tools including their shortcuts which I use regularly.</p>
@@ -150,9 +150,9 @@
   
   <entry>
     <title type="html"><![CDATA[HTML pre-launch flight check]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2006/08/25/html-pre-launch-flight-check/"/>
+    <link href="http://chapter31.com/2006/08/25/html-pre-launch-flight-check/"/>
     <updated>2006-08-25T12:49:28+10:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2006/08/25/html-pre-launch-flight-check</id>
+    <id>http://chapter31.com/2006/08/25/html-pre-launch-flight-check</id>
     <content type="html"><![CDATA[<p><a href="http://www.anybrowser.com/">AnyBrowser</a> have a lot of tools for you to use when validating and preparing your website for deployment including:</p>
 
 <ul>
@@ -172,9 +172,9 @@
   
   <entry>
     <title type="html"><![CDATA[Flash of Unstyled Content]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2006/06/20/flash-of-unstyled-content/"/>
+    <link href="http://chapter31.com/2006/06/20/flash-of-unstyled-content/"/>
     <updated>2006-06-20T18:41:49+10:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2006/06/20/flash-of-unstyled-content</id>
+    <id>http://chapter31.com/2006/06/20/flash-of-unstyled-content</id>
     <content type="html"><![CDATA[<p>The lovely people (person?) over at <a href="http://www.bluerobot.com/">Blue Robot</a> have coined a term 'FOUC'; or <em>Flash of Unstyled Content</em>.</p>
 
 <p>This is that annoying 'bug' in Windows IE where a user can see the entire body of the page their trying to view 'unstyled' (particularly for page layout) for a moment before the stylesheet kicks in. If the CSS is cached then you probably won't see this happen, but for first time users this just looks amature.</p>

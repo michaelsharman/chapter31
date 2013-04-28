@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Ubuntu | chapter31 &raquo;]]></title>
-  <link href="http://michaelsharman.github.io/chapter31/categories/ubuntu/atom.xml" rel="self"/>
-  <link href="http://michaelsharman.github.io/chapter31/"/>
-  <updated>2013-04-28T21:58:49+10:00</updated>
-  <id>http://michaelsharman.github.io/chapter31/</id>
+  <link href="http://chapter31.com/categories/ubuntu/atom.xml" rel="self"/>
+  <link href="http://chapter31.com/"/>
+  <updated>2013-04-28T22:11:56+10:00</updated>
+  <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Installing new fonts on Ubuntu server]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2012/09/24/installing-new-fonts-on-ubuntu-server/"/>
+    <link href="http://chapter31.com/2012/09/24/installing-new-fonts-on-ubuntu-server/"/>
     <updated>2012-09-24T13:41:55+10:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2012/09/24/installing-new-fonts-on-ubuntu-server</id>
+    <id>http://chapter31.com/2012/09/24/installing-new-fonts-on-ubuntu-server</id>
     <content type="html"><![CDATA[<p>I had some new fonts to install on our test server that runs Ubuntu server. Pretty simple really, just noting it down here for next time:</p>
 
 <ul>
@@ -41,9 +41,9 @@
   
   <entry>
     <title type="html"><![CDATA[Development configuration tips for Ubuntu]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2008/12/13/development-configuration-tips-for-ubuntu/"/>
+    <link href="http://chapter31.com/2008/12/13/development-configuration-tips-for-ubuntu/"/>
     <updated>2008-12-13T13:28:20+11:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2008/12/13/development-configuration-tips-for-ubuntu</id>
+    <id>http://chapter31.com/2008/12/13/development-configuration-tips-for-ubuntu</id>
     <content type="html"><![CDATA[<p>I just setup my machine at home with Ubuntu 8.10 (desktop) which was so easy think I saved hours off the time it would normally take with Windows. So much is already installed and ready to go and with apt (or the Synaptic package manager) it's super quick to download and install extra things things like MySQL, PHP, Apache, Java etc</p>
 
 <p>Here are some notes which helped me out when configuring some of these development tools.</p>
@@ -100,9 +100,9 @@ sudo apt-get install subversion
   
   <entry>
     <title type="html"><![CDATA[Can't access shared music with Rhythmbox (Ubuntu)?]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2008/02/28/cant-access-shared-music-with-rhythmbox-ubuntu/"/>
+    <link href="http://chapter31.com/2008/02/28/cant-access-shared-music-with-rhythmbox-ubuntu/"/>
     <updated>2008-02-28T17:21:14+11:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2008/02/28/cant-access-shared-music-with-rhythmbox-ubuntu</id>
+    <id>http://chapter31.com/2008/02/28/cant-access-shared-music-with-rhythmbox-ubuntu</id>
     <content type="html"><![CDATA[<p>Probably quite old news for those in the know, but if you're using Rhythmbox to play music on Ubuntu and want to listen to shared music over a network where people are using iTunes version 7+....it ain't going to work :(</p>
 
 <p>You can view who is sharing music, but their actual libraries won't load into Rhythmbox. In this case it's not a compatibility between OS's etc, it's purely proprietary :(</p>
@@ -117,9 +117,9 @@ sudo apt-get install subversion
   
   <entry>
     <title type="html"><![CDATA[Flex not working on Ubuntu using the Gnash player]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2007/11/14/flex-not-working-on-ubuntu-using-the-gnash-player/"/>
+    <link href="http://chapter31.com/2007/11/14/flex-not-working-on-ubuntu-using-the-gnash-player/"/>
     <updated>2007-11-14T11:38:27+11:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2007/11/14/flex-not-working-on-ubuntu-using-the-gnash-player</id>
+    <id>http://chapter31.com/2007/11/14/flex-not-working-on-ubuntu-using-the-gnash-player</id>
     <content type="html"><![CDATA[<p><a href="http://packages.ubuntu.com/feisty/utils/gnash">Gnash</a> is a free Flash movie player for Ubuntu which works as a standalone player or as a plugin for Firefox and Konqueror.</p>
 
 <p>This is the default (I believe) player installed on Ubuntu 7.10 (the Adobe player isn't there by default).</p>

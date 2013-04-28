@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: ColdFusion | chapter31 &raquo;]]></title>
-  <link href="http://michaelsharman.github.io/chapter31/categories/coldfusion/atom.xml" rel="self"/>
-  <link href="http://michaelsharman.github.io/chapter31/"/>
-  <updated>2013-04-28T21:58:49+10:00</updated>
-  <id>http://michaelsharman.github.io/chapter31/</id>
+  <link href="http://chapter31.com/categories/coldfusion/atom.xml" rel="self"/>
+  <link href="http://chapter31.com/"/>
+  <updated>2013-04-28T22:11:56+10:00</updated>
+  <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Adding a global ignore file for git]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2013/01/21/adding-a-global-ignore-file-for-git/"/>
+    <link href="http://chapter31.com/2013/01/21/adding-a-global-ignore-file-for-git/"/>
     <updated>2013-01-21T23:02:46+11:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2013/01/21/adding-a-global-ignore-file-for-git</id>
+    <id>http://chapter31.com/2013/01/21/adding-a-global-ignore-file-for-git</id>
     <content type="html"><![CDATA[<p>Quick setup of ignore files for Git. You can of course set these up per repo, but that gets a little old. Instead you can setup a single ignore file and link to it so that every repo refers to it.</p>
 
 <p>For example, create a git ignore file in your home directory:</p>
@@ -93,9 +93,9 @@ git config --global core.excludesfile ~/.gitignore_global
   
   <entry>
     <title type="html"><![CDATA[Showing hidden files in Finder on mac osx]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2013/01/21/showing-hidden-files-in-finder-on-mac-osx/"/>
+    <link href="http://chapter31.com/2013/01/21/showing-hidden-files-in-finder-on-mac-osx/"/>
     <updated>2013-01-21T22:37:37+11:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2013/01/21/showing-hidden-files-in-finder-on-mac-osx</id>
+    <id>http://chapter31.com/2013/01/21/showing-hidden-files-in-finder-on-mac-osx</id>
     <content type="html"><![CDATA[<p>Short and sweet, MAC OSX has this annoying trait where hidden files (dotfiles) are not visible by default in Finder. No probs, I'll just go to the "View" menu and turn them on. Nope...nada, zip.</p>
 
 <p>Turns out you have to enter a command in the terminal, nice. Here it is for future reference:</p>
@@ -120,9 +120,9 @@ defaults write com.apple.finder AppleShowAllFiles FALSE
   
   <entry>
     <title type="html"><![CDATA[Downloading youtube videos]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2013/01/01/downloading-youtube-videos/"/>
+    <link href="http://chapter31.com/2013/01/01/downloading-youtube-videos/"/>
     <updated>2013-01-01T13:48:27+11:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2013/01/01/downloading-youtube-videos</id>
+    <id>http://chapter31.com/2013/01/01/downloading-youtube-videos</id>
     <content type="html"><![CDATA[<p>I wanted to grab some youtube videos for the kids and found this cool <a href="http://rg3.github.com/youtube-dl/">CLI utility called youtube-dl</a> to handle it. I downloaded it from the website (you may need to chmod 755):
 <code>
 wget https://github.com/downloads/rg3/youtube-dl/youtube-dl -O /usr/local/bin/youtube-dl
@@ -184,9 +184,9 @@ youtube-dl -f 18 -o "myfilename.mp4" [URL]
   
   <entry>
     <title type="html"><![CDATA[Generating a powerset in ColdFusion]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2012/10/04/generating-a-powerset-in-coldfusion/"/>
+    <link href="http://chapter31.com/2012/10/04/generating-a-powerset-in-coldfusion/"/>
     <updated>2012-10-04T21:20:46+10:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2012/10/04/generating-a-powerset-in-coldfusion</id>
+    <id>http://chapter31.com/2012/10/04/generating-a-powerset-in-coldfusion</id>
     <content type="html"><![CDATA[<p>I recently needed to generate a <a href="http://en.wikipedia.org/wiki/Power_set">powerset</a> (a set of all subsets) of 3 HTML select boxes. The idea was that a user could choose 1-many options from each box, and they had to choose a value from all 3 boxes (none could be empty).</p>
 
 <p>Select #1 had 4 values<br/>
@@ -249,9 +249,9 @@ var res = Powerset.calculate([1,2,3,4]);</p>
   
   <entry>
     <title type="html"><![CDATA[Modifying FW/1 variables.framework properties]]></title>
-    <link href="http://michaelsharman.github.io/chapter31/2012/09/30/modifying-fw1-variables-framework-properties/"/>
+    <link href="http://chapter31.com/2012/09/30/modifying-fw1-variables-framework-properties/"/>
     <updated>2012-09-30T16:54:59+10:00</updated>
-    <id>http://michaelsharman.github.io/chapter31/2012/09/30/modifying-fw1-variables-framework-properties</id>
+    <id>http://chapter31.com/2012/09/30/modifying-fw1-variables-framework-properties</id>
     <content type="html"><![CDATA[<p><a href="https://github.com/seancorfield/fw1/">FW/1</a> gives you a nice, clean way to manage framework configuration properties. They're all wrapped up inside Application.cfc in a structure called <em>variables.framework</em>, <a href="https://github.com/seancorfield/fw1/wiki/Developing-Applications-Manual">you can read more about them here</a> under <em>Configuring FW/1 Applications</em>.</p>
 
 <p><a href="http://www.learnosity.com">Our applications</a> often have a need to use different values for these properties, depending on which environment the application is running in (development, testing, staging, production etc). An example of this might be <em>reloadApplicationOnEveryRequest</em>, which we want as <em>true</em> in development, but <em>false</em> elsewhere else.</p>
