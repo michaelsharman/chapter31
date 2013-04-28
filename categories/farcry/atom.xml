@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Farcry | chapter31 &raquo;]]></title>
+  <link href="http://michaelsharman.github.io/chapter31/categories/farcry/atom.xml" rel="self"/>
+  <link href="http://michaelsharman.github.io/chapter31/"/>
+  <updated>2013-04-28T21:58:49+10:00</updated>
+  <id>http://michaelsharman.github.io/chapter31/</id>
+  <author>
+    <name><![CDATA[Michael Sharman]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[FarCry Plugin - Webtop Tools]]></title>
+    <link href="http://michaelsharman.github.io/chapter31/2011/08/17/farcry-plugin-webtop-tools/"/>
+    <updated>2011-08-17T10:38:33+10:00</updated>
+    <id>http://michaelsharman.github.io/chapter31/2011/08/17/farcry-plugin-webtop-tools</id>
+    <content type="html"><![CDATA[<p>We're starting to compile a list of internal tools used when developing a FarCry application. I thought it might be simpler to create a small FarCry plugin to keep them all in the same place, makes it easier to use across multiple projects.</p>
+
+<p><a href="https://github.com/michaelsharman/lcwebtoptools">The plugin</a> currently contains 2 scripts:</p>
+
+<ul>
+<li>FarCry database diff (MySQL only at this stage)</li>
+<li>Content Object Meta</li>
+</ul>
+
+
+<p>The database diff looks for case-sensitivity differences between your ColdFusion components and the actual MySQL table names (MySQL only). Historically we've had issues because we are on Linux, this tool has helped quickly iron out any differences in "case".</p>
+
+<p>The Content Object Meta assists in finding information about content of any "type" in FarCry, based on the title, objectId or friendly URL. What does this mean? Well any "content object" you want information on can be found using this tool. Whether you have an objectId and you don't know if it belongs to dmNavigation, dmHTML, dmNews or a custom type. Or you might have part of a friendly URL or content label/title. This tool can help tell you what the content type is, whether it's approved, where it sits in the site tree (if relevant) etc.</p>
+
+<p>For example; if I wanted to know everything in FarCry that had a label LIKE 'credential' (wildcards are automatically added to your search term) I might get results like the following:</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2011/08/contenttitle.png" alt="" /></p>
+
+<p>From that initial resultset, if I clicked on an objectid for dmNavigation:</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2011/08/objectid.png" alt="" /></p>
+
+<p>Or if I clicked on an objectid for dmHTML:</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2011/08/objectid_dmhtml.png" alt="" /></p>
+
+<p>Note that there is a collapsed cfdump that you can expand for further info.</p>
+
+<h2>Requirements</h2>
+
+<p>Railo 3.2+ or ColdFusion 7+<br/>
+FarCry 6+<br/>
+MySQL 5+</p>
+
+<h2>Installation</h2>
+
+<p>"Official" notes on installing FarCry plugins can be found here: <a href="https://farcry.jira.com/wiki/pages/viewpage.action?pageId=12943398">https://farcry.jira.com/wiki/pages/viewpage.action?pageId=12943398</a></p>
+
+<p>It's pretty simple though:</p>
+
+<ul>
+<li>add the "lcwebtoptools" directory from git into /farcry/plugins/</li>
+<li>add "lcwebtoptools" to THIS.plugins in farcryConstructor.cfm (in your project webroot)</li>
+</ul>
+
+
+<p>e.g.</p>
+
+<pre><code>&lt;cfset THIS.plugins = "farcrycms,lcwebtoptools"&gt;
+</code></pre>
+
+<p>Restart your app, that's it. No coapi changes need to be made. To access the current tools, go to the "Admin" tab and choose "Webtop Tools" from the drop down.</p>
+
+<p>The plugin is <a href="https://github.com/michaelsharman/lcwebtoptools">hosted on github</a>, for a direct download to the zip <a href="https://github.com/michaelsharman/lcwebtoptools/zipball/master">click here</a>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Label vs Title in FarCry]]></title>
+    <link href="http://michaelsharman.github.io/chapter31/2011/08/01/label-vs-title-in-farcry/"/>
+    <updated>2011-08-01T09:16:01+10:00</updated>
+    <id>http://michaelsharman.github.io/chapter31/2011/08/01/label-vs-title-in-farcry</id>
+    <content type="html"><![CDATA[<p>All system content objects (and those custom types which extend "types" or "versions" etc) in FarCry have the "label" and "title" properties. Most of the time the value of these are identical, I find myself typically using the "title" property in formtools as well as any display methods. The question of course is why have both these if they're always exactly the same?</p>
+
+<p>A note on the FarCry forums suggested that this was a handy way split what you might want to use in a display method vs an admin screen or any other scenario etc. Well today I had need to do exactly this, and combined with some of the custom metadata for your <em>type components</em> I've found that this is yet another simple but powerful feature of FarCry core.</p>
+
+<h2>Scenario</h2>
+
+<p>I have a custom type, a "topic". Now these topics have titles but also "codes" associated with them. Sometimes I'll want to output just the title, but sometimes I'll want to output the code + title together. Sure <em>stObj</em> gives me the simple ability to access these singularly, but having the ability to store this composite value in the label field (as well as the single title in the "title" field) gives me freedom to display this in places like the object admin screen, generic nav, breadcrumbs etc. Very very nice.</p>
+
+<h2>How</h2>
+
+<p>Ok first you need to enable auto labels for your type:</p>
+
+<pre><code>&lt;cfcomponent extends="farcry.core.packages.types.versions" displayname="ACE Topic" bUseInTree="0" bFriendly="1" fuAlias="acetopic" bObjectBroker="0" bAutoSetLabel="true"&gt;
+</code></pre>
+
+<p>Then for each property you'd like combined for your label, set a <em>bLabel</em> attribute to true.</p>
+
+<pre><code>&lt;cfproperty name="Code" type="string" required="no" default="" ftSeq="1" ftwizardStep="Content" ftValidation="required" ftFieldset="General Details" bLabel="true"&gt;
+
+&lt;cfproperty name="Title" type="string" hint="Title of content item." required="no" default="" ftSeq="2" ftwizardStep="Content" ftFieldset="General Details" ftValidation="required" bLabel="true"&gt;
+</code></pre>
+
+<p>What this now does (after you edit a content object) is save the "code + title" in the label field. Cool :)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[FarCry Tip - Enable cfc's in your Railo ProxyPassMatch]]></title>
+    <link href="http://michaelsharman.github.io/chapter31/2011/07/01/farcry-tip-enable-cfcs-in-your-railo-proxypassmatch/"/>
+    <updated>2011-07-01T14:04:20+10:00</updated>
+    <id>http://michaelsharman.github.io/chapter31/2011/07/01/farcry-tip-enable-cfcs-in-your-railo-proxypassmatch</id>
+    <content type="html"><![CDATA[<p>I ran into an issue today while working on a FarCry project, basically when I opened up the "Related Content" popup from the WYSIWYG editor it was blank. Nothing. Not the usual tabs for Images, File, Flash etc.</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2011/07/relatedcontent.png" alt="" /></p>
+
+<p>The Railo logs were empty but Apache was throwing a strange error which I hadn't seen before: <em>"Couldn't initialize from remote server, JRun server(s) probably down."</em>. Funny as I'm not even using JRun!</p>
+
+<p>Looking at the Chrome console I could see that opening the popup made a request directly to a cfc (/webtop/facade/tinyMCE.cfc?method=ajaxGetTemplateDropdowns) and returned the following error: "<em>Failed to load resource: the server responded with a status of 500 (Internal Server Error)</em>"</p>
+
+<p>Eventually <a href="http://www.learnosity.com/techblog/">Mark</a> pointed me in the right direction which was kind of obvious if I'd actually read the error properly! Our config for Apache -> Railo is for cfm's only...not cfc's. I don't really like the approach of calling cfc's directly at all, which is why it's not in our Apache -> Railo proxy. But it wasn't a big deal to add it for FarCry projects.</p>
+
+<p>Here is the config we now use, note we now pass requests for cfm and cfc to Railo:</p>
+
+<p>``` javascript</p>
+
+<pre><code>    &lt;IfModule mod_proxy_ajp.c&gt;
+            &lt;Proxy *&gt;
+                    Order deny,allow
+                    Allow from all
+            &lt;/Proxy&gt;
+            ProxyPassMatch ^/(.*\.cf[cm])$ ajp://127.0.0.1:8009/$1
+            ProxyPassReverse  /  ajp://127.0.0.1:8009/
+    &lt;/IfModule&gt;
+</code></pre>
+
+<p>```</p>
+
+<p>And of course now the related content popup works :)</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2011/07/relatedcontent2.png" alt="" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[FarCry - grouping formtool category items]]></title>
+    <link href="http://michaelsharman.github.io/chapter31/2011/07/01/farcry-grouping-formtool-category-items/"/>
+    <updated>2011-07-01T10:51:52+10:00</updated>
+    <id>http://michaelsharman.github.io/chapter31/2011/07/01/farcry-grouping-formtool-category-items</id>
+    <content type="html"><![CDATA[<p>A new project we're working has the need to categorise each new content object, for this we use the built in FarCry category/keyword formtool.</p>
+
+<p>By default the render type is a multi-select tree, I wanted a single select dropdown. Luckily formtools makes this oh so simple.</p>
+
+<p><code>javascript
+&lt;cfproperty name="catHTML" type="nstring" required="true" default="" ftSeq="2" ftwizardStep="Content"  ftValidation="required" ftFieldset="General Details" ftLabel="Categories" ftType="Category" ftAlias="sections" ftRenderType="dropdown" ftSelectSize="1" ftSelectMultiple="false" ftAliasAsOptGroup="true"&gt;
+</code></p>
+
+<p>Note that I've set the dropdown size to 1 and multiple select to false. Basically I have a group of "sections" that each content object needs to belong to, section 1 through 11. I've setup the categories already under a parent category called "sections" (note the ftAlias in the formtool definition). Unfortunately the default rendering was showing "sections" as a selectable category, however I didn't want this. I only wanted the users to be able to choose the <em>children</em> of this category, not the category itself.</p>
+
+<p>Luckily FarCry makes this kind of thing simple to override. I added my own category.cfc inside my projects <em>packages/formtools</em> directory and made sure to extend category.cfc from <em>farcry.core.packages.formtools.category</em>. In this I only used the edit() function to render an optgroup from a new custom property called ftAliasAsOptGroup (see above snippet). This gave me the following:</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2011/07/optgroup.png" alt="FarCry optgroup" /></p>
+
+<p>The full category.cfc is below if you're interested.</p>
+
+<p>``` javascript
+<cfcomponent extends="farcry.core.packages.formtools.category"></p>
+
+<pre><code>&lt;cfproperty name="ftAliasAsOptGroup" default="" hint="If true, renders ftAlias as an optgroup"&gt;
+
+
+&lt;cffunction name="edit" access="public" output="false" returntype="string" hint="his will return a string of formatted HTML text to enable the user to edit the data"&gt;
+    &lt;cfargument name="typename" required="true" type="string" hint="The name of the type that this field is part of."&gt;
+    &lt;cfargument name="stObject" required="true" type="struct" hint="The object of the record that this field is part of."&gt;
+    &lt;cfargument name="stMetadata" required="true" type="struct" hint="This is the metadata that is either setup as part of the type.cfc or overridden when calling ft:object by using the stMetadata argument."&gt;
+    &lt;cfargument name="fieldname" required="true" type="string" hint="This is the name that will be used for the form field. It includes the prefix that will be used by ft:processform."&gt;
+
+    &lt;cfset var html = "" /&gt;
+    &lt;cfset var navid = "" /&gt;
+    &lt;cfset var oCategory = createObject("component",'farcry.core.packages.farcry.category')&gt;
+    &lt;cfset var lSelectedCategoryID = "" &gt;
+    &lt;cfset var lCategoryBranch = "" /&gt;
+    &lt;cfset var CategoryName = "" /&gt;
+    &lt;cfset var i = "" /&gt;
+    &lt;cfset var rootNodeText = "" /&gt;
+    &lt;cfset var rootID = "" /&gt;
+
+    &lt;cfif structKeyExists(application.catid, arguments.stMetadata.ftAlias)&gt;
+        &lt;cfset rootID = application.catid[arguments.stMetadata.ftAlias] &gt;
+    &lt;cfelse&gt;
+        &lt;cfset rootID = application.catid['root'] &gt;
+    &lt;/cfif&gt;
+
+    &lt;cfset lSelectedCategoryID = oCategory.getCategories(objectid=arguments.stObject.ObjectID,bReturnCategoryIDs=true,alias=arguments.stMetadata.ftAlias) /&gt;
+
+    &lt;cfset rootNodeText = oCategory.getCategoryNamebyID(categoryid=rootID) /&gt;
+
+    &lt;cfswitch expression="#arguments.stMetadata.ftRenderType#"&gt;
+
+        &lt;cfcase value="dropdown"&gt;
+            &lt;cfset lCategoryBranch = oCategory.getCategoryBranchAsList(lCategoryIDs=rootID) /&gt;
+
+            &lt;cfsavecontent variable="html"&gt;
+                &lt;cfoutput&gt;&lt;select id="#arguments.fieldname#" name="#arguments.fieldname#"  &lt;cfif arguments.stMetadata.ftSelectMultiple&gt;size="#arguments.stMetadata.ftSelectSize#" multiple="true"&lt;/cfif&gt; class="selectInput #arguments.stMetadata.ftSelectSize# #arguments.stMetadata.ftClass#"&gt;&lt;/cfoutput&gt;
+                &lt;cfloop list="#lCategoryBranch#" index="i"&gt;
+                    &lt;!--- If the item is the actual alias requested then it is not selectable. ---&gt;
+                    &lt;cfif i EQ rootID&gt;
+                        &lt;cfif len(arguments.stMetadata.ftDropdownFirstItem)&gt;
+                            &lt;cfoutput&gt;&lt;option value=""&gt;#arguments.stMetadata.ftDropdownFirstItem#&lt;/option&gt;&lt;/cfoutput&gt;
+                        &lt;cfelse&gt;
+                            &lt;cfset CategoryName = oCategory.getCategoryNamebyID(categoryid=i,typename='dmCategory') /&gt;
+                            &lt;cfif arguments.stMetadata.ftAliasAsOptGroup EQ true&gt;
+                                &lt;cfoutput&gt;&lt;optgroup label="#CategoryName#"&gt;&lt;/cfoutput&gt;
+                            &lt;cfelse&gt;
+                                &lt;cfoutput&gt;&lt;option value=""&gt;#CategoryName#&lt;/option&gt;&lt;/cfoutput&gt;
+                            &lt;/cfif&gt;
+                        &lt;/cfif&gt;
+                    &lt;cfelse&gt;
+                        &lt;cfset CategoryName = oCategory.getCategoryNamebyID(categoryid=i,typename='dmCategory') /&gt;
+                        &lt;cfoutput&gt;&lt;option value="#i#"&lt;cfif listContainsNoCase(lSelectedCategoryID, i)&gt; selected="selected"&lt;/cfif&gt;&gt;#CategoryName#&lt;/option&gt;&lt;/cfoutput&gt;
+                    &lt;/cfif&gt;                     
+                &lt;/cfloop&gt;
+                &lt;cfif arguments.stMetadata.ftAliasAsOptGroup EQ true&gt;
+                    &lt;cfoutput&gt;&lt;/optgroup&gt;&lt;/cfoutput&gt;
+                &lt;/cfif&gt;
+                &lt;cfoutput&gt;&lt;/select&gt;&lt;/cfoutput&gt;
+            &lt;/cfsavecontent&gt;
+        &lt;/cfcase&gt;
+
+        &lt;cfcase value="prototype"&gt;
+            &lt;cfsavecontent variable="html"&gt;
+
+                &lt;cfoutput&gt;&lt;fieldset style="width: 300px;"&gt;
+                    &lt;cfif len(arguments.stMetadata.ftLegend)&gt;&lt;legend&gt;#arguments.stMetadata.ftLegend#&lt;/legend&gt;&lt;/cfif&gt;
+
+                    &lt;div class="fieldsection optional full"&gt;
+
+                        &lt;div class="fieldwrap"&gt;
+                        &lt;/cfoutput&gt;
+
+                            &lt;ft:NTMPrototypeTree id="#arguments.fieldname#" navid="#rootID#" depth="99" bIncludeHome=1 lSelectedItems="#lSelectedCategoryID#" bSelectMultiple="#arguments.stMetadata.ftSelectMultiple#"&gt;
+
+                        &lt;cfoutput&gt;
+                        &lt;/div&gt;
+
+                        &lt;br class="fieldsectionbreak" /&gt;
+                    &lt;/div&gt;
+                    &lt;input type="hidden" id="#arguments.fieldname#" name="#arguments.fieldname#" value="" /&gt;
+                &lt;/fieldset&gt;&lt;/cfoutput&gt;
+
+            &lt;/cfsavecontent&gt;            
+        &lt;/cfcase&gt;
+        &lt;cfcase value="extjs"&gt;
+            &lt;!--- &lt;skin:htmlHead library="extjs" /&gt;
+            &lt;skin:htmlHead library="farcryForm" /&gt; ---&gt;
+
+            &lt;cfsavecontent variable="html"&gt;
+
+                &lt;cfoutput&gt;&lt;fieldset style="width: 300px;"&gt;
+                    &lt;cfif len(arguments.stMetadata.ftLegend)&gt;&lt;legend&gt;#arguments.stMetadata.ftLegend#&lt;/legend&gt;&lt;/cfif&gt;
+
+                    &lt;!--- &lt;div id="tree-div" style="border:1px solid #c3daf9;"&gt;&lt;/div&gt; ---&gt;
+                    &lt;div class="fieldsection optional full"&gt;
+
+                        &lt;div class="fieldwrap"&gt;
+
+                            &lt;div id="#arguments.fieldname#-tree-div"&gt;&lt;/div&gt; 
+
+                        &lt;/div&gt;
+
+                        &lt;br class="fieldsectionbreak" /&gt;
+                    &lt;/div&gt;
+                    &lt;input type="hidden" id="#arguments.fieldname#" name="#arguments.fieldname#" value="#lSelectedCategoryID#" /&gt;
+                    &lt;input type="hidden" name="#arguments.fieldname#" value="" /&gt;
+                &lt;/fieldset&gt;
+                &lt;/cfoutput&gt;
+
+            &lt;/cfsavecontent&gt;
+
+            &lt;skin:onReady&gt;
+            &lt;cfoutput&gt;
+                createFormtoolTree('#arguments.fieldname#','#rootID#', '#application.url.webtop#/facade/getCategoryNodes.cfm', '#rootNodeText#','#lSelectedCategoryID#', 'categoryIconCls');                                            
+            &lt;/cfoutput&gt;
+            &lt;/skin:onReady&gt;
+        &lt;/cfcase&gt;
+        &lt;cfcase value="jquery"&gt;         
+
+            &lt;skin:onReady&gt;
+            &lt;cfoutput&gt;
+                $j("###arguments.fieldname#_list").treeview({
+                    url: "#application.url.webtop#/facade/getCategoryNodes.cfm?node=#rootID#&amp;fieldname=#arguments.fieldname#&amp;multiple=#arguments.stMetadata.ftSelectMultiple#&amp;lSelectedItems=#lSelectedCategoryID#"
+                })
+            &lt;/cfoutput&gt;
+            &lt;/skin:onReady&gt;
+
+            &lt;cfsavecontent variable="html"&gt;             
+                &lt;cfoutput&gt;
+                &lt;div class="multiField"&gt;
+                    &lt;ul id="#arguments.fieldname#_list" class="treeview"&gt;&lt;/ul&gt;
+                &lt;/div&gt;
+                &lt;input type="hidden" name="#arguments.fieldname#" value="" /&gt;   
+                &lt;/cfoutput&gt;
+            &lt;/cfsavecontent&gt;            
+        &lt;/cfcase&gt;           
+        &lt;cfdefaultcase&gt;
+
+            &lt;skin:loadJS id="jquery" /&gt;
+            &lt;skin:loadJS id="jquery-checkboxtree" basehref="#application.url.webtop#/thirdparty/checkboxtree/js" lFiles="jquery.checkboxtree.js" /&gt;
+            &lt;skin:loadCSS id="jquery-checkboxtree" basehref="#application.url.webtop#/thirdparty/checkboxtree/css" lFiles="checkboxtree.css" /&gt;
+
+            &lt;skin:onReady&gt;
+            &lt;cfoutput&gt;
+                $j.ajax({
+                   type: "POST",
+                   url: '#application.fapi.getLink(type="dmCategory", objectid="#rootID#", view="displayCheckboxTree", urlParameters="ajaxmode=1")#',
+                   data: {
+                    fieldname: '#arguments.fieldname#',
+                    rootNodeID:'#rootID#', 
+                    selectedObjectIDs: '#lSelectedCategoryID#'
+                    },
+                   cache: false,
+                   success: function(msg){
+                        $j("###arguments.fieldname#-checkboxDiv").html(msg);
+                        $j("###arguments.fieldname#-checkboxTree").checkboxTree({
+                                collapsedarrow: "#application.url.webtop#/thirdparty/checkboxtree/images/checkboxtree/img-arrow-collapsed.gif",
+                                expandedarrow: "#application.url.webtop#/thirdparty/checkboxtree/images/checkboxtree/img-arrow-expanded.gif",
+                                blankarrow: "#application.url.webtop#/thirdparty/checkboxtree/images/checkboxtree/img-arrow-blank.gif",
+                                checkchildren: false,
+                                checkparents: false
+                        }); 
+                        $j("###arguments.fieldname#-checkboxDiv input:checked").addClass('mjb');     
+                        $j("###arguments.fieldname#-checkboxDiv input:checked").parent().addClass('mjb');           
+                   }
+                 });
+
+            &lt;/cfoutput&gt;
+            &lt;/skin:onReady&gt;
+
+            &lt;cfsavecontent variable="html"&gt;
+
+                &lt;cfoutput&gt;
+                &lt;div class="multiField"&gt;
+                    &lt;div id="#arguments.fieldname#-checkboxDiv"&gt;loading...&lt;/div&gt;
+                    &lt;input type="hidden" name="#arguments.fieldname#" value="" /&gt;           
+                &lt;/div&gt;
+                &lt;/cfoutput&gt;
+
+            &lt;/cfsavecontent&gt;            
+        &lt;/cfdefaultcase&gt;            
+
+    &lt;/cfswitch&gt;
+
+    &lt;cfreturn html&gt;
+&lt;/cffunction&gt;
+</code></pre>
+
+<p></cfcomponent>
+```</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[FarCry Tip - remove install directory]]></title>
+    <link href="http://michaelsharman.github.io/chapter31/2011/06/30/farcry-tip-remove-install-directory/"/>
+    <updated>2011-06-30T10:39:14+10:00</updated>
+    <id>http://michaelsharman.github.io/chapter31/2011/06/30/farcry-tip-remove-install-directory</id>
+    <content type="html"><![CDATA[<p>After you install FarCry you must make sure to delete the "install" folder(s) that FarCry leaves behind. Otherwise it's possible for anyone to access the installer wizard again from your production website, and as it's the installer they don't even need to be logged in to cause real havoc. Not good.</p>
+
+<p>By default, as of FarCry 6.1.x, there are 2 install folders to delete:</p>
+
+<ul>
+<li>farcry.core.webtop.install</li>
+<li>farcry.plugins.farcrycms.install</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

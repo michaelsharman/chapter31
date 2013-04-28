@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: CSS | chapter31 &raquo;]]></title>
+  <link href="http://michaelsharman.github.io/chapter31/categories/css/atom.xml" rel="self"/>
+  <link href="http://michaelsharman.github.io/chapter31/"/>
+  <updated>2013-04-28T21:58:49+10:00</updated>
+  <id>http://michaelsharman.github.io/chapter31/</id>
+  <author>
+    <name><![CDATA[Michael Sharman]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Reading blogs on a mac using Firefox]]></title>
+    <link href="http://michaelsharman.github.io/chapter31/2007/06/14/reading-blogs-on-a-mac-using-firefox/"/>
+    <updated>2007-06-14T09:54:27+10:00</updated>
+    <id>http://michaelsharman.github.io/chapter31/2007/06/14/reading-blogs-on-a-mac-using-firefox</id>
+    <content type="html"><![CDATA[<p>I've been on a Mac (OSX) for a little while now and generally I'm having a nice time, except when it comes to reading some (but only some) blogs!</p>
+
+<p>We all know that font sizes are different across browser and platform, but Firefox on a mac occasionally makes life a little difficult particularly when it comes to reading comments and code snippets.</p>
+
+<p>Here is a screen grab of an example, certainly not to pick on this particular blog but just one of the few examples I come across on my daily travels thru <a href="http://www.fullasagoog.com/">fullasagoog</a>.</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2007/06/mac.jpg" alt="Fonts on mac" /></p>
+
+<p>Of course I can easily bump up the text size (apple +), but that makes the rest of the page unviewable!</p>
+
+<p>Interesting to note that I don't have the same problem with Safari.</p>
+
+<p>The <a href="http://developer.yahoo.com/">Yahoo Developer Network</a> has some amazing tools including <a href="http://developer.yahoo.com/yui/fonts/">fonts</a> to provide consistent font sizing and line height and is well worth checking out.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Firefox Web Developer Toolbar]]></title>
+    <link href="http://michaelsharman.github.io/chapter31/2006/09/29/firefox-web-developer-toolbar/"/>
+    <updated>2006-09-29T11:11:11+10:00</updated>
+    <id>http://michaelsharman.github.io/chapter31/2006/09/29/firefox-web-developer-toolbar</id>
+    <content type="html"><![CDATA[<p><a href="http://www.boyzoid.com/blog/index.cfm">Scott Stroz</a> (aka boyzoid) has a <a href="http://www.boyzoid.com/blog/index.cfm/2006/9/28/Web-Developer-Toolbar">nice little post</a> on the <a href="https://addons.mozilla.org/firefox/60/">Firefox Web Developer Toolbar</a> by Chris Pederick.</p>
+
+<p>The toolbar (which has been around for ages) is a must have for any web developer, I thought I'd post some of the tools including their shortcuts which I use regularly.</p>
+
+<h3>CSS</h3>
+
+<p>Viewing CSS - Ctrl+Shift+C</p>
+
+<pre><code>Opens up a new tab with the current pages CSS. I also use the [JSView](https://addons.mozilla.org/firefox/2076/) for this because it lets you view and individual Javascript or CSS files
+</code></pre>
+
+<p>View Style Information - Ctrl+Shift+Y</p>
+
+<pre><code>In this mode you can hover your mouse over any area of the page and the status bar will show you where you are in the markup
+</code></pre>
+
+<p>Edit CSS - Ctrl+Shift+E</p>
+
+<pre><code>This one I use all the time, you can edit CSS (even on a remote site!) in real time. Saves making changes to your CSS, saving the file, switching to your browser and refreshing when you want to experiment with your CSS/markup
+</code></pre>
+
+<p>Disable Styles - Ctrl+Shift+S</p>
+
+<pre><code>Now we all test our pages to ensure they display correctly with no styles don't we?
+</code></pre>
+
+<h3>Forms</h3>
+
+<p>Display Form Details</p>
+
+<pre><code>Excellent for showing all field types, names and values
+</code></pre>
+
+<p>Show Passwords</p>
+
+<pre><code>If ever you need to see the value of a password field, this saves you having to view source
+</code></pre>
+
+<p>Clear Radio Buttons</p>
+
+<pre><code>Ever wished you could uncheck a radio button?
+</code></pre>
+
+<p>Populate Form Fields</p>
+
+<pre><code>When you're developing with forms it is a PAIN to keep filling them out every time you want to test a submission.
+</code></pre>
+
+<h3>Images</h3>
+
+<p>Display Image Paths</p>
+
+<pre><code>Very handy when you want to see the path of broken images etc
+</code></pre>
+
+<h3>Information</h3>
+
+<p>View Color Information</p>
+
+<pre><code>I sometimes use [pixie](http://www.nattyware.com/pixie.html) for this, but it is really handy to get hex values for all colours on the current page
+</code></pre>
+
+<h3>Miscellaneous</h3>
+
+<p>Edit HTML</p>
+
+<pre><code>Much like edit css, this allows you to edit your HTML in real time without needing to flick between your editor and a browser. Of course this doesn't actually save changes to your file, it's best used to see what things look like before deciding on the final edit to make in your file/IDE.
+</code></pre>
+
+<p>Show Ruler</p>
+
+<pre><code>When you want to measure an element on the page
+</code></pre>
+
+<p>Clear Cache</p>
+
+<pre><code>When you need to get the latest data, particularly usefull when working with flash content
+</code></pre>
+
+<h3>Resize</h3>
+
+<p>800 x 600</p>
+
+<pre><code>To test your page in a different resolution
+</code></pre>
+
+<h3>Tools</h3>
+
+<p>Validate</p>
+
+<pre><code>There are a lot of tools which you should use to validate your pages before going into production environments. CSS and HTML are 2 which I validate regularly. HTML shortcut is Ctrl+Shift+H
+</code></pre>
+
+<p>Javascript Console - Ctrl+Shift+J</p>
+
+<pre><code>When working with Javascript, the console keeps you informed about any bugs in your code. Note that [firebug](https://addons.mozilla.org/firefox/1843/) is also a great tool for this.
+</code></pre>
+
+<p>Validate Local CSS</p>
+
+<pre><code>When you're working in a development environment, external site might not have access to your web site.
+</code></pre>
+
+<p>All in all the web developer toolbar provides a wealth of information and can save you a LOT of time and heartache in day to day development.</p>
+
+<p>Learn to know and use these tools and you'll be smiling wider in no time :)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[HTML pre-launch flight check]]></title>
+    <link href="http://michaelsharman.github.io/chapter31/2006/08/25/html-pre-launch-flight-check/"/>
+    <updated>2006-08-25T12:49:28+10:00</updated>
+    <id>http://michaelsharman.github.io/chapter31/2006/08/25/html-pre-launch-flight-check</id>
+    <content type="html"><![CDATA[<p><a href="http://www.anybrowser.com/">AnyBrowser</a> have a lot of tools for you to use when validating and preparing your website for deployment including:</p>
+
+<ul>
+<li><p><a href="http://www.anybrowser.com/ScreenSizeTest.html">Screen Size Test</a></p></li>
+<li><p><a href="http://www.anybrowser.com/MetaTagGenerator.html">Meta Tag Creator</a></p></li>
+<li><p><a href="http://www.anybrowser.com/validateit.html">HTML Validation</a></p></li>
+<li><p><a href="http://www.anybrowser.com/linkchecker.html">Link checking</a></p></li>
+<li><p><a href="http://www.anybrowser.com/EngineView.html">Engine View</a> (See how your site might get listed by search engine spiders.)</p></li>
+</ul>
+
+
+<p>Not a bad list, don't forget that ALL web developers should validate their pages, perform link checking and test on different resolutions before going live.</p>
+
+<p>Another great site for viewing your website on any platform and/or operating system is <a href="http://www.browsercam.com/">Browser Cam</a>. I use this one all the time, it's a paid service but invaluable unless you are in abundance of (X)HHTML/CSS greatness that you don't need it!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Flash of Unstyled Content]]></title>
+    <link href="http://michaelsharman.github.io/chapter31/2006/06/20/flash-of-unstyled-content/"/>
+    <updated>2006-06-20T18:41:49+10:00</updated>
+    <id>http://michaelsharman.github.io/chapter31/2006/06/20/flash-of-unstyled-content</id>
+    <content type="html"><![CDATA[<p>The lovely people (person?) over at <a href="http://www.bluerobot.com/">Blue Robot</a> have coined a term 'FOUC'; or <em>Flash of Unstyled Content</em>.</p>
+
+<p>This is that annoying 'bug' in Windows IE where a user can see the entire body of the page their trying to view 'unstyled' (particularly for page layout) for a moment before the stylesheet kicks in. If the CSS is cached then you probably won't see this happen, but for first time users this just looks amature.</p>
+
+<p>Luckily for the rest of us Blue Robot have a tidy little solution :) All you need to do is add <em>"just one LINK element or SCRIPT element inside a document's HEAD"</em>. Wow!</p>
+
+<p>Note that the &lt;script&gt; or &lt;link&gt; tag should go before the CSS tag as follows:</p>
+
+<p>``` javascript
+<head>
+<link media="print" href="print.css" type="text/css" rel="stylesheet"></link></p>
+
+
+
+<p></head>
+```</p>
+
+<p><a href="http://www.bluerobot.com/web/css/fouc.asp">See the full article here</a></p>
+]]></content>
+  </entry>
+  
+</feed>

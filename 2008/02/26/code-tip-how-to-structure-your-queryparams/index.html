@@ -1,0 +1,322 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Code Tip: How to structure your queryparams - chapter31 &raquo;</title>
+	<meta name="author" content="Michael Sharman">
+
+	
+	<meta name="description" content="If I were a betting man I&#8217;d bet a LOT of money (and perhaps even the house!) that you&#8217;ve done this before. Try to spot the error in the &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="chapter31 &raquo;" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">chapter31 &raquo;</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/michaelsharman" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/michaelsharman" title="GitHub">GitHub</a>
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+	</form>
+</nav>
+
+</header>
+	
+		
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">Code Tip: How to Structure Your Queryparams</h2>
+	<div class="entry-content"><p>If I were a betting man I&#8217;d bet a LOT of money (and perhaps even the house!) that you&#8217;ve done this before.</p>
+
+<p>Try to spot the error in the query below:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfquery</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;qCreate&quot;</span> <span class="nx">datasource</span><span class="o">=</span><span class="s2">&quot;#getDSN()#&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="nx">INSERT</span> <span class="nx">INTO</span> <span class="nx">myTable</span>
+</span><span class='line'>      <span class="p">(</span>
+</span><span class='line'>          <span class="nx">ObjectId</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">Country</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">DateOfBirth</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">Email</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">FirstName</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">Gender</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">LastName</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">MainSchoolId</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">PhoneHome</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">PhoneMobile</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">PostCode</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">State</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">Street</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">StudentId</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">StudentPassword</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">StudentPodId</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">Suburb</span>
+</span><span class='line'>      <span class="p">)</span>
+</span><span class='line'>  <span class="nx">VALUES</span>
+</span><span class='line'>      <span class="p">(</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#createUUID()#&quot;</span> <span class="o">/&gt;</span><span class="p">,</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;country&#39;)#&quot;</span> <span class="o">/&gt;</span><span class="p">,</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_date&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#createODBCDate(arguments.oUser.get(&#39;dateOfBirth&#39;))#&quot;</span> <span class="o">/&gt;</span><span class="p">,</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;email&#39;)#&quot;</span> <span class="o">/&gt;</span><span class="p">,</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;firstName&#39;)#&quot;</span> <span class="o">/&gt;</span><span class="p">,</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;gender&#39;)#&quot;</span> <span class="o">/&gt;</span><span class="p">,</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;lastName&#39;)#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_integer&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;mainSchoolId&#39;)#&quot;</span> <span class="o">/&gt;</span><span class="p">,</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;phoneHome&#39;)#&quot;</span> <span class="o">/&gt;</span><span class="p">,</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;phoneMobile&#39;)#&quot;</span> <span class="o">/&gt;</span><span class="p">,</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;postCode&#39;)#&quot;</span> <span class="o">/&gt;</span><span class="p">,</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;state&#39;)#&quot;</span> <span class="o">/&gt;</span><span class="p">,</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;street&#39;)#&quot;</span> <span class="o">/&gt;</span><span class="p">,</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_integer&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.getStudentId()#&quot;</span> <span class="o">/&gt;</span><span class="p">,</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#hash(arguments.oUser.get(&#39;studentPassword&#39;))#&quot;</span> <span class="o">/&gt;</span><span class="p">,</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#createUUID()#&quot;</span> <span class="o">/&gt;</span><span class="p">,</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;suburb&#39;)#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>      <span class="p">)</span>            
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfquery&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Spot it? It&#8217;s one of those &#8220;Where&#8217;s Wally&#8221; errors where some people spot it straight away and some people (like me today) spend FAR too long searching for what went wrong.</p>
+
+<p>Ok&#8230;if you haven&#8217;t spotted it there is a missing comma in the SQL (after the 7th argument &#8216;lastName&#8217;).</p>
+
+<p>Even though in hindsight the error returned from MySQL was telling me exactly what was wrong:</p>
+
+<blockquote><p>&#8220;You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &#8216;MainSchoolId = 8459, PhoneHome = &#8221;, PhoneMobile = &#8221;, Post&#8217; at line 9&#8221;</p></blockquote>
+
+<p>Still took me longer than 5 minutes to debug. So&#8230;</p>
+
+<p>A new rule for me is going back to what I used to do all the time for this exact reason (no idea why I didn&#8217;t in this case).</p>
+
+<p>Putting the comma at the START of any argument like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#createUUID()#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;country&#39;)#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_date&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#createODBCDate(arguments.oUser.get(&#39;dateOfBirth&#39;))#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;email&#39;)#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;firstName&#39;)#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;gender&#39;)#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;lastName&#39;)#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_integer&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;mainSchoolId&#39;)#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;phoneHome&#39;)#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;phoneMobile&#39;)#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;postCode&#39;)#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;state&#39;)#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;street&#39;)#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_integer&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.getStudentId()#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#hash(arguments.oUser.get(&#39;studentPassword&#39;))#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#createUUID()#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;suburb&#39;)#&quot;</span> <span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now it&#8217;s EASY to spot this all too common syntax error, especially if you&#8217;re copying and pasting from somewhere else :)</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-02-26T15:16:49+11:00" pubdate data-updated="true">Feb 26<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/02/26/code-tip-how-to-structure-your-queryparams/#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2013
+
+    Michael Sharman
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'chapter31';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://michaelsharman.github.io/chapter31/2008/02/26/code-tip-how-to-structure-your-queryparams/';
+        var disqus_url = 'http://michaelsharman.github.io/chapter31/2008/02/26/code-tip-how-to-structure-your-queryparams/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-306772-2']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

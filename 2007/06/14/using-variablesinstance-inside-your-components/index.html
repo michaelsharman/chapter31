@@ -1,0 +1,241 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Using variables.instance inside your components - chapter31 &raquo;</title>
+	<meta name="author" content="Michael Sharman">
+
+	
+	<meta name="description" content="Often when creating ColdFusion components developers will create a structure to hold component instance data. This data is stored in the components &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="chapter31 &raquo;" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">chapter31 &raquo;</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/michaelsharman" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/michaelsharman" title="GitHub">GitHub</a>
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+	</form>
+</nav>
+
+</header>
+	
+		
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">Using variables.instance Inside Your Components</h2>
+	<div class="entry-content"><p>Often when creating ColdFusion components developers will create a structure to hold component instance data. This data is stored in the components &#8216;variables&#8217; scope and is therefore available to all methods.</p>
+
+<p>Here is an example from the <a href="http://rooibos.maestropublishing.com/">rooibos component generator</a>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfcomponent</span>
+</span><span class='line'>  <span class="nx">displayname</span><span class="o">=</span><span class="s2">&quot;sample&quot;</span>
+</span><span class='line'>  <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;false&quot;</span>
+</span><span class='line'>  <span class="nx">hint</span><span class="o">=</span><span class="s2">&quot;A bean which models the form.&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c">&lt;!--</span><span class="o">-</span>
+</span><span class='line'>  <span class="nx">PROPERTIES</span>
+</span><span class='line'>  <span class="o">---&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">variables</span><span class="p">.</span><span class="nx">instance</span> <span class="o">=</span> <span class="nx">StructNew</span><span class="p">()</span> <span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now some of you may be wondering why you would use the extra struct level of &#8216;instance&#8217; when we already know everything in that struct is in the components instance (variables) scope.</p>
+
+<p>A quick question to <a href="http://www.daemon.com.au/">Geoff Bowers</a> gave me a few answers.</p>
+
+<ul>
+<li><p>It&#8217;s obvious everywhere you reference this that it is instance data in the variables scope</p></li>
+<li><p>You can dump all the components instance data by using <cfdump var="#variables.instance#" />. The benefit of this is that only dumping the <em>variables</em> scope will give you a lot more than just your instance data! Think method signatures etc</p></li>
+<li><p>You can (if you want) separate &#8216;types&#8217; of instance data. e.g. you might pass in a DAO or Gateway component and assign it to the variables scope (variables.UserDAO)</p></li>
+</ul>
+
+
+<p>Another great example of dumping variables.instance quickly and easily (from the Rooibos generator):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c">&lt;!--</span><span class="o">-</span>
+</span><span class='line'><span class="nx">DUMP</span>
+</span><span class='line'><span class="o">---&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cffunction</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;dump&quot;</span> <span class="nx">access</span><span class="o">=</span><span class="s2">&quot;public&quot;</span> <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;true&quot;</span> <span class="k">return</span><span class="o">=</span><span class="s2">&quot;void&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;abort&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;boolean&quot;</span> <span class="k">default</span><span class="o">=</span><span class="s2">&quot;FALSE&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfdump</span> <span class="kd">var</span><span class="o">=</span><span class="s2">&quot;#variables.instance#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">abort</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfabort</span> <span class="o">/&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cfif&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cffunction&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-06-14T18:36:02+10:00" pubdate data-updated="true">Jun 14<span>th</span>, 2007</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2007/06/14/using-variablesinstance-inside-your-components/#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2013
+
+    Michael Sharman
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'chapter31';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://michaelsharman.github.io/chapter31/2007/06/14/using-variablesinstance-inside-your-components/';
+        var disqus_url = 'http://michaelsharman.github.io/chapter31/2007/06/14/using-variablesinstance-inside-your-components/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-306772-2']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

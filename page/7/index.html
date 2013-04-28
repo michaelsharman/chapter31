@@ -1,0 +1,1076 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>chapter31 &raquo;</title>
+	<meta name="author" content="Michael Sharman">
+
+	
+	<meta name="description" content="In discussing a possible caching solution at work a suggestion was made to use a secondary database (on the same server) to store some key &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="chapter31 &raquo;" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">chapter31 &raquo;</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/michaelsharman" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/michaelsharman" title="GitHub">GitHub</a>
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+	</form>
+</nav>
+
+</header>
+	
+		
+
+	
+	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/12/04/querying-multiple-databases-within-one-cfquery/">
+		
+			Querying Multiple Databases Within One Cfquery</a>
+	</h2>
+	<div class="entry-content">
+		<p>In discussing a possible caching solution <a href="http://www.lynchconsulting.com.au/">at work</a> a suggestion was made to use a secondary database (on the same server) to store some key application data. It&#8217;s not really important to describe why we wanted to do this, suffice to say that my concern was if and when the application would need to perform a SQL &#8220;JOIN&#8221; between the primary and secondary (caching) database as I wasn&#8217;t sure if it was technically possible within our environment (ColdFusion 8, MySQL).</p>
+
+<p>I quickly mocked up a proof of concept and was pleased to see that this works fine with ColdFusion and MySQL. It looks as though <cfquery> simply wraps up your SQL and sends it to the database server for execution (as you&#8217;d probably expect), so this is really the ability of the database server rather than any specific ColdFusion engine.</p>
+
+<p>The only thing you need to do is make sure that you <strong>explicitly qualify</strong> the references to your column and table names with the actual database name and <em>very importantly</em> make sure the database user (as defined in your cfquery datasource attribute) has access to both databases! Remember that you&#8217;re using a single ColdFusion datasource to talk to 2 different databases.</p>
+
+<p>Here&#8217;s a code sample qualifying just the database and column names:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfquery</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;qGetSomething&quot;</span> <span class="nx">datasource</span><span class="o">=</span><span class="s2">&quot;myDatasource&quot;</span><span class="o">&gt;</span>
+</span><span class='line'><span class="nx">SELECT</span>    <span class="nx">mydb1</span><span class="p">.</span><span class="nx">Column1</span><span class="p">,</span> <span class="nx">mydb1</span><span class="p">.</span><span class="nx">Column2</span><span class="p">,</span> <span class="nx">mydb2</span><span class="p">.</span><span class="nx">Column3</span>
+</span><span class='line'><span class="nx">FROM</span>  <span class="nx">mydb1</span><span class="p">.</span><span class="nx">Table1</span> <span class="nx">t1</span> <span class="nx">INNER</span> <span class="nx">JOIN</span> <span class="nx">mydb2</span><span class="p">.</span><span class="nx">Table2</span> <span class="nx">t2</span>
+</span><span class='line'>      <span class="nx">ON</span> <span class="nx">t1</span><span class="p">.</span><span class="nx">id</span> <span class="o">=</span> <span class="nx">t2</span><span class="p">.</span><span class="nx">id</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfquery&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Here&#8217;s a code sample qualifying the database, table and column names:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfquery</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;qGetSomething&quot;</span> <span class="nx">datasource</span><span class="o">=</span><span class="s2">&quot;myDatasource&quot;</span><span class="o">&gt;</span>
+</span><span class='line'><span class="nx">SELECT</span>    <span class="nx">mydb1</span><span class="p">.</span><span class="nx">Table1</span><span class="p">.</span><span class="nx">Column1</span><span class="p">,</span> <span class="nx">mydb1</span><span class="p">.</span><span class="nx">Table1</span><span class="p">.</span><span class="nx">Column2</span><span class="p">,</span> <span class="nx">mydb2</span><span class="p">.</span><span class="nx">Table2</span><span class="p">.</span><span class="nx">Column3</span>
+</span><span class='line'><span class="nx">FROM</span>  <span class="nx">mydb1</span><span class="p">.</span><span class="nx">Table1</span> <span class="nx">t1</span> <span class="nx">INNER</span> <span class="nx">JOIN</span> <span class="nx">mydb2</span><span class="p">.</span><span class="nx">Table2</span> <span class="nx">t2</span>
+</span><span class='line'>      <span class="nx">ON</span> <span class="nx">t1</span><span class="p">.</span><span class="nx">id</span> <span class="o">=</span> <span class="nx">t2</span><span class="p">.</span><span class="nx">id</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfquery&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you get an error like the following back, you know you have a database user permission error :(</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">SELECT</span> <span class="nx">command</span> <span class="nx">denied</span> <span class="nx">to</span> <span class="nx">user</span> <span class="s1">&#39;mydbuser&#39;</span><span class="err">@</span><span class="s1">&#39;localhost&#39;</span> <span class="k">for</span> <span class="nx">table</span> <span class="s1">&#39;Table2&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-12-04T10:25:00+11:00" pubdate data-updated="true">Dec 4<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/databases/'>Databases</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/12/04/querying-multiple-databases-within-one-cfquery//page/7/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/11/28/installing-a-new-farcry-5-project-extended-advanced-mode/">
+		
+			Installing a New FarCry 5 Project - (Extended) Advanced Mode</a>
+	</h2>
+	<div class="entry-content">
+		<p>There are several installation options for the latest version of <a href="http://www.farcrycore.org/">FarCry</a> (5.0.2) which makes things nice and flexible for the framework to be used by different people in a variety of setups.</p>
+
+<p>The <a href="http://docs.farcrycms.org/display/FCDEV50/Deployment+Configurations">deployment configurations</a> page has some easy to follow instructions for installing in &#8220;Standalone&#8221; mode. This is really the best option if you are in a shared environment where you may not have control over ColdFusion mappings, but also if you are looking to get up and running quickly (maybe you just want to evaluate the product etc).</p>
+
+<p>For <a href="http://www.lynchconsulting.com.au/">us</a> we use FarCry for many applications, but in what would be considered an &#8220;Advanced&#8221; configuration mode (using FarCry 5+ parlance). Unfortunately it looks as though we may stray a little from the &#8220;Advanced&#8221; configuration which is the point of this tutorial.</p>
+
+<p>The <a href="http://docs.farcrycms.org/display/FCDEV50/Deployment+Configurations">current advanced</a> setup may be a little confusing to some. It doesn&#8217;t really list full details for the advanced mode, but still seems to require you to have FarCry running in the following directory structure (note that in the example below &#8216;farcry_5.0.2&#8217; can really be called anything and is not a strict naming requirement, I like to use this as it is explicit as to which version I&#8217;m using):</p>
+
+<ul>
+<li>/farcry_5.0.2
+
+<ul>
+<li>/core</li>
+<li>/plugins
+
+<ul>
+<li>/farcrycms</li>
+</ul>
+</li>
+<li>/projects
+
+<ul>
+<li>/myproject1</li>
+<li>/myproject2</li>
+</ul>
+</li>
+<li>/skeletons
+
+<ul>
+<li>/mollio</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<p>This is nice and easy as it gives you the ability to have only 1 ColdFusion mapping (<em>/farcry</em> pointing to your /farcry_5.0.2 directory) which all your projects can share (i.e. all projects would share the same farcry &#8220;core&#8221; and &#8220;plugins&#8221; codebase etc). It&#8217;s this structure where our setup starts to differ.</p>
+
+<p>We typically have <em>library</em> directories to hold shared codebases and a <em>completely separate location for our vhosts</em> (projects or &#8220;web sites&#8221;). This is the main difference and means we have something like the following:</p>
+
+<ul>
+<li>/libs/farcry_5.0.2
+
+<ul>
+<li>/core</li>
+<li>/plugins
+
+<ul>
+<li>/farcrycms</li>
+</ul>
+</li>
+<li>/projects <em>(note this is only needed for our installation, we won&#8217;t be hosting projects from here)</em></li>
+<li>/skeletons <em>(note this is only needed for our installation, we won&#8217;t need this in production)</em></li>
+</ul>
+</li>
+<li>/vhosts
+
+<ul>
+<li>/myproject1</li>
+</ul>
+</li>
+</ul>
+
+
+<p><strong>Note:</strong> <em>In actual fact our vhost setup is slightly different than what I&#8217;ve listed above, but this is easier to describe for the purposes of a tutorial.</em></p>
+
+<p>This is an extremely flexible setup, but installing this way is a little tricky. I&#8217;ve done several installs for this configuration using the following steps:</p>
+
+<h3>Installation - Preparation</h3>
+
+<p>Is is assumed that your farcry files, as mentioned above, are in the following location (this location is of course an example of what you may have on a linux based machine, you could obviously use a different path like C:/libs/farcry_5.0.2):</p>
+
+<ul>
+<li>/libs/farcry_5.0.2</li>
+</ul>
+
+
+<p>It is also assumed that you want to install your project into the following location:</p>
+
+<ul>
+<li>/vhosts/myproject</li>
+</ul>
+
+
+<p>*Note: <strong>DO NOT</strong> actually create this project folder yet, we will move the folder to this location <em>after the FarCry installation</em> has completed.</p>
+
+<p>Follow the following steps:</p>
+
+<ol>
+<li>Create a blank database. This can be called anything you want, typically something which mirrors your project name is a good idea</li>
+<li>Create a new datasource in ColdFusion Administrator and verify that it is connecting to your new database</li>
+<li>Create your project vhost (i.e. http://myproject.local) in your web server of choice (Apache or IIS etc)
+
+<ul>
+<li>Point the document root to &#8216;/vhosts/myproject/www&#8217; <em>(even though this actual location doesn&#8217;t exist yet!)</em></li>
+<li>Make sure you have a &#8216;/webtop&#8217; alias (this replaces the old &#8216;farcry&#8217; alias for those familiar with prior versions of FarCry) pointing to /libs/farcry_5.0.2/core/webtop</li>
+</ul>
+</li>
+<li>Create an entry in your hosts file so myproject.local is in use on 127.0.0.1 (for production you&#8217;d obviously use different settings!)</li>
+<li>Create a &#8216;/farcry&#8217; ColdFusion mapping pointing to the directory which holds &#8220;core&#8221; (i.e. /libs/farcry_5.0.2)</li>
+<li>Create a &#8216;/farcry/projects/myproject&#8217; ColdFusion mapping
+
+<ul>
+<li>mapping: /farcry/projects/myproject</li>
+<li>path: /vhosts/myproject</li>
+</ul>
+</li>
+</ol>
+
+
+<p>*Note: You could get away with having a single ColdFusion mapping of /farcry/projects if all your projects existed under the same directory (i.e. /vhosts), otherwise create a projects mapping per project (e.g. /farcry/projects/myproject). I find it&#8217;s a good idea anyway to have a separate mapping per project.</p>
+
+<h3>Installation - Installing</h3>
+
+<p>To install FarCry we visit the &#8216;/webtop/install&#8217; sub-directory off your project URL, e.g. http://myproject.local/webtop/install/.</p>
+
+<p>You may be wondering how this works as we haven&#8217;t setup our physical project diretory yet, it works because of the web mapping (alias/virtual directory) of &#8216;/webtop&#8217; which points directly to /farcry_5.0.2/core/webtop/install.</p>
+
+<p>Ok we&#8217;re almost there! If everything is going well so far and the stars have aligned you&#8217;ll see the FarCry installation screen.</p>
+
+<p><a href="http://www.chapter31.com/wp-content/uploads/2008/11/screen-1.png"><img src="http://www.chapter31.com/wp-content/uploads/2008/11/screen-1-270x300.png" alt="" /></a></p>
+
+<p>The important value on this page is &#8220;Project Folder Name&#8221;. This should be &#8220;myproject&#8221; (i.e. what will become the physical name of your project directory, the same name as we added in our vhost).</p>
+
+<p>The 2nd step allows you to enter your ColdFusion datasource and database type:</p>
+
+<p><a href="http://www.chapter31.com/wp-content/uploads/2008/11/screen-2.png"><img src="http://www.chapter31.com/wp-content/uploads/2008/11/screen-2-300x196.png" alt="" /></a></p>
+
+<p>On the 3rd step you must choose a skeleton to install from. Just use the default &#8216;mollio&#8217;:</p>
+
+<p><a href="http://www.chapter31.com/wp-content/uploads/2008/11/screen-3.png"><img src="http://www.chapter31.com/wp-content/uploads/2008/11/screen-3-300x174.png" alt="" /></a></p>
+
+<p>The 4th step is for plugins, for most cases leave the default which is probably &#8216;farcry&#8217; and &#8216;farcry greybox&#8217;:</p>
+
+<p><a href="http://www.chapter31.com/wp-content/uploads/2008/11/screen-4.png"><img src="http://www.chapter31.com/wp-content/uploads/2008/11/screen-4-282x300.png" alt="" /></a></p>
+
+<p>The 5th step is important as the default is &#8220;Sub-Directory&#8221;. You have to change this to the last option &#8220;Advanced Configuration&#8221;:</p>
+
+<p><a href="http://www.chapter31.com/wp-content/uploads/2008/11/screen-5.png"><img src="http://www.chapter31.com/wp-content/uploads/2008/11/screen-5-229x300.png" alt="" /></a></p>
+
+<p>Step 6 is a confirmation step, nothing to do here except &#8220;INSTALL NOW&#8221;:</p>
+
+<p><a href="http://www.chapter31.com/wp-content/uploads/2008/11/screen-6.png"><img src="http://www.chapter31.com/wp-content/uploads/2008/11/screen-6-189x300.png" alt="" /></a></p>
+
+<p>After hitting &#8220;INSTALL NOW&#8221; FarCry will go off and do its magic:</p>
+
+<p><a href="http://www.chapter31.com/wp-content/uploads/2008/11/installing.png"><img src="http://www.chapter31.com/wp-content/uploads/2008/11/installing-300x100.png" alt="" /></a></p>
+
+<p>When the installation is complete and you can see the final screen FarCry will have successfully installed your project under the /libs/farcry_5.0.2/projects/myproject directory.</p>
+
+<p><a href="http://www.chapter31.com/wp-content/uploads/2008/11/complete.png"><img src="http://www.chapter31.com/wp-content/uploads/2008/11/complete-300x265.png" alt="" /></a></p>
+
+<p><strong><strong>Important</strong></strong> BEFORE you click the &#8220;VIEW SITE&#8221; or &#8220;LOGIN TO FARCY WEBTOP&#8221; buttons you must <em>move the project directory</em> to where you&#8217;ve specified in your vhost (i.e. move &#8216;myproject&#8217; from &#8216;farcry_5.0.2/projects/myproject&#8217; to &#8216;/vhosts/myproject&#8217;).</p>
+
+<p>Once you&#8217;ve moved your project directory, you can click the &#8220;Visit Site&#8221; button and/or &#8220;Login to the FarCry Webtop&#8221; and you&#8217;re ready to roll :)</p>
+
+<p>Hopefully that helps people trying to install FarCry in a slightly different configuration.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-11-28T15:07:07+11:00" pubdate data-updated="true">Nov 28<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/farcry/'>Farcry</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/11/28/installing-a-new-farcry-5-project-extended-advanced-mode//page/7/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/11/25/security-reminder-are-you-using-scriptprotect/">
+		
+			Security Reminder - Are You Using Scriptprotect?</a>
+	</h2>
+	<div class="entry-content">
+		<p>One of our applications had an entry in the ColdFusion exception logs today:</p>
+
+<blockquote><p>ScriptProtect error replacing insecure tag in scope CGI;</p></blockquote>
+
+<p>Essentially someone (via an automated process) was trying to find a weakness in our application by trying URL&#8217;s like:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">http</span><span class="o">:</span><span class="c1">//www.mysite.com/?mode=&gt;&#39;&gt;&lt;script&gt;alert(40891)&lt;/script&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Luckily we use scriptprotect (among many other defensive techniques) to prevent this type of thing from causing any damage. But I just thought I&#8217;d throw out a quick reminder to EVERYONE using CF7+ (or Railo) to make sure and use the <a href="http://www.chapter31.com/2006/12/21/scriptprotect-in-cfmx7/">scriptprotect</a> attribute of either the cfapplication tag or Application.cfc</p>
+
+<p>It is simple to do (set once and forget) and helps protect you against XSS attacks and as it&#8217;s easier to implement than cfqueryparam there really isn&#8217;t any excuse to get caught with your pants down by not using it!</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-11-25T12:30:06+11:00" pubdate data-updated="true">Nov 25<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/11/25/security-reminder-are-you-using-scriptprotect//page/7/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/11/24/use-applicationapplicationname-careful-when-re-initing-your-app/">
+		
+			Use application.applicationName? Careful When Re-initing Your App</a>
+	</h2>
+	<div class="entry-content">
+		<p>I&#8217;m sure most ColdFusion developers know that the application scope has a built-in variable called <em>application.applicationName</em> which stores the name of the application that you specify in the cfapplication tag or the <em>this.name</em> value if your using <a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=AppEvents_01.html">Application.cfc</a>. This doesn&#8217;t appear when you dump the application scope&#8230;but it&#8217;s there.</p>
+
+<p>Today I wanted to use this variable, everything was working fine until I ran into an error when I re-initialised my application via a URL variable. The error I received was:</p>
+
+<blockquote><p>Element APPLICATIONNAME is undefined in APPLICATION.</p></blockquote>
+
+<p><a href="http://www.lynchconsulting.com.au/blog/">Marko</a> helped me out with the obvious&#8230;as I had cleared my application scope the &#8220;applicationName&#8221; variable didn&#8217;t exist for the page request. Let me show you how I was re-initialising the application scope; the following 2 methods are declared in my Application.cfc, checkReInit() is called from onRequestStart():</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cffunction</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;checkReInit&quot;</span> <span class="nx">access</span><span class="o">=</span><span class="s2">&quot;private&quot;</span> <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="nx">returntype</span><span class="o">=</span><span class="s2">&quot;void&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfscript</span><span class="o">&gt;</span>      
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="nx">structKeyExists</span><span class="p">(</span><span class="nx">URL</span><span class="p">,</span> <span class="s2">&quot;reinit&quot;</span><span class="p">)</span> <span class="nx">AND</span> <span class="nx">URL</span><span class="p">.</span><span class="nx">reinit</span> <span class="nx">EQ</span> <span class="mi">101</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">{</span>
+</span><span class='line'>          <span class="nx">clearAppScope</span><span class="p">();</span>
+</span><span class='line'>      <span class="p">}</span>        
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cfscript&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cffunction&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cffunction</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;clearAppScope&quot;</span> <span class="nx">access</span><span class="o">=</span><span class="s2">&quot;private&quot;</span> <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="nx">returnType</span><span class="o">=</span><span class="s2">&quot;void&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfscript</span><span class="o">&gt;</span>      
+</span><span class='line'>      <span class="nx">structClear</span><span class="p">(</span><span class="nx">application</span><span class="p">);</span>
+</span><span class='line'>      <span class="nx">onApplicationStart</span><span class="p">();</span>        
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cfscript&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cffunction&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>As you can see in the sample code above, if a URL parameter called <em>reinit</em> exists with the value of 101 the application scope is cleared then re-inited via onApplicationStart().</p>
+
+<p><em><strong>**Note:</strong></em> I <em>really</em> don&#8217;t recommend this type of code for a production environment, in fact this is a cut down version of what the actual code is&#8230;we don&#8217;t run applications with the ability to re-initialise the application scope via the public URL from a production site.</p>
+
+<p>Anyway&#8230;clearAppScope() essentially clears whatever is in the application scope then calls onApplicationStart() to re-initialise the application. This is all good and well except <em>this.name</em> is not defined inside onApplicationStart(), it&#8217;s defined in the constructor area at the top of the file so any code in your .cfm template referencing <em>application.applicationName</em> will fail because this value won&#8217;t exist.</p>
+
+<p>I would have thought a simple page refresh would rectify any issues (as this.name would be called the next time a template was executed) but I was still getting errors.</p>
+
+<p>A simple fix is to explicitly set the application name value if and when you clear the app scope. That way it will be available to your application as expected.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&lt;</span><span class="n">cffunction</span> <span class="nb">name</span><span class="o">=</span><span class="s2">&quot;clearAppScope&quot;</span> <span class="n">access</span><span class="o">=</span><span class="s2">&quot;private&quot;</span> <span class="n">output</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="n">returnType</span><span class="o">=</span><span class="s2">&quot;void&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="n">cfscript</span><span class="o">&gt;</span>       
+</span><span class='line'>      <span class="n">structClear</span><span class="p">(</span><span class="n">application</span><span class="p">);</span>
+</span><span class='line'>      <span class="n">application</span><span class="o">.</span><span class="n">applicationName</span> <span class="o">=</span> <span class="n">this</span><span class="o">.</span><span class="n">name</span><span class="p">;</span>
+</span><span class='line'>      <span class="n">onApplicationStart</span><span class="p">();</span>     
+</span><span class='line'>  <span class="o">&lt;</span><span class="sr">/cfscript&gt;</span>
+</span><span class='line'><span class="sr">&lt;/</span><span class="n">cffunction</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-11-24T21:54:14+11:00" pubdate data-updated="true">Nov 24<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/11/24/use-applicationapplicationname-careful-when-re-initing-your-app//page/7/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/11/22/cfqueryparam-does-not-work-in-order-by-what-are-my-options/">
+		
+			Cfqueryparam Does Not Work in ORDER by, What Are My Options?</a>
+	</h2>
+	<div class="entry-content">
+		<p>For those that don&#8217;t know, ColdFusion&#8217;s <a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=Tags_p-q_18.html">cfqueryparam</a> won&#8217;t work on a SQL ORDER BY clause, so the following <strong>will not work</strong>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfquery</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;qGetUsers&quot;</span> <span class="nx">datasource</span><span class="o">=</span><span class="s2">&quot;mydsn&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="nx">SELECT</span>  <span class="nx">FirstName</span><span class="p">,</span> <span class="nx">LastName</span>
+</span><span class='line'>  <span class="nx">FROM</span>        <span class="nx">Users</span>
+</span><span class='line'>  <span class="nx">ORDER</span> <span class="nx">BY</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.order#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfquery&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is really nothing new, people have been talking about this for years but with the spate of recent SQL injection attacks (<em>note that I meant to publish this around sept 08 but got sidetracked!</em>) it&#8217;s worth mentioning again because there certainly are times where you want dynamic ordering based on a URL or form value.</p>
+
+<p>So what does this mean to you? How are you to manage dynamic ORDER BY values? The most common scenario I&#8217;ve come across is to use a list of allowed <em>order by</em> column values as defined by the developer. Something like:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">lValidOrderBy</span> <span class="o">=</span> <span class="s2">&quot;firstName, lastName, dateTimeCreated&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">listFindNoCase</span><span class="p">(</span><span class="nx">lValidOrderBy</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">order</span><span class="p">)</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">orderBy</span> <span class="o">=</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">order</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfelse</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="c">&lt;!--</span><span class="o">-</span> <span class="nx">Default</span> <span class="nx">order</span> <span class="nx">by</span> <span class="nx">column</span> <span class="o">---&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">orderBy</span> <span class="o">=</span> <span class="s2">&quot;lastName&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfif&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfquery</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;qGetUsers&quot;</span> <span class="nx">dsn</span><span class="o">=</span><span class="s2">&quot;mydsn&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="nx">SELECT</span>  <span class="nx">FirstName</span><span class="p">,</span> <span class="nx">LastName</span>
+</span><span class='line'>  <span class="nx">FROM</span>    <span class="nx">Users</span>
+</span><span class='line'>  <span class="nx">ORDER</span> <span class="nx">BY</span> <span class="err">#</span><span class="nx">orderBy</span><span class="err">#</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfquery&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Another approach might be to use a switch with either a <strong>literal </strong>value or a <strong>keyword </strong>which might map to a list of options like:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">SELECT</span> <span class="nx">FirstName</span><span class="p">,</span> <span class="nx">LastName</span>
+</span><span class='line'><span class="nx">FROM</span>   <span class="nx">Users</span>
+</span><span class='line'><span class="nx">ORDER</span> <span class="nx">BY</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfswitch</span> <span class="nx">expression</span><span class="o">=</span><span class="s2">&quot;#arguments.order#&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="c">&lt;!--</span><span class="o">-</span> <span class="nx">A</span> <span class="nx">literal</span> <span class="nx">value</span> <span class="o">---&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfcase</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;lastName&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="nx">lastName</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cfcase&gt;</span>
+</span><span class='line'>  <span class="c">&lt;!--</span><span class="o">-</span> <span class="nx">A</span> <span class="nx">keyword</span> <span class="nx">defined</span> <span class="nx">by</span> <span class="nx">the</span> <span class="nx">application</span> <span class="o">---&gt;</span>  
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfcase</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;user-reverse&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="nx">lastName</span> <span class="nx">DESC</span><span class="p">,</span> <span class="nx">firstName</span> <span class="nx">ASC</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cfcase&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfdefaultcase</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="nx">lastName</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cfdefaultcase&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfswitch&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I like this approach as the &#8220;mapped&#8221; keyword allows you to use <em>order by</em> values which aren&#8217;t so simple as a basic literal.</p>
+
+<p>This means when you want to order by multiple columns, use ASC/DESC or a combination of both (which are of course perfectly valid and real-world options) you can define these keywords in your application and still benefit from the safety of possible SQL injection by utilising the <a href="http://www.cfquickdocs.com/#cfswitch">cfswitch</a> statement.</p>
+
+<p>Don&#8217;t forget to always sanitise ANY USER INPUT!!!</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-11-22T13:15:50+11:00" pubdate data-updated="true">Nov 22<span>nd</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/databases/'>Databases</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/11/22/cfqueryparam-does-not-work-in-order-by-what-are-my-options//page/7/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/11/20/logging-all-mysql-queries-on-mac-osx/">
+		
+			Logging All MySQL Queries on Mac OSX</a>
+	</h2>
+	<div class="entry-content">
+		<p><a href="http://www.lynchconsulting.com.au/go/blog">We&#8217;ve</a> been doing some debugging of a 3rd party application recently where we had some possible performance concerns under a certain load and/or size of data in the database. What we wanted to know was exactly which queries (and how many) where hitting the database on a specific page request.</p>
+
+<p>The simplest method was to turn on logging of all queries on the local MySQL database, this is turned off by default as like most debugging techniques it adds overhead. To do this I needed to make a small change in the config file and restart MySQL. However it seems that a Mac installation of MySQL doesn&#8217;t create this config file by default which is a little confusing.</p>
+
+<p>Here are the steps taken to turn on logging of all queries:</p>
+
+<p><strong>Create a &#8220;my.cnf&#8221; file (if it doesn&#8217;t already exist)</strong></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sudo touch /etc/my.cnf</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>Add an entry to my.cnf telling MySQL where to write the log entries</strong></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[mysqld]
+</span><span class='line'>log=/var/log/mysqld.log</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>Create the log file</strong></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sudo touch /var/log/mysqld.log</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>Restart MySQL</strong></p>
+
+<p>To view the logs simply open mysqld.log in your favourite editor, or you can tail it in the terminal:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>tail -f /var/log/mysqld.log</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is a really handy way to see all the database traffic from your application. We also use MySQL Adminstrator to <a href="http://www.chapter31.com/2008/02/21/using-mysql-administrator-to-view-real-time-stats/">view some real-time stats</a> in terms of the total number of queries being executed.</p>
+
+<p>Remember once you&#8217;ve finished your debugging to turn logging off in my.cnf, I just comment it out (with a #) and restart MySQL:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="err">#</span><span class="p">[</span><span class="nx">mysqld</span><span class="p">]</span>
+</span><span class='line'><span class="err">#</span><span class="nx">log</span><span class="o">=</span><span class="err">/var/log/mysqld.log</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>Note:</strong> An easy way to check if you do have a my.cnf file is to open up <a href="http://dev.mysql.com/downloads/gui-tools/5.0.html">MySQL Administrator</a> and click the &#8220;Options&#8221; tab. If you get an alert saying &#8220;Configuration File not Found&#8221; then you know you need to go and create one!</p>
+
+<p><a href="http://www.chapter31.com/wp-content/uploads/2008/11/picture-11.png"><img src="http://www.chapter31.com/wp-content/uploads/2008/11/picture-11-300x132.png" alt="" /></a></p>
+
+<p>Once you have a my.cnf file you have access to the wide array of config options all from MySQL Administrator:</p>
+
+<p><a href="http://www.chapter31.com/wp-content/uploads/2008/11/picture-3.png"><img src="http://www.chapter31.com/wp-content/uploads/2008/11/picture-3-300x204.png" alt="" /></a></p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-11-20T10:19:48+11:00" pubdate data-updated="true">Nov 20<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/databases/'>Databases</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/11/20/logging-all-mysql-queries-on-mac-osx//page/7/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/11/15/forgot-to-import-your-coldfusion-tag-libraries/">
+		
+			Forgot to Import Your ColdFusion Tag Libraries?</a>
+	</h2>
+	<div class="entry-content">
+		<p>I&#8217;ve been bitten by the &#8220;forgetting to add <cfimport>&#8221; when importing ColdFusion custom tags before. If you also have then you know what I mean and have shared the frustration&#8230;basically your custom tag does nothing but you get no error from ColdFusion, nada, zip! Depending on the scenario this can lead to some wasted hair pulling time!</p>
+
+<p>The reason is of course that the syntax to import custom tags is perfectly valid XML which is ignored by ColdFusion server because you forgot to add <cfimport> tag. As such the output goes straight to the browser which treats it as markup&#8230;markup which it knows nothing about therefore it ignores it and you have no idea why your server side script isn&#8217;t doing anything :(</p>
+
+<p>Well today I saw a brilliantly simple solution by the newest <a href="http://www.daemon.com.au/">Daemonite</a> <a href="http://robrohan.com/">Rob Rohan</a>.</p>
+
+<p>From <a href="http://groups.google.com/group/farcry-dev/browse_thread/thread/e6ada060cd04c91b?hl=en">Rob&#8217;s post</a> on the farcry-dev mailing list:</p>
+
+<blockquote><p>however, since the &lt;skin:build> type tags will make it all the way to the browser, we can style the tag in the browser to alert the problem.</p>
+
+<p>I threw together a quick CSS file that you can include into your  project style sheet that will draw attention to the error. Just add this to your site style sheet:</p>
+
+<p>@import url(&#8216;http://robrohan.com/farcrystuff/missingTag.css&#8217;);</p>
+
+<p>Or download the css file and put it where you want. That will style any FarCry taglib with block, red so you can spot the mistake right off.</p></blockquote>
+
+<p>While this tip is fantastic and easily flexible for use in any ColdFusion project, keep in mind that in its current state it will only be of use for FarCry developers.</p>
+
+<p><strong>Also note</strong> that the custom tag syntax (e.g. &lt;skin:buildlink>) will only make its way to the browser (as part of the html source to be parsed by the css) if it&#8217;s inside <cfoutput> tags. If not then you&#8217;ll have the same problem as before where you&#8217;re tags are doing nothing, you&#8217;re not getting an error from ColdFusion AND the css won&#8217;t style anything because the xml tags aren&#8217;t in the source code :(</p>
+
+<p>Here is a screen shot of the css in action, as you can see it&#8217;s hard to miss your mistake!</p>
+
+<p><a href="http://www.chapter31.com/wp-content/uploads/2008/11/cfimport_css.jpg"><img src="http://www.chapter31.com/wp-content/uploads/2008/11/cfimport_css-300x92.jpg" alt="" /></a></p>
+
+<p>Many thanks to Rob for the tip, here is the <a href="http://robrohan.com/farcrystuff/missingTag.css">link to his css</a>.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-11-15T20:55:58+11:00" pubdate data-updated="true">Nov 15<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/farcry/'>Farcry</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/11/15/forgot-to-import-your-coldfusion-tag-libraries//page/7/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/11/12/google-releases-video-chat/">
+		
+			Google Releases Video Chat</a>
+	</h2>
+	<div class="entry-content">
+		<p>For those that use gtalk/gmail, google have finally caught up and released <a href="http://mail.google.com/videochat">voice and video chat</a>.</p>
+
+<p>They even help you <a href="http://www.google.com/mail/help/videochat/learnmore.html">buy a webcam</a>!</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-11-12T14:04:21+11:00" pubdate data-updated="true">Nov 12<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/misc/'>Misc</a>, <a class='category' href='/categories/tools/'>Tools</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/11/12/google-releases-video-chat//page/7/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/11/12/var-scoping-how-and-where-do-you-set-your-function-variables/">
+		
+			Var Scoping - How and Where Do You Set Your Function Variables?</a>
+	</h2>
+	<div class="entry-content">
+		<p>As everybody knows you should var scope ALL local function variables inside ColdFusion components, and these variables must be declared at the top of your function before any other code. If you place other code above a &#8220;var&#8221; scoped variable in your method signature an exception will be thrown.</p>
+
+<p>Depending on how you define you methods this will probably be fine, but I got to thinking recently on how this works with exception handling within your function, specifically for try/catch blocks.</p>
+
+<p>As you can&#8217;t add code above your var scoped variables there is no way to wrap your var scope block in a try/catch block. With this being the case you <em>may</em> have problems if an exception is thrown when you var scope a local variable.</p>
+
+<p>An example of what I&#8217;m talking about:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cffunction</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;getWorkSchedule&quot;</span> <span class="nx">access</span><span class="o">=</span><span class="s2">&quot;public&quot;</span> <span class="nx">returntype</span><span class="o">=</span><span class="s2">&quot;query&quot;</span><span class="o">&gt;</span>  
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfset</span> <span class="kd">var</span> <span class="nx">oUser</span> <span class="o">=</span> <span class="nx">getUserService</span><span class="p">().</span><span class="nx">getUser</span><span class="p">()</span> <span class="o">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cftry</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="p">...</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfcatch</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="err">/cfcatch&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cftry&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cffunction&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In the fictional example shown above we have a method which returns a users work schedule, the first thing done is retrieving an instance of <em>User</em> from the <em>UserService</em>. As this has been set at the same time we var scope our variable (oUser), what happens if the call to <em>getUserService().getUser()</em> throws an exception? The exception would bubble up to the calling template (the template that called getWorkSchedule()) which might be fine but might also be unexpected.</p>
+
+<p>This is just food for thought, it may be that instead you want to define your method like:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cffunction</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;getWorkSchedule&quot;</span> <span class="nx">access</span><span class="o">=</span><span class="s2">&quot;public&quot;</span> <span class="nx">returntype</span><span class="o">=</span><span class="s2">&quot;query&quot;</span><span class="o">&gt;</span>  
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfset</span> <span class="kd">var</span> <span class="nx">oUser</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cftry</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">oUser</span> <span class="o">=</span> <span class="nx">getUserService</span><span class="p">().</span><span class="nx">getUser</span><span class="p">()</span> <span class="o">/&gt;</span>
+</span><span class='line'>      <span class="p">...</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfcatch</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="err">/cfcatch&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cftry&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cffunction&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Here we take the approach of always declaring our local variables as empty strings or integers etc (simple values) <strong>before</strong> setting explicit values into them. This means all your variables are cleanly defined and you can catch any possible exceptions if you need to inside the try/catch.</p>
+
+<p>The only is that is feels like a bit of double handling because I need to <cfset> my variables twice&#8230;</p>
+
+<p>How do other people handle this? Lend me your thoughts :)</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-11-12T11:40:34+11:00" pubdate data-updated="true">Nov 12<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/11/12/var-scoping-how-and-where-do-you-set-your-function-variables//page/7/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/11/10/invalid-serial-number-when-upgrading-to-flex-builder-3-pro/">
+		
+			&#8220;Invalid Serial Number&#8221; When Upgrading to Flex Builder 3 Pro</a>
+	</h2>
+	<div class="entry-content">
+		<p>Ok this was annoying&#8230;I had an older trial version of the standalone Flex Builder 3 on my system (Mac 10.5) and wanted to activate it with a new serial for FB3 Professional.</p>
+
+<p>Whenever I entered the serial in &#8220;Help -> Manage Flex Licenses&#8221; I kept getting a message saying &#8220;Invalid serial number&#8221; even though it was a brand new serial. Damn.</p>
+
+<p><a href="http://www.lynchconsulting.com.au/go/blog">Mark</a> gave me the original hint to remove the <em>license.properties</em> file under <em>/Library/Application Support/Adobe/Flex</em> but FB wasn&#8217;t re-creating it when I entered my serial on startup. I needed to create the file manually and enter my serial number. These steps got me going:</p>
+
+<ul>
+<li>cd /Library/Application Support/Adobe/Flex</li>
+<li>sudo touch license.properties (create the file)</li>
+<li>sudo nano license.properties (edit the file)</li>
+<li>enter the following &#8220;flexbuilder3=xxxx-xxxx-xxxx-xxxx-xxxx-xxxx&#8221; (where xxx etc is your actual serial)</li>
+<li>restart Flex Builder</li>
+</ul>
+
+
+<p>Also thanks to <a href="http://62five.com/blog/?p=26">62five.com</a> for the post.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-11-10T14:16:54+11:00" pubdate data-updated="true">Nov 10<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/flex/'>Flex</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/11/10/invalid-serial-number-when-upgrading-to-flex-builder-3-pro//page/7/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+<nav id="pagenavi">
+    
+        <a href="/page/6/" class="prev">Prev</a>
+    
+    
+        <a href="/page/8/" class="next">Next</a>
+    
+    <div class="center"><a href="/blog/archives">Blog Archives</a></div>
+</nav></div>
+	<footer id="footer" class="inner">Copyright &copy; 2013
+
+    Michael Sharman
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'chapter31';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-306772-2']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

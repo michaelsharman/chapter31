@@ -1,0 +1,240 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>var scoping - how and where do you set your function variables? - chapter31 &raquo;</title>
+	<meta name="author" content="Michael Sharman">
+
+	
+	<meta name="description" content="As everybody knows you should var scope ALL local function variables inside ColdFusion components, and these variables must be declared at the top of &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="chapter31 &raquo;" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">chapter31 &raquo;</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/michaelsharman" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/michaelsharman" title="GitHub">GitHub</a>
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+	</form>
+</nav>
+
+</header>
+	
+		
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">Var Scoping - How and Where Do You Set Your Function Variables?</h2>
+	<div class="entry-content"><p>As everybody knows you should var scope ALL local function variables inside ColdFusion components, and these variables must be declared at the top of your function before any other code. If you place other code above a &#8220;var&#8221; scoped variable in your method signature an exception will be thrown.</p>
+
+<p>Depending on how you define you methods this will probably be fine, but I got to thinking recently on how this works with exception handling within your function, specifically for try/catch blocks.</p>
+
+<p>As you can&#8217;t add code above your var scoped variables there is no way to wrap your var scope block in a try/catch block. With this being the case you <em>may</em> have problems if an exception is thrown when you var scope a local variable.</p>
+
+<p>An example of what I&#8217;m talking about:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cffunction</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;getWorkSchedule&quot;</span> <span class="nx">access</span><span class="o">=</span><span class="s2">&quot;public&quot;</span> <span class="nx">returntype</span><span class="o">=</span><span class="s2">&quot;query&quot;</span><span class="o">&gt;</span>  
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfset</span> <span class="kd">var</span> <span class="nx">oUser</span> <span class="o">=</span> <span class="nx">getUserService</span><span class="p">().</span><span class="nx">getUser</span><span class="p">()</span> <span class="o">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cftry</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="p">...</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfcatch</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="err">/cfcatch&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cftry&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cffunction&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In the fictional example shown above we have a method which returns a users work schedule, the first thing done is retrieving an instance of <em>User</em> from the <em>UserService</em>. As this has been set at the same time we var scope our variable (oUser), what happens if the call to <em>getUserService().getUser()</em> throws an exception? The exception would bubble up to the calling template (the template that called getWorkSchedule()) which might be fine but might also be unexpected.</p>
+
+<p>This is just food for thought, it may be that instead you want to define your method like:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cffunction</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;getWorkSchedule&quot;</span> <span class="nx">access</span><span class="o">=</span><span class="s2">&quot;public&quot;</span> <span class="nx">returntype</span><span class="o">=</span><span class="s2">&quot;query&quot;</span><span class="o">&gt;</span>  
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfset</span> <span class="kd">var</span> <span class="nx">oUser</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cftry</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">oUser</span> <span class="o">=</span> <span class="nx">getUserService</span><span class="p">().</span><span class="nx">getUser</span><span class="p">()</span> <span class="o">/&gt;</span>
+</span><span class='line'>      <span class="p">...</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfcatch</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="err">/cfcatch&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cftry&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cffunction&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Here we take the approach of always declaring our local variables as empty strings or integers etc (simple values) <strong>before</strong> setting explicit values into them. This means all your variables are cleanly defined and you can catch any possible exceptions if you need to inside the try/catch.</p>
+
+<p>The only is that is feels like a bit of double handling because I need to <cfset> my variables twice&#8230;</p>
+
+<p>How do other people handle this? Lend me your thoughts :)</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-11-12T11:40:34+11:00" pubdate data-updated="true">Nov 12<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/11/12/var-scoping-how-and-where-do-you-set-your-function-variables/#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2013
+
+    Michael Sharman
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'chapter31';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://michaelsharman.github.io/chapter31/2008/11/12/var-scoping-how-and-where-do-you-set-your-function-variables/';
+        var disqus_url = 'http://michaelsharman.github.io/chapter31/2008/11/12/var-scoping-how-and-where-do-you-set-your-function-variables/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-306772-2']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,222 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Converting boolean values to numeric equivalents - chapter31 &raquo;</title>
+	<meta name="author" content="Michael Sharman">
+
+	
+	<meta name="description" content="Today I had a situation where I wanted to convert a boolean value (true or false) to a numeric equivalent (1 or 0) for insertion into a database &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="chapter31 &raquo;" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">chapter31 &raquo;</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/michaelsharman" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/michaelsharman" title="GitHub">GitHub</a>
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+	</form>
+</nav>
+
+</header>
+	
+		
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">Converting Boolean Values to Numeric Equivalents</h2>
+	<div class="entry-content"><p>Today I had a situation where I wanted to convert a boolean value (true or false) to a numeric equivalent (1 or 0) for insertion into a database table field which had a &#8220;tinyint&#8221; data type.</p>
+
+<p>The value was coming from a form checkbox, so the actual element may or may not exist in the form struct depending on whether the user &#8220;checked&#8221; the box or not.</p>
+
+<p>I found a few ways to do this, some &#8220;better&#8221; than others but all using <a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=functions_s_27.html">structKeyExists()</a> to look for the form element. The result of which will of course return a boolean &#8220;true&#8221; if the key exists within the form struct (meaning the user has checked the checkbox) or &#8220;false&#8221; which tells me the checkbox was unchecked (or simply not checked in the first place).</p>
+
+<p>The long way round, arguably less elegant:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">structKeyExists</span><span class="p">(</span><span class="nx">form</span><span class="p">,</span> <span class="s1">&#39;minimised&#39;</span><span class="p">)</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="mi">1</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfelse</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="mi">0</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfif&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Using the ColdFusion <a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=functions_h-im_05.html">iif()</a> equivalent of a conditional &#8220;ternary operator&#8221;</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="err">#</span><span class="nx">iif</span><span class="p">((</span><span class="nx">structKeyExists</span><span class="p">(</span><span class="nx">form</span><span class="p">,</span> <span class="s1">&#39;minimised&#39;</span><span class="p">)),</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="err">#</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Casting the value using <a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=functions_in-k_45.html">javaCast()</a>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="err">#</span><span class="nx">javaCast</span><span class="p">(</span><span class="s1">&#39;int&#39;</span><span class="p">,</span> <span class="nx">structKeyExists</span><span class="p">(</span><span class="nx">form</span><span class="p">,</span> <span class="s1">&#39;minimised&#39;</span><span class="p">))</span><span class="err">#</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Doing a <a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=functions_m-r_08.html">numberFormat()</a>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="err">#</span><span class="nx">numberFormat</span><span class="p">(</span><span class="nx">structKeyExists</span><span class="p">(</span><span class="nx">form</span><span class="p">,</span> <span class="s1">&#39;minimised&#39;</span><span class="p">))</span><span class="err">#</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The last 2 examples seem like the best approach to me as they are more succinct than using an <cfif>/<cfelse> combination, and most people shy away from <a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=functions_h-im_05.html">iif()</a> because it will <a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=functions_e-g_03.html">evaluate()</a> either of the string expressions (in this case 1 or 0) which is irrelevant for your needs in many cases including this one.</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-03-03T10:32:32+11:00" pubdate data-updated="true">Mar 3<span>rd</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/03/03/converting-boolean-values-to-numeric-equivalents/#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2013
+
+    Michael Sharman
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'chapter31';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://michaelsharman.github.io/chapter31/2008/03/03/converting-boolean-values-to-numeric-equivalents/';
+        var disqus_url = 'http://michaelsharman.github.io/chapter31/2008/03/03/converting-boolean-values-to-numeric-equivalents/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-306772-2']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

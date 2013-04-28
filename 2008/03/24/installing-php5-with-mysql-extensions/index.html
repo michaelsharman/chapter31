@@ -1,0 +1,218 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Installing PHP5 with MySQL extensions - chapter31 &raquo;</title>
+	<meta name="author" content="Michael Sharman">
+
+	
+	<meta name="description" content="I&#8217;m generally a ColdFusion programmer but occasionally I need to install PHP for one reason or another, the last couple of times has been to &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="chapter31 &raquo;" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">chapter31 &raquo;</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/michaelsharman" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/michaelsharman" title="GitHub">GitHub</a>
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+	</form>
+</nav>
+
+</header>
+	
+		
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">Installing PHP5 With MySQL Extensions</h2>
+	<div class="entry-content"><p>I&#8217;m generally a ColdFusion programmer but occasionally I need to install PHP for one reason or another, the last couple of times has been to use <a href="http://wordpress.org/">Wordpress</a>.</p>
+
+<p>I remember the last time I did this (maybe 6 months ago) I had problems with connecting to MySQL because <a href="http://www.php.net/manual/en/faq.databases.php#faq.databases.mysql.php5">PHP 5 no longer bundles MySQL client libraries</a> for the following reasons:</p>
+
+<ul>
+<li>Most systems these days already have the client library installed.</li>
+<li>Given the above, having multiple versions of the library can get messy. For example, if you link mod_auth_mysql against one version and PHP against another, and then enable both in Apache, you get a nice fat crash. Also, the bundled library didn&#8217;t always play well with the installed server version. The most obvious symptom of this being disagreement over where to find the mysql.socket Unix domain socket file.</li>
+<li>Maintenance was somewhat lax and it was falling further and further behind the released version.</li>
+<li>Future versions of the library are under the GPL and thus we don&#8217;t have an upgrade path since we cannot bundle a GPL&#8217;ed library in a BSD/Apache-style licensed project. A clean break in PHP 5 seemed like the best option.</li>
+</ul>
+
+
+<p>Ok fine, no problems. There are even some fairly easy to find instructions for Windows users (which I am at home):</p>
+
+<ul>
+<li>Windows users may enable the extension php_mysql.dll inside php.ini</li>
+<li>Also, be sure libmysql.dll is available to the systems PATH.</li>
+</ul>
+
+
+<p>No prob, you can even put libmysql.dll in the C:/windows/ directory which isn&#8217;t a best practice, but is easy!</p>
+
+<p>So I fire up my Wordpress site and get the following error:</p>
+
+<p><em>&#8220;Your PHP installation appears to be missing the MySQL which is required for WordPress.&#8221;</em></p>
+
+<p>A few rounds in Google told me I needed to uncomment some files in php.ini:</p>
+
+<ul>
+<li>extension=php_mysql.dll</li>
+<li>extension=php_mysqli.dll</li>
+</ul>
+
+
+<p>Hmmm&#8230;.I don&#8217;t have those files nor do I have those lines in my php.ini file, that&#8217;s strange.</p>
+
+<p>Ok&#8230;so what was my problem? When installing I didn&#8217;t select any extra &#8216;extensions&#8217; for MySQL. The installer actually makes it nice and simple, so this is just a note for next time I need to do this to be careful and choose the extensions I need when installing.</p>
+
+<p>Luckily you can just run the installer again to change the configuration of your installation, including adding necessary extensions :)</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-03-24T15:59:51+11:00" pubdate data-updated="true">Mar 24<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/php/'>PHP</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/03/24/installing-php5-with-mysql-extensions/#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2013
+
+    Michael Sharman
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'chapter31';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://michaelsharman.github.io/chapter31/2008/03/24/installing-php5-with-mysql-extensions/';
+        var disqus_url = 'http://michaelsharman.github.io/chapter31/2008/03/24/installing-php5-with-mysql-extensions/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-306772-2']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

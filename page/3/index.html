@@ -1,0 +1,1281 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>chapter31 &raquo;</title>
+	<meta name="author" content="Michael Sharman">
+
+	
+	<meta name="description" content="Often with doing a find and replace you want to use line breaks in the find (or replace) criteria. Sometimes I&#8217;ll have a column of data from a &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="chapter31 &raquo;" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">chapter31 &raquo;</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/michaelsharman" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/michaelsharman" title="GitHub">GitHub</a>
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+	</form>
+</nav>
+
+</header>
+	
+		
+
+	
+	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2012/03/17/find-and-replace-with-line-breaks-in-eclipse/">
+		
+			Find and Replace With Line Breaks in Eclipse</a>
+	</h2>
+	<div class="entry-content">
+		<p>Often with doing a find and replace you want to use line breaks in the find (or replace) criteria. Sometimes I&#8217;ll have a column of data from a csv that I want to modify&#8230;whatever.</p>
+
+<p>You can now check the &#8220;regular expressions&#8221; checkbox while doing a file search in Eclipse and specify &#8220;\R&#8221; to find or replace line breaks (platform independent).</p>
+
+<p>Eg replace line breaks with commas:</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2012/03/Screen-shot-2012-03-17-at-1.54.41-PM.png" alt="" /></p>
+
+<p>Other interesting and useful options are:</p>
+
+<ul>
+<li>\t - tabs</li>
+<li>\n - newline</li>
+<li>\R - platform indepedent line delimiter</li>
+<li>\r - carriage return</li>
+<li>^ - line start</li>
+</ul>
+
+
+<p>This was introduced in Eclipse 3.4.x, <a href="http://archive.eclipse.org/eclipse/downloads/drops/R-3.4-200806172000/whatsnew3.4/eclipse-news-part1.html">read more here</a>.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-17T13:56:45+11:00" pubdate data-updated="true">Mar 17<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2012/03/17/find-and-replace-with-line-breaks-in-eclipse//page/3/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2012/03/15/error-restoring-mysql-database-when-using-btree-on-indexes/">
+		
+			Error Restoring MySQL Database When USING BTREE on Indexes</a>
+	</h2>
+	<div class="entry-content">
+		<p>Occasionally when I&#8217;m restoring a database that was backed up from a different server than the one I&#8217;m restoring on I get an error along the lines of:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&gt;</span><span class="p">[</span><span class="nb">Error</span><span class="p">]</span> <span class="nx">Script</span> <span class="nx">lines</span><span class="o">:</span> <span class="mi">5</span><span class="o">-</span><span class="mi">17</span> <span class="o">-------------------------</span>
+</span><span class='line'> <span class="nx">You</span> <span class="nx">have</span> <span class="nx">an</span> <span class="nx">error</span> <span class="k">in</span> <span class="nx">your</span> <span class="nx">SQL</span> <span class="nx">syntax</span><span class="p">;</span> <span class="nx">check</span> <span class="nx">the</span> <span class="nx">manual</span> <span class="nx">that</span> <span class="nx">corresponds</span> <span class="nx">to</span> <span class="nx">your</span> <span class="nx">MySQL</span> <span class="nx">server</span> <span class="nx">version</span> <span class="k">for</span> <span class="nx">the</span> <span class="nx">right</span> <span class="nx">syntax</span> <span class="nx">to</span> <span class="nx">use</span> <span class="nx">near</span> <span class="s1">&#39;USING BTREE</span>
+</span><span class='line'><span class="s1">) ENGINE=InnoDB DEFAULT CHARSET=utf8&#39;</span> <span class="nx">at</span> <span class="nx">line</span> <span class="mi">11</span>
+</span><span class='line'>
+</span><span class='line'> <span class="nx">Warnings</span><span class="o">:</span> <span class="o">---&gt;</span>
+</span><span class='line'>   <span class="nx">W</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">:</span> <span class="nx">You</span> <span class="nx">have</span> <span class="nx">an</span> <span class="nx">error</span> <span class="k">in</span> <span class="nx">your</span> <span class="nx">SQL</span> <span class="nx">syntax</span><span class="p">;</span> <span class="nx">check</span> <span class="nx">the</span> <span class="nx">manual</span> <span class="nx">that</span> <span class="nx">corresponds</span> <span class="nx">to</span> <span class="nx">your</span> <span class="nx">MySQL</span> <span class="nx">server</span> <span class="nx">version</span> <span class="k">for</span> <span class="nx">the</span> <span class="nx">right</span> <span class="nx">syntax</span> <span class="nx">to</span> <span class="nx">use</span> <span class="nx">near</span> <span class="s1">&#39;USING BTREE</span>
+</span><span class='line'><span class="s1">) ENGINE=InnoDB DEFAULT CHARSET=utf8&#39;</span> <span class="nx">at</span> <span class="nx">line</span> <span class="mi">11</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Hmm, the docs suggest that BTREE is a valid index type for both MyISAM and InnoDB. So why is it barfing?</p>
+
+<p>Well it turns out dumping the database from a newer version of MySQL than what you are restoring onto can be bad. In my case running status at the mysql prompt told me that my source database was running on <em>5.5.9</em> but the destination version was <em>5.0.51a</em>.</p>
+
+<p>Basically the issue seems to be that MySQL 5.0.x has issues with USING BTREE. So&#8230;just remove that from your sql and you&#8217;ll be good to go. Alternatively you can use the &#8211;compatible option when running your mysqldump on the <em>newer server version</em>, something like:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">mysqldump</span> <span class="o">--</span><span class="nx">compatible</span><span class="o">=</span><span class="nx">ansi</span> <span class="o">-</span><span class="nx">h127</span><span class="p">.</span><span class="mf">0.0</span><span class="p">.</span><span class="mi">1</span> <span class="o">-</span><span class="nx">umyuser</span> <span class="o">-</span><span class="nx">p</span> <span class="nx">mydatabase</span> <span class="o">|</span> <span class="nx">gzip</span> <span class="o">&gt;</span> <span class="nx">mydatabase</span><span class="p">.</span><span class="nx">sql</span><span class="p">.</span><span class="nx">gz</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The value of &#8220;compatible&#8221; can be ansi, mysql323, mysql40, postgresql, oracle, mssql, db2, maxdb, no_key_options, no_table_options, or no_field_options.</p>
+
+<p>Nice</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-15T15:42:39+11:00" pubdate data-updated="true">Mar 15<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/databases/'>Databases</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2012/03/15/error-restoring-mysql-database-when-using-btree-on-indexes//page/3/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2012/03/14/turning-voice-over-off-permanently-on-max-osx/">
+		
+			Turning Voice Over Off Permanently on Max OSX</a>
+	</h2>
+	<div class="entry-content">
+		<p>One of the keyboard shortcuts I often use is command-F6, but I seem to accidentally hit command-F5 on most occasions :(</p>
+
+<p>Problem with this is that the god awful &#8220;voice over&#8221; starts yapping away. Well if you&#8217;re like me and know that you&#8217;ll pretty much never want this enabled (at least for now!) then here&#8217;s how you turn it off permanently.</p>
+
+<ol>
+<li>Open up system preferences</li>
+<li>Click on keyboard</li>
+<li>Go to the keyboard shortcuts tab</li>
+<li>Choose universal access from the list on the left</li>
+<li>Uncheck the &#8220;Turn voice over on or off&#8221; checkbox</li>
+</ol>
+
+
+<p>Breathe a sigh of relief :)</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2012/03/sys_prefs.jpg" alt="mac system preferences" /></p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2012/03/voiceover_off.jpg" alt="Mac voice over off" /></p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-14T16:41:04+11:00" pubdate data-updated="true">Mar 14<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/mac/'>Mac</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2012/03/14/turning-voice-over-off-permanently-on-max-osx//page/3/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2011/10/27/twitter-bootstrap-modal-not-working-in-firefox/">
+		
+			Twitter Bootstrap - Modal Not Working in Firefox</a>
+	</h2>
+	<div class="entry-content">
+		<p>Quick heads up for those having issues getting the modal window in the twitter bootstrap to work in firefox, I had a problem where the overlay would show but not the actual modal window content. Seems there is a problem if you&#8217;re using animation (fade etc).</p>
+
+<p><a href="https://github.com/twitter/bootstrap/issues/240">See here for more information.</a></p>
+
+<p>For now we use no animation, so a typical modal source example might be (note: no animation as is the default in the docs):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">div</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;preview-modal&quot;</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;modal hide&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;modal-header&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">a</span> <span class="nx">href</span><span class="o">=</span><span class="s2">&quot;#&quot;</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;close&quot;</span><span class="o">&gt;&amp;</span><span class="nx">times</span><span class="p">;</span><span class="o">&lt;</span><span class="err">/a&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">h3</span><span class="o">&gt;</span><span class="nx">Modal</span> <span class="nx">Heading</span><span class="o">&lt;</span><span class="err">/h3&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/div&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;modal-body&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">One</span> <span class="nx">fine</span> <span class="nx">body</span><span class="err">…</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/div&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;modal-footer&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">a</span> <span class="nx">href</span><span class="o">=</span><span class="s2">&quot;#&quot;</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;btn primary&quot;</span><span class="o">&gt;</span><span class="nx">Primary</span><span class="o">&lt;</span><span class="err">/a&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">a</span> <span class="nx">href</span><span class="o">=</span><span class="s2">&quot;#&quot;</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;btn secondary&quot;</span><span class="o">&gt;</span><span class="nx">Secondary</span><span class="o">&lt;</span><span class="err">/a&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/div&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/div&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Typically there is &#8220;fade&#8221; in the class of the parent div which we&#8217;ve removed.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-10-27T18:00:45+11:00" pubdate data-updated="true">Oct 27<span>th</span>, 2011</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2011/10/27/twitter-bootstrap-modal-not-working-in-firefox//page/3/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2011/08/18/customising-search-results-from-google-cse/">
+		
+			Customising Search Results From Google Cse</a>
+	</h2>
+	<div class="entry-content">
+		<p>Google custom search engine (cse) is pretty cool, in fact it&#8217;s very cool. Within minutes you can have the ability to search your entire site all with a snippet of code! And for a nominal fee you can deliver these results without ads :)</p>
+
+<p>We use google cse for most of our sites but the other day we ran into a slight problem. The site in question has both public and private access, the public site is delivered over <em>http</em> and has plenty of indexable content. This is what we use google cse for. The issue came about once a user was logged in, their session is maintained via <em>secure cookies over https</em>. But the problem was that if they performed a search, all the results that cse returned directed users to <em>http</em> which effectively logged them out of the site (i.e. the user was no longer on https, as we don&#8217;t send cookies over http no session existed).</p>
+
+<p>Even changing the site to index as <em>https</em> inside the cse control panel didn&#8217;t fix the issue, so we started to look for solutions to customise the results. Here are a few immediate options:</p>
+
+<ul>
+<li>Use the JSON API</li>
+<li>Return the results as XML</li>
+<li>Use custom templates</li>
+</ul>
+
+
+<p>The JSON API is super cool but from what I can see there&#8217;s a crazy limit of 150 queries per day unless you pay $5 per 1000 queries. Wow, no thanks.</p>
+
+<p>XML is of course a tried and true approach but kinda clunky and verbose.</p>
+
+<p>That leaves <a href="http://code.google.com/apis/customsearch/docs/js/rendering.html">custom templates</a>, from google:</p>
+
+<blockquote><p>The specification that allows you to customize results is a minimal form of the template languages used by <a href="http://code.google.com/apis/opensocial/">OpenSocial</a> and <a href="http://code.google.com/apis/jstemplate/docs/howto.html">jstemplates</a>.</p></blockquote>
+
+<p>This is a super cool and super easy way to modify the rendering of your custom google search results. Of course if you need to make big changes to the results then one of the other options is probably your best bet, but for what we wanted to achieve (delivering cse results as https) this was fine.</p>
+
+<p>How does it work? Add your JavaScript snippet as usual:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="nx">google</span><span class="p">.</span><span class="nx">load</span><span class="p">(</span><span class="s1">&#39;search&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="p">{</span><span class="nx">language</span> <span class="o">:</span> <span class="s1">&#39;en&#39;</span><span class="p">,</span> <span class="s2">&quot;nocss&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">});</span>
+</span><span class='line'>  <span class="nx">google</span><span class="p">.</span><span class="nx">setOnLoadCallback</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>      <span class="kd">var</span> <span class="nx">customSearchControl</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">search</span><span class="p">.</span><span class="nx">CustomSearchControl</span><span class="p">(</span><span class="s1">&#39;003499422247080460488:qvs6fhb5k8o&#39;</span><span class="p">);</span>
+</span><span class='line'>      <span class="nx">customSearchControl</span><span class="p">.</span><span class="nx">setResultSetSize</span><span class="p">(</span><span class="nx">google</span><span class="p">.</span><span class="nx">search</span><span class="p">.</span><span class="nx">Search</span><span class="p">.</span><span class="nx">FILTERED_CSE_RESULTSET</span><span class="p">);</span>
+</span><span class='line'>      <span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">search</span><span class="p">.</span><span class="nx">DrawOptions</span><span class="p">();</span>
+</span><span class='line'>      <span class="nx">options</span><span class="p">.</span><span class="nx">setAutoComplete</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+</span><span class='line'>      <span class="nx">google</span><span class="p">.</span><span class="nx">search</span><span class="p">.</span><span class="nx">Csedr</span><span class="p">.</span><span class="nx">addOverride</span><span class="p">(</span><span class="s2">&quot;bos_&quot;</span><span class="p">);</span>
+</span><span class='line'>      <span class="nx">customSearchControl</span><span class="p">.</span><span class="nx">draw</span><span class="p">(</span><span class="s1">&#39;cse&#39;</span><span class="p">,</span> <span class="nx">options</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">},</span> <span class="kc">true</span><span class="p">);</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/script&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We override the css from google and turn on autocomplete, apart from that the most important thing to note is the <em>addOverride()</em> option. Essentially here you add a prefix specific to your site, in this case ours is &#8220;bos_&#8221;. Google will look for this prefix, along with several specific values to render the content.</p>
+
+<p>For example the main results appear in a section called <em>webResult</em>, so create a div with an id of your prefix + &#8220;webResult&#8221;</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">div</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;bos_webResult&quot;</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is where google will look render the search results. A full example:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">div</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;bos_webResult&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;gs-webResult gs-result&quot;</span>
+</span><span class='line'>  <span class="nx">data</span><span class="o">-</span><span class="nx">vars</span><span class="o">=</span><span class="s2">&quot;{longUrl:function() {</span>
+</span><span class='line'><span class="s2">   var i = unescapedUrl.indexOf(visibleUrl);</span>
+</span><span class='line'><span class="s2">   return i &lt; 1 ? visibleUrl : unescapedUrl.substring(i);}}&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">table</span><span class="o">&gt;</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">tr</span><span class="o">&gt;</span>
+</span><span class='line'>              <span class="o">&lt;</span><span class="nx">td</span> <span class="nx">valign</span><span class="o">=</span><span class="s2">&quot;top&quot;</span><span class="o">&gt;</span>                  
+</span><span class='line'>                  <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;gs-title&quot;</span><span class="o">&gt;</span>     
+</span><span class='line'>                      <span class="o">&lt;</span><span class="nx">a</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;gs-title&quot;</span> <span class="nx">data</span><span class="o">-</span><span class="nx">attr</span><span class="o">=</span><span class="s2">&quot;{href:unescapedUrl.replace(&#39;http://&#39;, &#39;https://&#39;),target:target}&quot;</span> <span class="nx">data</span><span class="o">-</span><span class="nx">body</span><span class="o">=</span><span class="s2">&quot;html(title.replace(&#39;Our site tite :: &#39;, &#39;&#39;))&quot;</span><span class="o">&gt;&lt;</span><span class="err">/a&gt;</span>
+</span><span class='line'>                  <span class="o">&lt;</span><span class="err">/div&gt;</span>
+</span><span class='line'>                  <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;gs-snippet&quot;</span> <span class="nx">data</span><span class="o">-</span><span class="nx">body</span><span class="o">=</span><span class="s2">&quot;html(content)&quot;</span><span class="o">&gt;&lt;</span><span class="err">/div&gt;</span>
+</span><span class='line'>                  <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;gs-visibleUrl gs-visibleUrl-long&quot;</span> <span class="nx">data</span><span class="o">-</span><span class="nx">body</span><span class="o">=</span><span class="s2">&quot;longUrl()&quot;</span><span class="o">&gt;&lt;</span><span class="err">/div&gt;                 </span>
+</span><span class='line'>              <span class="o">&lt;</span><span class="err">/td&gt;</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="err">/tr&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="err">/table&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/div&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/div&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can see that we&#8217;re using the template language &#8220;data-xxx&#8221; attributes on the &#8220;a&#8221; tag to modify the results returned from cse. In the example above we use the data-attr to replace &#8220;http://&#8221; with &#8220;https://&#8221; and also the data-body to replace the site title. This is possible because the templating approache evaluates JavaScript, nice!</p>
+
+<p>There are many more options available with this approach, great to see google provide so many ways to render their search results.</p>
+
+<p>This templating approach is another fantastic way to simplify the modifying the results from google cse. <a href="http://code.google.com/apis/customsearch/docs/js/rendering.html">Read more on their docs</a>.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-18T09:07:35+10:00" pubdate data-updated="true">Aug 18<span>th</span>, 2011</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2011/08/18/customising-search-results-from-google-cse//page/3/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2011/08/17/farcry-plugin-webtop-tools/">
+		
+			FarCry Plugin - Webtop Tools</a>
+	</h2>
+	<div class="entry-content">
+		<p>We&#8217;re starting to compile a list of internal tools used when developing a FarCry application. I thought it might be simpler to create a small FarCry plugin to keep them all in the same place, makes it easier to use across multiple projects.</p>
+
+<p><a href="https://github.com/michaelsharman/lcwebtoptools">The plugin</a> currently contains 2 scripts:</p>
+
+<ul>
+<li>FarCry database diff (MySQL only at this stage)</li>
+<li>Content Object Meta</li>
+</ul>
+
+
+<p>The database diff looks for case-sensitivity differences between your ColdFusion components and the actual MySQL table names (MySQL only). Historically we&#8217;ve had issues because we are on Linux, this tool has helped quickly iron out any differences in &#8220;case&#8221;.</p>
+
+<p>The Content Object Meta assists in finding information about content of any &#8220;type&#8221; in FarCry, based on the title, objectId or friendly URL. What does this mean? Well any &#8220;content object&#8221; you want information on can be found using this tool. Whether you have an objectId and you don&#8217;t know if it belongs to dmNavigation, dmHTML, dmNews or a custom type. Or you might have part of a friendly URL or content label/title. This tool can help tell you what the content type is, whether it&#8217;s approved, where it sits in the site tree (if relevant) etc.</p>
+
+<p>For example; if I wanted to know everything in FarCry that had a label LIKE &#8216;credential&#8217; (wildcards are automatically added to your search term) I might get results like the following:</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2011/08/contenttitle.png" alt="" /></p>
+
+<p>From that initial resultset, if I clicked on an objectid for dmNavigation:</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2011/08/objectid.png" alt="" /></p>
+
+<p>Or if I clicked on an objectid for dmHTML:</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2011/08/objectid_dmhtml.png" alt="" /></p>
+
+<p>Note that there is a collapsed cfdump that you can expand for further info.</p>
+
+<h2>Requirements</h2>
+
+<p>Railo 3.2+ or ColdFusion 7+<br/>
+FarCry 6+<br/>
+MySQL 5+</p>
+
+<h2>Installation</h2>
+
+<p>&#8220;Official&#8221; notes on installing FarCry plugins can be found here: <a href="https://farcry.jira.com/wiki/pages/viewpage.action?pageId=12943398">https://farcry.jira.com/wiki/pages/viewpage.action?pageId=12943398</a></p>
+
+<p>It&#8217;s pretty simple though:</p>
+
+<ul>
+<li>add the &#8220;lcwebtoptools&#8221; directory from git into /farcry/plugins/</li>
+<li>add &#8220;lcwebtoptools&#8221; to THIS.plugins in farcryConstructor.cfm (in your project webroot)</li>
+</ul>
+
+
+<p>e.g.</p>
+
+<pre><code>&lt;cfset THIS.plugins = "farcrycms,lcwebtoptools"&gt;
+</code></pre>
+
+<p>Restart your app, that&#8217;s it. No coapi changes need to be made. To access the current tools, go to the &#8220;Admin&#8221; tab and choose &#8220;Webtop Tools&#8221; from the drop down.</p>
+
+<p>The plugin is <a href="https://github.com/michaelsharman/lcwebtoptools">hosted on github</a>, for a direct download to the zip <a href="https://github.com/michaelsharman/lcwebtoptools/zipball/master">click here</a>.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-17T10:38:33+10:00" pubdate data-updated="true">Aug 17<span>th</span>, 2011</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/farcry/'>Farcry</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2011/08/17/farcry-plugin-webtop-tools//page/3/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2011/08/01/label-vs-title-in-farcry/">
+		
+			Label vs Title in FarCry</a>
+	</h2>
+	<div class="entry-content">
+		<p>All system content objects (and those custom types which extend &#8220;types&#8221; or &#8220;versions&#8221; etc) in FarCry have the &#8220;label&#8221; and &#8220;title&#8221; properties. Most of the time the value of these are identical, I find myself typically using the &#8220;title&#8221; property in formtools as well as any display methods. The question of course is why have both these if they&#8217;re always exactly the same?</p>
+
+<p>A note on the FarCry forums suggested that this was a handy way split what you might want to use in a display method vs an admin screen or any other scenario etc. Well today I had need to do exactly this, and combined with some of the custom metadata for your <em>type components</em> I&#8217;ve found that this is yet another simple but powerful feature of FarCry core.</p>
+
+<h2>Scenario</h2>
+
+<p>I have a custom type, a &#8220;topic&#8221;. Now these topics have titles but also &#8220;codes&#8221; associated with them. Sometimes I&#8217;ll want to output just the title, but sometimes I&#8217;ll want to output the code + title together. Sure <em>stObj</em> gives me the simple ability to access these singularly, but having the ability to store this composite value in the label field (as well as the single title in the &#8220;title&#8221; field) gives me freedom to display this in places like the object admin screen, generic nav, breadcrumbs etc. Very very nice.</p>
+
+<h2>How</h2>
+
+<p>Ok first you need to enable auto labels for your type:</p>
+
+<pre><code>&lt;cfcomponent extends="farcry.core.packages.types.versions" displayname="ACE Topic" bUseInTree="0" bFriendly="1" fuAlias="acetopic" bObjectBroker="0" bAutoSetLabel="true"&gt;
+</code></pre>
+
+<p>Then for each property you&#8217;d like combined for your label, set a <em>bLabel</em> attribute to true.</p>
+
+<pre><code>&lt;cfproperty name="Code" type="string" required="no" default="" ftSeq="1" ftwizardStep="Content" ftValidation="required" ftFieldset="General Details" bLabel="true"&gt;
+
+&lt;cfproperty name="Title" type="string" hint="Title of content item." required="no" default="" ftSeq="2" ftwizardStep="Content" ftFieldset="General Details" ftValidation="required" bLabel="true"&gt;
+</code></pre>
+
+<p>What this now does (after you edit a content object) is save the &#8220;code + title&#8221; in the label field. Cool :)</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-01T09:16:01+10:00" pubdate data-updated="true">Aug 1<span>st</span>, 2011</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/farcry/'>Farcry</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2011/08/01/label-vs-title-in-farcry//page/3/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2011/07/01/farcry-tip-enable-cfcs-in-your-railo-proxypassmatch/">
+		
+			FarCry Tip - Enable Cfc&#8217;s in Your Railo ProxyPassMatch</a>
+	</h2>
+	<div class="entry-content">
+		<p>I ran into an issue today while working on a FarCry project, basically when I opened up the &#8220;Related Content&#8221; popup from the WYSIWYG editor it was blank. Nothing. Not the usual tabs for Images, File, Flash etc.</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2011/07/relatedcontent.png" alt="" /></p>
+
+<p>The Railo logs were empty but Apache was throwing a strange error which I hadn&#8217;t seen before: <em>&#8220;Couldn&#8217;t initialize from remote server, JRun server(s) probably down.&#8221;</em>. Funny as I&#8217;m not even using JRun!</p>
+
+<p>Looking at the Chrome console I could see that opening the popup made a request directly to a cfc (/webtop/facade/tinyMCE.cfc?method=ajaxGetTemplateDropdowns) and returned the following error: &#8221;<em>Failed to load resource: the server responded with a status of 500 (Internal Server Error)</em>&#8221;</p>
+
+<p>Eventually <a href="http://www.learnosity.com/techblog/">Mark</a> pointed me in the right direction which was kind of obvious if I&#8217;d actually read the error properly! Our config for Apache -> Railo is for cfm&#8217;s only&#8230;not cfc&#8217;s. I don&#8217;t really like the approach of calling cfc&#8217;s directly at all, which is why it&#8217;s not in our Apache -> Railo proxy. But it wasn&#8217;t a big deal to add it for FarCry projects.</p>
+
+<p>Here is the config we now use, note we now pass requests for cfm and cfc to Railo:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>    <span class="o">&lt;</span><span class="nx">IfModule</span> <span class="nx">mod_proxy_ajp</span><span class="p">.</span><span class="nx">c</span><span class="o">&gt;</span>
+</span><span class='line'>            <span class="o">&lt;</span><span class="nx">Proxy</span> <span class="o">*&gt;</span>
+</span><span class='line'>                    <span class="nx">Order</span> <span class="nx">deny</span><span class="p">,</span><span class="nx">allow</span>
+</span><span class='line'>                    <span class="nx">Allow</span> <span class="nx">from</span> <span class="nx">all</span>
+</span><span class='line'>            <span class="o">&lt;</span><span class="err">/Proxy&gt;</span>
+</span><span class='line'>            <span class="nx">ProxyPassMatch</span> <span class="o">^</span><span class="sr">/(.*\.cf[cm])$ ajp:/</span><span class="o">/</span><span class="mf">127.0</span><span class="p">.</span><span class="mf">0.1</span><span class="o">:</span><span class="mi">8009</span><span class="o">/</span><span class="nx">$1</span>
+</span><span class='line'>            <span class="nx">ProxyPassReverse</span>  <span class="o">/</span>  <span class="nx">ajp</span><span class="o">:</span><span class="c1">//127.0.0.1:8009/</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="err">/IfModule&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And of course now the related content popup works :)</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2011/07/relatedcontent2.png" alt="" /></p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-01T14:04:20+10:00" pubdate data-updated="true">Jul 1<span>st</span>, 2011</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/farcry/'>Farcry</a>, <a class='category' href='/categories/railo/'>Railo</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2011/07/01/farcry-tip-enable-cfcs-in-your-railo-proxypassmatch//page/3/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2011/07/01/farcry-grouping-formtool-category-items/">
+		
+			FarCry - Grouping Formtool Category Items</a>
+	</h2>
+	<div class="entry-content">
+		<p>A new project we&#8217;re working has the need to categorise each new content object, for this we use the built in FarCry category/keyword formtool.</p>
+
+<p>By default the render type is a multi-select tree, I wanted a single select dropdown. Luckily formtools makes this oh so simple.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfproperty</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;catHTML&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;nstring&quot;</span> <span class="nx">required</span><span class="o">=</span><span class="s2">&quot;true&quot;</span> <span class="k">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span> <span class="nx">ftSeq</span><span class="o">=</span><span class="s2">&quot;2&quot;</span> <span class="nx">ftwizardStep</span><span class="o">=</span><span class="s2">&quot;Content&quot;</span>  <span class="nx">ftValidation</span><span class="o">=</span><span class="s2">&quot;required&quot;</span> <span class="nx">ftFieldset</span><span class="o">=</span><span class="s2">&quot;General Details&quot;</span> <span class="nx">ftLabel</span><span class="o">=</span><span class="s2">&quot;Categories&quot;</span> <span class="nx">ftType</span><span class="o">=</span><span class="s2">&quot;Category&quot;</span> <span class="nx">ftAlias</span><span class="o">=</span><span class="s2">&quot;sections&quot;</span> <span class="nx">ftRenderType</span><span class="o">=</span><span class="s2">&quot;dropdown&quot;</span> <span class="nx">ftSelectSize</span><span class="o">=</span><span class="s2">&quot;1&quot;</span> <span class="nx">ftSelectMultiple</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="nx">ftAliasAsOptGroup</span><span class="o">=</span><span class="s2">&quot;true&quot;</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note that I&#8217;ve set the dropdown size to 1 and multiple select to false. Basically I have a group of &#8220;sections&#8221; that each content object needs to belong to, section 1 through 11. I&#8217;ve setup the categories already under a parent category called &#8220;sections&#8221; (note the ftAlias in the formtool definition). Unfortunately the default rendering was showing &#8220;sections&#8221; as a selectable category, however I didn&#8217;t want this. I only wanted the users to be able to choose the <em>children</em> of this category, not the category itself.</p>
+
+<p>Luckily FarCry makes this kind of thing simple to override. I added my own category.cfc inside my projects <em>packages/formtools</em> directory and made sure to extend category.cfc from <em>farcry.core.packages.formtools.category</em>. In this I only used the edit() function to render an optgroup from a new custom property called ftAliasAsOptGroup (see above snippet). This gave me the following:</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2011/07/optgroup.png" alt="FarCry optgroup" /></p>
+
+<p>The full category.cfc is below if you&#8217;re interested.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+<span class='line-number'>116</span>
+<span class='line-number'>117</span>
+<span class='line-number'>118</span>
+<span class='line-number'>119</span>
+<span class='line-number'>120</span>
+<span class='line-number'>121</span>
+<span class='line-number'>122</span>
+<span class='line-number'>123</span>
+<span class='line-number'>124</span>
+<span class='line-number'>125</span>
+<span class='line-number'>126</span>
+<span class='line-number'>127</span>
+<span class='line-number'>128</span>
+<span class='line-number'>129</span>
+<span class='line-number'>130</span>
+<span class='line-number'>131</span>
+<span class='line-number'>132</span>
+<span class='line-number'>133</span>
+<span class='line-number'>134</span>
+<span class='line-number'>135</span>
+<span class='line-number'>136</span>
+<span class='line-number'>137</span>
+<span class='line-number'>138</span>
+<span class='line-number'>139</span>
+<span class='line-number'>140</span>
+<span class='line-number'>141</span>
+<span class='line-number'>142</span>
+<span class='line-number'>143</span>
+<span class='line-number'>144</span>
+<span class='line-number'>145</span>
+<span class='line-number'>146</span>
+<span class='line-number'>147</span>
+<span class='line-number'>148</span>
+<span class='line-number'>149</span>
+<span class='line-number'>150</span>
+<span class='line-number'>151</span>
+<span class='line-number'>152</span>
+<span class='line-number'>153</span>
+<span class='line-number'>154</span>
+<span class='line-number'>155</span>
+<span class='line-number'>156</span>
+<span class='line-number'>157</span>
+<span class='line-number'>158</span>
+<span class='line-number'>159</span>
+<span class='line-number'>160</span>
+<span class='line-number'>161</span>
+<span class='line-number'>162</span>
+<span class='line-number'>163</span>
+<span class='line-number'>164</span>
+<span class='line-number'>165</span>
+<span class='line-number'>166</span>
+<span class='line-number'>167</span>
+<span class='line-number'>168</span>
+<span class='line-number'>169</span>
+<span class='line-number'>170</span>
+<span class='line-number'>171</span>
+<span class='line-number'>172</span>
+<span class='line-number'>173</span>
+<span class='line-number'>174</span>
+<span class='line-number'>175</span>
+<span class='line-number'>176</span>
+<span class='line-number'>177</span>
+<span class='line-number'>178</span>
+<span class='line-number'>179</span>
+<span class='line-number'>180</span>
+<span class='line-number'>181</span>
+<span class='line-number'>182</span>
+<span class='line-number'>183</span>
+<span class='line-number'>184</span>
+<span class='line-number'>185</span>
+<span class='line-number'>186</span>
+<span class='line-number'>187</span>
+<span class='line-number'>188</span>
+<span class='line-number'>189</span>
+<span class='line-number'>190</span>
+<span class='line-number'>191</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfcomponent</span> <span class="kr">extends</span><span class="o">=</span><span class="s2">&quot;farcry.core.packages.formtools.category&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfproperty</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;ftAliasAsOptGroup&quot;</span> <span class="k">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span> <span class="nx">hint</span><span class="o">=</span><span class="s2">&quot;If true, renders ftAlias as an optgroup&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cffunction</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;edit&quot;</span> <span class="nx">access</span><span class="o">=</span><span class="s2">&quot;public&quot;</span> <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="nx">returntype</span><span class="o">=</span><span class="s2">&quot;string&quot;</span> <span class="nx">hint</span><span class="o">=</span><span class="s2">&quot;his will return a string of formatted HTML text to enable the user to edit the data&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;typename&quot;</span> <span class="nx">required</span><span class="o">=</span><span class="s2">&quot;true&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;string&quot;</span> <span class="nx">hint</span><span class="o">=</span><span class="s2">&quot;The name of the type that this field is part of.&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;stObject&quot;</span> <span class="nx">required</span><span class="o">=</span><span class="s2">&quot;true&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;struct&quot;</span> <span class="nx">hint</span><span class="o">=</span><span class="s2">&quot;The object of the record that this field is part of.&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;stMetadata&quot;</span> <span class="nx">required</span><span class="o">=</span><span class="s2">&quot;true&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;struct&quot;</span> <span class="nx">hint</span><span class="o">=</span><span class="s2">&quot;This is the metadata that is either setup as part of the type.cfc or overridden when calling ft:object by using the stMetadata argument.&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;fieldname&quot;</span> <span class="nx">required</span><span class="o">=</span><span class="s2">&quot;true&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;string&quot;</span> <span class="nx">hint</span><span class="o">=</span><span class="s2">&quot;This is the name that will be used for the form field. It includes the prefix that will be used by ft:processform.&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfset</span> <span class="kd">var</span> <span class="nx">html</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfset</span> <span class="kd">var</span> <span class="nx">navid</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfset</span> <span class="kd">var</span> <span class="nx">oCategory</span> <span class="o">=</span> <span class="nx">createObject</span><span class="p">(</span><span class="s2">&quot;component&quot;</span><span class="p">,</span><span class="s1">&#39;farcry.core.packages.farcry.category&#39;</span><span class="p">)</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfset</span> <span class="kd">var</span> <span class="nx">lSelectedCategoryID</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="o">&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfset</span> <span class="kd">var</span> <span class="nx">lCategoryBranch</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfset</span> <span class="kd">var</span> <span class="nx">CategoryName</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfset</span> <span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfset</span> <span class="kd">var</span> <span class="nx">rootNodeText</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfset</span> <span class="kd">var</span> <span class="nx">rootID</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>              
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">structKeyExists</span><span class="p">(</span><span class="nx">application</span><span class="p">.</span><span class="nx">catid</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">stMetadata</span><span class="p">.</span><span class="nx">ftAlias</span><span class="p">)</span><span class="o">&gt;</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">rootID</span> <span class="o">=</span> <span class="nx">application</span><span class="p">.</span><span class="nx">catid</span><span class="p">[</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">stMetadata</span><span class="p">.</span><span class="nx">ftAlias</span><span class="p">]</span> <span class="o">&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfelse</span><span class="o">&gt;</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">rootID</span> <span class="o">=</span> <span class="nx">application</span><span class="p">.</span><span class="nx">catid</span><span class="p">[</span><span class="s1">&#39;root&#39;</span><span class="p">]</span> <span class="o">&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="err">/cfif&gt;</span>
+</span><span class='line'>      
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">lSelectedCategoryID</span> <span class="o">=</span> <span class="nx">oCategory</span><span class="p">.</span><span class="nx">getCategories</span><span class="p">(</span><span class="nx">objectid</span><span class="o">=</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">stObject</span><span class="p">.</span><span class="nx">ObjectID</span><span class="p">,</span><span class="nx">bReturnCategoryIDs</span><span class="o">=</span><span class="kc">true</span><span class="p">,</span><span class="nx">alias</span><span class="o">=</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">stMetadata</span><span class="p">.</span><span class="nx">ftAlias</span><span class="p">)</span> <span class="o">/&gt;</span>
+</span><span class='line'>      
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">rootNodeText</span> <span class="o">=</span> <span class="nx">oCategory</span><span class="p">.</span><span class="nx">getCategoryNamebyID</span><span class="p">(</span><span class="nx">categoryid</span><span class="o">=</span><span class="nx">rootID</span><span class="p">)</span> <span class="o">/&gt;</span>
+</span><span class='line'>      
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfswitch</span> <span class="nx">expression</span><span class="o">=</span><span class="s2">&quot;#arguments.stMetadata.ftRenderType#&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>          
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfcase</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;dropdown&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>              <span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">lCategoryBranch</span> <span class="o">=</span> <span class="nx">oCategory</span><span class="p">.</span><span class="nx">getCategoryBranchAsList</span><span class="p">(</span><span class="nx">lCategoryIDs</span><span class="o">=</span><span class="nx">rootID</span><span class="p">)</span> <span class="o">/&gt;</span>
+</span><span class='line'>                          
+</span><span class='line'>              <span class="o">&lt;</span><span class="nx">cfsavecontent</span> <span class="nx">variable</span><span class="o">=</span><span class="s2">&quot;html&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>                  <span class="o">&lt;</span><span class="nx">cfoutput</span><span class="o">&gt;&lt;</span><span class="nx">select</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;#arguments.fieldname#&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;#arguments.fieldname#&quot;</span>  <span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">stMetadata</span><span class="p">.</span><span class="nx">ftSelectMultiple</span><span class="o">&gt;</span><span class="nx">size</span><span class="o">=</span><span class="s2">&quot;#arguments.stMetadata.ftSelectSize#&quot;</span> <span class="nx">multiple</span><span class="o">=</span><span class="s2">&quot;true&quot;</span><span class="o">&lt;</span><span class="err">/cfif&gt; class=&quot;selectInput #arguments.stMetadata.ftSelectSize# #arguments.stMetadata.ftClass#&quot;&gt;&lt;/cfoutput&gt;</span>
+</span><span class='line'>                  <span class="o">&lt;</span><span class="nx">cfloop</span> <span class="nx">list</span><span class="o">=</span><span class="s2">&quot;#lCategoryBranch#&quot;</span> <span class="nx">index</span><span class="o">=</span><span class="s2">&quot;i&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>                      <span class="c">&lt;!--</span><span class="o">-</span> <span class="nx">If</span> <span class="nx">the</span> <span class="nx">item</span> <span class="nx">is</span> <span class="nx">the</span> <span class="nx">actual</span> <span class="nx">alias</span> <span class="nx">requested</span> <span class="nx">then</span> <span class="nx">it</span> <span class="nx">is</span> <span class="nx">not</span> <span class="nx">selectable</span><span class="p">.</span> <span class="o">---&gt;</span>
+</span><span class='line'>                      <span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">i</span> <span class="nx">EQ</span> <span class="nx">rootID</span><span class="o">&gt;</span>
+</span><span class='line'>                          <span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">len</span><span class="p">(</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">stMetadata</span><span class="p">.</span><span class="nx">ftDropdownFirstItem</span><span class="p">)</span><span class="o">&gt;</span>
+</span><span class='line'>                              <span class="o">&lt;</span><span class="nx">cfoutput</span><span class="o">&gt;&lt;</span><span class="nx">option</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="o">&gt;</span><span class="err">#</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">stMetadata</span><span class="p">.</span><span class="nx">ftDropdownFirstItem</span><span class="err">#</span><span class="o">&lt;</span><span class="err">/option&gt;&lt;/cfoutput&gt;</span>
+</span><span class='line'>                          <span class="o">&lt;</span><span class="nx">cfelse</span><span class="o">&gt;</span>
+</span><span class='line'>                              <span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">CategoryName</span> <span class="o">=</span> <span class="nx">oCategory</span><span class="p">.</span><span class="nx">getCategoryNamebyID</span><span class="p">(</span><span class="nx">categoryid</span><span class="o">=</span><span class="nx">i</span><span class="p">,</span><span class="nx">typename</span><span class="o">=</span><span class="s1">&#39;dmCategory&#39;</span><span class="p">)</span> <span class="o">/&gt;</span>
+</span><span class='line'>                              <span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">stMetadata</span><span class="p">.</span><span class="nx">ftAliasAsOptGroup</span> <span class="nx">EQ</span> <span class="kc">true</span><span class="o">&gt;</span>
+</span><span class='line'>                                  <span class="o">&lt;</span><span class="nx">cfoutput</span><span class="o">&gt;&lt;</span><span class="nx">optgroup</span> <span class="nx">label</span><span class="o">=</span><span class="s2">&quot;#CategoryName#&quot;</span><span class="o">&gt;&lt;</span><span class="err">/cfoutput&gt;</span>
+</span><span class='line'>                              <span class="o">&lt;</span><span class="nx">cfelse</span><span class="o">&gt;</span>
+</span><span class='line'>                                  <span class="o">&lt;</span><span class="nx">cfoutput</span><span class="o">&gt;&lt;</span><span class="nx">option</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="o">&gt;</span><span class="err">#</span><span class="nx">CategoryName</span><span class="err">#</span><span class="o">&lt;</span><span class="err">/option&gt;&lt;/cfoutput&gt;</span>
+</span><span class='line'>                              <span class="o">&lt;</span><span class="err">/cfif&gt;</span>
+</span><span class='line'>                          <span class="o">&lt;</span><span class="err">/cfif&gt;</span>
+</span><span class='line'>                      <span class="o">&lt;</span><span class="nx">cfelse</span><span class="o">&gt;</span>
+</span><span class='line'>                          <span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">CategoryName</span> <span class="o">=</span> <span class="nx">oCategory</span><span class="p">.</span><span class="nx">getCategoryNamebyID</span><span class="p">(</span><span class="nx">categoryid</span><span class="o">=</span><span class="nx">i</span><span class="p">,</span><span class="nx">typename</span><span class="o">=</span><span class="s1">&#39;dmCategory&#39;</span><span class="p">)</span> <span class="o">/&gt;</span>
+</span><span class='line'>                          <span class="o">&lt;</span><span class="nx">cfoutput</span><span class="o">&gt;&lt;</span><span class="nx">option</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#i#&quot;</span><span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">listContainsNoCase</span><span class="p">(</span><span class="nx">lSelectedCategoryID</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span><span class="o">&gt;</span> <span class="nx">selected</span><span class="o">=</span><span class="s2">&quot;selected&quot;</span><span class="o">&lt;</span><span class="err">/cfif&gt;&gt;#CategoryName#&lt;/option&gt;&lt;/cfoutput&gt;</span>
+</span><span class='line'>                      <span class="o">&lt;</span><span class="err">/cfif&gt;                      </span>
+</span><span class='line'>                  <span class="o">&lt;</span><span class="err">/cfloop&gt;</span>
+</span><span class='line'>                  <span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">stMetadata</span><span class="p">.</span><span class="nx">ftAliasAsOptGroup</span> <span class="nx">EQ</span> <span class="kc">true</span><span class="o">&gt;</span>
+</span><span class='line'>                      <span class="o">&lt;</span><span class="nx">cfoutput</span><span class="o">&gt;&lt;</span><span class="err">/optgroup&gt;&lt;/cfoutput&gt;</span>
+</span><span class='line'>                  <span class="o">&lt;</span><span class="err">/cfif&gt;</span>
+</span><span class='line'>                  <span class="o">&lt;</span><span class="nx">cfoutput</span><span class="o">&gt;&lt;</span><span class="err">/select&gt;&lt;/cfoutput&gt;</span>
+</span><span class='line'>              <span class="o">&lt;</span><span class="err">/cfsavecontent&gt;</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="err">/cfcase&gt;</span>
+</span><span class='line'>          
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfcase</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;prototype&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>              <span class="o">&lt;</span><span class="nx">cfsavecontent</span> <span class="nx">variable</span><span class="o">=</span><span class="s2">&quot;html&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>              
+</span><span class='line'>                  <span class="o">&lt;</span><span class="nx">cfoutput</span><span class="o">&gt;&lt;</span><span class="nx">fieldset</span> <span class="nx">style</span><span class="o">=</span><span class="s2">&quot;width: 300px;&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>                      <span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">len</span><span class="p">(</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">stMetadata</span><span class="p">.</span><span class="nx">ftLegend</span><span class="p">)</span><span class="o">&gt;&lt;</span><span class="nx">legend</span><span class="o">&gt;</span><span class="err">#</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">stMetadata</span><span class="p">.</span><span class="nx">ftLegend</span><span class="err">#</span><span class="o">&lt;</span><span class="err">/legend&gt;&lt;/cfif&gt;</span>
+</span><span class='line'>                  
+</span><span class='line'>                      <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;fieldsection optional full&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>                                              
+</span><span class='line'>                          <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;fieldwrap&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>                          <span class="o">&lt;</span><span class="err">/cfoutput&gt;</span>
+</span><span class='line'>
+</span><span class='line'>                              <span class="o">&lt;</span><span class="nx">ft</span><span class="o">:</span><span class="nx">NTMPrototypeTree</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;#arguments.fieldname#&quot;</span> <span class="nx">navid</span><span class="o">=</span><span class="s2">&quot;#rootID#&quot;</span> <span class="nx">depth</span><span class="o">=</span><span class="s2">&quot;99&quot;</span> <span class="nx">bIncludeHome</span><span class="o">=</span><span class="mi">1</span> <span class="nx">lSelectedItems</span><span class="o">=</span><span class="s2">&quot;#lSelectedCategoryID#&quot;</span> <span class="nx">bSelectMultiple</span><span class="o">=</span><span class="s2">&quot;#arguments.stMetadata.ftSelectMultiple#&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>                          
+</span><span class='line'>                          <span class="o">&lt;</span><span class="nx">cfoutput</span><span class="o">&gt;</span>
+</span><span class='line'>                          <span class="o">&lt;</span><span class="err">/div&gt;</span>
+</span><span class='line'>                          
+</span><span class='line'>                          <span class="o">&lt;</span><span class="nx">br</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;fieldsectionbreak&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>                      <span class="o">&lt;</span><span class="err">/div&gt;</span>
+</span><span class='line'>                      <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;hidden&quot;</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;#arguments.fieldname#&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;#arguments.fieldname#&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>                  <span class="o">&lt;</span><span class="err">/fieldset&gt;&lt;/cfoutput&gt;</span>
+</span><span class='line'>                          
+</span><span class='line'>              <span class="o">&lt;</span><span class="err">/cfsavecontent&gt;         </span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="err">/cfcase&gt;</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfcase</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;extjs&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>              <span class="c">&lt;!--</span><span class="o">-</span> <span class="o">&lt;</span><span class="nx">skin</span><span class="o">:</span><span class="nx">htmlHead</span> <span class="nx">library</span><span class="o">=</span><span class="s2">&quot;extjs&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>              <span class="o">&lt;</span><span class="nx">skin</span><span class="o">:</span><span class="nx">htmlHead</span> <span class="nx">library</span><span class="o">=</span><span class="s2">&quot;farcryForm&quot;</span> <span class="o">/&gt;</span> <span class="o">---&gt;</span>
+</span><span class='line'>              
+</span><span class='line'>              <span class="o">&lt;</span><span class="nx">cfsavecontent</span> <span class="nx">variable</span><span class="o">=</span><span class="s2">&quot;html&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>                  
+</span><span class='line'>                  <span class="o">&lt;</span><span class="nx">cfoutput</span><span class="o">&gt;&lt;</span><span class="nx">fieldset</span> <span class="nx">style</span><span class="o">=</span><span class="s2">&quot;width: 300px;&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>                      <span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">len</span><span class="p">(</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">stMetadata</span><span class="p">.</span><span class="nx">ftLegend</span><span class="p">)</span><span class="o">&gt;&lt;</span><span class="nx">legend</span><span class="o">&gt;</span><span class="err">#</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">stMetadata</span><span class="p">.</span><span class="nx">ftLegend</span><span class="err">#</span><span class="o">&lt;</span><span class="err">/legend&gt;&lt;/cfif&gt;</span>
+</span><span class='line'>                  
+</span><span class='line'>                      <span class="c">&lt;!--</span><span class="o">-</span> <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;tree-div&quot;</span> <span class="nx">style</span><span class="o">=</span><span class="s2">&quot;border:1px solid #c3daf9;&quot;</span><span class="o">&gt;&lt;</span><span class="err">/div&gt; ---&gt;</span>
+</span><span class='line'>                      <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;fieldsection optional full&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>                                          
+</span><span class='line'>                          <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;fieldwrap&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>                              
+</span><span class='line'>                              <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;#arguments.fieldname#-tree-div&quot;</span><span class="o">&gt;&lt;</span><span class="err">/div&gt;    </span>
+</span><span class='line'>                              
+</span><span class='line'>                          <span class="o">&lt;</span><span class="err">/div&gt;</span>
+</span><span class='line'>                          
+</span><span class='line'>                          <span class="o">&lt;</span><span class="nx">br</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;fieldsectionbreak&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>                      <span class="o">&lt;</span><span class="err">/div&gt;</span>
+</span><span class='line'>                      <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;hidden&quot;</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;#arguments.fieldname#&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;#arguments.fieldname#&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#lSelectedCategoryID#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>                      <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;hidden&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;#arguments.fieldname#&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>                  <span class="o">&lt;</span><span class="err">/fieldset&gt;</span>
+</span><span class='line'>                  <span class="o">&lt;</span><span class="err">/cfoutput&gt;</span>
+</span><span class='line'>                                              
+</span><span class='line'>              <span class="o">&lt;</span><span class="err">/cfsavecontent&gt;</span>
+</span><span class='line'>          
+</span><span class='line'>              <span class="o">&lt;</span><span class="nx">skin</span><span class="o">:</span><span class="nx">onReady</span><span class="o">&gt;</span>
+</span><span class='line'>              <span class="o">&lt;</span><span class="nx">cfoutput</span><span class="o">&gt;</span>
+</span><span class='line'>                  <span class="nx">createFormtoolTree</span><span class="p">(</span><span class="s1">&#39;#arguments.fieldname#&#39;</span><span class="p">,</span><span class="s1">&#39;#rootID#&#39;</span><span class="p">,</span> <span class="s1">&#39;#application.url.webtop#/facade/getCategoryNodes.cfm&#39;</span><span class="p">,</span> <span class="s1">&#39;#rootNodeText#&#39;</span><span class="p">,</span><span class="s1">&#39;#lSelectedCategoryID#&#39;</span><span class="p">,</span> <span class="s1">&#39;categoryIconCls&#39;</span><span class="p">);</span>                                           
+</span><span class='line'>              <span class="o">&lt;</span><span class="err">/cfoutput&gt;</span>
+</span><span class='line'>              <span class="o">&lt;</span><span class="err">/skin:onReady&gt;</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="err">/cfcase&gt;</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfcase</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;jquery&quot;</span><span class="o">&gt;</span>            
+</span><span class='line'>
+</span><span class='line'>              <span class="o">&lt;</span><span class="nx">skin</span><span class="o">:</span><span class="nx">onReady</span><span class="o">&gt;</span>
+</span><span class='line'>              <span class="o">&lt;</span><span class="nx">cfoutput</span><span class="o">&gt;</span>
+</span><span class='line'>                  <span class="nx">$j</span><span class="p">(</span><span class="s2">&quot;###arguments.fieldname#_list&quot;</span><span class="p">).</span><span class="nx">treeview</span><span class="p">({</span>
+</span><span class='line'>                      <span class="nx">url</span><span class="o">:</span> <span class="s2">&quot;#application.url.webtop#/facade/getCategoryNodes.cfm?node=#rootID#&amp;fieldname=#arguments.fieldname#&amp;multiple=#arguments.stMetadata.ftSelectMultiple#&amp;lSelectedItems=#lSelectedCategoryID#&quot;</span>
+</span><span class='line'>                  <span class="p">})</span>
+</span><span class='line'>              <span class="o">&lt;</span><span class="err">/cfoutput&gt;</span>
+</span><span class='line'>              <span class="o">&lt;</span><span class="err">/skin:onReady&gt;</span>
+</span><span class='line'>              
+</span><span class='line'>              <span class="o">&lt;</span><span class="nx">cfsavecontent</span> <span class="nx">variable</span><span class="o">=</span><span class="s2">&quot;html&quot;</span><span class="o">&gt;</span>                
+</span><span class='line'>                  <span class="o">&lt;</span><span class="nx">cfoutput</span><span class="o">&gt;</span>
+</span><span class='line'>                  <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;multiField&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>                      <span class="o">&lt;</span><span class="nx">ul</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;#arguments.fieldname#_list&quot;</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;treeview&quot;</span><span class="o">&gt;&lt;</span><span class="err">/ul&gt;</span>
+</span><span class='line'>                  <span class="o">&lt;</span><span class="err">/div&gt;</span>
+</span><span class='line'>                  <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;hidden&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;#arguments.fieldname#&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;&quot;</span> <span class="o">/&gt;</span>    
+</span><span class='line'>                  <span class="o">&lt;</span><span class="err">/cfoutput&gt;</span>
+</span><span class='line'>              <span class="o">&lt;</span><span class="err">/cfsavecontent&gt;         </span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="err">/cfcase&gt;            </span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfdefaultcase</span><span class="o">&gt;</span>
+</span><span class='line'>              
+</span><span class='line'>              <span class="o">&lt;</span><span class="nx">skin</span><span class="o">:</span><span class="nx">loadJS</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;jquery&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>              <span class="o">&lt;</span><span class="nx">skin</span><span class="o">:</span><span class="nx">loadJS</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;jquery-checkboxtree&quot;</span> <span class="nx">basehref</span><span class="o">=</span><span class="s2">&quot;#application.url.webtop#/thirdparty/checkboxtree/js&quot;</span> <span class="nx">lFiles</span><span class="o">=</span><span class="s2">&quot;jquery.checkboxtree.js&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>              <span class="o">&lt;</span><span class="nx">skin</span><span class="o">:</span><span class="nx">loadCSS</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;jquery-checkboxtree&quot;</span> <span class="nx">basehref</span><span class="o">=</span><span class="s2">&quot;#application.url.webtop#/thirdparty/checkboxtree/css&quot;</span> <span class="nx">lFiles</span><span class="o">=</span><span class="s2">&quot;checkboxtree.css&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>                                              
+</span><span class='line'>              <span class="o">&lt;</span><span class="nx">skin</span><span class="o">:</span><span class="nx">onReady</span><span class="o">&gt;</span>
+</span><span class='line'>              <span class="o">&lt;</span><span class="nx">cfoutput</span><span class="o">&gt;</span>
+</span><span class='line'>                  <span class="nx">$j</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+</span><span class='line'>                     <span class="nx">type</span><span class="o">:</span> <span class="s2">&quot;POST&quot;</span><span class="p">,</span>
+</span><span class='line'>                     <span class="nx">url</span><span class="o">:</span> <span class="s1">&#39;#application.fapi.getLink(type=&quot;dmCategory&quot;, objectid=&quot;#rootID#&quot;, view=&quot;displayCheckboxTree&quot;, urlParameters=&quot;ajaxmode=1&quot;)#&#39;</span><span class="p">,</span>
+</span><span class='line'>                     <span class="nx">data</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>                      <span class="nx">fieldname</span><span class="o">:</span> <span class="s1">&#39;#arguments.fieldname#&#39;</span><span class="p">,</span>
+</span><span class='line'>                      <span class="nx">rootNodeID</span><span class="o">:</span><span class="s1">&#39;#rootID#&#39;</span><span class="p">,</span>
+</span><span class='line'>                      <span class="nx">selectedObjectIDs</span><span class="o">:</span> <span class="s1">&#39;#lSelectedCategoryID#&#39;</span>
+</span><span class='line'>                      <span class="p">},</span>
+</span><span class='line'>                     <span class="nx">cache</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+</span><span class='line'>                     <span class="nx">success</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">msg</span><span class="p">){</span>
+</span><span class='line'>                          <span class="nx">$j</span><span class="p">(</span><span class="s2">&quot;###arguments.fieldname#-checkboxDiv&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">msg</span><span class="p">);</span>
+</span><span class='line'>                          <span class="nx">$j</span><span class="p">(</span><span class="s2">&quot;###arguments.fieldname#-checkboxTree&quot;</span><span class="p">).</span><span class="nx">checkboxTree</span><span class="p">({</span>
+</span><span class='line'>                                  <span class="nx">collapsedarrow</span><span class="o">:</span> <span class="s2">&quot;#application.url.webtop#/thirdparty/checkboxtree/images/checkboxtree/img-arrow-collapsed.gif&quot;</span><span class="p">,</span>
+</span><span class='line'>                                  <span class="nx">expandedarrow</span><span class="o">:</span> <span class="s2">&quot;#application.url.webtop#/thirdparty/checkboxtree/images/checkboxtree/img-arrow-expanded.gif&quot;</span><span class="p">,</span>
+</span><span class='line'>                                  <span class="nx">blankarrow</span><span class="o">:</span> <span class="s2">&quot;#application.url.webtop#/thirdparty/checkboxtree/images/checkboxtree/img-arrow-blank.gif&quot;</span><span class="p">,</span>
+</span><span class='line'>                                  <span class="nx">checkchildren</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+</span><span class='line'>                                  <span class="nx">checkparents</span><span class="o">:</span> <span class="kc">false</span>
+</span><span class='line'>                          <span class="p">});</span>  
+</span><span class='line'>                          <span class="nx">$j</span><span class="p">(</span><span class="s2">&quot;###arguments.fieldname#-checkboxDiv input:checked&quot;</span><span class="p">).</span><span class="nx">addClass</span><span class="p">(</span><span class="s1">&#39;mjb&#39;</span><span class="p">);</span>  
+</span><span class='line'>                          <span class="nx">$j</span><span class="p">(</span><span class="s2">&quot;###arguments.fieldname#-checkboxDiv input:checked&quot;</span><span class="p">).</span><span class="nx">parent</span><span class="p">().</span><span class="nx">addClass</span><span class="p">(</span><span class="s1">&#39;mjb&#39;</span><span class="p">);</span>          
+</span><span class='line'>                     <span class="p">}</span>
+</span><span class='line'>                   <span class="p">});</span>
+</span><span class='line'>                  
+</span><span class='line'>              <span class="o">&lt;</span><span class="err">/cfoutput&gt;</span>
+</span><span class='line'>              <span class="o">&lt;</span><span class="err">/skin:onReady&gt;</span>
+</span><span class='line'>              
+</span><span class='line'>              <span class="o">&lt;</span><span class="nx">cfsavecontent</span> <span class="nx">variable</span><span class="o">=</span><span class="s2">&quot;html&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>                  <span class="o">&lt;</span><span class="nx">cfoutput</span><span class="o">&gt;</span>
+</span><span class='line'>                  <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;multiField&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>                      <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;#arguments.fieldname#-checkboxDiv&quot;</span><span class="o">&gt;</span><span class="nx">loading</span><span class="p">...</span><span class="o">&lt;</span><span class="err">/div&gt;</span>
+</span><span class='line'>                      <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;hidden&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;#arguments.fieldname#&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;&quot;</span> <span class="o">/&gt;</span>            
+</span><span class='line'>                  <span class="o">&lt;</span><span class="err">/div&gt;</span>
+</span><span class='line'>                  <span class="o">&lt;</span><span class="err">/cfoutput&gt;</span>
+</span><span class='line'>                  
+</span><span class='line'>              <span class="o">&lt;</span><span class="err">/cfsavecontent&gt;         </span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="err">/cfdefaultcase&gt;         </span>
+</span><span class='line'>          
+</span><span class='line'>      <span class="o">&lt;</span><span class="err">/cfswitch&gt;</span>
+</span><span class='line'>      
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfreturn</span> <span class="nx">html</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cffunction&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfcomponent&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-01T10:51:52+10:00" pubdate data-updated="true">Jul 1<span>st</span>, 2011</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/farcry/'>Farcry</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2011/07/01/farcry-grouping-formtool-category-items//page/3/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2011/06/30/farcry-tip-remove-install-directory/">
+		
+			FarCry Tip - Remove Install Directory</a>
+	</h2>
+	<div class="entry-content">
+		<p>After you install FarCry you must make sure to delete the &#8220;install&#8221; folder(s) that FarCry leaves behind. Otherwise it&#8217;s possible for anyone to access the installer wizard again from your production website, and as it&#8217;s the installer they don&#8217;t even need to be logged in to cause real havoc. Not good.</p>
+
+<p>By default, as of FarCry 6.1.x, there are 2 install folders to delete:</p>
+
+<ul>
+<li>farcry.core.webtop.install</li>
+<li>farcry.plugins.farcrycms.install</li>
+</ul>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-06-30T10:39:14+10:00" pubdate data-updated="true">Jun 30<span>th</span>, 2011</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/farcry/'>Farcry</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2011/06/30/farcry-tip-remove-install-directory//page/3/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+<nav id="pagenavi">
+    
+        <a href="/page/2/" class="prev">Prev</a>
+    
+    
+        <a href="/page/4/" class="next">Next</a>
+    
+    <div class="center"><a href="/blog/archives">Blog Archives</a></div>
+</nav></div>
+	<footer id="footer" class="inner">Copyright &copy; 2013
+
+    Michael Sharman
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'chapter31';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-306772-2']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

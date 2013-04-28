@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: PHP | chapter31 &raquo;]]></title>
+  <link href="http://michaelsharman.github.io/chapter31/categories/php/atom.xml" rel="self"/>
+  <link href="http://michaelsharman.github.io/chapter31/"/>
+  <updated>2013-04-28T21:58:49+10:00</updated>
+  <id>http://michaelsharman.github.io/chapter31/</id>
+  <author>
+    <name><![CDATA[Michael Sharman]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Wordpress - detecting the categories of a post]]></title>
+    <link href="http://michaelsharman.github.io/chapter31/2011/05/11/wordpress-detecting-the-categories-of-a-post/"/>
+    <updated>2011-05-11T23:48:49+10:00</updated>
+    <id>http://michaelsharman.github.io/chapter31/2011/05/11/wordpress-detecting-the-categories-of-a-post</id>
+    <content type="html"><![CDATA[<p>I was creating a Wordpress child theme (the best way to modify/override your themes) tonight and had the need to have different display options depending on which categories the blog article had. So for example if I had a post categorised with "portfolio", I wanted to hide the comments form which usually sits at the bottom of a post.</p>
+
+<p>The following snippet will loop over all post categories, if it finds that "portfolio" is one of the categories assigned to the current post then a local variable (boolean) is set which you can use to hide Wordpress functions anywhere in the current template.</p>
+
+<p>``` php
+&lt;?php</p>
+
+<pre><code>$isPortfolio = false;
+
+$categories = get_the_category();
+
+foreach($categories as $cat)
+{
+    if ($cat-&gt;cat_name == 'portfolio')
+    {
+        $isPortfolio = true;
+        break;
+    }       
+}
+</code></pre>
+
+<p>?>
+```</p>
+
+<p>These changes were at the top of my child theme's <em>single.php</em> template. Not displaying the comments form was as simple as:</p>
+
+<p><code>
+&lt;?php if (!$isPortfolio){comments_template('', true);} ?&gt;
+</code></p>
+
+<h2>Update 12th May 2011</h2>
+
+<p>Thanks to Martin in the comments below for alerting me to the fact that Wordpress already has something for this, has_category($category, $post);</p>
+
+<p><code>
+&lt;?php $isPortfolio = has_category('portfolio'); ?&gt;
+</code></p>
+
+<p>Note I didn't need the 2nd argument as it defaults to the current post.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[FancyBox for Wordpress plugin not working]]></title>
+    <link href="http://michaelsharman.github.io/chapter31/2011/05/11/fancybox-for-wordpress-plugin-not-working/"/>
+    <updated>2011-05-11T23:42:10+10:00</updated>
+    <id>http://michaelsharman.github.io/chapter31/2011/05/11/fancybox-for-wordpress-plugin-not-working</id>
+    <content type="html"><![CDATA[<p>I just spent some time figuring out why fancybox wasn't working tonight (image thumbnails were just linking to the large image...not loading the overlay as they should). It now seems obvious after the fact but as far as I can see it's NOT in the fancybox docs.</p>
+
+<p>When you insert your gallery from the media section of a page in wp-admin, you HAVE to choose "Image File", not "Attachment Page". That's it!</p>
+
+<p>Annoyingly if you set the option to "Image File", save and exit...the next time you edit the page Wordpress doesn't remember your decision and instead checks the "Attachment Page" radio option.</p>
+
+<p>Hope this helps some people :)</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2011/05/gallery_settings.jpg" alt="wordpress gallery settings" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Development configuration tips for Ubuntu]]></title>
+    <link href="http://michaelsharman.github.io/chapter31/2008/12/13/development-configuration-tips-for-ubuntu/"/>
+    <updated>2008-12-13T13:28:20+11:00</updated>
+    <id>http://michaelsharman.github.io/chapter31/2008/12/13/development-configuration-tips-for-ubuntu</id>
+    <content type="html"><![CDATA[<p>I just setup my machine at home with Ubuntu 8.10 (desktop) which was so easy think I saved hours off the time it would normally take with Windows. So much is already installed and ready to go and with apt (or the Synaptic package manager) it's super quick to download and install extra things things like MySQL, PHP, Apache, Java etc</p>
+
+<p>Here are some notes which helped me out when configuring some of these development tools.</p>
+
+<p>This assumes you've already installed Apache and MySQL, for notes on installing these I <a href="http://ubuntuexperiment.wordpress.com/2008/11/10/installing-apache-php-mysql/">found this article</a> to be a great resource.</p>
+
+<p>If you get this message when you restart Apache, "<em>Could not reliably determine the server’s fully qualified domain name, using 127.0.1.1 for ServerName</em>", edit /etc/apache2/conf.d/fqdn and add "ServerName localhost":</p>
+
+<p><code>
+sudo nano /etc/apache2/conf.d/fqdn
+</code></p>
+
+<p><strong>Load the mod_rewrite module for Apache</strong></p>
+
+<p><code>
+sudo a2enmod rewrite
+</code></p>
+
+<p><strong>Enable your Apache vhosts</strong></p>
+
+<p>I already had all my vhosts defined in separate <em>.conf</em> files on my windows box, so I copied them all into /etc/apache2/sites-available and setup symbolic links from my /etc/apache2/sites-enabled:</p>
+
+<p><code>
+sudo ln -s /etc/apache2/sites-available/mysite.conf /etc/apache2/sites-enabled/mysite.conf
+</code></p>
+
+<p><strong>Download and install PHP</strong></p>
+
+<p><code>
+sudo apt-get install php5 libapache2-mod-php5
+</code></p>
+
+<p><strong>PHP connector to MySQL</strong></p>
+
+<p><code>
+sudo apt-get install libapache2-mod-auth-mysql php5-mysql
+</code></p>
+
+<p><strong>Install MySQL Administrator</strong></p>
+
+<p><code>
+sudo apt-get install mysql-admin
+</code></p>
+
+<p><strong>Install subversion</strong></p>
+
+<p><code>
+sudo apt-get install subversion
+</code></p>
+
+<p>I am also using <a href="http://www.poweredbypulse.com/">Pulse</a> to manage my <a href="http://www.eclipse.org/">eclipse</a> development environment so I needed Java which I got from the Synaptic Package Manager (<em>sun-java6-bin</em>). Pulse is super cool, I used the standard cfeclipse profile with the addition of the PHP PDT (for developing in PHP).</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Adding subscriptions to comments for your Wordpress theme]]></title>
+    <link href="http://michaelsharman.github.io/chapter31/2008/08/09/adding-subscriptions-to-comments-for-your-wordpress-theme/"/>
+    <updated>2008-08-09T13:13:26+10:00</updated>
+    <id>http://michaelsharman.github.io/chapter31/2008/08/09/adding-subscriptions-to-comments-for-your-wordpress-theme</id>
+    <content type="html"><![CDATA[<p>If you are using a Wordpress theme which doesn't support users subscribing to comments (crazy I know) you can add the plugin <a href="http://txfx.net/code/wordpress/subscribe-to-comments/">Subscribe to comments</a> which is currently at version 2.1</p>
+
+<p>A summary of the features this plugin provides:</p>
+
+<ul>
+<li>Rudimentary security</li>
+<li>Recognition of subscription status</li>
+<li>Themeable subscription manager</li>
+<li>Ability to let users change notification e-mail address</li>
+<li>Easy integration into comments form</li>
+<li>Subscription without leaving a comment</li>
+<li>Customization</li>
+<li>Internationalization</li>
+</ul>
+
+
+<p>Installation is as easy as you'd expect from a Wordpress plugin. Simply upload 1 php file into the plugins directory, then "activate" the plugin in the admin area.</p>
+
+<p>Then all you need to do is add a line of code to your theme <em>comments.php</em> where you want the checkbox to go and you're ready!</p>
+
+<p><code>javascript
+&lt;?php show_subscription_checkbox(); ?&gt;
+</code></p>
+
+<p><a href="http://txfx.net/code/wordpress/subscribe-to-comments/">Read more</a> and download the plugin here.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Wordpress for mobile devices]]></title>
+    <link href="http://michaelsharman.github.io/chapter31/2008/07/25/wordpress-for-mobile-devices/"/>
+    <updated>2008-07-25T10:55:59+10:00</updated>
+    <id>http://michaelsharman.github.io/chapter31/2008/07/25/wordpress-for-mobile-devices</id>
+    <content type="html"><![CDATA[<p><a href="http://wordpress.org/">Wordpress</a> is one of the most used blogging platforms around. One of the great things about it is the community support including the countless plugins you can use to enhance your blog/site.</p>
+
+<p>Particularly with the iPhone and other smart devices, mobile web seems to be experiencing a surge in traffic and importance to businesses. Although a lot of these "smart" devices now have full-featured browsers which can certainly handle your site without resorting to an entirely different version for mobile, there are still millions of handsets which access the web without a sophisticated browser so you often need to have a separate version of your site or at least a different stylesheet to handle these devices.</p>
+
+<p>After all you might not be able to offer your standard site (with pages exceeding 200K each etc) to a 2G mobile device.</p>
+
+<p><a href="http://wordpressmobile.mobi/">wordpressmobile</a> is a nice little plugin for Wordpress to enable your blog to be viewed by mobile devices. You can also post entries from your phone :)</p>
+
+<blockquote><p>WordPress Mobile Plugin was developed to make your blog mobile friendly, bring you more mobile traffic and make you money on the mobile web!</p></blockquote>
+
+<p>Installation couldn't be simpler;</p>
+
+<ol>
+<li>Upload wordpress-mobile.php to your wp-content/plugins folder</li>
+<li>Navigate to your plugin manager and activate the plugin</li>
+</ol>
+
+
+<p>That's it!</p>
+
+<p>The plugin automatically detects whether a visitor is on a mobile device, if they are then it serves them up a mobile version. This can be nice as you don't need to worry about different sub-domains or sub-directories to hold a separate version of your site specifically for mobiles.</p>
+
+<p>The good thing is that it won't get in the way for devices which have actual "browsers" like the iPhone, meaning on those phones visitors will see the full version of your site.</p>
+]]></content>
+  </entry>
+  
+</feed>

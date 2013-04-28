@@ -1,0 +1,241 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Setting application variables in FarCry - chapter31 &raquo;</title>
+	<meta name="author" content="Michael Sharman">
+
+	
+	<meta name="description" content="I just thought I&#8217;d write up some quick thoughts on setting application scoped variables in FarCry as it occured to me that it could be a little &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="chapter31 &raquo;" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">chapter31 &raquo;</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/michaelsharman" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/michaelsharman" title="GitHub">GitHub</a>
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+	</form>
+</nav>
+
+</header>
+	
+		
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">Setting Application Variables in FarCry</h2>
+	<div class="entry-content"><p>I just thought I&#8217;d write up some quick thoughts on setting application scoped variables in FarCry as it occured to me that it could be a little confusing to non-FarCry developers.</p>
+
+<p>It doesn&#8217;t really matter which framework you use,  you can theoretically set you application variables <em>anywhere you want</em>, but ideally you want to follow some sort of methodology and consistency both with the rest of your development team and of course the <a href="http://www.farcrycms.org/">framework you happen to be using</a>.</p>
+
+<p><a href="http://www.farcrycms.org/">FarCry</a> has (somewhat) recently added a &#8220;farcryConstructor.cfm&#8221; inside the project webroot (www). A quick peek inside suggests that this is where application vars are set, this is re-inforced by checking Application.cfc which has a bascially empty OnApplicationStart() in terms of setting project application vars.</p>
+
+<p>Sample of farcryConstructor.cfm:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">THIS</span><span class="p">.</span><span class="nx">sessionmanagement</span> <span class="o">=</span> <span class="kc">true</span>  <span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">THIS</span><span class="p">.</span><span class="nx">sessiontimeout</span> <span class="o">=</span> <span class="nx">createTimeSpan</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">THIS</span><span class="p">.</span><span class="nx">applicationtimeout</span> <span class="o">=</span> <span class="nx">createTimeSpan</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">THIS</span><span class="p">.</span><span class="nx">clientmanagement</span> <span class="o">=</span> <span class="kc">false</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="p">...</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>There is also the <em>/config</em> directory which has been in existence for several versions and contains, you guessed it, &#8220;configuration&#8221; files. Namely:</p>
+
+<ul>
+<li>_serverSpecificRequestScope.cfm</li>
+<li>_serverSpecificVars.cfm</li>
+<li>_serverSpecificVarsAfterInit.cfm</li>
+</ul>
+
+
+<p>So where do you add your custom project application vars? The options we have so far are:</p>
+
+<ul>
+<li>www/farcryConstuctor.cfm</li>
+<li>www/Application.cfc</li>
+<li>config/_serverSpecificxxx.cfm</li>
+</ul>
+
+
+<p>Well <em>farcryConstructor.cfm</em> could seem like an ideal place, after all it&#8217;s the &#8220;constructor&#8221;. But it is generated from the installation routine and as such ignores any custom variables which are set inside it. So steer clear of this one.</p>
+
+<p>OnApplicationStart() would also be a logical place inside <em>Application.cfc</em>. After all that&#8217;s probably where all your configuration happens in non-framework applications. This will indeed work as expected, but it&#8217;s not really the ideal place for your project config information.</p>
+
+<p>It&#8217;s probably best to follow the &#8220;FarCry way&#8221; of doing things which is to utilise the files inside your <em>/config</em> directory. This should be the first place anyone in your development team goes to look for any custom project properties or application scoped variables.</p>
+
+<p>Let&#8217;s look at the 3 /config files:</p>
+
+<p><strong>_serverSpecificRequestScope.cfm</strong>
+<em>This file is run after /core/tags/farcry/</em>requestScope.cfm
+It enables us to both override the default farcry request scope variables and also add our own_</p>
+
+<p><strong>_serverSpecificVars.cfm</strong>
+<em>THIS WILL BE INCLUDED BEFORE THE FARCRY INIT IS RUN BUT ONLY ON APPLICATION INITIALISATION.</em></p>
+
+<p><strong>_serverSpecificVarsAfterInit.cfm</strong>
+<em>THIS WILL BE INCLUDED AFTER THE FARCRY INIT HAS BEEN RUN BUT ONLY ON APPLICATION INITIALISATION.</em></p>
+
+<p>I would therefore use <em>_serverSpecificVars.cfm</em> for all your application scoped variables as it is run once on application initialisation. If you need to make a change here you need to update the application.</p>
+
+<p>I&#8217;d use <em><em>serverSpecificRequestScope.cfm</em> for all your request scoped variables. This template is basically like OnRequestStart() in </em>Application.cfc_, i.e. it is executed on each page request.</p>
+
+<p>Hope that helps some people :)</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-06-09T11:59:01+10:00" pubdate data-updated="true">Jun 9<span>th</span>, 2009</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/farcry/'>Farcry</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2009/06/09/setting-application-variables-in-farcry/#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2013
+
+    Michael Sharman
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'chapter31';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://michaelsharman.github.io/chapter31/2009/06/09/setting-application-variables-in-farcry/';
+        var disqus_url = 'http://michaelsharman.github.io/chapter31/2009/06/09/setting-application-variables-in-farcry/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-306772-2']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

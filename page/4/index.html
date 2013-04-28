@@ -1,0 +1,949 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>chapter31 &raquo;</title>
+	<meta name="author" content="Michael Sharman">
+
+	
+	<meta name="description" content="Like most CMS solutions out there, Mura CMS gives you some cool hooks to override core functionality. See the developer guides for more information &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="chapter31 &raquo;" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">chapter31 &raquo;</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/michaelsharman" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/michaelsharman" title="GitHub">GitHub</a>
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+	</form>
+</nav>
+
+</header>
+	
+		
+
+	
+	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2011/06/01/mura-overriding-dspcrumblistlinks/">
+		
+			Mura - Overriding dspCrumblistLinks</a>
+	</h2>
+	<div class="entry-content">
+		<p>Like most CMS solutions out there, Mura CMS gives you some cool hooks to override core functionality. <a href="http://docs.getmura.com/index.cfm/developer-guides/">See the developer guides</a> for more information.</p>
+
+<p>I&#8217;ve created a <a href="https://github.com/michaelsharman/muracustomisations/">repository on github</a> to store any customisations or extensions that could be cherry picked for use in any Mura app.</p>
+
+<p>First up was a super simple one for breadcrumbs. By default, Mura will put an &#8220;a href&#8221; around the last item in the crumb list. The site I was working on specified that the last item should be plain text (no hyperlink).</p>
+
+<p>Mura makes this nice and easy by extending the contentRenderer.cfc inside your /[siteid]/includes folder. Here is the function which includes my custom argument <em>linkLastItem [bool]</em> to determine whether or not to link the last item:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cffunction</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;dspCrumblistLinks&quot;</span>  <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="nx">returntype</span><span class="o">=</span><span class="s2">&quot;string&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;id&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;string&quot;</span> <span class="k">default</span><span class="o">=</span><span class="s2">&quot;crumblist&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;separator&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;string&quot;</span> <span class="k">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;linkLastItem&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;boolean&quot;</span> <span class="nx">required</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="k">default</span><span class="o">=</span><span class="s2">&quot;true&quot;</span> <span class="nx">hint</span><span class="o">=</span><span class="s2">&quot;Whether to generate an &#39;a href&#39; for the last crumb item&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfset</span> <span class="kd">var</span> <span class="nx">thenav</span><span class="o">=</span><span class="s2">&quot;&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfset</span> <span class="kd">var</span> <span class="nx">theOffset</span><span class="o">=</span><span class="nx">arrayLen</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">crumbdata</span><span class="p">)</span><span class="o">-</span> <span class="k">this</span><span class="p">.</span><span class="nx">navOffSet</span> <span class="o">/&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfset</span> <span class="kd">var</span> <span class="nx">I</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">/&gt;</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">arrayLen</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">crumbdata</span><span class="p">)</span> <span class="nx">gt</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">navOffSet</span><span class="p">)</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfsavecontent</span> <span class="nx">variable</span><span class="o">=</span><span class="s2">&quot;theNav&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfoutput</span><span class="o">&gt;&lt;</span><span class="nx">ul</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;#arguments.id#&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>              <span class="o">&lt;</span><span class="nx">cfloop</span> <span class="nx">from</span><span class="o">=</span><span class="s2">&quot;#theOffset#&quot;</span> <span class="nx">to</span><span class="o">=</span><span class="s2">&quot;1&quot;</span> <span class="nx">index</span><span class="o">=</span><span class="s2">&quot;I&quot;</span> <span class="nx">step</span><span class="o">=</span><span class="s2">&quot;-1&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>                  <span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">I</span> <span class="nx">neq</span> <span class="mi">1</span><span class="o">&gt;</span>
+</span><span class='line'>                      <span class="o">&lt;</span><span class="nx">li</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;#iif(I eq theOffset,de(&#39;first&#39;),de(&#39;&#39;))#&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>                      <span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">i</span> <span class="nx">neq</span> <span class="nx">theOffset</span><span class="o">&gt;</span><span class="err">#</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">separator</span><span class="err">#</span><span class="o">&lt;</span><span class="err">/cfif&gt;</span>
+</span><span class='line'>                      <span class="err">#</span><span class="nx">addlink</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">crumbdata</span><span class="p">[</span><span class="nx">I</span><span class="p">].</span><span class="nx">type</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">crumbdata</span><span class="p">[</span><span class="nx">I</span><span class="p">].</span><span class="nx">filename</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">crumbdata</span><span class="p">[</span><span class="nx">I</span><span class="p">].</span><span class="nx">menutitle</span><span class="p">,</span> <span class="s1">&#39;_self&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">crumbdata</span><span class="p">[</span><span class="nx">I</span><span class="p">].</span><span class="nx">contentid</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">crumbdata</span><span class="p">[</span><span class="nx">I</span><span class="p">].</span><span class="nx">siteid</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="nx">application</span><span class="p">.</span><span class="nx">configBean</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(),</span> <span class="nx">application</span><span class="p">.</span><span class="nx">configBean</span><span class="p">.</span><span class="nx">getStub</span><span class="p">(),</span> <span class="nx">application</span><span class="p">.</span><span class="nx">configBean</span><span class="p">.</span><span class="nx">getIndexFile</span><span class="p">(),</span> <span class="nx">event</span><span class="p">.</span><span class="nx">getValue</span><span class="p">(</span><span class="s1">&#39;showMeta&#39;</span><span class="p">),</span><span class="mi">0</span><span class="p">)</span><span class="err">#</span><span class="o">&lt;</span><span class="err">/li&gt;</span>
+</span><span class='line'>                  <span class="o">&lt;</span><span class="nx">cfelse</span><span class="o">&gt;</span>
+</span><span class='line'>                      <span class="o">&lt;</span><span class="nx">li</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;#iif(arraylen(this.crumbdata),de(&#39;last&#39;),de(&#39;first&#39;))#&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>                          <span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">linkLastItem</span><span class="o">&gt;</span>
+</span><span class='line'>                              <span class="err">#</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">separator</span><span class="err">##</span><span class="nx">addlink</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">crumbdata</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">type</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">crumbdata</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">filename</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">crumbdata</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">menutitle</span><span class="p">,</span> <span class="s1">&#39;_self&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">crumbdata</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">contentid</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">crumbdata</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">siteid</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="nx">application</span><span class="p">.</span><span class="nx">configBean</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(),</span> <span class="nx">application</span><span class="p">.</span><span class="nx">configBean</span><span class="p">.</span><span class="nx">getStub</span><span class="p">(),</span> <span class="nx">application</span><span class="p">.</span><span class="nx">configBean</span><span class="p">.</span><span class="nx">getIndexFile</span><span class="p">(),</span><span class="nx">event</span><span class="p">.</span><span class="nx">getValue</span><span class="p">(</span><span class="s1">&#39;showMeta&#39;</span><span class="p">),</span><span class="mi">0</span><span class="p">)</span><span class="err">#</span>
+</span><span class='line'>                          <span class="o">&lt;</span><span class="nx">cfelse</span><span class="o">&gt;</span>
+</span><span class='line'>                              <span class="err">#</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">separator</span><span class="err">##</span><span class="k">this</span><span class="p">.</span><span class="nx">crumbdata</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">menutitle</span><span class="err">#</span>
+</span><span class='line'>                          <span class="o">&lt;</span><span class="err">/cfif&gt;</span>
+</span><span class='line'>                      <span class="o">&lt;</span><span class="err">/li&gt;</span>
+</span><span class='line'>                  <span class="o">&lt;</span><span class="err">/cfif&gt;</span>
+</span><span class='line'>              <span class="o">&lt;</span><span class="err">/cfloop&gt;</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="err">/ul&gt;&lt;/cfoutput&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="err">/cfsavecontent&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cfif&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfreturn</span> <span class="nx">trim</span><span class="p">(</span><span class="nx">theNav</span><span class="p">)</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cffunction&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-06-01T08:31:03+10:00" pubdate data-updated="true">Jun 1<span>st</span>, 2011</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/mura/'>Mura</a>, <a class='category' href='/categories/railo/'>Railo</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2011/06/01/mura-overriding-dspcrumblistlinks//page/4/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2011/05/30/farcry-to-mura-migrating-data-from-farcry-to-mura-cms/">
+		
+			FarCry to Mura - Migrating Data From FarCry to Mura CMS</a>
+	</h2>
+	<div class="entry-content">
+		<p>For years <a href="http://www.learnosity.com/">here at Learnosity</a> we&#8217;ve been using <a href="http://www.farcrycore.org/">FarCry</a> for most of our CMS requirements (yes, I know that FarCry, or rather farcrycms, is a lot more than just a CMS).</p>
+
+<p>For one reason or another we decided it was time to look at some of the other options for content management in the ColdFusion sphere, <a href="http://www.getmura.com/">Mura CMS</a> was a likely candidate for evalutation.</p>
+
+<p>We had a small-ish site that was already running in FarCry 6+ which we wanted to port to Mura so we could really get a feel for how things worked in Mura-land. If things go well we may decide to move more sites across, so I wanted a way to migrate existing content from a FarCry database to a Mura one. A quick search for something to do this came up blank so I spent half a day coming up with a little tool to do this. Here it is in case anyone else might find it useful.</p>
+
+<p>You can <a href="https://github.com/michaelsharman/farcrytomura">find the project on github</a> (https://github.com/michaelsharman/farcrytomura), below is the &#8220;help&#8221; page I added:</p>
+
+<h2>Introduction</h2>
+
+<p>This script imports basic navigation and HTML data from an existing FarCry database into a Mura one.</p>
+
+<h2>Requirements</h2>
+
+<p>This was built on</p>
+
+<ul>
+<li>Railo 3.2+</li>
+<li>ColdFusion 7+</li>
+<li>FarCry 6+</li>
+<li>Mura 5.4+</li>
+<li>MySQL 5+</li>
+</ul>
+
+
+<p>Not sure about FarCry 5, you should be ok as I don&#8217;t think the v6 schema changes will effect this script</p>
+
+<p>To make things easier, session management must enabled</p>
+
+<h2>Installation</h2>
+
+<p>Probably easiest to put this folder (farcrytomura) in the webroot of an existing project/vhost, then call it from http://www.yourproject.com/farcrytomura/</p>
+
+<p>If you want, you can setup a project/vhost specifically for this, but it&#8217;s not necessary.</p>
+
+<p>This script has its own Application.cfc to avoid scope conflict</p>
+
+<p>Caveat - the ColdFusion/Railo server (instance/context) that you run this from needs to have BOTH dsn&#8217;s (the FarCry and Mura ones) in the cf admin</p>
+
+<h2>FarCry content types</h2>
+
+<p>Currently we examine the FarCry navigation tree and bring across the entire structure underneath &#8216;Root&#8217; (i.e. any nLevel 2+ nodes)</p>
+
+<p>If people want it, we can extend the functionality to import from a specific node, e.g. from &#8216;Home&#8217;.This would be handy if your FarCry site has secondary/utility navigation etc that you want imported separately.</p>
+
+<p>Although all navigation nodes will be created in Mura, the only actual content that is imported is dmHTML, we ignore:</p>
+
+<ul>
+<li>dmInclude</li>
+<li>dmLink</li>
+<li>Anything but the first content object under a navigation node</li>
+<li>dmNews, dmEvent or any other &#8220;dynamic&#8221; content type</li>
+<li>Custom tree content types</li>
+</ul>
+
+
+<p>Basically we import all navigation nodes under the site tab, from &#8220;Root&#8221; down, including the HTML content.</p>
+
+<h2>FarCry homepage content</h2>
+
+<p>Currently we ignore the farcry homepage content because we assume there is at least a &#8220;home&#8221; page in Mura. This is a TODO</p>
+
+<h2>SES URLs</h2>
+
+<p>Mura ses url&#8217;s are created on import based off the title of the page from FarCry. This should be the default behaviour as if you were created a page from within Mura admin.</p>
+
+<p>Currently we&#8217;re NOT importing the FarCry friendly URL into Mura.</p>
+
+<h2>Rolling back</h2>
+
+<p>If you want to rollback the import, you&#8217;ll need to:</p>
+
+<pre><code>DELETE FROM tcontent WHERE siteID = '[yoursite]' AND lastUpdateBy = 'farcrytomura'
+</code></pre>
+
+<h2>TODOs</h2>
+
+<ul>
+<li>Ability to select the page template from Mura</li>
+<li>When previewing the Mura navigation tree, indent properly</li>
+<li>Import the FarCry &#8220;home&#8221; page content</li>
+<li>Handle farcry secondary/utility nav&#8217;s (anything else at the same level as &#8220;home&#8221;)</li>
+<li>Fix sortorder on sub items, they work fine but not as neat as they could be</li>
+</ul>
+
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2011/05/farcrytomura_setdns.png" alt="" />
+<img src="http://www.chapter31.com/wp-content/uploads/2011/05/farcrytomura_setmurasiteid.png" alt="" />
+<img src="http://www.chapter31.com/wp-content/uploads/2011/05/farcrytomura_checkfarcry.png" alt="" />
+<img src="http://www.chapter31.com/wp-content/uploads/2011/05/farcrytomura_checkmura.png" alt="" />
+<img src="http://www.chapter31.com/wp-content/uploads/2011/05/farcrytomura_domigration.png" alt="" />
+<img src="http://www.chapter31.com/wp-content/uploads/2011/05/farcrytomura_help.png" alt="" /></p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-05-30T09:00:27+10:00" pubdate data-updated="true">May 30<span>th</span>, 2011</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/farcry/'>Farcry</a>, <a class='category' href='/categories/mura/'>Mura</a>, <a class='category' href='/categories/railo/'>Railo</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2011/05/30/farcry-to-mura-migrating-data-from-farcry-to-mura-cms//page/4/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2011/05/11/wordpress-detecting-the-categories-of-a-post/">
+		
+			Wordpress - Detecting the Categories of a Post</a>
+	</h2>
+	<div class="entry-content">
+		<p>I was creating a Wordpress child theme (the best way to modify/override your themes) tonight and had the need to have different display options depending on which categories the blog article had. So for example if I had a post categorised with &#8220;portfolio&#8221;, I wanted to hide the comments form which usually sits at the bottom of a post.</p>
+
+<p>The following snippet will loop over all post categories, if it finds that &#8220;portfolio&#8221; is one of the categories assigned to the current post then a local variable (boolean) is set which you can use to hide Wordpress functions anywhere in the current template.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="cp">&lt;?php</span>
+</span><span class='line'>  <span class="nv">$isPortfolio</span> <span class="o">=</span> <span class="k">false</span><span class="p">;</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="nv">$categories</span> <span class="o">=</span> <span class="nx">get_the_category</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">foreach</span><span class="p">(</span><span class="nv">$categories</span> <span class="k">as</span> <span class="nv">$cat</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="nv">$cat</span><span class="o">-&gt;</span><span class="na">cat_name</span> <span class="o">==</span> <span class="s1">&#39;portfolio&#39;</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">{</span>
+</span><span class='line'>          <span class="nv">$isPortfolio</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+</span><span class='line'>          <span class="k">break</span><span class="p">;</span>
+</span><span class='line'>      <span class="p">}</span>        
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="cp">?&gt;</span><span class="x"></span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>These changes were at the top of my child theme&#8217;s <em>single.php</em> template. Not displaying the comments form was as simple as:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="cp">&lt;?php</span> <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nv">$isPortfolio</span><span class="p">){</span><span class="nx">comments_template</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">);}</span> <span class="cp">?&gt;</span><span class="x"></span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Update 12th May 2011</h2>
+
+<p>Thanks to Martin in the comments below for alerting me to the fact that Wordpress already has something for this, has_category($category, $post);</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="cp">&lt;?php</span> <span class="nv">$isPortfolio</span> <span class="o">=</span> <span class="nx">has_category</span><span class="p">(</span><span class="s1">&#39;portfolio&#39;</span><span class="p">);</span> <span class="cp">?&gt;</span><span class="x"></span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note I didn&#8217;t need the 2nd argument as it defaults to the current post.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-05-11T23:48:49+10:00" pubdate data-updated="true">May 11<span>th</span>, 2011</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/php/'>PHP</a>, <a class='category' href='/categories/wordpress/'>Wordpress</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2011/05/11/wordpress-detecting-the-categories-of-a-post//page/4/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2011/05/11/fancybox-for-wordpress-plugin-not-working/">
+		
+			FancyBox for Wordpress Plugin Not Working</a>
+	</h2>
+	<div class="entry-content">
+		<p>I just spent some time figuring out why fancybox wasn&#8217;t working tonight (image thumbnails were just linking to the large image&#8230;not loading the overlay as they should). It now seems obvious after the fact but as far as I can see it&#8217;s NOT in the fancybox docs.</p>
+
+<p>When you insert your gallery from the media section of a page in wp-admin, you HAVE to choose &#8220;Image File&#8221;, not &#8220;Attachment Page&#8221;. That&#8217;s it!</p>
+
+<p>Annoyingly if you set the option to &#8220;Image File&#8221;, save and exit&#8230;the next time you edit the page Wordpress doesn&#8217;t remember your decision and instead checks the &#8220;Attachment Page&#8221; radio option.</p>
+
+<p>Hope this helps some people :)</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2011/05/gallery_settings.jpg" alt="wordpress gallery settings" /></p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-05-11T23:42:10+10:00" pubdate data-updated="true">May 11<span>th</span>, 2011</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/php/'>PHP</a>, <a class='category' href='/categories/wordpress/'>Wordpress</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2011/05/11/fancybox-for-wordpress-plugin-not-working//page/4/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2011/04/17/farcry-twitter-plugin/">
+		
+			FarCry Twitter Plugin</a>
+	</h2>
+	<div class="entry-content">
+		<p>I spent a couple of hours on a FarCry plugin for twitter yesterday based off their official API.</p>
+
+<h2>What?</h2>
+
+<p>This plugin basically wraps up the options that the offical twitter API gives you including:</p>
+
+<ul>
+<li>Twitter username</li>
+<li>Showing avatars, timestamps, hashtags etc</li>
+<li>Theme appearance (colours for background and text etc</li>
+<li>Dimensions of widget</li>
+</ul>
+
+
+<p>For more, visit the <a href="https://github.com/michaelsharman/farcrytwitter">project page,</a> download it and have a play.</p>
+
+<h2>Why?</h2>
+
+<p>Although the twitter API is super simple to implement, it&#8217;s always handy to have things wrapped up as a plugin so we can easily create as many widgets as we need and handle caching etc. Caching is important as the API is rate limited to 150 requests per hour, using FarCry&#8217;s object broker will get around this.</p>
+
+<p>Plus it makes it simple for non techy people to get going with the goodness of twitter.</p>
+
+<h2>Where?</h2>
+
+<p>The project is currently hosted at GitHub&#8230;where else?
+<a href="https://github.com/michaelsharman/farcrytwitter">farcrytwitter project page</a></p>
+
+<h2>Requirements?</h2>
+
+<p>FarCry 6+ (although I think it&#8217;ll work on 5+ I haven&#8217;t tested)<br/>
+Railo 3.x / ColdFusion 8+<br/>
+MySQL / MSSQL (or whatever database your version of FarCry supports)</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2011/04/publishingrule.png" alt="" />
+<img src="http://www.chapter31.com/wp-content/uploads/2011/04/widgetsample-150x150.png" alt="" /></p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-04-17T22:04:49+10:00" pubdate data-updated="true">Apr 17<span>th</span>, 2011</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/farcry/'>Farcry</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2011/04/17/farcry-twitter-plugin//page/4/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2011/03/04/mysql-alternative-to-mssqls-isnull/">
+		
+			MySQL Alternative to MSSQL&#8217;s isNull()</a>
+	</h2>
+	<div class="entry-content">
+		<p>I was looking for a way to do isNull() in MySQL the other day, for those that don&#8217;t know this means you can do something like:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">SELECT</span> <span class="nx">isNull</span><span class="p">(</span><span class="nx">mycolumn</span><span class="p">,</span> <span class="s1">&#39;blah&#39;</span><span class="p">)</span> <span class="nx">FROM</span> <span class="nx">myTable</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If the value in <em>mycolumn</em> is NULL, then &#8216;blah&#8217; is returned, this can of course be any string literal/numeric value you want. MySQL doesn&#8217;t have isNull() but it does have <a href="http://dev.mysql.com/doc/refman/5.0/en/control-flow-functions.html#function_ifnull">ifNull()</a> which is basically the same.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">SELECT</span> <span class="nx">ifNull</span><span class="p">(</span><span class="nx">mycolumn</span><span class="p">,</span> <span class="s1">&#39;blah&#39;</span><span class="p">)</span> <span class="nx">FROM</span> <span class="nx">myTable</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-03-04T10:22:53+11:00" pubdate data-updated="true">Mar 4<span>th</span>, 2011</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/databases/'>Databases</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2011/03/04/mysql-alternative-to-mssqls-isnull//page/4/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2011/02/08/sql-for-finding-duplicate-values/">
+		
+			SQL for Finding Duplicate Values</a>
+	</h2>
+	<div class="entry-content">
+		<p>Quick post to remind me how to check a table column for duplicate values next time I&#8217;m looking for it (when my memory fails!)</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">SELECT</span> <span class="nx">id</span><span class="p">,</span> <span class="nx">count</span><span class="p">(</span><span class="nx">id</span><span class="p">)</span>
+</span><span class='line'><span class="nx">FROM</span> <span class="nx">mytable</span>
+</span><span class='line'><span class="nx">GROUP</span> <span class="nx">BY</span> <span class="nx">id</span>
+</span><span class='line'><span class="nx">HAVING</span> <span class="nx">count</span><span class="p">(</span><span class="nx">id</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-02-08T17:47:18+11:00" pubdate data-updated="true">Feb 8<span>th</span>, 2011</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/databases/'>Databases</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2011/02/08/sql-for-finding-duplicate-values//page/4/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2011/01/13/checking-for-correct-case-sensitive-tables-in-farcry/">
+		
+			Checking for Correct Case-sensitive Tables in FarCry</a>
+	</h2>
+	<div class="entry-content">
+		<p>We run several FarCry projects at Learnosity and all of them run on Linux. We have occasionally come across issues where the FarCry codebase will refer to a MySQL table in the wrong &#8220;case&#8221;.</p>
+
+<p>E.g. referring to &#8220;dmhtml&#8221; where the actual table name is &#8220;dmHTML&#8221;.</p>
+
+<p>This is course fails in any case sensitive environment. Note that we also run our <a href="http://www.chapter31.com/2010/10/04/case-sensitive-development-on-mac-os-x/">Macs as case sensitive in development</a> to help find these issues before deploying to a stage/production server.</p>
+
+<p>Anyway, I wrote a small test script to introspect the FarCry codebase for types and rules etc to compare that with a local MySQL database to attempt to find (and fix) any case sensitive issues that might occur.</p>
+
+<p>We already have a custom area under the &#8220;Admin&#8221; tab in the webtop, I added the file there.</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2011/01/webtop.png" alt="webtop" /></p>
+
+<p>If you&#8217;re interesting in having a look, <a href="http://www.chapter31.com/wp-content/uploads/2011/01/diff.cfm">download diff.cfm</a> and put inside your projects &#8220;customAdmin&#8221; folder and link to it from customadmin.xml e.g.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">section</span> <span class="nx">mergeType</span><span class="o">=</span><span class="s2">&quot;merge&quot;</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;admin&quot;</span> <span class="nx">sequence</span><span class="o">=</span><span class="s2">&quot;4100&quot;</span> <span class="nx">permission</span><span class="o">=</span><span class="s2">&quot;MainNavAdminTab&quot;</span> <span class="nx">label</span><span class="o">=</span><span class="s2">&quot;Admin&quot;</span> <span class="nx">icon</span><span class="o">=</span><span class="s2">&quot;config&quot;</span> <span class="nx">description</span><span class="o">=</span><span class="s2">&quot;administration/utility tasks&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">subsection</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;learnosity&quot;</span> <span class="nx">sequence</span><span class="o">=</span><span class="s2">&quot;10000&quot;</span> <span class="nx">label</span><span class="o">=</span><span class="s2">&quot;Table Name Check&quot;</span> <span class="nx">permission</span><span class="o">=</span><span class="s2">&quot;AdminGeneralTab&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">menu</span> <span class="nx">sequence</span><span class="o">=</span><span class="s2">&quot;10&quot;</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;intranetmenu&quot;</span> <span class="nx">label</span><span class="o">=</span><span class="s2">&quot;Utility Tasks&quot;</span> <span class="nx">labelType</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">menuitem</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;diff&quot;</span> <span class="nx">sequence</span><span class="o">=</span><span class="s2">&quot;1&quot;</span> <span class="nx">label</span><span class="o">=</span><span class="s2">&quot;FarCry/MySQL Diff&quot;</span> <span class="nx">link</span><span class="o">=</span><span class="s2">&quot;/admin/customadmin.cfm?module=diff.cfm&quot;</span> <span class="o">/&gt;</span>             
+</span><span class='line'>      <span class="o">&lt;</span><span class="err">/menu&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/subsection&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/section&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Hope it helps!</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-01-13T09:47:45+11:00" pubdate data-updated="true">Jan 13<span>th</span>, 2011</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/farcry/'>Farcry</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2011/01/13/checking-for-correct-case-sensitive-tables-in-farcry//page/4/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2010/12/08/adding-prototype-methods-to-jquery/">
+		
+			Adding Prototype Methods to jQuery</a>
+	</h2>
+	<div class="entry-content">
+		<p>We recently upgraded a project which was using the Prototype JavaScript framework to use jQuery and ran into a few methods which didn&#8217;t exist in jQuery at all.</p>
+
+<p>A quick search gave us an easy solution; by adding a prototype property (not related to the Prototype framework) to String.prototype we can give every <code>string</code> in our codebase access to these methods as if they were part of the JavaScript spec (or the jQuery library).</p>
+
+<p>E.g. we wanted to add the endsWith() and startsWith() functions on any String object which basically checks a string for a suffix or prefix:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c1">// Allows jQuery to use &#39;.startsWith&#39; and &#39;.endsWith&#39; which are in the Prototype framework</span>
+</span><span class='line'><span class="kd">function</span> <span class="nx">utilityInit</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="nb">String</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">endsWith</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">suffix</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">substr</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="nx">suffix</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="o">===</span> <span class="nx">suffix</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="nb">String</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">startsWith</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">prefix</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">substr</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nx">prefix</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="o">===</span> <span class="nx">prefix</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note that I wrapped these additions in a function called utilityInit() which I run on document ready&#8230;so I can access them anytime I need.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-12-08T09:41:50+11:00" pubdate data-updated="true">Dec 8<span>th</span>, 2010</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/javascript/'>Javascript</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2010/12/08/adding-prototype-methods-to-jquery//page/4/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2010/11/15/importing-a-csv-into-mysql-using-the-command-line/">
+		
+			Importing a Csv Into MySQL Using the Command Line</a>
+	</h2>
+	<div class="entry-content">
+		<p><strong><em>UPDATE 16th Nov 2010: I had some issues with the import which I noted in the first code example below</em></strong></p>
+
+<p>Today I had to import csv into a single mysql table. The destination table only had 5 columns and the csv was around 22MB (around 400,000 records). The csv also contained more columns that I needed for the import. Sometimes I&#8217;ll use a GUI to do this as I usually have one open, but it never ceases to amaze me how much slower GUI tools are compared to the command line.</p>
+
+<p>To import the file via Aqua Data Studio took around 20 mins to import on my machine (over the network to the staging server took over 40mins!). As I need to do this more and more I though I&#8217;d look at a few command line options. I actually wanted to do this in 2 steps; firstly import the csv, them export it as a sql file and import it into &#8220;production&#8221; from there.</p>
+
+<p>First we need to import the original .csv, ignoring certrain columns which the destination table didn&#8217;t need. Why not open this in excel/open office and <code>clean</code> the csv first? Too many rows, by default open office won&#8217;t read that many rows, plus it slows the machine down to even try that, double plus it&#8217;s super simple to ignore columns you don&#8217;t need:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">mysql</span><span class="o">&gt;</span> <span class="nx">LOAD</span> <span class="nx">DATA</span> <span class="nx">LOCAL</span> <span class="nx">INFILE</span> <span class="s1">&#39;/pathtofile/myfile.csv&#39;</span>
+</span><span class='line'>    <span class="o">-&gt;</span> <span class="nx">INTO</span> <span class="nx">TABLE</span> <span class="nx">MyTable</span>
+</span><span class='line'>    <span class="o">-&gt;</span> <span class="nx">FIELDS</span> <span class="nx">TERMINATED</span> <span class="nx">BY</span> <span class="s1">&#39;,&#39;</span>
+</span><span class='line'>    <span class="o">-&gt;</span> <span class="nx">ENCLOSED</span> <span class="nx">BY</span> <span class="s1">&#39;&quot;&#39;</span>
+</span><span class='line'>    <span class="o">-&gt;</span> <span class="nx">LINES</span> <span class="nx">TERMINATED</span> <span class="nx">BY</span> <span class="s1">&#39;\r\n&#39;</span>
+</span><span class='line'>    <span class="o">-&gt;</span> <span class="p">(</span><span class="nx">col1</span><span class="p">,</span><span class="nx">col2</span><span class="p">,</span><span class="err">@</span><span class="nx">ignore</span><span class="p">,</span><span class="nx">col3</span><span class="p">,</span><span class="nx">col4</span><span class="p">,</span><span class="err">@</span><span class="nx">ignore</span><span class="p">,</span><span class="nx">col5</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note the LINES TERMINATED BY&#8230;you really need &#8216;\r\n&#8217;, especially if you .csv had been generated from a Windows machine! Otherwise your import will be kinda funky :(</p>
+
+<p>Also note the ENCLOSED BY &#8216;&#8221;&#8217;, if you skip that option then any data in the .csv what was enclosed by double quotes (strings for eg) will actually import the double quotes into your database which is more than likely not what you want.</p>
+
+<p>Note the <code>@ignore</code> user variables specified in the column list. Basically that&#8217;s saying that there are extra columns in the csv which I don&#8217;t want to import into the database. So by assigning the csv column to a user variable and not assigning the variable to an actual table column you effectively ignore it. You can call the user variable anything you want (prefixed with <code>@</code> of course). Calling it <code>@ignore</code> made sense to me.</p>
+
+<p>Great now we have our data in the table, took about 2 seconds to run as opposed to 20min in the GUI tool :/</p>
+
+<p>Then I had to quickly massage the data via sql as defined by the business rules as the original csv was <code>incomplete</code> in terms of the application requirements. After that was done I exported the table into a sql file:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">mysqldump</span> <span class="o">-</span><span class="nx">uroot</span> <span class="o">-</span><span class="nx">p</span> <span class="p">[</span><span class="nx">local_database_name</span><span class="p">]</span> <span class="p">[</span><span class="nx">table_to_export</span><span class="p">]</span> <span class="o">--</span><span class="nx">skip</span><span class="o">-</span><span class="nx">opt</span> <span class="o">--</span><span class="nx">compact</span> <span class="o">--</span><span class="nx">disable</span><span class="o">-</span><span class="nx">keys</span> <span class="o">--</span><span class="nx">extended</span><span class="o">-</span><span class="nx">insert</span> <span class="o">--</span><span class="nx">no</span><span class="o">-</span><span class="nx">create</span><span class="o">-</span><span class="nx">info</span> <span class="o">&gt;</span> <span class="nx">mytable</span><span class="p">.</span><span class="nx">sql</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The options used here skip things in the .sql file like CREATE TABLE etc. They also combine INSERTS and disable the keys to improve the speed of the import. Finally import the production ready sql into:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">mysql</span> <span class="o">-</span><span class="nx">uroot</span> <span class="o">-</span><span class="nx">p</span> <span class="p">[</span><span class="nx">production_database</span><span class="p">]</span> <span class="o">&lt;</span> <span class="nx">mytable</span><span class="p">.</span><span class="nx">sql</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Again, the point of this is pure performance. The speed difference is incredible, even on a local machine I don&#8217;t know why anyone would bother using GUI tools to import/export data unless you were working with tiny databases/tables.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-11-15T10:38:10+11:00" pubdate data-updated="true">Nov 15<span>th</span>, 2010</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/databases/'>Databases</a>, <a class='category' href='/categories/mac/'>Mac</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2010/11/15/importing-a-csv-into-mysql-using-the-command-line//page/4/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+<nav id="pagenavi">
+    
+        <a href="/page/3/" class="prev">Prev</a>
+    
+    
+        <a href="/page/5/" class="next">Next</a>
+    
+    <div class="center"><a href="/blog/archives">Blog Archives</a></div>
+</nav></div>
+	<footer id="footer" class="inner">Copyright &copy; 2013
+
+    Michael Sharman
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'chapter31';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-306772-2']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

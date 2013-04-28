@@ -1,0 +1,244 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Preventing FW/1 from reinitialising an app via the URL - chapter31 &raquo;</title>
+	<meta name="author" content="Michael Sharman">
+
+	
+	<meta name="description" content="One of the things that FW/1 allows you to do is configure a reload &#8220;key&#8221; and &#8220;password&#8221; which you can use to reinit your &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="chapter31 &raquo;" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">chapter31 &raquo;</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/michaelsharman" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/michaelsharman" title="GitHub">GitHub</a>
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+	</form>
+</nav>
+
+</header>
+	
+		
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">Preventing FW/1 From Reinitialising an App via the URL</h2>
+	<div class="entry-content"><p>One of the things that <a href="https://github.com/seancorfield/fw1">FW/1</a> allows you to do is configure a reload &#8220;key&#8221; and &#8220;password&#8221; which you can use to reinit your application via URL.</p>
+
+<p>So inside your Application.cfc you might have:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>variables.framework = {
+</span><span class='line'>  reload = 'reinit',
+</span><span class='line'>  password = "mysecretkey"
+</span><span class='line'>  …
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So you can reinit your application (flush the application scope by re-running onApplicationStart()) by calling something like:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>http://www.example.com/?reinit=mysecretkey</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The &#8220;reload&#8221; and &#8220;password&#8221; properties can be changed to whatever you want for securities sake.</p>
+
+<p>We wanted a little extra security, that being the option to never allow an application to be reinitialised via a URL. Typically we want this in a production environment only. What you lose in flexibility, being able to reinit the application quickly and easily after a release/deployment, you (arguably) gain in security. Perhaps this is being a little over-cautious, but we like to be better safe than sorry, especially when reducing possible DOS vectors. Also it makes life easier when dealing with system administrators and/or security audits :)</p>
+
+<p>To achieve this we simply added a new property to the <em>variables.framework</em> structure inside Application.cfc, called &#8220;disableReloadApplication&#8221;, which accepts true|false. If <em>true</em>, then even if you know the &#8220;reload&#8221; and &#8220;password&#8221; values…the application cannot be reinitialised via the URL. So the following would NOT reinit the app:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>http://www.example.com/?reinit=mysecretkey</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A few extra lines were needed inside framework.cfc to make this happen:</p>
+
+<p>setupFrameworkDefaults()</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>…
+</span><span class='line'>if ( !structKeyExists(variables.framework, 'disableReloadApplication') ) {
+</span><span class='line'>  variables.framework.disableReloadApplication = false;
+</span><span class='line'>}
+</span><span class='line'>…</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and isFrameworkReloadRequest()</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>return ( !variables.framework.disableReloadApplication &&
+</span><span class='line'>  ((isDefined( 'URL' ) &&
+</span><span class='line'>  structKeyExists( URL, variables.framework.reload ) &&
+</span><span class='line'>  URL[ variables.framework.reload ] == variables.framework.password ) ||
+</span><span class='line'>  variables.framework.reloadApplicationOnEveryRequest));</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Although we could have extended framework.cfc with our own file (and just defined these 2 methods), we just altered the original framework.cfc as we store a local copy in source control that all our projects can draw from.</p>
+
+<p><a href="https://github.com/michaelsharman/fw1">Here is the fork of FW/1</a> (really just a change to framework.cfc), version 2.0.1.</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-27T22:57:23+10:00" pubdate data-updated="true">Sep 27<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2012/09/27/preventing-fw1-from-reinitialising-an-app-via-the-url/#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2013
+
+    Michael Sharman
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'chapter31';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://michaelsharman.github.io/chapter31/2012/09/27/preventing-fw1-from-reinitialising-an-app-via-the-url/';
+        var disqus_url = 'http://michaelsharman.github.io/chapter31/2012/09/27/preventing-fw1-from-reinitialising-an-app-via-the-url/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-306772-2']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

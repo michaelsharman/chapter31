@@ -1,0 +1,229 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Detecting and redirecting http to https - chapter31 &raquo;</title>
+	<meta name="author" content="Michael Sharman">
+
+	
+	<meta name="description" content="There was a recent thread on the mach-ii mailing list where a user wanted to detect whether a request was being made via http or https. This is quite &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="chapter31 &raquo;" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">chapter31 &raquo;</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/michaelsharman" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/michaelsharman" title="GitHub">GitHub</a>
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+	</form>
+</nav>
+
+</header>
+	
+		
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">Detecting and Redirecting Http to Https</h2>
+	<div class="entry-content"><p>There was a <a href="http://groups.google.com/group/mach-ii-for-coldfusion/browse_thread/thread/c742be0d8ab0395c?hl=en">recent thread</a> on the <a href="http://groups.google.com/group/mach-ii-for-coldfusion/">mach-ii mailing list</a> where a user wanted to detect whether a request was being made via http or https.</p>
+
+<p>This is quite a common step developers take when working on a site with secure (SSL) and non-secure areas. As the list is mach-ii there are a couple of obvious framework specific options to take, those being Filters and Plugins. Although Peter Farrel does have an sslPlugin available, I liked the approach put forward by <a href="http://www.pteradactylcry.com/blog/">Matt Osbun</a>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">Compare</span><span class="p">(</span><span class="nx">cgi</span><span class="p">.</span><span class="nx">SERVER_PORT</span><span class="p">,</span><span class="mi">443</span><span class="p">)</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cflocation</span> <span class="nx">url</span><span class="o">=</span><span class="s2">&quot;https://#cgi.server_name##cgi.path_info#?#cgi.query_string#&quot;</span> <span class="nx">addtoken</span><span class="o">=</span><span class="s2">&quot;false&quot;</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfif&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now I know a lot of people don&#8217;t like using CGI scoped variables, even the more common ones, so I thought I&#8217;d try it out with getPageContext().</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c">&lt;!--</span><span class="o">-</span> <span class="nx">set</span> <span class="nx">up</span> <span class="nx">the</span> <span class="nx">getRequest</span> <span class="nx">method</span> <span class="k">for</span> <span class="nx">easy</span> <span class="nx">access</span> <span class="o">---&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">oRequest</span> <span class="o">=</span> <span class="nx">getPageContext</span><span class="p">().</span><span class="nx">getRequest</span><span class="p">()</span> <span class="o">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">compare</span><span class="p">(</span><span class="nx">oRequest</span><span class="p">.</span><span class="nx">getServerPort</span><span class="p">(),</span> <span class="mi">443</span><span class="p">)</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cflocation</span> <span class="nx">url</span><span class="o">=</span><span class="s2">&quot;https://#oRequest.getServerName()##oRequest.getRequestURI()#?#oRequest.getQueryString()#&quot;</span> <span class="nx">addtoken</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfif&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>As you can see it&#8217;s a little bit longer, but I believe is a safer option than relying on CGI variables.</p>
+
+<p>A slight modification (using getRequest()) is testing the isSecure() which &#8221;<em>Returns true if this protocol is secure</em>&#8221;:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c">&lt;!--</span><span class="o">-</span> <span class="nx">set</span> <span class="nx">up</span> <span class="nx">the</span> <span class="nx">getRequest</span> <span class="nx">method</span> <span class="k">for</span> <span class="nx">easy</span> <span class="nx">access</span> <span class="o">---&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">oRequest</span> <span class="o">=</span> <span class="nx">getPageContext</span><span class="p">().</span><span class="nx">getRequest</span><span class="p">()</span> <span class="o">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">NOT</span> <span class="nx">oRequest</span><span class="p">.</span><span class="nx">isSecure</span><span class="p">()</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cflocation</span> <span class="nx">url</span><span class="o">=</span><span class="s2">&quot;https://#oRequest.getServerName()##oRequest.getRequestURI()#?#oRequest.getQueryString()#&quot;</span> <span class="nx">addtoken</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfif&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I&#8217;m still (slowly) making my way through getPageContext(), it can provide an absolute wealth of knowledge for the ColdFusion programmer. You can view the 1.4 <a href="http://java.sun.com/j2ee/1.4/docs/api/javax/servlet/jsp/PageContext.html">pagecontext docs here</a> and the <a href="http://java.sun.com/j2ee/1.4/docs/api/javax/servlet/ServletRequest.html">servletrequest docs here</a>.</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-07-21T15:43:41+10:00" pubdate data-updated="true">Jul 21<span>st</span>, 2007</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2007/07/21/detecting-and-redirecting-http-to-https/#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2013
+
+    Michael Sharman
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'chapter31';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://michaelsharman.github.io/chapter31/2007/07/21/detecting-and-redirecting-http-to-https/';
+        var disqus_url = 'http://michaelsharman.github.io/chapter31/2007/07/21/detecting-and-redirecting-http-to-https/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-306772-2']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

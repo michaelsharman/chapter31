@@ -1,0 +1,226 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Commenting templates with author data - chapter31 &raquo;</title>
+	<meta name="author" content="Michael Sharman">
+
+	
+	<meta name="description" content="We all know that we should liberally comment our code to allow other developers (and yourself) to quickly and easily find out what a particular &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="chapter31 &raquo;" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">chapter31 &raquo;</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/michaelsharman" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/michaelsharman" title="GitHub">GitHub</a>
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+	</form>
+</nav>
+
+</header>
+	
+		
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">Commenting Templates With Author Data</h2>
+	<div class="entry-content"><p>We all know that we should liberally comment our code to allow other developers (and yourself) to quickly and easily find out what a particular section of code does. But what about a comment block at the top of the page so anybody can (at a glance) determine template specific information?</p>
+
+<p>Here is an example of what I use at the top of my pages, this is pretty standard but I know a lot of people don&#8217;t do it.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&lt;!---</span>
+</span><span class='line'>   <span class="no">Name</span>          <span class="p">:</span> <span class="n">myFile</span><span class="o">.</span><span class="n">cfm</span>
+</span><span class='line'>   <span class="no">Author</span>        <span class="p">:</span> <span class="no">Michael</span> <span class="no">Sharman</span>
+</span><span class='line'>   <span class="no">Created</span>       <span class="p">:</span> <span class="no">November</span> <span class="mo">06</span><span class="p">,</span> <span class="mi">2006</span>
+</span><span class='line'>   <span class="no">Last</span> <span class="no">Updated</span>  <span class="p">:</span> <span class="no">November</span> <span class="mo">06</span><span class="p">,</span> <span class="mi">2006</span>
+</span><span class='line'>   <span class="no">History</span>       <span class="p">:</span> <span class="no">Initial</span> <span class="n">release</span> <span class="p">(</span><span class="n">mps</span> <span class="mi">6</span><span class="o">/</span><span class="mi">11</span><span class="o">/</span><span class="mi">2006</span><span class="p">)</span>
+</span><span class='line'>   <span class="no">Purpose</span>       <span class="p">:</span> <span class="n">A</span> <span class="n">descriptive</span> <span class="n">message</span>
+</span><span class='line'><span class="o">---&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I find the best thing is to either have this as part of a template for a new <em>.cfm</em> file, or as a snippet for easy access. I actually use snippets with built-in and custom <a href="http://www.chapter31.com/2006/10/22/cfeclipse-snippets/">snippet variables</a> for the comment options.</p>
+
+<p>The snippet I use for cfeclipse is:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&lt;!---</span>
+</span><span class='line'>   <span class="no">Name</span>          <span class="p">:</span> <span class="vg">$$</span><span class="p">{</span><span class="no">CURRENTFILE</span><span class="p">}</span>
+</span><span class='line'>   <span class="no">Author</span>        <span class="p">:</span> <span class="no">Michael</span> <span class="no">Sharman</span>
+</span><span class='line'>   <span class="no">Created</span>       <span class="p">:</span> <span class="vg">$$</span><span class="p">{</span><span class="no">MONTH</span><span class="p">}</span> <span class="vg">$$</span><span class="p">{</span><span class="no">DAYOFMONTH</span><span class="p">},</span> <span class="vg">$$</span><span class="p">{</span><span class="no">YEAR</span><span class="p">}</span>
+</span><span class='line'>   <span class="no">Last</span> <span class="no">Updated</span>  <span class="p">:</span> <span class="vg">$$</span><span class="p">{</span><span class="no">MONTH</span><span class="p">}</span> <span class="vg">$$</span><span class="p">{</span><span class="no">DAYOFMONTH</span><span class="p">},</span> <span class="vg">$$</span><span class="p">{</span><span class="no">YEAR</span><span class="p">}</span>
+</span><span class='line'>   <span class="no">History</span>       <span class="p">:</span> <span class="no">Initial</span> <span class="n">release</span> <span class="p">(</span><span class="n">mps</span> <span class="vg">$$</span><span class="p">{</span><span class="no">DAYOFMONTH</span><span class="p">}</span><span class="o">/</span><span class="vg">$$</span><span class="p">{</span><span class="no">MONTHNUMBER</span><span class="p">}</span><span class="o">/</span><span class="vg">$$</span><span class="p">{</span><span class="no">YEAR</span><span class="p">})</span>
+</span><span class='line'>   <span class="no">Purpose</span>       <span class="p">:</span> <span class="vg">$$</span><span class="p">{</span><span class="ss">Purpose</span><span class="p">:}</span>
+</span><span class='line'><span class="o">---&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note the custom variable $${Purpose:} as well as the built-in snippet variables like $${CURRENTFILE}. You can read more about <a href="http://www.cfeclipse.org/go/documentation/user-docs/snippets">snippet variables here</a>.</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-11-16T13:55:20+11:00" pubdate data-updated="true">Nov 16<span>th</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2006/11/16/commenting-templates-with-author-data/#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2013
+
+    Michael Sharman
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'chapter31';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://michaelsharman.github.io/chapter31/2006/11/16/commenting-templates-with-author-data/';
+        var disqus_url = 'http://michaelsharman.github.io/chapter31/2006/11/16/commenting-templates-with-author-data/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-306772-2']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

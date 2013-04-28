@@ -1,0 +1,1054 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>chapter31 &raquo;</title>
+	<meta name="author" content="Michael Sharman">
+
+	
+	<meta name="description" content="Ok now we all know that ColdFusion is kind of lame when it comes to whitespace management, unless you specifically have &#8220;whitespace management &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="chapter31 &raquo;" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">chapter31 &raquo;</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/michaelsharman" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/michaelsharman" title="GitHub">GitHub</a>
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+	</form>
+</nav>
+
+</header>
+	
+		
+
+	
+	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2012/09/20/whitespace-issues-in-cfscript-based-functions/">
+		
+			Whitespace Issues in Cfscript Based Functions</a>
+	</h2>
+	<div class="entry-content">
+		<p>Ok now we all know that ColdFusion is kind of lame when it comes to whitespace management, unless you specifically have &#8220;whitespace management&#8221; turned on for your server.</p>
+
+<p>I have a function that is used to build the <em>href</em> value of a hyperlink. Nothing special there. However when I viewed the source of the page I was a little surprised to see a mountain of whitespace coming back from the function.</p>
+
+<p>All I do is return a string from the function, I don&#8217;t output any text from within the function.</p>
+
+<p>Here it is:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kr">public</span> <span class="nx">string</span> <span class="kd">function</span> <span class="nx">getFullPageURI</span><span class="p">(</span><span class="nx">required</span> <span class="nx">string</span> <span class="nx">pagename</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">pages</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">lib</span><span class="p">.</span><span class="nx">services</span><span class="p">.</span><span class="nx">pages</span><span class="p">();</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">page</span> <span class="o">=</span> <span class="nx">pages</span><span class="p">.</span><span class="nx">getPageByNavURL</span><span class="p">(</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">pagename</span><span class="p">,</span> <span class="nx">getId</span><span class="p">());</span>
+</span><span class='line'>  <span class="k">return</span> <span class="nx">page</span><span class="p">.</span><span class="nx">getPageURI</span><span class="p">();</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And the link source:</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2012/09/Screen-shot-2012-09-20-at-5.24.32-PM.png" alt="" /></p>
+
+<p>Hmm, could that suck any more? Now what happens if I add output=&#8221;false&#8221; (not particularly intuitive) to the end of the function, like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kr">public</span> <span class="nx">string</span> <span class="kd">function</span> <span class="nx">getFullPageURI</span><span class="p">(</span><span class="nx">required</span> <span class="nx">string</span> <span class="nx">pagename</span><span class="p">)</span> <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;false&quot;</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">pages</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">lib</span><span class="p">.</span><span class="nx">services</span><span class="p">.</span><span class="nx">pages</span><span class="p">();</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">page</span> <span class="o">=</span> <span class="nx">pages</span><span class="p">.</span><span class="nx">getPageByNavURL</span><span class="p">(</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">pagename</span><span class="p">,</span> <span class="nx">getId</span><span class="p">());</span>
+</span><span class='line'>  <span class="k">return</span> <span class="nx">page</span><span class="p">.</span><span class="nx">getPageURI</span><span class="p">();</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now I get:</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2012/09/Screen-shot-2012-09-20-at-5.25.54-PM.png" alt="" /></p>
+
+<p>Sorry but that&#8217;s just insane. cfscript should behave like cfsilent all the time unless you specify a writeOutput();</p>
+
+<p>Hope this helps any other people out there. The lesson learned is that you can specify output=&#8221;false&#8221; in a cfscript based function, but ONLY AFTER THE METHOD SIGNATAURE!</p>
+
+<p>So if you did this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kr">public</span> <span class="nx">string</span> <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="kd">function</span> <span class="nx">getFullPageURI</span><span class="p">(</span><span class="nx">required</span> <span class="nx">string</span> <span class="nx">pagename</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If would fail. It needs to occur after the parens.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-20T17:28:08+10:00" pubdate data-updated="true">Sep 20<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2012/09/20/whitespace-issues-in-cfscript-based-functions//page/2/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2012/09/14/jquery-ui-dialog-focus-on-first-tabable-element/">
+		
+			jQuery UI Dialog Focus on First Tabable Element</a>
+	</h2>
+	<div class="entry-content">
+		<p>I&#8217;ve been using the <a href="http://jqueryui.com/demos/dialog/">jQuery UI dialog</a> for a project recently, one thing that bugged me though, was that upon opening a dialog the first tabable element always gets focussed. This can be:</p>
+
+<ul>
+<li>hyperlinks</li>
+<li>input boxes</li>
+<li>select boxes</li>
+<li>buttons</li>
+<li>textareas etc</li>
+</ul>
+
+
+<p>An example of this is:</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2012/09/Screen-shot-2012-09-14-at-4.06.09-PM.png" alt="" /></p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2012/09/Screen-shot-2012-09-14-at-4.06.30-PM.png" alt="" /></p>
+
+<p>A quick way around this is to fire a <a href="http://api.jquery.com/blur/">blur()</a> method, targeting the first <em>tabable</em> element type of your dialog. So if I open up a dialog window with an id of <em>dialog</em>, I can do:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#dialog&#39;</span><span class="p">).</span><span class="nx">dialog</span><span class="p">(</span><span class="s1">&#39;open&#39;</span><span class="p">);</span>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#dialog&#39;</span><span class="p">).</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;a, select, input, textarea, button&#39;</span><span class="p">).</span><span class="nx">first</span><span class="p">().</span><span class="nx">blur</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I was hoping to put this inside the open() method of the dialog, but it doesn&#8217;t seem to parse the contents of the dialog within that method. So the following did not work for me:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#dialog&#39;</span><span class="p">).</span><span class="nx">dialog</span><span class="p">({</span>
+</span><span class='line'>  <span class="nx">autoOpen</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+</span><span class='line'>  <span class="nx">maxWidth</span><span class="o">:</span> <span class="mi">600</span><span class="p">,</span>
+</span><span class='line'>  <span class="nx">minWidth</span><span class="o">:</span> <span class="mi">500</span><span class="p">,</span>
+</span><span class='line'>  <span class="nx">modal</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+</span><span class='line'>  <span class="nx">resizable</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+</span><span class='line'>  <span class="nx">open</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;a, select, input, textarea, button&#39;</span><span class="p">).</span><span class="nx">first</span><span class="p">().</span><span class="nx">blur</span><span class="p">();</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-14T16:27:29+10:00" pubdate data-updated="true">Sep 14<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/javascript/'>Javascript</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2012/09/14/jquery-ui-dialog-focus-on-first-tabable-element//page/2/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2012/08/14/timing-synchronous-javascript-operations/">
+		
+			Timing Synchronous JavaScript Operations</a>
+	</h2>
+	<div class="entry-content">
+		<p>There&#8217;s a cool little method on the <em>console</em> object that allows you to track how long an operation took to run. It&#8217;s called <a href="https://developer.mozilla.org/en-US/docs/DOM/console.time">console.time</a>.</p>
+
+<p>Basically you just start a timer at the top of the code you want to time, like so:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">time</span><span class="p">(</span><span class="s1">&#39;timer-name&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// your javascript goes here</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">timeEnd</span><span class="p">(</span><span class="s1">&#39;timer-name&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Each <em>timer</em> block should have a unique name (in the example above I called my timer &#8216;timer-name&#8217;), and you can have up to 10,000 timers running on a single page.</p>
+
+<p>By calling <em>console.timeEnd()</em>, the browser will write to the console how long (in milliseconds) the code took to run since you first called console.time();</p>
+
+<p>This works in Chrome 2+, Firefox 10+, Opera and Safari 4+. Typically IE support is a little sketchy, however I <a href="http://stackoverflow.com/questions/3516515/console-time-in-ie8-developer-tools?answertab=active#tab-top">found a cool custom function</a> on Stack Overflow that allows you to use console.time/timeEnd in IE7/8 etc.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c1">//console.time implementation for IE</span>
+</span><span class='line'><span class="k">if</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">console</span> <span class="o">&amp;&amp;</span> <span class="k">typeof</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">console</span><span class="p">.</span><span class="nx">time</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;undefined&quot;</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">time</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">reset</span><span class="p">){</span>
+</span><span class='line'>        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span><span class="p">;</span> <span class="p">}</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">time</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">().</span><span class="nx">getTime</span><span class="p">();</span>
+</span><span class='line'>        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">console</span><span class="p">.</span><span class="nx">timeCounters</span><span class="p">)</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">timeCounters</span> <span class="o">=</span> <span class="p">{}</span> <span class="p">};</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">key</span> <span class="o">=</span> <span class="s2">&quot;KEY&quot;</span> <span class="o">+</span> <span class="nx">name</span><span class="p">.</span><span class="nx">toString</span><span class="p">();</span>
+</span><span class='line'>        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">reset</span> <span class="o">&amp;&amp;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">timeCounters</span><span class="p">[</span><span class="nx">key</span><span class="p">])</span> <span class="p">{</span> <span class="k">return</span><span class="p">;</span> <span class="p">}</span>
+</span><span class='line'>            <span class="nx">console</span><span class="p">.</span><span class="nx">timeCounters</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">time</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">timeEnd</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">){</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">time</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">().</span><span class="nx">getTime</span><span class="p">();</span>
+</span><span class='line'>        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">console</span><span class="p">.</span><span class="nx">timeCounters</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span><span class="p">;</span> <span class="p">}</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">key</span> <span class="o">=</span> <span class="s2">&quot;KEY&quot;</span> <span class="o">+</span> <span class="nx">name</span><span class="p">.</span><span class="nx">toString</span><span class="p">();</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">timeCounter</span> <span class="o">=</span> <span class="nx">console</span><span class="p">.</span><span class="nx">timeCounters</span><span class="p">[</span><span class="nx">key</span><span class="p">];</span>
+</span><span class='line'>        <span class="k">if</span><span class="p">(</span><span class="nx">timeCounter</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="kd">var</span> <span class="nx">diff</span> <span class="o">=</span> <span class="nx">time</span> <span class="o">-</span> <span class="nx">timeCounter</span><span class="p">;</span>
+</span><span class='line'>            <span class="kd">var</span> <span class="nx">label</span> <span class="o">=</span> <span class="nx">name</span> <span class="o">+</span> <span class="s2">&quot;: &quot;</span> <span class="o">+</span> <span class="nx">diff</span> <span class="o">+</span> <span class="s2">&quot;ms&quot;</span><span class="p">;</span>
+</span><span class='line'>            <span class="nx">console</span><span class="p">.</span><span class="nx">info</span><span class="p">(</span><span class="nx">label</span><span class="p">);</span>
+</span><span class='line'>            <span class="k">delete</span> <span class="nx">console</span><span class="p">.</span><span class="nx">timeCounters</span><span class="p">[</span><span class="nx">key</span><span class="p">];</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nx">diff</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">};</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-14T07:24:05+10:00" pubdate data-updated="true">Aug 14<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/javascript/'>Javascript</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2012/08/14/timing-synchronous-javascript-operations//page/2/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2012/08/10/setting-font-mime-types-in-apache/">
+		
+			Setting Font MIME Types in Apache</a>
+	</h2>
+	<div class="entry-content">
+		<p>If your website is using custom fonts, you may see this line in your Chrome console:</p>
+
+<blockquote><p>Resource interpreted as Font but transferred with MIME type application/octet-stream</p></blockquote>
+
+<p>This is really kinda annoying, if you want to get rid of that warning then add the following directives to your apache conf/.htaccess:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">AddType</span> <span class="nx">application</span><span class="o">/</span><span class="nx">vnd</span><span class="p">.</span><span class="nx">ms</span><span class="o">-</span><span class="nx">fontobject</span> <span class="nx">eot</span>
+</span><span class='line'><span class="nx">AddType</span> <span class="nx">font</span><span class="o">/</span><span class="nx">opentype</span> <span class="nx">otf</span>
+</span><span class='line'><span class="nx">AddType</span> <span class="nx">font</span><span class="o">/</span><span class="nx">truetype</span> <span class="nx">ttf</span>
+</span><span class='line'><span class="nx">AddType</span> <span class="nx">application</span><span class="o">/</span><span class="nx">x</span><span class="o">-</span><span class="nx">font</span><span class="o">-</span><span class="nx">woff</span> <span class="p">.</span><span class="nx">woff</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="http://www.jbarker.com/blog/2011/resource-interpreted-font-transferred-mime-type">See here for more information.</a></p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-10T09:40:00+10:00" pubdate data-updated="true">Aug 10<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/apache-slash-iis/'>Apache/IIS</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2012/08/10/setting-font-mime-types-in-apache//page/2/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2012/08/06/turning-off-sessions-for-non-https-traffic/">
+		
+			Turning Off Sessions for Non-https Traffic</a>
+	</h2>
+	<div class="entry-content">
+		<p>Today I wanted to configure an application to only set <em>secure</em> cookies. Those are cookies that are only sent back to the server if over a secure (https) connection.</p>
+
+<p>The main reason for this is to prevent session hijacking, where a bad guy might sniff the cookie values which links a user to the session &#8220;state&#8221; on the server. If they managed to do that, (which they could if the session was started on an <em>http://</em> connection, then if/when the user logged on and was transferred to <em>https://</em>) the bad guy would still have their cookie values and thus would be able to visit the website as the logged in user. No good. You can read more on <a href="http://www.12robots.com/index.cfm/2009/1/5/mmmmMMmmmmmmm-Cookies--Security-Series-12">Jason Dean&#8217;s great series on security</a></p>
+
+<p>Another thing to consider when it comes to securing your sessions/cookies is using <em>httpOnly</em> cookies. These are ones that reside in the browser memory, so that when you close down your browser (not just a tab, the whole browser) the cookie expires. So if somebody comes along after you and opens up a browser…they won&#8217;t access any previous logged in sessions you may have left open. Another cool thing about <em>httpOnly</em> cookies is that they can&#8217;t be read from JavaScript which helps to mitigate CSRF attacks :)</p>
+
+<p>As ColdFusion sets a new session by default upon every first visit (if you have <em>sessionManagement</em> turned on), you have a couple of options to mitigate session hijacking. One of these is <em>secure</em> cookies, ColdFusion has a few options for this (as well as <em>httpOnly</em>). <a href="http://www.12robots.com/index.cfm/2009/5/6/Making-the-JSESSIONID-Session-Token-Cookie-SECURE-and-HTTPOnly-and-settings-its-PATH">12Robots has a great page</a> with code sample on how to set these up, however I wanted to take things one step further and that was to simply turn off <em>sessionManagement</em> if NOT over SSL. This also has the benefit of not allowing bots to clog up your server RAM with sessions that your site/application just doesn&#8217;t need.</p>
+
+<p>Here is the code I used to only have session management turned on over SSL and not for traffic over port 80. Also included is the code from 12Robots to set <em>secure</em> and <em>httpOnly</em> cookies.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">component</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s2">&quot;myappname&quot;</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">this</span><span class="p">.</span><span class="nx">applicationTimeout</span> <span class="o">=</span> <span class="nx">createTimeSpan</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">//Get the page context to test HTTPS, if on http then DON&#39;T set sessions/cookies (for bots and security), otherwise set sessions</span>
+</span><span class='line'>  <span class="nx">currRequest</span> <span class="o">=</span> <span class="nx">getPageContext</span><span class="p">().</span><span class="nx">getRequest</span><span class="p">();</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="nx">currRequest</span><span class="p">.</span><span class="nx">isSecure</span><span class="p">())</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="k">this</span><span class="p">.</span><span class="nx">sessionManagement</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+</span><span class='line'>      <span class="k">this</span><span class="p">.</span><span class="nx">sessionTimeout</span> <span class="o">=</span> <span class="nx">createTimeSpan</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">else</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="k">this</span><span class="p">.</span><span class="nx">sessionManagement</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">this</span><span class="p">.</span><span class="nx">setClientCookies</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">this</span><span class="p">.</span><span class="nx">clientManagement</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// This method only fires if this.sessionManagement = true</span>
+</span><span class='line'>  <span class="kr">public</span> <span class="k">void</span> <span class="kd">function</span> <span class="nx">onSessionStart</span><span class="p">()</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="kd">var</span> <span class="nx">response</span> <span class="o">=</span> <span class="nx">getPageContext</span><span class="p">().</span><span class="nx">getResponse</span><span class="p">();</span>
+</span><span class='line'>      <span class="kd">var</span> <span class="nx">path</span> <span class="o">=</span> <span class="s2">&quot;/&quot;</span><span class="p">;</span>
+</span><span class='line'>      <span class="kd">var</span> <span class="nx">domain</span> <span class="o">=</span> <span class="nx">application</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">httpsURL</span><span class="p">;</span>
+</span><span class='line'>      <span class="kd">var</span> <span class="nx">secure</span> <span class="o">=</span> <span class="s2">&quot;Secure&quot;</span><span class="p">;</span>
+</span><span class='line'>      <span class="kd">var</span> <span class="nx">HTTPOnly</span> <span class="o">=</span> <span class="s2">&quot;HTTPOnly&quot;</span><span class="p">;</span>
+</span><span class='line'>      <span class="kd">var</span> <span class="nx">header</span> <span class="o">=</span> <span class="s2">&quot;jsessionid=#session.sessionid#;domain=#domain#;path=#path#;#secure#;#HTTPOnly#&quot;</span><span class="p">;</span>
+</span><span class='line'>      <span class="nx">response</span><span class="p">.</span><span class="nx">addHeader</span><span class="p">(</span><span class="s2">&quot;Set-Cookie&quot;</span><span class="p">,</span> <span class="nx">header</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// the rest of your Application.cfc</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-06T17:05:22+10:00" pubdate data-updated="true">Aug 6<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2012/08/06/turning-off-sessions-for-non-https-traffic//page/2/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2012/07/10/editing-svnignore-on-the-terminal/">
+		
+			Editing Svn:ignore on the Terminal</a>
+	</h2>
+	<div class="entry-content">
+		<p><em>svn:ignore</em> is a great way to exclude certain files or folders from being added to your subversion repository. Typically I&#8217;ll manage this via an IDE plugin like subclipse (in Eclipse), but if you want to do it via the terminal instead (bash)&#8230;here&#8217;s how.</p>
+
+<h2>Crappy way</h2>
+
+<p>You can add single values to your svn:ignore by running this command either at the root of your project or wherever directory you want the ignore to take effect:</p>
+
+<pre><code>svn propset svn:ignore "*.project" .
+</code></pre>
+
+<p>However that command seems not only to add an ignore rule, but also it clears any rules you may have had on that directory and only inserts the single rule you just specified. No good.</p>
+
+<h2>Better way</h2>
+
+<p>There are a couple of ways to enter multiple ignore values into your ignore file, I like simply opening up the ignore editor. Try this command:</p>
+
+<pre><code>svn propedit svn:ignore .
+</code></pre>
+
+<p>If you get the following error it means you haven&#8217;t associated an editor with svn:ignore</p>
+
+<blockquote><p>svn: None of the environment variables SVN_EDITOR, VISUAL or EDITOR are set, and no &#8216;editor-cmd&#8217; run-time configuration option was found</p></blockquote>
+
+<p>You can quickly associate the editor with nano (or another editor of your choice) by running:</p>
+
+<pre><code>export SVN_EDITOR=nano
+</code></pre>
+
+<p>That&#8217;s not ideal as it&#8217;ll only work in the current bash session, when you close your terminal window that export will be lost. The best bet is to add it to your ~/.bash_profile (or ~/.bash_login).</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd ~
+</span><span class='line'>nano .bash_profile
+</span><span class='line'>export SVN_EDITOR=nano</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now you&#8217;ll always be able to edit your svn:ignore file. So let&#8217;s try again:</p>
+
+<pre><code>svn propedit svn:ignore .
+</code></pre>
+
+<p>Nano (or whatever editor you specified) should open allowing you to enter whatever you want :)</p>
+
+<p>Here&#8217;s a simple list of mine:</p>
+
+<pre><code>*.DS_Store  
+*.project  
+*.sublime-project  
+*.sublime-workspace  
+htdocs/WEB-INF
+</code></pre>
+
+<p>If you actually want to see all your files (including those that you&#8217;ve ignored) via the terminal, run:</p>
+
+<pre><code>svn status --no-ignore
+</code></pre>
+
+<h2>Externals</h2>
+
+<p>Note that you can also edit any svn:externals using the same technique.</p>
+
+<pre><code>svn propedit svn:externals .
+</code></pre>
+
+<p>Remember that you need to be in the location of the directory that contains any externals for this to work properly.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-07-10T22:49:19+10:00" pubdate data-updated="true">Jul 10<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/svn/'>SVN</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2012/07/10/editing-svnignore-on-the-terminal//page/2/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2012/07/06/concatenating-values-into-a-single-column-with-mysql-group_concat/">
+		
+			Concatenating Values Into a Single Column With MySQL Group_concat</a>
+	</h2>
+	<div class="entry-content">
+		<p>How many times have you wanted to return a list of grouped values from a database, in a single column, per row of your recordset? Actually I&#8217;ve wanted to do that a few times! Most of the time I&#8217;ll let the application layer handle that, but sometimes letting the database do the hard work fits the bill.</p>
+
+<p>My not-so-theoretical example is <em>course subjects</em> (think English, Maths etc) that have 1-<em>n</em> &#8220;stages&#8221; (think categories) attached to them. If I want to return a recordset of all courses, with the attached stages, I might write a query like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">SELECT</span> <span class="n">sy</span><span class="p">.</span><span class="n">title</span> <span class="k">as</span> <span class="n">course</span><span class="p">,</span> <span class="n">st</span><span class="p">.</span><span class="n">stage</span>
+</span><span class='line'><span class="k">FROM</span> <span class="n">syllabus</span> <span class="n">sy</span> <span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">syllabus_stages</span> <span class="n">sy_st</span>
+</span><span class='line'><span class="k">ON</span> <span class="n">sy</span><span class="p">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">sy_st</span><span class="p">.</span><span class="n">syllabus_id</span>
+</span><span class='line'><span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">stages</span> <span class="n">st</span>
+</span><span class='line'><span class="k">ON</span> <span class="n">sy_st</span><span class="p">.</span><span class="n">stage_id</span> <span class="o">=</span> <span class="n">st</span><span class="p">.</span><span class="n">id</span>
+</span><span class='line'><span class="k">GROUP</span> <span class="k">BY</span> <span class="n">sy</span><span class="p">.</span><span class="n">title</span><span class="p">,</span> <span class="n">stage</span>
+</span><span class='line'><span class="k">ORDER</span> <span class="k">BY</span> <span class="n">sy</span><span class="p">.</span><span class="n">title</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Looks pretty standard, with something like that I&#8217;d get the following:</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2012/07/Screen-shot-2012-07-06-at-6.50.45-AM.png" alt="" /></p>
+
+<p>But now the application has to handle the grouping, not a huge problem by any means. Also don&#8217;t get me wrong&#8230;this is where you normally would want to do this (sql is a data retrieval language and in most instances shouldn&#8217;t be handling presentation aspects). However, if I just wanted to display a list of stages (categories), I can use <a href="http://dev.mysql.com/doc/refman/5.0/en/group-by-functions.html#function_group-concat">group_concat</a> to make life a litte easier.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">SELECT</span> <span class="n">sy</span><span class="p">.</span><span class="n">title</span> <span class="k">as</span> <span class="n">course</span><span class="p">,</span> <span class="n">group_concat</span><span class="p">(</span><span class="n">st</span><span class="p">.</span><span class="n">stage</span> <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">st</span><span class="p">.</span><span class="n">stage</span><span class="p">)</span> <span class="k">as</span> <span class="n">stage</span>
+</span><span class='line'><span class="k">FROM</span> <span class="n">syllabus</span> <span class="n">sy</span> <span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">syllabus_stages</span> <span class="n">sy_st</span>
+</span><span class='line'><span class="k">ON</span> <span class="n">sy</span><span class="p">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">sy_st</span><span class="p">.</span><span class="n">syllabus_id</span>
+</span><span class='line'><span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">stages</span> <span class="n">st</span>
+</span><span class='line'><span class="k">ON</span> <span class="n">sy_st</span><span class="p">.</span><span class="n">stage_id</span> <span class="o">=</span> <span class="n">st</span><span class="p">.</span><span class="n">id</span>
+</span><span class='line'><span class="k">GROUP</span> <span class="k">BY</span> <span class="n">sy</span><span class="p">.</span><span class="n">title</span>
+</span><span class='line'><span class="k">ORDER</span> <span class="k">BY</span> <span class="n">sy</span><span class="p">.</span><span class="n">title</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This gives me:</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2012/07/Screen-shot-2012-07-06-at-6.53.14-AM.png" alt="" /></p>
+
+<p>Pretty cool eh?</p>
+
+<p>The default list separator is a comma, but you can also specify your own.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">SELECT</span> <span class="n">sy</span><span class="p">.</span><span class="n">title</span> <span class="k">as</span> <span class="n">course</span><span class="p">,</span> <span class="n">group_concat</span><span class="p">(</span><span class="n">st</span><span class="p">.</span><span class="n">stage</span> <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">st</span><span class="p">.</span><span class="n">stage</span> <span class="n">SEPARATOR</span> <span class="s1">&#39; | &#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">stage</span>
+</span><span class='line'><span class="k">FROM</span> <span class="n">syllabus</span> <span class="n">sy</span> <span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">syllabus_stages</span> <span class="n">sy_st</span>
+</span><span class='line'><span class="k">ON</span> <span class="n">sy</span><span class="p">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">sy_st</span><span class="p">.</span><span class="n">syllabus_id</span>
+</span><span class='line'><span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">stages</span> <span class="n">st</span>
+</span><span class='line'><span class="k">ON</span> <span class="n">sy_st</span><span class="p">.</span><span class="n">stage_id</span> <span class="o">=</span> <span class="n">st</span><span class="p">.</span><span class="n">id</span>
+</span><span class='line'><span class="k">GROUP</span> <span class="k">BY</span> <span class="n">sy</span><span class="p">.</span><span class="n">title</span>
+</span><span class='line'><span class="k">ORDER</span> <span class="k">BY</span> <span class="n">sy</span><span class="p">.</span><span class="n">title</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2012/07/Screen-shot-2012-07-06-at-7.12.02-AM.png" alt="" /></p>
+
+<p><a href="http://dev.mysql.com/doc/refman/5.0/en/group-by-functions.html#function_group-concat">See the group_concat page</a> for more details.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-07-06T07:15:31+10:00" pubdate data-updated="true">Jul 6<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/databases/'>Databases</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2012/07/06/concatenating-values-into-a-single-column-with-mysql-group_concat//page/2/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2012/07/05/jquery-tinymce-issue-with-attr/">
+		
+			jQuery tinyMCE Issue With $.attr();</a>
+	</h2>
+	<div class="entry-content">
+		<p>I had some strange behaviour with the jQuery verion of tinyMCE (3.4.6). Basically I was <a href="http://harvesthq.github.com/chosen/">integrating the chosen library</a> (which is build as a jQuery plugin), but it seems the $.attr(&#8216;id&#8217;) from within chosen.js was returning a JavaScript element reference instead of the value of the &#8220;id&#8221; field.</p>
+
+<p><a href="http://www.chapter31.com/wp-content/uploads/2012/07/tiny_error.png"><img src="http://www.chapter31.com/wp-content/uploads/2012/07/tiny_error.png" alt="" /></a></p>
+
+<p>Some basic tracing showed the strange error:</p>
+
+<p><a href="http://www.chapter31.com/wp-content/uploads/2012/07/tiny_trace.png"><img src="http://www.chapter31.com/wp-content/uploads/2012/07/tiny_trace.png" alt="" /></a></p>
+
+<p>The solution for me was moving to tinyMCE 3.5.4.1 (and jQuery 1.7.2, previously I was on 1.6.4). All good now, just thought I&#8217;d throw up a quick post if anyone was being caught by this.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-07-05T09:05:02+10:00" pubdate data-updated="true">Jul 5<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/javascript/'>Javascript</a>, <a class='category' href='/categories/misc/'>Misc</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2012/07/05/jquery-tinymce-issue-with-attr//page/2/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2012/06/06/apache-permission-denied-on-mac-osx-lion/">
+		
+			Apache Permission Denied on Mac OSX Lion</a>
+	</h2>
+	<div class="entry-content">
+		<p>I&#8217;ve just upgraded to OSX Lion and had some trouble getting Apache to load a vhost. I kept getting a 403 permission denied error, but all my vhosts had the correct permission directives set.</p>
+
+<p>Now by default your webserver document root is located in <em>/Library/WebServer/Documents</em>. I don&#8217;t really like that for my local machine, I&#8217;d rather store web files under my user account. Just tends to make things easier.</p>
+
+<p>However&#8230;if you&#8217;re getting a 403 error, and something like this in your apache error log (/var/log/apache2/error_log):</p>
+
+<pre><code>[Wed Jun 06 00:36:02 2012] [crit] [client 127.0.0.1] (13)Permission denied: /Users/[username]/Documents/.htaccess pcfg_openfile: unable to check htaccess file, ensure it is readable
+</code></pre>
+
+<p>Then check your directory permissions. The interesting thing is that I don&#8217;t have an .htaccess file in my Documents directory. Even adding one did nothing, so I&#8217;m not quite sure why Apache was complaining about this.</p>
+
+<p>The answer was simple, I didn&#8217;t have &#8220;group&#8221; read or execute permissions on the <em>Documents</em> directory, once I ran a chmod&#8230;everything started working ok :)</p>
+
+<pre><code>chmod 755 Documents
+</code></pre>
+
+<p>The actual path to my site was <em>/Users/[username]/Documents/workspaces/sitename/htdocs</em>, but still&#8230;without the requisite permissions on the <em>Documents</em> folder Apache couldn&#8217;t access the vhost.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-06-06T00:52:49+10:00" pubdate data-updated="true">Jun 6<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/apache-slash-iis/'>Apache/IIS</a>, <a class='category' href='/categories/mac/'>Mac</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2012/06/06/apache-permission-denied-on-mac-osx-lion//page/2/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2012/05/24/strange-linefeed-characters-appearing-on-mac/">
+		
+			Strange Linefeed Characters Appearing on Mac</a>
+	</h2>
+	<div class="entry-content">
+		<p>Had a funny situation today where I was emailed a bash program file, but simply downloading the attachment from gmail (in Chrome) added a linefeed (\r) to the file.</p>
+
+<p>This is strange because I never actually opened the file to edit, so I&#8217;m not sure what was writing those chars to the file. I&#8217;m on a Mac (OSX 10.6.8), so I get the line feed character in general, but just not in this case as the file was never opened.</p>
+
+<p>The following command shows (among other things) the non-printing characters:</p>
+
+<p><code>od -c filename | sed 4q</code></p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2012/05/dos2unix_before1.png" alt="" /></p>
+
+<p>You can see the offending <em>\r</em> which was breaking the bash program. The unix tool <em>dos2unix</em> was suggested to clean up the file. Unfortunately this wasn&#8217;t available on Mac by default. MacPorts to the rescue (I assume homebrew would be a good option as well):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo port install dos2unix
+</span><span class='line'>Password:
+</span><span class='line'>---&gt;  Fetching dos2unix
+</span><span class='line'>---&gt;  Attempting to fetch dos2unix-3.1.tar.gz from http://fresh.t-systems-sfr.com/linux/src/
+</span><span class='line'>---&gt;  Verifying checksum<span class="o">(</span>s<span class="o">)</span> <span class="k">for </span>dos2unix
+</span><span class='line'>---&gt;  Extracting dos2unix
+</span><span class='line'>---&gt;  Configuring dos2unix
+</span><span class='line'>---&gt;  Building dos2unix with target all
+</span><span class='line'>---&gt;  Staging dos2unix into destroot
+</span><span class='line'>---&gt;  Installing dos2unix 3.1_0
+</span><span class='line'>---&gt;  Activating dos2unix 3.1_0
+</span><span class='line'>---&gt;  Cleaning dos2unix
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then run the program to clean up the invalid line feed (on 2 files).</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>dos2unix -n dirwatcher2 dirwatcher2_2
+</span><span class='line'>dos2unix: converting file dirwatcher2 to file dirwatcher2_2 in UNIX format ...
+</span><span class='line'>dos2unix -n processPDF processPDF_2
+</span><span class='line'>dos2unix: converting file processPDF to file processPDF_2 in UNIX format ...
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Nice! The changes are:</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2012/05/dos2unix_after.png" alt="" /></p>
+
+<p>No \r</p>
+
+<p>:)</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-05-24T14:14:47+10:00" pubdate data-updated="true">May 24<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/mac/'>Mac</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2012/05/24/strange-linefeed-characters-appearing-on-mac//page/2/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+<nav id="pagenavi">
+    
+        <a href="/" class="prev">Prev</a>
+    
+    
+        <a href="/page/3/" class="next">Next</a>
+    
+    <div class="center"><a href="/blog/archives">Blog Archives</a></div>
+</nav></div>
+	<footer id="footer" class="inner">Copyright &copy; 2013
+
+    Michael Sharman
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'chapter31';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-306772-2']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

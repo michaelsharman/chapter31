@@ -1,0 +1,960 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>chapter31 &raquo;</title>
+	<meta name="author" content="Michael Sharman">
+
+	
+	<meta name="description" content="A lot of web applications these days use a UUID as the primary key instead of the int/identity combination (speaking for MSSQL that is). Now there &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="chapter31 &raquo;" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">chapter31 &raquo;</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/michaelsharman" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/michaelsharman" title="GitHub">GitHub</a>
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+	</form>
+</nav>
+
+</header>
+	
+		
+
+	
+	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2007/01/30/coldfusion-uuids-and-mssql-newid/">
+		
+			ColdFusion UUID and MSSQL newID()</a>
+	</h2>
+	<div class="entry-content">
+		<p>A lot of web applications these days use a UUID as the primary key instead of the int/identity combination (speaking for MSSQL that is).</p>
+
+<p>Now there is a (valid) argument that UUID&#8217;s aren&#8217;t great for primary keys due to the fact that primary keys are clustered, meaning that integers would work much better if the table had a large amount of data. This may not effect you dramatically as you&#8217;d would most likely only see performance degradation once the database had a substantial amount of data.</p>
+
+<p>Anyway, creating a UUID is often handled by the createUUID() function in ColdFusion which produces a 35 character string in the format of:</p>
+
+<blockquote><p>xxxxxxxx-xxxx-xxxx-xxxxxxxxxxxxxxxx (8-4-4-16)</p></blockquote>
+
+<p>However you can also generate a unique id at the database level which is a slightly different format to ColdFusions UUID. The Microsoft/DCE standard uses the following:</p>
+
+<blockquote><p>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx (8-4-4-4-12)</p></blockquote>
+
+<p>Lots of developers prefer to let the database handle the creation of primary keys instead of the application (ColdFusion). Having the database create this can be done using the MSSQL <em>newID()</em> built in function. Note that this will produce a 36 character string, 1 more than ColdFusions createUUID(). You have the option to use something like char(36) or varchar(36) as the column datatype, but you could also use the <em>uniqueidentifier</em> datatype.</p>
+
+<p>This can cause a few incompatibility problems if you are expecting the ColdFusion standard in your code. So to maintain consistency and possibly prevent database/code errors you can simply convert the database level <em>newID()</em> to the ColdFusion UUID by removing the last (4th) hyphen in the SQL.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">select</span> <span class="n">left</span><span class="p">(</span><span class="n">newid</span><span class="p">(),</span> <span class="mi">23</span><span class="p">)</span> <span class="o">+</span> <span class="n">right</span><span class="p">(</span><span class="n">newid</span><span class="p">(),</span><span class="mi">12</span><span class="p">)</span> <span class="n">as</span> <span class="n">objectid</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>or in the middle of a query:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">INSERT</span> <span class="no">INTO</span> <span class="n">myTable</span> <span class="p">(</span><span class="no">ID</span><span class="p">,</span> <span class="no">FirstName</span><span class="p">)</span>
+</span><span class='line'><span class="no">VALUES</span> <span class="p">(</span><span class="n">left</span><span class="p">(</span><span class="n">newid</span><span class="p">(),</span> <span class="mi">23</span><span class="p">)</span> <span class="o">+</span> <span class="n">right</span><span class="p">(</span><span class="n">newid</span><span class="p">(),</span><span class="mi">12</span><span class="p">),</span> <span class="s2">&quot;Michael&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In the situation where you might want to convert a ColdFusion created UUID to conform to the Microsoft standard, you can use the CreateGUID() function (by Nathan Dintenfass) from <a href="http://cflib.org/">cflib</a> as follows:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">function</span> <span class="no">CreateGUID</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="n">insert</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="no">CreateUUID</span><span class="p">(),</span> <span class="mi">23</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>UUID&#8217;s for database keys can be very handy but just watch out how and where you are creating them and how they fit into your application. Remember that if you did an</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">IsValid</span><span class="p">(</span><span class="s2">&quot;uuid&quot;</span><span class="p">,</span> <span class="n">myNewID</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>where myNewID was created by newID() in the database&#8230;your test would fail!</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-01-30T11:25:38+11:00" pubdate data-updated="true">Jan 30<span>th</span>, 2007</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/databases/'>Databases</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2007/01/30/coldfusion-uuids-and-mssql-newid//page/18/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2007/01/11/to-delete-or-not-to-delete/">
+		
+			To Delete or Not to Delete</a>
+	</h2>
+	<div class="entry-content">
+		<p>As a web developer you are constantly faced with building functionality to remove an object from an application. The object could be anything from a web page in a CMS to a user in a CRM, but generally involves a record(s) stored in a database.</p>
+
+<p>For a user &#8216;using&#8217; the application whenever they access the functionality to remove the object it disappears from view&#8230;but what happens behind the scenes?</p>
+
+<p>There are a couple of standard options available to developers:</p>
+
+<ol>
+<li><p>To actually delete the object from the database via a DELETE statement</p></li>
+<li><p>To flag the object as deleted (via an UPDATE statement) and have code to handle the &#8216;removal&#8217; in a view accordingly</p></li>
+</ol>
+
+
+<p>Deleting the record(s) is nice and easy and most likely no other code will be needed in your &#8216;view&#8217;, but there are schools of thought where people never (or rarely) physically delete a record from the database even if you do have backups to access at a later date. The main reason for this is that somebody (particularly an administrator) might be interested in all sorts of information on the history of that object, who removed it (and when) and the ability to rollback that object to an active state.</p>
+
+<p>It&#8217;s this approach to web applications which I almost always follow. I rarely delete objects from the database, opting to flag the record instead. But this <em>can</em> lead to a lot more time spent completing the project, which could mean a later &#8216;go live&#8217; date.</p>
+
+<p>Consider that a HUGE portion of your application code is (or should) be taken up by defensive programming like exception handling and safety from malicious intent etc, how much extra code might you spend on keeping these removed (so presumably no longer relevant) objects?</p>
+
+<p>Of course each scenario is different as are the business requirements of a client, but even if a client assuring you that &#8220;we&#8217;ll never need it again!&#8221;, I&#8217;d have a long and hard think before actually physically deleting anything. After all, we are professionals and need to think ahead to what the client may need in the future. Your &#8216;expert&#8217; advise should always be considered and put forward, even if it is the unpopular view.</p>
+
+<p>How much extra time spent will of course differ in each scenario but you&#8217;ll clearly need to have your SQL statements to filter out these records (eg. WHERE IsDeleted Is Null). This will most likely need to be done on any gateway type query which is run on the table(s) in question.</p>
+
+<p>Do you need to build in an audit trail for tracking which user deleted the object, when they deleted it and have mandatory comments on why they deleted it?</p>
+
+<p>Do you need to have the ability to rollback to an active state?</p>
+
+<p>In the above 2 scenarios you&#8217;ll probably need an interface to access this data as well.</p>
+
+<p>Business logic might also add another layer of complexity (the catalyst for this post) to the question which is &#8220;to delete or not to delete&#8221;.</p>
+
+<p>I&#8217;m still a fan of storing the data for most operations, but in an age of agile/extreme programming, more and more pressure to get the job done in half the time and a great mantra of &#8220;release early, release often&#8221;&#8230;sometimes you may need to ask yourself if you really need to keep this data :)</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-01-11T23:19:57+11:00" pubdate data-updated="true">Jan 11<span>th</span>, 2007</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/databases/'>Databases</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2007/01/11/to-delete-or-not-to-delete//page/18/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2006/12/21/scriptprotect-in-cfmx7/">
+		
+			Scriptprotect in CFMX7</a>
+	</h2>
+	<div class="entry-content">
+		<p>I only recently found out about <a href="http://www.chapter31.com/createTimeSpan(1,0,0,0">scriptprotect</a>) which is a cool new feature of ColdFusion MX7. Scriptprotect basically specifies whether to protect variables from cross-site scripting attacks, and can be enabled 2 ways.</p>
+
+<p>The first is a server setting in ColdFusion Administrator. Go to &#8216;Settings&#8217; and check the &#8220;Enable global script protection&#8221; checkbox. This will obviously effect all sites running on that ColdFusion instance but can be overridden in each sites Application.cfm/Application.cfc file.</p>
+
+<p>If you are using Application.cfc you&#8217;ll want to add scriptProtect at the top of the file in the constructor/initialisation code area.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfscript</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s2">&quot;myApplication&quot;</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">this</span><span class="p">.</span><span class="nx">applicationTimeout</span> <span class="o">=</span> <span class="nx">createTimeSpan</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+</span><span class='line'>  <span class="k">this</span><span class="p">.</span><span class="nx">sessionmanagement</span> <span class="o">=</span> <span class="s2">&quot;true&quot;</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">this</span><span class="p">.</span><span class="nx">sessiontimeout</span> <span class="o">=</span> <span class="nx">createTimeSpan</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+</span><span class='line'>  <span class="k">this</span><span class="p">.</span><span class="nx">scriptProtect</span> <span class="o">=</span> <span class="s2">&quot;all&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfscript&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you are using Application.cfm you can just add scriptProtect as an attribute to the cfapplication tag.</p>
+
+<pre><code>&lt;cfapplication name="myApplication" scriptProtect="all"&gt;
+</code></pre>
+
+<p>Note that you have the following options for scriptProtect:</p>
+
+<ul>
+<li>none: do not protect variables</li>
+<li>all: protect Form, URL, CGI, and Cookie variables</li>
+<li>comma-delimited list of ColdFusion scopes: Protect variables in the specified scopes.</li>
+</ul>
+
+
+<p>But what does it actually do? With scriptProtect ColdFusion can protect variables in URL, Cookie, CGI, and Form scopes by replacing object, embed, script, applet, and meta tags with the text &#8220;InvalidTag&#8221;.</p>
+
+<p>So if I have scriptProtect enabled and a not so nice person enters something like:</p>
+
+<pre><code>&lt;script&gt;alert('hi');&lt;/script&gt;
+</code></pre>
+
+<p>or something much worse than that in a comments field of a blog for example (where all users can see the output), the end output to the screen will be:</p>
+
+<pre><code>alert('hi');
+</code></pre>
+
+<p>The actual source of the page will be:</p>
+
+<pre><code>&lt;InvalidTag&gt;alert('hi');&lt;/script&gt;
+</code></pre>
+
+<p>Although this might not be ideal for a lot of people because we don&#8217;t want to display that content to users (i.e. alert=(&#8216;hi&#8217;);), it&#8217;s better than the potentially malicious script actually running whenever a user loads the page!</p>
+
+<p>See <a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/wwhelp/wwhimpl/common/html/wwhelp.htm?context=ColdFusion_Documentation&amp;file=00001176.htm">this article</a> for more information on cross-site scripting and the protection ColdFusion offers.</p>
+
+<p>Pete Freitag also has a couple of great articles on this topic, <a href="http://www.petefreitag.com/item/362.cfm">see here</a> and <a href="http://www.petefreitag.com/item/363.cfm">here.</a></p>
+
+<p>One thing I did note which may seem obvious, but scriptProtect doesn&#8217;t work when you &#8220;Enable global script protection&#8221; in ColdFusion Administrator and you don&#8217;t have an Application.cfm or Application.cfc in your project directory or anywhere in the parent directory path. Not that this is likely to happen :)</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-12-21T15:43:11+11:00" pubdate data-updated="true">Dec 21<span>st</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2006/12/21/scriptprotect-in-cfmx7//page/18/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2006/12/20/eclipsecfeclipse-gives-me-a-headache/">
+		
+			Eclipse/cfeclipse Gives Me a Headache</a>
+	</h2>
+	<div class="entry-content">
+		<p>So I know I&#8217;m going to get a hard time from the die hard <a href="http://www.eclipse.org/">eclipse</a> lovers out there. Don&#8217;t get me wrong, eclipse (or more precisely for me <a href="http://www.cfeclipse.org/">cfeclipse</a>) is free to use and at that cost you can&#8217;t get any cheaper which is fantastic for all ColdFusion developers :)</p>
+
+<p>Also I REALLY admire Rob Rohan, Mark Drew and all the other contributors this and every other open source product. It&#8217;s people like these who truly give something of value to the community at large. Well done.</p>
+
+<p>Some of the things I love about eclipse/cfeclipse are:</p>
+
+<ul>
+<li>Snippets and snippet variables</li>
+<li>Free and open source</li>
+<li>Plugins for CSS, Javascript, SVN etc</li>
+<li>Code completion</li>
+<li>Syntax highlighting</li>
+</ul>
+
+
+<p>So with all these lovely features (and more) why does it sometimes make my life difficult? Well it&#8217;s the little things!</p>
+
+<p>When I installed eclipse 3.2 (which I&#8217;ve done three times now on three different machines) I experienced memory leaks causing my code to magically duplicate itself in the editor pane. The only solution was to shut down that file and re-open it.</p>
+
+<p>Why can&#8217;t I open a file which doesn&#8217;t exist in a &#8216;project&#8217;? Oh I understand the merits of keeping everything in a project, but tell me that this doesn&#8217;t annoy you when you want to look at a random file. Please don&#8217;t say &#8220;use notepad&#8221;.</p>
+
+<p>In 3.2 after I add a comment (using the keyboard shortcut ctrl + shft + M)  my cursor appears to the left of the comment block&#8230;not in the middle where I can start to write my comment.</p>
+
+<p>The global replace (for me) is clunky. First you&#8217;ve got to know how to do it. Hit ctrl + h (or use the search menu option), then enter your text that you want to replace, hit search&#8230;oh but don&#8217;t forget to make sure that the &#8216;working set&#8217; you are in is selected as by default it&#8217;s the last working set you searched in. After searching you&#8217;ll get another window to enter your replacement text, but you can&#8217;t choose to replace in &#8220;All open documents&#8221;.</p>
+
+<p>Don&#8217;t get me started on auto-completing single and double quotes. It works well some of the time, but can trip you up if you&#8217;re not careful.</p>
+
+<p>Why can&#8217;t I see the file path of the file I&#8217;m working on in the header? I know I know&#8230;you can hover over the tab and get a tooltip, but it&#8217;s just not the same.</p>
+
+<p>Does your eclipse/cfeclipse suddenly &#8216;hang&#8217; every now and then? Don&#8217;t worry, give it about 10 seconds and it&#8217;ll wake up again.</p>
+
+<p>I&#8217;ve had discussions with some other developers who don&#8217;t seem to be having the same issues as me. But I&#8217;ve used 3 different versions of eclipse/cfeclipse on 3 different machines. Same problems.</p>
+
+<p>The general concensus is that it&#8217;s probably plugins which are causing me pain. But the plugins are one of the main reasons I use cfeclipse!. Plugins for SVN and <a href="http://www.aptana.com/">Aptana</a> etc are very handy. Where am I if I suddenly can&#8217;t use plugins? Well back using <a href="http://www.adobe.com/products/homesite/">Homesite</a> I think. I used Homesite before eclipse, and apart from the plugins (and of course the AUD$139 cost) why would I want to use eclipse?</p>
+
+<p>I&#8217;m sure this is close to heart for many of you out there as most developers I know are proud to use eclipse/cfeclipse as am I. But I&#8217;m willing to pay for a smooth ride. Please please please feel free to enlighten me if you think I&#8217;m way off track here. At the end of the day I just want an editor which gives me no problems and has the main features a developer (not designer, note I didn&#8217;t mention the design view of Dreamweaver) needs.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-12-20T15:39:46+11:00" pubdate data-updated="true">Dec 20<span>th</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2006/12/20/eclipsecfeclipse-gives-me-a-headache//page/18/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2006/12/19/determining-which-httpproxy-ports-your-jrun-instance-is-running-on/">
+		
+			Determining Which Http/proxy Ports Your JRun Instance Is Running On</a>
+	</h2>
+	<div class="entry-content">
+		<p>At Daemon we often run ColdFusion in multi-server mode (on top of JRun) which enables us to cleanly separate projects which require different server settings from one another.</p>
+
+<p>Typically I have a ColdFusion instance per <a href="http://www.farcrycms.org/">Farcry</a> version, at the moment that would be:</p>
+
+<ul>
+<li>p300 (v3)</li>
+<li>gonzales (v4)</li>
+</ul>
+
+
+<p>When ColdFusion first installs in multi-server mode you get the default &#8216;cfusion&#8217; instance, but you also get the &#8216;admin&#8217; JRun instance which is really only used when you need to access the JRun Management Console&#8230;not very often for most people!</p>
+
+<p>That being the case I often switch it off (in Control Panel/Administrative Tools/Services) and set its start option to manual, i.e. I&#8217;ll start it if I want to use it because I don&#8217;t want it taking up any system resources when I don&#8217;t specifically need it :)</p>
+
+<p><em>Sometimes</em> this is a pain when you need to double check the http and/or proxy port of a particular ColdFusion instance, usually when I need to access ColdFusion administrator or when I&#8217;m setting a bootstrap in my apache config.</p>
+
+<p>To save me starting the &#8216;admin&#8217; JRun instance purely to see the proxy port value, I can open up the jrun.xml file in my server-inf directory and look for the <port> setting under ProxyService.</p>
+
+<p>For me this is located in C:\JRun4\servers\cfusion_gonzales\SERVER-INF</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;!-- ================================================================== --&gt;
+</span><span class='line'>&lt;!-- This is the built-in JRun Web Server --&gt;
+</span><span class='line'>&lt;!-- ================================================================== --&gt;
+</span><span class='line'>&lt;attribute name="port"&gt;8301&lt;/attribute&gt;&lt;/code&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;!-- ========================================================================= --&gt;
+</span><span class='line'>&lt;!-- This service is for communicating with a native (IIS, Apache, Netscape) --&gt;
+</span><span class='line'>&lt;!-- web server. --&gt;
+</span><span class='line'>&lt;!-- To run this service in a secure mode via SSL, set the keyStore, --&gt;
+</span><span class='line'>&lt;!-- keyStorePassWord, trustStore and socketFactoryName attributes. --&gt;
+</span><span class='line'>&lt;!-- ========================================================================= --&gt;
+</span><span class='line'>&lt;attribute name="port"&gt;51000&lt;/attribute&gt;&lt;/code&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Believe it or not this is actually easier for me than starting (and then stopping) my admin JRun instance! Now you can just add this to your folder of explorer shortcuts.</p>
+
+<p>Ah it&#8217;s the little things&#8230;</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-12-19T16:00:51+11:00" pubdate data-updated="true">Dec 19<span>th</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2006/12/19/determining-which-httpproxy-ports-your-jrun-instance-is-running-on//page/18/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2006/12/15/reseting-a-lost-coldfusion-administrator-password/">
+		
+			Reseting a Lost ColdFusion Administrator Password</a>
+	</h2>
+	<div class="entry-content">
+		<p>A colleague sent me a nice way to obtain access to ColdFusion Administrator (any instance) when you&#8217;ve lost your password. After a little googling I also came across another method, both assume that you have administrator access to the application server.</p>
+
+<p>The following examples assume a ColdFusion installation in a multi-server environment, using the default (cfusion) instance.</p>
+
+<ol>
+<li>Reseting the password:
+
+<ul>
+<li>Open the <em>password.properties</em> file in C:\JRun4\servers\cfusion\cfusion-ear\cfusion-war\WEB-INF\cfusion\lib</li>
+<li>Enter your new password for RDS (&#8220;rdspassword&#8221;) and ColdFusion Administrator (&#8220;password&#8221;)</li>
+<li>Make sure &#8220;encrypted&#8221; is set to false</li>
+<li>Restart your ColdFusion instance</li>
+</ul>
+</li>
+<li>Turning the password off (allowing full access with no authentication)
+
+<ul>
+<li>Open the <em>neo-security.xml</em> file in C:\JRun4\servers\cfusion\cfusion-ear\cfusion-war\WEB-INF\cfusion\lib</li>
+<li>Search for <em>&lt;var name=&#8217;admin.security.enabled&#8217;&gt;&lt;boolean value=&#8217;true&#8217;/&gt;&lt;/var&gt;</em></li>
+<li>Set <em>value=&#8217;false&#8217;</em> and restart your ColdFusion instance.</li>
+</ul>
+</li>
+</ol>
+
+
+<p>Note that with option 2 you are left totally unprotected, anyone who has access to that machine (and knows the administrator URL) will have access and control over your ColdFusion application server.</p>
+
+<p>Therefore it would be best now that you have access, to set a new password immediately :)</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-12-15T13:00:24+11:00" pubdate data-updated="true">Dec 15<span>th</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2006/12/15/reseting-a-lost-coldfusion-administrator-password//page/18/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2006/12/13/no-error-handler-for-mxna/">
+		
+			No Error Handler for MXNA</a>
+	</h2>
+	<div class="entry-content">
+		<p>Funny, but I&#8217;ve had this screen many many times when accessing <a href="http://weblogs.macromedia.com/mxna/">MXNA</a>.</p>
+
+<p>I wonder how many sites (let alone high profile sites) don&#8217;t have a default error handler in place.</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2006/12/mxna_error.gif" alt="mxna error" /></p>
+
+<p>Exception handling (be it with cftry/cfcatch or cferror etc) is often the last thing on a developers mind. It&#8217;s easy to assume that things won&#8217;t go wrong or the user will enter the correct data in a form.</p>
+
+<p>One of the things I strive to do as a developer is to think of the worst case scenario, or to think like a hacker/malicious user. What would they do to break my site?</p>
+
+<p>Would they turn off javascript? In that case I need to make sure I have server side validation to backup my client side validation.</p>
+
+<p>Am I referencing scoped variables? Maybe I should &lt;cfparam&gt; them.</p>
+
+<p>In the event of certain exceptions I may need to alert the site administrator of the error via email, a handy feature when using &lt;cferror&gt;</p>
+
+<p>Either way a user seeing an error message is bad whichever way you look at it. It looks amateur and could potentially give away vital information for would be malicious users.</p>
+
+<p>As such, exception handling it should be a mandatory part of any coders development methodology. Whether you use a granular approach like &lt;cftry&gt; or not, you should implement &lt;cferror&gt; to catch any exceptions that slip through the net.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-12-13T13:53:22+11:00" pubdate data-updated="true">Dec 13<span>th</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2006/12/13/no-error-handler-for-mxna//page/18/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2006/12/13/outputting-content-from-within-a-method/">
+		
+			Outputting Content From Within a Method</a>
+	</h2>
+	<div class="entry-content">
+		<p>Normally I&#8217;m with the crowd who says &#8220;don&#8217;t output content or use <cfinclude> from within a function&#8221;. Like a lot of people I would much rather return whatever value I need to the calling page/function, so that I then have a choice with what I want to do with it.</p>
+
+<p>Still, the other day I found myself doing what I don&#8217;t normally do&#8230;wanting to output a simple text value from within a method.</p>
+
+<p>My scenario was quite complex so I won&#8217;t go into all the details, suffice to say that there were several methods being called eventuating in a final method call to display().</p>
+
+<p>The display() method was outputting a simple string value (yikes!). Now the actual problem I encountered was that my output wasn&#8217;t actually displaying :(</p>
+
+<p>I had output=&#8221;true&#8221; in the display() method but nothing was showing. It took me a few minutes to trace through the code and discover that because display() was being called from another function (and I wanted to output a value from within display(), that the initial functions output attribute also needed to be set to true. This I did not know.</p>
+
+<p>So the following will not work because output is set to false in function1():</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&lt;</span><span class="n">cffunction</span> <span class="nb">name</span><span class="o">=</span><span class="s2">&quot;function1&quot;</span> <span class="n">access</span><span class="o">=</span><span class="s2">&quot;public&quot;</span> <span class="n">returntype</span><span class="o">=</span><span class="s2">&quot;void&quot;</span> <span class="n">output</span><span class="o">=</span><span class="s2">&quot;false&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>   <span class="o">&lt;</span><span class="n">cfscript</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="sr">//no</span> <span class="n">output</span> <span class="k">in</span> <span class="n">this</span> <span class="nb">method</span><span class="p">,</span> <span class="n">just</span> <span class="n">call</span> <span class="n">another</span> <span class="nb">method</span>
+</span><span class='line'>      <span class="nb">display</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="k">return</span><span class="p">;</span>           
+</span><span class='line'>
+</span><span class='line'>   <span class="o">&lt;</span><span class="sr">/cfscript&gt;</span>
+</span><span class='line'><span class="sr">&lt;/</span><span class="n">cffunction</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;!---</span> <span class="no">PRIVATE</span> <span class="no">METHODS</span> <span class="o">---&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">cffunction</span> <span class="nb">name</span><span class="o">=</span><span class="s2">&quot;display&quot;</span> <span class="n">access</span><span class="o">=</span><span class="s2">&quot;private&quot;</span> <span class="n">returntype</span><span class="o">=</span><span class="s2">&quot;void&quot;</span> <span class="n">output</span><span class="o">=</span><span class="s2">&quot;true&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>   <span class="o">&lt;</span><span class="n">cfsavecontent</span> <span class="n">variable</span><span class="o">=</span><span class="s2">&quot;content&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="no">Header</span><span class="o">&lt;</span><span class="sr">/h1&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">      Content to display</span>
+</span><span class='line'><span class="sr">   &lt;/</span><span class="n">cfsavecontent</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="o">&lt;</span><span class="n">cfoutput</span><span class="o">&gt;</span><span class="c1">#content#&lt;/cfoutput&gt;</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="o">&lt;</span><span class="n">cfreturn</span> <span class="sr">/&gt;</span>
+</span><span class='line'><span class="sr">&lt;/</span><span class="n">cffunction</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But if you change the output attribute to true:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&lt;</span><span class="n">cffunction</span> <span class="nb">name</span><span class="o">=</span><span class="s2">&quot;function1&quot;</span> <span class="n">access</span><span class="o">=</span><span class="s2">&quot;public&quot;</span> <span class="n">returntype</span><span class="o">=</span><span class="s2">&quot;void&quot;</span> <span class="n">output</span><span class="o">=</span><span class="s2">&quot;true&quot;</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Lovely output!</p>
+
+<p>Now if only I kept true to my rule of not outputting content in a method&#8230;</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-12-13T09:47:51+11:00" pubdate data-updated="true">Dec 13<span>th</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2006/12/13/outputting-content-from-within-a-method//page/18/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2006/12/08/including-js-files-from-within-js-files/">
+		
+			Including Js Files From Within Js Files</a>
+	</h2>
+	<div class="entry-content">
+		<p>I&#8217;m working on an application which stores a lot of data in the application scope. Part of the data stored is a config CFC that has a method which loads &#8216;external assets&#8217; (javascript and css files etc) into the <head> of the html document via <a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/wwhelp/wwhimpl/common/html/wwhelp.htm?context=ColdFusion_Documentation&amp;file=00000271.htm"><cfhtmlhead></a>. I love that tag :)</p>
+
+<p>My part in this application development is limited to a particular section only, but there was already a lot of external assets present in the header and things were getting very messy. I was looking for a way to simulate <cfinclude> but from within a .js file so I could clean up my output a bit, fortunately there is a way!</p>
+
+<p>I now have a master js file to add to the <head> section of my document:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;js/master.js&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span><span class="o">&gt;&lt;</span><span class="err">/script&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>From within this master.js file I can &#8216;include&#8217; any js files I want.</p>
+
+<p>master.js</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c1">//this function includes all necessary js files for the application</span>
+</span><span class='line'><span class="kd">function</span> <span class="nx">include</span><span class="p">(</span><span class="nx">file</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">script</span>  <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;script&#39;</span><span class="p">);</span>
+</span><span class='line'>  <span class="nx">script</span><span class="p">.</span><span class="nx">src</span>  <span class="o">=</span> <span class="nx">file</span><span class="p">;</span>
+</span><span class='line'>  <span class="nx">script</span><span class="p">.</span><span class="nx">type</span> <span class="o">=</span> <span class="s1">&#39;text/javascript&#39;</span><span class="p">;</span>
+</span><span class='line'>  <span class="nx">script</span><span class="p">.</span><span class="nx">defer</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;head&#39;</span><span class="p">).</span><span class="nx">item</span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">script</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="cm">/* include any js files here */</span>
+</span><span class='line'><span class="nx">include</span><span class="p">(</span><span class="s1">&#39;js/myFile1.js&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="nx">include</span><span class="p">(</span><span class="s1">&#39;js/myFile2.js&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The above code includes myFile1.js and myFile2.js, both of which are located in the relative &#8216;js/&#8217; directory.</p>
+
+<p>Not only does this clean up my output, but as my config file was stored in application scope every time I wanted to add/remove an asset from my application I need to refresh the scope&#8230;annoying. But now I am happy :)</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-12-08T10:05:24+11:00" pubdate data-updated="true">Dec 8<span>th</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/x-html/'>(X)HTML</a>, <a class='category' href='/categories/javascript/'>Javascript</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2006/12/08/including-js-files-from-within-js-files//page/18/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2006/12/05/snapa-google-competitor-and-cool-site-preview-tool/">
+		
+			snap. ..a Google Competitor and Cool Site Preview Tool</a>
+	</h2>
+	<div class="entry-content">
+		<p><a href="http://www.snap.com/">Snap</a> is a nice little search engine which displays your results in a left window pane and a site preview of your search result in the right. It&#8217;s very Ajax-y and includes personalised settings, email a friend, result ratings and more. They even made the Time <a href="http://www.time.com/time/business/article/0,8599,1222614,00.html#snap">50 coolest websites of 2006</a>.</p>
+
+<p>Snap is also a free preview tool for your website which enables visitors to catch a glimpse of what websites you are linking to. All you need to do is hover your mouse over a hyperlink to see a thumbnail of the linked site.</p>
+
+<p><a href="http://www.daemon.com.au/">Try it here</a></p>
+
+<p>I&#8217;ll admit that this one is a bit gimmicky but it&#8217;s still kind of fun :)</p>
+
+<p>By default snap only gives you previews of external URL&#8217;s, but you can turn on internal URL&#8217;s as well as play with a few extra options. <a href="http://www.snap.com/about/spa_faq.php">See their FAQ&#8217;s</a> for more.</p>
+
+<p>Setting up takes approximately 2 minutes, just fill out a tiny form and copy/paste a link to a javascript file in your site header. That&#8217;s it!</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-12-05T17:20:57+11:00" pubdate data-updated="true">Dec 5<span>th</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/misc/'>Misc</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2006/12/05/snapa-google-competitor-and-cool-site-preview-tool//page/18/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+<nav id="pagenavi">
+    
+        <a href="/page/17/" class="prev">Prev</a>
+    
+    
+        <a href="/page/19/" class="next">Next</a>
+    
+    <div class="center"><a href="/blog/archives">Blog Archives</a></div>
+</nav></div>
+	<footer id="footer" class="inner">Copyright &copy; 2013
+
+    Michael Sharman
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'chapter31';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-306772-2']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>
