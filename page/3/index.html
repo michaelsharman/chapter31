@@ -97,7 +97,7 @@
 
 <p>Eg replace line breaks with commas:</p>
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2012/03/Screen-shot-2012-03-17-at-1.54.41-PM.png" alt="" /></p>
+<p><img src="/images/uploads/2012/03/Screen-shot-2012-03-17-at-1.54.41-PM.png" alt="" /></p>
 
 <p>Other interesting and useful options are:</p>
 
@@ -241,9 +241,9 @@
 
 <p>Breathe a sigh of relief :)</p>
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2012/03/sys_prefs.jpg" alt="mac system preferences" /></p>
+<p><img src="/images/uploads/2012/03/sys_prefs.jpg" alt="mac system preferences" /></p>
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2012/03/voiceover_off.jpg" alt="Mac voice over off" /></p>
+<p><img src="/images/uploads/2012/03/voiceover_off.jpg" alt="Mac voice over off" /></p>
 
 		
 		
@@ -524,22 +524,22 @@
 
 <p>For example; if I wanted to know everything in FarCry that had a label LIKE &#8216;credential&#8217; (wildcards are automatically added to your search term) I might get results like the following:</p>
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2011/08/contenttitle.png" alt="" /></p>
+<p><img src="/images/uploads/2011/08/contenttitle.png" alt="" /></p>
 
 <p>From that initial resultset, if I clicked on an objectid for dmNavigation:</p>
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2011/08/objectid.png" alt="" /></p>
+<p><img src="/images/uploads/2011/08/objectid.png" alt="" /></p>
 
 <p>Or if I clicked on an objectid for dmHTML:</p>
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2011/08/objectid_dmhtml.png" alt="" /></p>
+<p><img src="/images/uploads/2011/08/objectid_dmhtml.png" alt="" /></p>
 
 <p>Note that there is a collapsed cfdump that you can expand for further info.</p>
 
 <h2>Requirements</h2>
 
-<p>Railo 3.2+ or ColdFusion 7+<br/>
-FarCry 6+<br/>
+<p>Railo 3.2+ or ColdFusion 7+
+FarCry 6+
 MySQL 5+</p>
 
 <h2>Installation</h2>
@@ -669,7 +669,7 @@ MySQL 5+</p>
 	<div class="entry-content">
 		<p>I ran into an issue today while working on a FarCry project, basically when I opened up the &#8220;Related Content&#8221; popup from the WYSIWYG editor it was blank. Nothing. Not the usual tabs for Images, File, Flash etc.</p>
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2011/07/relatedcontent.png" alt="" /></p>
+<p><img src="/images/uploads/2011/07/relatedcontent.png" alt="" /></p>
 
 <p>The Railo logs were empty but Apache was throwing a strange error which I hadn&#8217;t seen before: <em>&#8220;Couldn&#8217;t initialize from remote server, JRun server(s) probably down.&#8221;</em>. Funny as I&#8217;m not even using JRun!</p>
 
@@ -700,7 +700,7 @@ MySQL 5+</p>
 
 <p>And of course now the related content popup works :)</p>
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2011/07/relatedcontent2.png" alt="" /></p>
+<p><img src="/images/uploads/2011/07/relatedcontent2.png" alt="" /></p>
 
 		
 		
@@ -755,7 +755,7 @@ MySQL 5+</p>
 
 <p>Luckily FarCry makes this kind of thing simple to override. I added my own category.cfc inside my projects <em>packages/formtools</em> directory and made sure to extend category.cfc from <em>farcry.core.packages.formtools.category</em>. In this I only used the edit() function to render an optgroup from a new custom property called ftAliasAsOptGroup (see above snippet). This gave me the following:</p>
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2011/07/optgroup.png" alt="FarCry optgroup" /></p>
+<p><img src="/images/uploads/2011/07/optgroup.png" alt="FarCry optgroup" /></p>
 
 <p>The full category.cfc is below if you&#8217;re interested.</p>
 
@@ -955,7 +955,7 @@ MySQL 5+</p>
 </span><span class='line'>
 </span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfproperty</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;ftAliasAsOptGroup&quot;</span> <span class="k">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span> <span class="nx">hint</span><span class="o">=</span><span class="s2">&quot;If true, renders ftAlias as an optgroup&quot;</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'>  
+</span><span class='line'>
 </span><span class='line'>  <span class="o">&lt;</span><span class="nx">cffunction</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;edit&quot;</span> <span class="nx">access</span><span class="o">=</span><span class="s2">&quot;public&quot;</span> <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="nx">returntype</span><span class="o">=</span><span class="s2">&quot;string&quot;</span> <span class="nx">hint</span><span class="o">=</span><span class="s2">&quot;his will return a string of formatted HTML text to enable the user to edit the data&quot;</span><span class="o">&gt;</span>
 </span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;typename&quot;</span> <span class="nx">required</span><span class="o">=</span><span class="s2">&quot;true&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;string&quot;</span> <span class="nx">hint</span><span class="o">=</span><span class="s2">&quot;The name of the type that this field is part of.&quot;</span><span class="o">&gt;</span>
 </span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;stObject&quot;</span> <span class="nx">required</span><span class="o">=</span><span class="s2">&quot;true&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;struct&quot;</span> <span class="nx">hint</span><span class="o">=</span><span class="s2">&quot;The object of the record that this field is part of.&quot;</span><span class="o">&gt;</span>
@@ -971,22 +971,22 @@ MySQL 5+</p>
 </span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfset</span> <span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="o">/&gt;</span>
 </span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfset</span> <span class="kd">var</span> <span class="nx">rootNodeText</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="o">/&gt;</span>
 </span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfset</span> <span class="kd">var</span> <span class="nx">rootID</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'>              
+</span><span class='line'>
 </span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">structKeyExists</span><span class="p">(</span><span class="nx">application</span><span class="p">.</span><span class="nx">catid</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">stMetadata</span><span class="p">.</span><span class="nx">ftAlias</span><span class="p">)</span><span class="o">&gt;</span>
 </span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">rootID</span> <span class="o">=</span> <span class="nx">application</span><span class="p">.</span><span class="nx">catid</span><span class="p">[</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">stMetadata</span><span class="p">.</span><span class="nx">ftAlias</span><span class="p">]</span> <span class="o">&gt;</span>
 </span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfelse</span><span class="o">&gt;</span>
 </span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">rootID</span> <span class="o">=</span> <span class="nx">application</span><span class="p">.</span><span class="nx">catid</span><span class="p">[</span><span class="s1">&#39;root&#39;</span><span class="p">]</span> <span class="o">&gt;</span>
 </span><span class='line'>      <span class="o">&lt;</span><span class="err">/cfif&gt;</span>
-</span><span class='line'>      
+</span><span class='line'>
 </span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">lSelectedCategoryID</span> <span class="o">=</span> <span class="nx">oCategory</span><span class="p">.</span><span class="nx">getCategories</span><span class="p">(</span><span class="nx">objectid</span><span class="o">=</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">stObject</span><span class="p">.</span><span class="nx">ObjectID</span><span class="p">,</span><span class="nx">bReturnCategoryIDs</span><span class="o">=</span><span class="kc">true</span><span class="p">,</span><span class="nx">alias</span><span class="o">=</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">stMetadata</span><span class="p">.</span><span class="nx">ftAlias</span><span class="p">)</span> <span class="o">/&gt;</span>
-</span><span class='line'>      
+</span><span class='line'>
 </span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">rootNodeText</span> <span class="o">=</span> <span class="nx">oCategory</span><span class="p">.</span><span class="nx">getCategoryNamebyID</span><span class="p">(</span><span class="nx">categoryid</span><span class="o">=</span><span class="nx">rootID</span><span class="p">)</span> <span class="o">/&gt;</span>
-</span><span class='line'>      
+</span><span class='line'>
 </span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfswitch</span> <span class="nx">expression</span><span class="o">=</span><span class="s2">&quot;#arguments.stMetadata.ftRenderType#&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>          
+</span><span class='line'>
 </span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfcase</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;dropdown&quot;</span><span class="o">&gt;</span>
 </span><span class='line'>              <span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">lCategoryBranch</span> <span class="o">=</span> <span class="nx">oCategory</span><span class="p">.</span><span class="nx">getCategoryBranchAsList</span><span class="p">(</span><span class="nx">lCategoryIDs</span><span class="o">=</span><span class="nx">rootID</span><span class="p">)</span> <span class="o">/&gt;</span>
-</span><span class='line'>                          
+</span><span class='line'>
 </span><span class='line'>              <span class="o">&lt;</span><span class="nx">cfsavecontent</span> <span class="nx">variable</span><span class="o">=</span><span class="s2">&quot;html&quot;</span><span class="o">&gt;</span>
 </span><span class='line'>                  <span class="o">&lt;</span><span class="nx">cfoutput</span><span class="o">&gt;&lt;</span><span class="nx">select</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;#arguments.fieldname#&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;#arguments.fieldname#&quot;</span>  <span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">stMetadata</span><span class="p">.</span><span class="nx">ftSelectMultiple</span><span class="o">&gt;</span><span class="nx">size</span><span class="o">=</span><span class="s2">&quot;#arguments.stMetadata.ftSelectSize#&quot;</span> <span class="nx">multiple</span><span class="o">=</span><span class="s2">&quot;true&quot;</span><span class="o">&lt;</span><span class="err">/cfif&gt; class=&quot;selectInput #arguments.stMetadata.ftSelectSize# #arguments.stMetadata.ftClass#&quot;&gt;&lt;/cfoutput&gt;</span>
 </span><span class='line'>                  <span class="o">&lt;</span><span class="nx">cfloop</span> <span class="nx">list</span><span class="o">=</span><span class="s2">&quot;#lCategoryBranch#&quot;</span> <span class="nx">index</span><span class="o">=</span><span class="s2">&quot;i&quot;</span><span class="o">&gt;</span>
@@ -1005,7 +1005,7 @@ MySQL 5+</p>
 </span><span class='line'>                      <span class="o">&lt;</span><span class="nx">cfelse</span><span class="o">&gt;</span>
 </span><span class='line'>                          <span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">CategoryName</span> <span class="o">=</span> <span class="nx">oCategory</span><span class="p">.</span><span class="nx">getCategoryNamebyID</span><span class="p">(</span><span class="nx">categoryid</span><span class="o">=</span><span class="nx">i</span><span class="p">,</span><span class="nx">typename</span><span class="o">=</span><span class="s1">&#39;dmCategory&#39;</span><span class="p">)</span> <span class="o">/&gt;</span>
 </span><span class='line'>                          <span class="o">&lt;</span><span class="nx">cfoutput</span><span class="o">&gt;&lt;</span><span class="nx">option</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#i#&quot;</span><span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">listContainsNoCase</span><span class="p">(</span><span class="nx">lSelectedCategoryID</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span><span class="o">&gt;</span> <span class="nx">selected</span><span class="o">=</span><span class="s2">&quot;selected&quot;</span><span class="o">&lt;</span><span class="err">/cfif&gt;&gt;#CategoryName#&lt;/option&gt;&lt;/cfoutput&gt;</span>
-</span><span class='line'>                      <span class="o">&lt;</span><span class="err">/cfif&gt;                      </span>
+</span><span class='line'>                      <span class="o">&lt;</span><span class="err">/cfif&gt;</span>
 </span><span class='line'>                  <span class="o">&lt;</span><span class="err">/cfloop&gt;</span>
 </span><span class='line'>                  <span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">stMetadata</span><span class="p">.</span><span class="nx">ftAliasAsOptGroup</span> <span class="nx">EQ</span> <span class="kc">true</span><span class="o">&gt;</span>
 </span><span class='line'>                      <span class="o">&lt;</span><span class="nx">cfoutput</span><span class="o">&gt;&lt;</span><span class="err">/optgroup&gt;&lt;/cfoutput&gt;</span>
@@ -1013,64 +1013,64 @@ MySQL 5+</p>
 </span><span class='line'>                  <span class="o">&lt;</span><span class="nx">cfoutput</span><span class="o">&gt;&lt;</span><span class="err">/select&gt;&lt;/cfoutput&gt;</span>
 </span><span class='line'>              <span class="o">&lt;</span><span class="err">/cfsavecontent&gt;</span>
 </span><span class='line'>          <span class="o">&lt;</span><span class="err">/cfcase&gt;</span>
-</span><span class='line'>          
+</span><span class='line'>
 </span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfcase</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;prototype&quot;</span><span class="o">&gt;</span>
 </span><span class='line'>              <span class="o">&lt;</span><span class="nx">cfsavecontent</span> <span class="nx">variable</span><span class="o">=</span><span class="s2">&quot;html&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>              
+</span><span class='line'>
 </span><span class='line'>                  <span class="o">&lt;</span><span class="nx">cfoutput</span><span class="o">&gt;&lt;</span><span class="nx">fieldset</span> <span class="nx">style</span><span class="o">=</span><span class="s2">&quot;width: 300px;&quot;</span><span class="o">&gt;</span>
 </span><span class='line'>                      <span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">len</span><span class="p">(</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">stMetadata</span><span class="p">.</span><span class="nx">ftLegend</span><span class="p">)</span><span class="o">&gt;&lt;</span><span class="nx">legend</span><span class="o">&gt;</span><span class="err">#</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">stMetadata</span><span class="p">.</span><span class="nx">ftLegend</span><span class="err">#</span><span class="o">&lt;</span><span class="err">/legend&gt;&lt;/cfif&gt;</span>
-</span><span class='line'>                  
+</span><span class='line'>
 </span><span class='line'>                      <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;fieldsection optional full&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>                                              
+</span><span class='line'>
 </span><span class='line'>                          <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;fieldwrap&quot;</span><span class="o">&gt;</span>
 </span><span class='line'>                          <span class="o">&lt;</span><span class="err">/cfoutput&gt;</span>
 </span><span class='line'>
 </span><span class='line'>                              <span class="o">&lt;</span><span class="nx">ft</span><span class="o">:</span><span class="nx">NTMPrototypeTree</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;#arguments.fieldname#&quot;</span> <span class="nx">navid</span><span class="o">=</span><span class="s2">&quot;#rootID#&quot;</span> <span class="nx">depth</span><span class="o">=</span><span class="s2">&quot;99&quot;</span> <span class="nx">bIncludeHome</span><span class="o">=</span><span class="mi">1</span> <span class="nx">lSelectedItems</span><span class="o">=</span><span class="s2">&quot;#lSelectedCategoryID#&quot;</span> <span class="nx">bSelectMultiple</span><span class="o">=</span><span class="s2">&quot;#arguments.stMetadata.ftSelectMultiple#&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>                          
+</span><span class='line'>
 </span><span class='line'>                          <span class="o">&lt;</span><span class="nx">cfoutput</span><span class="o">&gt;</span>
 </span><span class='line'>                          <span class="o">&lt;</span><span class="err">/div&gt;</span>
-</span><span class='line'>                          
+</span><span class='line'>
 </span><span class='line'>                          <span class="o">&lt;</span><span class="nx">br</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;fieldsectionbreak&quot;</span> <span class="o">/&gt;</span>
 </span><span class='line'>                      <span class="o">&lt;</span><span class="err">/div&gt;</span>
 </span><span class='line'>                      <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;hidden&quot;</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;#arguments.fieldname#&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;#arguments.fieldname#&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;&quot;</span> <span class="o">/&gt;</span>
 </span><span class='line'>                  <span class="o">&lt;</span><span class="err">/fieldset&gt;&lt;/cfoutput&gt;</span>
-</span><span class='line'>                          
-</span><span class='line'>              <span class="o">&lt;</span><span class="err">/cfsavecontent&gt;         </span>
+</span><span class='line'>
+</span><span class='line'>              <span class="o">&lt;</span><span class="err">/cfsavecontent&gt;</span>
 </span><span class='line'>          <span class="o">&lt;</span><span class="err">/cfcase&gt;</span>
 </span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfcase</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;extjs&quot;</span><span class="o">&gt;</span>
 </span><span class='line'>              <span class="c">&lt;!--</span><span class="o">-</span> <span class="o">&lt;</span><span class="nx">skin</span><span class="o">:</span><span class="nx">htmlHead</span> <span class="nx">library</span><span class="o">=</span><span class="s2">&quot;extjs&quot;</span> <span class="o">/&gt;</span>
 </span><span class='line'>              <span class="o">&lt;</span><span class="nx">skin</span><span class="o">:</span><span class="nx">htmlHead</span> <span class="nx">library</span><span class="o">=</span><span class="s2">&quot;farcryForm&quot;</span> <span class="o">/&gt;</span> <span class="o">---&gt;</span>
-</span><span class='line'>              
+</span><span class='line'>
 </span><span class='line'>              <span class="o">&lt;</span><span class="nx">cfsavecontent</span> <span class="nx">variable</span><span class="o">=</span><span class="s2">&quot;html&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>                  
+</span><span class='line'>
 </span><span class='line'>                  <span class="o">&lt;</span><span class="nx">cfoutput</span><span class="o">&gt;&lt;</span><span class="nx">fieldset</span> <span class="nx">style</span><span class="o">=</span><span class="s2">&quot;width: 300px;&quot;</span><span class="o">&gt;</span>
 </span><span class='line'>                      <span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">len</span><span class="p">(</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">stMetadata</span><span class="p">.</span><span class="nx">ftLegend</span><span class="p">)</span><span class="o">&gt;&lt;</span><span class="nx">legend</span><span class="o">&gt;</span><span class="err">#</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">stMetadata</span><span class="p">.</span><span class="nx">ftLegend</span><span class="err">#</span><span class="o">&lt;</span><span class="err">/legend&gt;&lt;/cfif&gt;</span>
-</span><span class='line'>                  
+</span><span class='line'>
 </span><span class='line'>                      <span class="c">&lt;!--</span><span class="o">-</span> <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;tree-div&quot;</span> <span class="nx">style</span><span class="o">=</span><span class="s2">&quot;border:1px solid #c3daf9;&quot;</span><span class="o">&gt;&lt;</span><span class="err">/div&gt; ---&gt;</span>
 </span><span class='line'>                      <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;fieldsection optional full&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>                                          
+</span><span class='line'>
 </span><span class='line'>                          <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;fieldwrap&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>                              
-</span><span class='line'>                              <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;#arguments.fieldname#-tree-div&quot;</span><span class="o">&gt;&lt;</span><span class="err">/div&gt;    </span>
-</span><span class='line'>                              
+</span><span class='line'>
+</span><span class='line'>                              <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;#arguments.fieldname#-tree-div&quot;</span><span class="o">&gt;&lt;</span><span class="err">/div&gt;</span>
+</span><span class='line'>
 </span><span class='line'>                          <span class="o">&lt;</span><span class="err">/div&gt;</span>
-</span><span class='line'>                          
+</span><span class='line'>
 </span><span class='line'>                          <span class="o">&lt;</span><span class="nx">br</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;fieldsectionbreak&quot;</span> <span class="o">/&gt;</span>
 </span><span class='line'>                      <span class="o">&lt;</span><span class="err">/div&gt;</span>
 </span><span class='line'>                      <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;hidden&quot;</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;#arguments.fieldname#&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;#arguments.fieldname#&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#lSelectedCategoryID#&quot;</span> <span class="o">/&gt;</span>
 </span><span class='line'>                      <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;hidden&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;#arguments.fieldname#&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;&quot;</span> <span class="o">/&gt;</span>
 </span><span class='line'>                  <span class="o">&lt;</span><span class="err">/fieldset&gt;</span>
 </span><span class='line'>                  <span class="o">&lt;</span><span class="err">/cfoutput&gt;</span>
-</span><span class='line'>                                              
+</span><span class='line'>
 </span><span class='line'>              <span class="o">&lt;</span><span class="err">/cfsavecontent&gt;</span>
-</span><span class='line'>          
+</span><span class='line'>
 </span><span class='line'>              <span class="o">&lt;</span><span class="nx">skin</span><span class="o">:</span><span class="nx">onReady</span><span class="o">&gt;</span>
 </span><span class='line'>              <span class="o">&lt;</span><span class="nx">cfoutput</span><span class="o">&gt;</span>
-</span><span class='line'>                  <span class="nx">createFormtoolTree</span><span class="p">(</span><span class="s1">&#39;#arguments.fieldname#&#39;</span><span class="p">,</span><span class="s1">&#39;#rootID#&#39;</span><span class="p">,</span> <span class="s1">&#39;#application.url.webtop#/facade/getCategoryNodes.cfm&#39;</span><span class="p">,</span> <span class="s1">&#39;#rootNodeText#&#39;</span><span class="p">,</span><span class="s1">&#39;#lSelectedCategoryID#&#39;</span><span class="p">,</span> <span class="s1">&#39;categoryIconCls&#39;</span><span class="p">);</span>                                           
+</span><span class='line'>                  <span class="nx">createFormtoolTree</span><span class="p">(</span><span class="s1">&#39;#arguments.fieldname#&#39;</span><span class="p">,</span><span class="s1">&#39;#rootID#&#39;</span><span class="p">,</span> <span class="s1">&#39;#application.url.webtop#/facade/getCategoryNodes.cfm&#39;</span><span class="p">,</span> <span class="s1">&#39;#rootNodeText#&#39;</span><span class="p">,</span><span class="s1">&#39;#lSelectedCategoryID#&#39;</span><span class="p">,</span> <span class="s1">&#39;categoryIconCls&#39;</span><span class="p">);</span>
 </span><span class='line'>              <span class="o">&lt;</span><span class="err">/cfoutput&gt;</span>
 </span><span class='line'>              <span class="o">&lt;</span><span class="err">/skin:onReady&gt;</span>
 </span><span class='line'>          <span class="o">&lt;</span><span class="err">/cfcase&gt;</span>
-</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfcase</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;jquery&quot;</span><span class="o">&gt;</span>            
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfcase</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;jquery&quot;</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'>              <span class="o">&lt;</span><span class="nx">skin</span><span class="o">:</span><span class="nx">onReady</span><span class="o">&gt;</span>
 </span><span class='line'>              <span class="o">&lt;</span><span class="nx">cfoutput</span><span class="o">&gt;</span>
@@ -1079,22 +1079,22 @@ MySQL 5+</p>
 </span><span class='line'>                  <span class="p">})</span>
 </span><span class='line'>              <span class="o">&lt;</span><span class="err">/cfoutput&gt;</span>
 </span><span class='line'>              <span class="o">&lt;</span><span class="err">/skin:onReady&gt;</span>
-</span><span class='line'>              
-</span><span class='line'>              <span class="o">&lt;</span><span class="nx">cfsavecontent</span> <span class="nx">variable</span><span class="o">=</span><span class="s2">&quot;html&quot;</span><span class="o">&gt;</span>                
+</span><span class='line'>
+</span><span class='line'>              <span class="o">&lt;</span><span class="nx">cfsavecontent</span> <span class="nx">variable</span><span class="o">=</span><span class="s2">&quot;html&quot;</span><span class="o">&gt;</span>
 </span><span class='line'>                  <span class="o">&lt;</span><span class="nx">cfoutput</span><span class="o">&gt;</span>
 </span><span class='line'>                  <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;multiField&quot;</span><span class="o">&gt;</span>
 </span><span class='line'>                      <span class="o">&lt;</span><span class="nx">ul</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;#arguments.fieldname#_list&quot;</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;treeview&quot;</span><span class="o">&gt;&lt;</span><span class="err">/ul&gt;</span>
 </span><span class='line'>                  <span class="o">&lt;</span><span class="err">/div&gt;</span>
-</span><span class='line'>                  <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;hidden&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;#arguments.fieldname#&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;&quot;</span> <span class="o">/&gt;</span>    
+</span><span class='line'>                  <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;hidden&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;#arguments.fieldname#&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;&quot;</span> <span class="o">/&gt;</span>
 </span><span class='line'>                  <span class="o">&lt;</span><span class="err">/cfoutput&gt;</span>
-</span><span class='line'>              <span class="o">&lt;</span><span class="err">/cfsavecontent&gt;         </span>
-</span><span class='line'>          <span class="o">&lt;</span><span class="err">/cfcase&gt;            </span>
+</span><span class='line'>              <span class="o">&lt;</span><span class="err">/cfsavecontent&gt;</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="err">/cfcase&gt;</span>
 </span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfdefaultcase</span><span class="o">&gt;</span>
-</span><span class='line'>              
+</span><span class='line'>
 </span><span class='line'>              <span class="o">&lt;</span><span class="nx">skin</span><span class="o">:</span><span class="nx">loadJS</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;jquery&quot;</span> <span class="o">/&gt;</span>
 </span><span class='line'>              <span class="o">&lt;</span><span class="nx">skin</span><span class="o">:</span><span class="nx">loadJS</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;jquery-checkboxtree&quot;</span> <span class="nx">basehref</span><span class="o">=</span><span class="s2">&quot;#application.url.webtop#/thirdparty/checkboxtree/js&quot;</span> <span class="nx">lFiles</span><span class="o">=</span><span class="s2">&quot;jquery.checkboxtree.js&quot;</span> <span class="o">/&gt;</span>
 </span><span class='line'>              <span class="o">&lt;</span><span class="nx">skin</span><span class="o">:</span><span class="nx">loadCSS</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;jquery-checkboxtree&quot;</span> <span class="nx">basehref</span><span class="o">=</span><span class="s2">&quot;#application.url.webtop#/thirdparty/checkboxtree/css&quot;</span> <span class="nx">lFiles</span><span class="o">=</span><span class="s2">&quot;checkboxtree.css&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'>                                              
+</span><span class='line'>
 </span><span class='line'>              <span class="o">&lt;</span><span class="nx">skin</span><span class="o">:</span><span class="nx">onReady</span><span class="o">&gt;</span>
 </span><span class='line'>              <span class="o">&lt;</span><span class="nx">cfoutput</span><span class="o">&gt;</span>
 </span><span class='line'>                  <span class="nx">$j</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
@@ -1114,29 +1114,29 @@ MySQL 5+</p>
 </span><span class='line'>                                  <span class="nx">blankarrow</span><span class="o">:</span> <span class="s2">&quot;#application.url.webtop#/thirdparty/checkboxtree/images/checkboxtree/img-arrow-blank.gif&quot;</span><span class="p">,</span>
 </span><span class='line'>                                  <span class="nx">checkchildren</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
 </span><span class='line'>                                  <span class="nx">checkparents</span><span class="o">:</span> <span class="kc">false</span>
-</span><span class='line'>                          <span class="p">});</span>  
-</span><span class='line'>                          <span class="nx">$j</span><span class="p">(</span><span class="s2">&quot;###arguments.fieldname#-checkboxDiv input:checked&quot;</span><span class="p">).</span><span class="nx">addClass</span><span class="p">(</span><span class="s1">&#39;mjb&#39;</span><span class="p">);</span>  
-</span><span class='line'>                          <span class="nx">$j</span><span class="p">(</span><span class="s2">&quot;###arguments.fieldname#-checkboxDiv input:checked&quot;</span><span class="p">).</span><span class="nx">parent</span><span class="p">().</span><span class="nx">addClass</span><span class="p">(</span><span class="s1">&#39;mjb&#39;</span><span class="p">);</span>          
+</span><span class='line'>                          <span class="p">});</span>
+</span><span class='line'>                          <span class="nx">$j</span><span class="p">(</span><span class="s2">&quot;###arguments.fieldname#-checkboxDiv input:checked&quot;</span><span class="p">).</span><span class="nx">addClass</span><span class="p">(</span><span class="s1">&#39;mjb&#39;</span><span class="p">);</span>
+</span><span class='line'>                          <span class="nx">$j</span><span class="p">(</span><span class="s2">&quot;###arguments.fieldname#-checkboxDiv input:checked&quot;</span><span class="p">).</span><span class="nx">parent</span><span class="p">().</span><span class="nx">addClass</span><span class="p">(</span><span class="s1">&#39;mjb&#39;</span><span class="p">);</span>
 </span><span class='line'>                     <span class="p">}</span>
 </span><span class='line'>                   <span class="p">});</span>
-</span><span class='line'>                  
+</span><span class='line'>
 </span><span class='line'>              <span class="o">&lt;</span><span class="err">/cfoutput&gt;</span>
 </span><span class='line'>              <span class="o">&lt;</span><span class="err">/skin:onReady&gt;</span>
-</span><span class='line'>              
+</span><span class='line'>
 </span><span class='line'>              <span class="o">&lt;</span><span class="nx">cfsavecontent</span> <span class="nx">variable</span><span class="o">=</span><span class="s2">&quot;html&quot;</span><span class="o">&gt;</span>
 </span><span class='line'>
 </span><span class='line'>                  <span class="o">&lt;</span><span class="nx">cfoutput</span><span class="o">&gt;</span>
 </span><span class='line'>                  <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;multiField&quot;</span><span class="o">&gt;</span>
 </span><span class='line'>                      <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;#arguments.fieldname#-checkboxDiv&quot;</span><span class="o">&gt;</span><span class="nx">loading</span><span class="p">...</span><span class="o">&lt;</span><span class="err">/div&gt;</span>
-</span><span class='line'>                      <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;hidden&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;#arguments.fieldname#&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;&quot;</span> <span class="o">/&gt;</span>            
+</span><span class='line'>                      <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;hidden&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;#arguments.fieldname#&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;&quot;</span> <span class="o">/&gt;</span>
 </span><span class='line'>                  <span class="o">&lt;</span><span class="err">/div&gt;</span>
 </span><span class='line'>                  <span class="o">&lt;</span><span class="err">/cfoutput&gt;</span>
-</span><span class='line'>                  
-</span><span class='line'>              <span class="o">&lt;</span><span class="err">/cfsavecontent&gt;         </span>
-</span><span class='line'>          <span class="o">&lt;</span><span class="err">/cfdefaultcase&gt;         </span>
-</span><span class='line'>          
+</span><span class='line'>
+</span><span class='line'>              <span class="o">&lt;</span><span class="err">/cfsavecontent&gt;</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="err">/cfdefaultcase&gt;</span>
+</span><span class='line'>
 </span><span class='line'>      <span class="o">&lt;</span><span class="err">/cfswitch&gt;</span>
-</span><span class='line'>      
+</span><span class='line'>
 </span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfreturn</span> <span class="nx">html</span><span class="o">&gt;</span>
 </span><span class='line'>  <span class="o">&lt;</span><span class="err">/cffunction&gt;</span>
 </span><span class='line'>

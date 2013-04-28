@@ -86,7 +86,7 @@
 
 <p>Basically I had a form field with a name/id of &#8220;restoration_required&#8221; but when I submitted the form I got the following error:</p>
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2007/04/formerror.gif" alt="Form Error" /></p>
+<p><img src="/images/uploads/2007/04/formerror.gif" alt="Form Error" /></p>
 
 <p>Now <a href="http://www.daemon.com.au/">Geoff Bowers</a> happened to be standing nearby and was kind enough to point out that this looked like a <cfform> validation error, only I wasn&#8217;t using cfform!</p>
 
@@ -112,20 +112,20 @@
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
 </pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfform</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;myForm&quot;</span> <span class="nx">action</span><span class="o">=</span><span class="s2">&quot;&quot;</span> <span class="nx">format</span><span class="o">=</span><span class="s2">&quot;html&quot;</span> <span class="nx">method</span><span class="o">=</span><span class="s2">&quot;post&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>  
+</span><span class='line'>
 </span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfinput</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;firstName_required&quot;</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;firstName_required&quot;</span> <span class="nx">required</span><span class="o">=</span><span class="s2">&quot;true&quot;</span> <span class="nx">validateat</span><span class="o">=</span><span class="s2">&quot;onServer&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'>  
+</span><span class='line'>
 </span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfinput</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;submit&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;Submit&quot;</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;Submit&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;Send&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'>  
+</span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="err">/cfform&gt;</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2007/04/form1.gif" alt="Sample form" /></p>
+<p><img src="/images/uploads/2007/04/form1.gif" alt="Sample form" /></p>
 
 <p>Submitting this gives me the following error:</p>
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2007/04/formerror2.gif" alt="Form Error 2" /></p>
+<p><img src="/images/uploads/2007/04/formerror2.gif" alt="Form Error 2" /></p>
 
 <p>In my opinion that is a bug which basically means whether you&#8217;re using &lt;cfform&gt; or &lt;form&gt; you can&#8217;t name any fields ending with &#8220;_required&#8221;.</p>
 </div>

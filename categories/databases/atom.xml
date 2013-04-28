@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Databases | chapter31 &raquo;]]></title>
   <link href="http://chapter31.com/categories/databases/atom.xml" rel="self"/>
   <link href="http://chapter31.com/"/>
-  <updated>2013-04-28T22:29:57+10:00</updated>
+  <updated>2013-04-28T22:39:59+10:00</updated>
   <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
@@ -34,7 +34,7 @@ ORDER BY sy.title
 
 <p>Looks pretty standard, with something like that I'd get the following:</p>
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2012/07/Screen-shot-2012-07-06-at-6.50.45-AM.png" alt="" /></p>
+<p><img src="/images/uploads/2012/07/Screen-shot-2012-07-06-at-6.50.45-AM.png" alt="" /></p>
 
 <p>But now the application has to handle the grouping, not a huge problem by any means. Also don't get me wrong...this is where you normally would want to do this (sql is a data retrieval language and in most instances shouldn't be handling presentation aspects). However, if I just wanted to display a list of stages (categories), I can use <a href="http://dev.mysql.com/doc/refman/5.0/en/group-by-functions.html#function_group-concat">group_concat</a> to make life a litte easier.</p>
 
@@ -50,7 +50,7 @@ ORDER BY sy.title
 
 <p>This gives me:</p>
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2012/07/Screen-shot-2012-07-06-at-6.53.14-AM.png" alt="" /></p>
+<p><img src="/images/uploads/2012/07/Screen-shot-2012-07-06-at-6.53.14-AM.png" alt="" /></p>
 
 <p>Pretty cool eh?</p>
 
@@ -66,7 +66,7 @@ GROUP BY sy.title
 ORDER BY sy.title
 </code></p>
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2012/07/Screen-shot-2012-07-06-at-7.12.02-AM.png" alt="" /></p>
+<p><img src="/images/uploads/2012/07/Screen-shot-2012-07-06-at-7.12.02-AM.png" alt="" /></p>
 
 <p><a href="http://dev.mysql.com/doc/refman/5.0/en/group-by-functions.html#function_group-concat">See the group_concat page</a> for more details.</p>
 ]]></content>

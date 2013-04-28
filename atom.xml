@@ -4,7 +4,7 @@
   <title><![CDATA[chapter31 &raquo;]]></title>
   <link href="http://chapter31.com/atom.xml" rel="self"/>
   <link href="http://chapter31.com/"/>
-  <updated>2013-04-28T22:29:57+10:00</updated>
+  <updated>2013-04-28T22:39:59+10:00</updated>
   <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
@@ -626,7 +626,7 @@ Select #3 had 8192* possible combinations</p>
 
 <p>And the link source:</p>
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2012/09/Screen-shot-2012-09-20-at-5.24.32-PM.png" alt="" /></p>
+<p><img src="http://chapter31.com/images/uploads/2012/09/Screen-shot-2012-09-20-at-5.24.32-PM.png" alt="" /></p>
 
 <p>Hmm, could that suck any more? Now what happens if I add output=&#8221;false&#8221; (not particularly intuitive) to the end of the function, like this:</p>
 
@@ -647,7 +647,7 @@ Select #3 had 8192* possible combinations</p>
 
 <p>Now I get:</p>
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2012/09/Screen-shot-2012-09-20-at-5.25.54-PM.png" alt="" /></p>
+<p><img src="http://chapter31.com/images/uploads/2012/09/Screen-shot-2012-09-20-at-5.25.54-PM.png" alt="" /></p>
 
 <p>Sorry but that&#8217;s just insane. cfscript should behave like cfsilent all the time unless you specify a writeOutput();</p>
 
@@ -682,9 +682,9 @@ Select #3 had 8192* possible combinations</p>
 
 <p>An example of this is:</p>
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2012/09/Screen-shot-2012-09-14-at-4.06.09-PM.png" alt="" /></p>
+<p><img src="http://chapter31.com/images/uploads/2012/09/Screen-shot-2012-09-14-at-4.06.09-PM.png" alt="" /></p>
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2012/09/Screen-shot-2012-09-14-at-4.06.30-PM.png" alt="" /></p>
+<p><img src="http://chapter31.com/images/uploads/2012/09/Screen-shot-2012-09-14-at-4.06.30-PM.png" alt="" /></p>
 
 <p>A quick way around this is to fire a <a href="http://api.jquery.com/blur/">blur()</a> method, targeting the first <em>tabable</em> element type of your dialog. So if I open up a dialog window with an id of <em>dialog</em>, I can do:</p>
 
@@ -1021,7 +1021,7 @@ htdocs/WEB-INF
 
 <p>Looks pretty standard, with something like that I&#8217;d get the following:</p>
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2012/07/Screen-shot-2012-07-06-at-6.50.45-AM.png" alt="" /></p>
+<p><img src="http://chapter31.com/images/uploads/2012/07/Screen-shot-2012-07-06-at-6.50.45-AM.png" alt="" /></p>
 
 <p>But now the application has to handle the grouping, not a huge problem by any means. Also don&#8217;t get me wrong&#8230;this is where you normally would want to do this (sql is a data retrieval language and in most instances shouldn&#8217;t be handling presentation aspects). However, if I just wanted to display a list of stages (categories), I can use <a href="http://dev.mysql.com/doc/refman/5.0/en/group-by-functions.html#function_group-concat">group_concat</a> to make life a litte easier.</p>
 
@@ -1044,7 +1044,7 @@ htdocs/WEB-INF
 
 <p>This gives me:</p>
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2012/07/Screen-shot-2012-07-06-at-6.53.14-AM.png" alt="" /></p>
+<p><img src="http://chapter31.com/images/uploads/2012/07/Screen-shot-2012-07-06-at-6.53.14-AM.png" alt="" /></p>
 
 <p>Pretty cool eh?</p>
 
@@ -1067,7 +1067,7 @@ htdocs/WEB-INF
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2012/07/Screen-shot-2012-07-06-at-7.12.02-AM.png" alt="" /></p>
+<p><img src="http://chapter31.com/images/uploads/2012/07/Screen-shot-2012-07-06-at-7.12.02-AM.png" alt="" /></p>
 
 <p><a href="http://dev.mysql.com/doc/refman/5.0/en/group-by-functions.html#function_group-concat">See the group_concat page</a> for more details.</p>
 ]]></content>
@@ -1080,11 +1080,11 @@ htdocs/WEB-INF
     <id>http://chapter31.com/2012/07/05/jquery-tinymce-issue-with-attr</id>
     <content type="html"><![CDATA[<p>I had some strange behaviour with the jQuery verion of tinyMCE (3.4.6). Basically I was <a href="http://harvesthq.github.com/chosen/">integrating the chosen library</a> (which is build as a jQuery plugin), but it seems the $.attr(&#8216;id&#8217;) from within chosen.js was returning a JavaScript element reference instead of the value of the &#8220;id&#8221; field.</p>
 
-<p><a href="http://www.chapter31.com/wp-content/uploads/2012/07/tiny_error.png"><img src="http://www.chapter31.com/wp-content/uploads/2012/07/tiny_error.png" alt="" /></a></p>
+<p><a href="http://chapter31.com/images/uploads/2012/07/tiny_error.png"><img src="http://chapter31.com/images/uploads/2012/07/tiny_error.png" alt="" /></a></p>
 
 <p>Some basic tracing showed the strange error:</p>
 
-<p><a href="http://www.chapter31.com/wp-content/uploads/2012/07/tiny_trace.png"><img src="http://www.chapter31.com/wp-content/uploads/2012/07/tiny_trace.png" alt="" /></a></p>
+<p><a href="http://chapter31.com/images/uploads/2012/07/tiny_trace.png"><img src="http://chapter31.com/images/uploads/2012/07/tiny_trace.png" alt="" /></a></p>
 
 <p>The solution for me was moving to tinyMCE 3.5.4.1 (and jQuery 1.7.2, previously I was on 1.6.4). All good now, just thought I&#8217;d throw up a quick post if anyone was being caught by this.</p>
 ]]></content>
@@ -1128,7 +1128,7 @@ htdocs/WEB-INF
 
 <p><code>od -c filename | sed 4q</code></p>
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2012/05/dos2unix_before1.png" alt="" /></p>
+<p><img src="http://chapter31.com/images/uploads/2012/05/dos2unix_before1.png" alt="" /></p>
 
 <p>You can see the offending <em>\r</em> which was breaking the bash program. The unix tool <em>dos2unix</em> was suggested to clean up the file. Unfortunately this wasn&#8217;t available on Mac by default. MacPorts to the rescue (I assume homebrew would be a good option as well):</p>
 
@@ -1174,7 +1174,7 @@ htdocs/WEB-INF
 
 <p>Nice! The changes are:</p>
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2012/05/dos2unix_after.png" alt="" /></p>
+<p><img src="http://chapter31.com/images/uploads/2012/05/dos2unix_after.png" alt="" /></p>
 
 <p>No \r</p>
 

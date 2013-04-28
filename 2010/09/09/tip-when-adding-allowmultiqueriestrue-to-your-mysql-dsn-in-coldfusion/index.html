@@ -90,7 +90,7 @@
 
 <p>Finally took a comment from <a href="http://www.bennadel.com/blog/1209-Turning-On-Multiple-Statements-In-ColdFusion-8-MySQL-4-5-Datasource.htm">Will Tomlinson over on Ben Nadel&#8217;s blog</a> to help me out. Delete and recreate the DSN, happy days!</p>
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2010/09/cfadmin.png" alt="" /></p>
+<p><img src="/images/uploads/2010/09/cfadmin.png" alt="" /></p>
 
 <p>Who want&#8217;s some sample code?</p>
 
@@ -118,9 +118,9 @@
 </pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cffunction</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;addStuff&quot;</span> <span class="nx">access</span><span class="o">=</span><span class="s2">&quot;public&quot;</span> <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="nx">returnType</span><span class="o">=</span><span class="s2">&quot;numeric&quot;</span><span class="o">&gt;</span>
 </span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;ref&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;string&quot;</span> <span class="nx">required</span><span class="o">=</span><span class="s2">&quot;true&quot;</span><span class="o">&gt;</span>
 </span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;stage&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;string&quot;</span> <span class="nx">required</span><span class="o">=</span><span class="s2">&quot;true&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>  
+</span><span class='line'>
 </span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfset</span> <span class="kd">var</span> <span class="nx">q</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>  
+</span><span class='line'>
 </span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfquery</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;q&quot;</span> <span class="nx">datasource</span><span class="o">=</span><span class="s2">&quot;#variables.instance.config.dsn#&quot;</span><span class="o">&gt;</span>
 </span><span class='line'>      <span class="nx">INSERT</span> <span class="nx">INTO</span> <span class="nx">mytable</span>
 </span><span class='line'>          <span class="p">(</span>
@@ -132,7 +132,7 @@
 </span><span class='line'>              <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.ref#&quot;</span><span class="o">&gt;</span>
 </span><span class='line'>              <span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.stage#&quot;</span><span class="o">&gt;</span>
 </span><span class='line'>          <span class="p">);</span><span class="nx">SELECT</span> <span class="nx">LAST_INSERT_ID</span><span class="p">()</span> <span class="nx">AS</span> <span class="nx">newId</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cfquery&gt;       </span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cfquery&gt;</span>
 </span><span class='line'>
 </span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfreturn</span> <span class="nx">q</span><span class="p">.</span><span class="nx">newId</span><span class="o">&gt;</span>
 </span><span class='line'><span class="o">&lt;</span><span class="err">/cffunction&gt;</span>

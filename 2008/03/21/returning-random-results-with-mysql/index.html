@@ -159,21 +159,21 @@
 
 <p>Solution 1 - average 4021ms</p>
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2008/03/solution1.jpg" alt="mysql_solution1" /></p>
+<p><img src="/images/uploads/2008/03/solution1.jpg" alt="mysql_solution1" /></p>
 
 <p>Solution 3 - average 32.1ms</p>
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2008/03/solution3.jpg" alt="mysql_solution3" /></p>
+<p><img src="/images/uploads/2008/03/solution3.jpg" alt="mysql_solution3" /></p>
 
 <p>Second with only 150 rows:</p>
 
 <p>Solution 1 - average 13.25ms</p>
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2008/03/solution1_1501.jpg" alt="solution1_150_2" /></p>
+<p><img src="/images/uploads/2008/03/solution1_1501.jpg" alt="solution1_150_2" /></p>
 
 <p>Solution 3 - average 1.55ms</p>
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2008/03/solution3_150.jpg" alt="solution3_150" /></p>
+<p><img src="/images/uploads/2008/03/solution3_150.jpg" alt="solution3_150" /></p>
 
 <p>So when you only want 1 random row returned the best bet by far is solution 3. I ran the same test returning 10 rows and got very similar results for all 4 tests, you just need to watch for the case where the OFFSET is too high (check that #recordCount# - #theOffset# > 10 etc) and that only the &#8216;seed&#8217; row is random.</p>
 

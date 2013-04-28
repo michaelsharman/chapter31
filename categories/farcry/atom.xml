@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Farcry | chapter31 &raquo;]]></title>
   <link href="http://chapter31.com/categories/farcry/atom.xml" rel="self"/>
   <link href="http://chapter31.com/"/>
-  <updated>2013-04-28T22:29:57+10:00</updated>
+  <updated>2013-04-28T22:39:59+10:00</updated>
   <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
@@ -34,22 +34,22 @@
 
 <p>For example; if I wanted to know everything in FarCry that had a label LIKE 'credential' (wildcards are automatically added to your search term) I might get results like the following:</p>
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2011/08/contenttitle.png" alt="" /></p>
+<p><img src="/images/uploads/2011/08/contenttitle.png" alt="" /></p>
 
 <p>From that initial resultset, if I clicked on an objectid for dmNavigation:</p>
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2011/08/objectid.png" alt="" /></p>
+<p><img src="/images/uploads/2011/08/objectid.png" alt="" /></p>
 
 <p>Or if I clicked on an objectid for dmHTML:</p>
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2011/08/objectid_dmhtml.png" alt="" /></p>
+<p><img src="/images/uploads/2011/08/objectid_dmhtml.png" alt="" /></p>
 
 <p>Note that there is a collapsed cfdump that you can expand for further info.</p>
 
 <h2>Requirements</h2>
 
-<p>Railo 3.2+ or ColdFusion 7+<br/>
-FarCry 6+<br/>
+<p>Railo 3.2+ or ColdFusion 7+
+FarCry 6+
 MySQL 5+</p>
 
 <h2>Installation</h2>
@@ -113,7 +113,7 @@ MySQL 5+</p>
     <id>http://chapter31.com/2011/07/01/farcry-tip-enable-cfcs-in-your-railo-proxypassmatch</id>
     <content type="html"><![CDATA[<p>I ran into an issue today while working on a FarCry project, basically when I opened up the "Related Content" popup from the WYSIWYG editor it was blank. Nothing. Not the usual tabs for Images, File, Flash etc.</p>
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2011/07/relatedcontent.png" alt="" /></p>
+<p><img src="/images/uploads/2011/07/relatedcontent.png" alt="" /></p>
 
 <p>The Railo logs were empty but Apache was throwing a strange error which I hadn't seen before: <em>"Couldn't initialize from remote server, JRun server(s) probably down."</em>. Funny as I'm not even using JRun!</p>
 
@@ -139,7 +139,7 @@ MySQL 5+</p>
 
 <p>And of course now the related content popup works :)</p>
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2011/07/relatedcontent2.png" alt="" /></p>
+<p><img src="/images/uploads/2011/07/relatedcontent2.png" alt="" /></p>
 ]]></content>
   </entry>
   
@@ -160,7 +160,7 @@ MySQL 5+</p>
 
 <p>Luckily FarCry makes this kind of thing simple to override. I added my own category.cfc inside my projects <em>packages/formtools</em> directory and made sure to extend category.cfc from <em>farcry.core.packages.formtools.category</em>. In this I only used the edit() function to render an optgroup from a new custom property called ftAliasAsOptGroup (see above snippet). This gave me the following:</p>
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2011/07/optgroup.png" alt="FarCry optgroup" /></p>
+<p><img src="/images/uploads/2011/07/optgroup.png" alt="FarCry optgroup" /></p>
 
 <p>The full category.cfc is below if you're interested.</p>
 
@@ -219,7 +219,7 @@ MySQL 5+</p>
                     &lt;cfelse&gt;
                         &lt;cfset CategoryName = oCategory.getCategoryNamebyID(categoryid=i,typename='dmCategory') /&gt;
                         &lt;cfoutput&gt;&lt;option value="#i#"&lt;cfif listContainsNoCase(lSelectedCategoryID, i)&gt; selected="selected"&lt;/cfif&gt;&gt;#CategoryName#&lt;/option&gt;&lt;/cfoutput&gt;
-                    &lt;/cfif&gt;                     
+                    &lt;/cfif&gt;
                 &lt;/cfloop&gt;
                 &lt;cfif arguments.stMetadata.ftAliasAsOptGroup EQ true&gt;
                     &lt;cfoutput&gt;&lt;/optgroup&gt;&lt;/cfoutput&gt;
@@ -249,7 +249,7 @@ MySQL 5+</p>
                     &lt;input type="hidden" id="#arguments.fieldname#" name="#arguments.fieldname#" value="" /&gt;
                 &lt;/fieldset&gt;&lt;/cfoutput&gt;
 
-            &lt;/cfsavecontent&gt;            
+            &lt;/cfsavecontent&gt;
         &lt;/cfcase&gt;
         &lt;cfcase value="extjs"&gt;
             &lt;!--- &lt;skin:htmlHead library="extjs" /&gt;
@@ -265,7 +265,7 @@ MySQL 5+</p>
 
                         &lt;div class="fieldwrap"&gt;
 
-                            &lt;div id="#arguments.fieldname#-tree-div"&gt;&lt;/div&gt; 
+                            &lt;div id="#arguments.fieldname#-tree-div"&gt;&lt;/div&gt;
 
                         &lt;/div&gt;
 
@@ -280,11 +280,11 @@ MySQL 5+</p>
 
             &lt;skin:onReady&gt;
             &lt;cfoutput&gt;
-                createFormtoolTree('#arguments.fieldname#','#rootID#', '#application.url.webtop#/facade/getCategoryNodes.cfm', '#rootNodeText#','#lSelectedCategoryID#', 'categoryIconCls');                                            
+                createFormtoolTree('#arguments.fieldname#','#rootID#', '#application.url.webtop#/facade/getCategoryNodes.cfm', '#rootNodeText#','#lSelectedCategoryID#', 'categoryIconCls');
             &lt;/cfoutput&gt;
             &lt;/skin:onReady&gt;
         &lt;/cfcase&gt;
-        &lt;cfcase value="jquery"&gt;         
+        &lt;cfcase value="jquery"&gt;
 
             &lt;skin:onReady&gt;
             &lt;cfoutput&gt;
@@ -294,15 +294,15 @@ MySQL 5+</p>
             &lt;/cfoutput&gt;
             &lt;/skin:onReady&gt;
 
-            &lt;cfsavecontent variable="html"&gt;             
+            &lt;cfsavecontent variable="html"&gt;
                 &lt;cfoutput&gt;
                 &lt;div class="multiField"&gt;
                     &lt;ul id="#arguments.fieldname#_list" class="treeview"&gt;&lt;/ul&gt;
                 &lt;/div&gt;
-                &lt;input type="hidden" name="#arguments.fieldname#" value="" /&gt;   
+                &lt;input type="hidden" name="#arguments.fieldname#" value="" /&gt;
                 &lt;/cfoutput&gt;
-            &lt;/cfsavecontent&gt;            
-        &lt;/cfcase&gt;           
+            &lt;/cfsavecontent&gt;
+        &lt;/cfcase&gt;
         &lt;cfdefaultcase&gt;
 
             &lt;skin:loadJS id="jquery" /&gt;
@@ -316,7 +316,7 @@ MySQL 5+</p>
                    url: '#application.fapi.getLink(type="dmCategory", objectid="#rootID#", view="displayCheckboxTree", urlParameters="ajaxmode=1")#',
                    data: {
                     fieldname: '#arguments.fieldname#',
-                    rootNodeID:'#rootID#', 
+                    rootNodeID:'#rootID#',
                     selectedObjectIDs: '#lSelectedCategoryID#'
                     },
                    cache: false,
@@ -328,9 +328,9 @@ MySQL 5+</p>
                                 blankarrow: "#application.url.webtop#/thirdparty/checkboxtree/images/checkboxtree/img-arrow-blank.gif",
                                 checkchildren: false,
                                 checkparents: false
-                        }); 
-                        $j("###arguments.fieldname#-checkboxDiv input:checked").addClass('mjb');     
-                        $j("###arguments.fieldname#-checkboxDiv input:checked").parent().addClass('mjb');           
+                        });
+                        $j("###arguments.fieldname#-checkboxDiv input:checked").addClass('mjb');
+                        $j("###arguments.fieldname#-checkboxDiv input:checked").parent().addClass('mjb');
                    }
                  });
 
@@ -342,12 +342,12 @@ MySQL 5+</p>
                 &lt;cfoutput&gt;
                 &lt;div class="multiField"&gt;
                     &lt;div id="#arguments.fieldname#-checkboxDiv"&gt;loading...&lt;/div&gt;
-                    &lt;input type="hidden" name="#arguments.fieldname#" value="" /&gt;           
+                    &lt;input type="hidden" name="#arguments.fieldname#" value="" /&gt;
                 &lt;/div&gt;
                 &lt;/cfoutput&gt;
 
-            &lt;/cfsavecontent&gt;            
-        &lt;/cfdefaultcase&gt;            
+            &lt;/cfsavecontent&gt;
+        &lt;/cfdefaultcase&gt;
 
     &lt;/cfswitch&gt;
 

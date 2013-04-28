@@ -191,11 +191,11 @@
 
 <p>Let&#8217;s say you had a form allowing a user to add their own web bookmarks (think a simple <a href="http://del.icio.us/">del.icio.us</a>). To make things easier for the user they can add multiple &#8216;bookmarks&#8217; at a time.</p>
 
-<p><a href="http://www.chapter31.com/wp-content/uploads/2008/04/multiple_entry_form.jpg"><img src="http://www.chapter31.com/wp-content/uploads/2008/04/multiple_entry_form-300x101.jpg" alt="multiple_entry_form" /></a></p>
+<p><a href="/images/uploads/2008/04/multiple_entry_form.jpg"><img src="/images/uploads/2008/04/multiple_entry_form-300x101.jpg" alt="multiple_entry_form" /></a></p>
 
 <p>For the sake of our argument when a user submits this form we transform the data into an array of structures (but it can really be anything you can loop over) so that each bookmark <em>row</em> from the form is an element of the array.</p>
 
-<p><a href="http://www.chapter31.com/wp-content/uploads/2008/04/multi_insert_struct.gif"><img src="http://www.chapter31.com/wp-content/uploads/2008/04/multi_insert_struct.gif" alt="Structure" /></a></p>
+<p><a href="/images/uploads/2008/04/multi_insert_struct.gif"><img src="/images/uploads/2008/04/multi_insert_struct.gif" alt="Structure" /></a></p>
 
 <p>Normally you might INSERT the data with something like the following:</p>
 
@@ -227,11 +227,11 @@
 </span><span class='line'>              <span class="p">,</span> <span class="nx">Description</span>
 </span><span class='line'>          <span class="p">)</span>
 </span><span class='line'>      <span class="nx">VALUES</span>
-</span><span class='line'>          <span class="p">(</span>                        
+</span><span class='line'>          <span class="p">(</span>
 </span><span class='line'>              <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#createUUID()#&quot;</span> <span class="o">/&gt;</span>
 </span><span class='line'>              <span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#aBookmarks[i][&#39;URL&#39;]#&quot;</span> <span class="o">/&gt;</span>
 </span><span class='line'>              <span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#aBookmarks[i][&#39;Title&#39;]#&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'>              <span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#aBookmarks[i][&#39;Description&#39;]#&quot;</span> <span class="o">/&gt;</span>       
+</span><span class='line'>              <span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#aBookmarks[i][&#39;Description&#39;]#&quot;</span> <span class="o">/&gt;</span>
 </span><span class='line'>          <span class="p">)</span>
 </span><span class='line'>  <span class="o">&lt;</span><span class="err">/cfquery&gt;</span>
 </span><span class='line'><span class="o">&lt;</span><span class="err">/cfloop&gt;</span>
@@ -270,12 +270,12 @@
 </span><span class='line'>      <span class="p">)</span>
 </span><span class='line'>  <span class="nx">VALUES</span>
 </span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfloop</span> <span class="nx">from</span><span class="o">=</span><span class="s2">&quot;1&quot;</span> <span class="nx">to</span><span class="o">=</span><span class="s2">&quot;#arrayLen(aBookmarks)#&quot;</span> <span class="nx">index</span><span class="o">=</span><span class="s2">&quot;i&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>          <span class="p">(</span>                        
+</span><span class='line'>          <span class="p">(</span>
 </span><span class='line'>              <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#createUUID()#&quot;</span> <span class="o">/&gt;</span>
 </span><span class='line'>              <span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#aBookmarks[i][&#39;URL&#39;]#&quot;</span> <span class="o">/&gt;</span>
 </span><span class='line'>              <span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#aBookmarks[i][&#39;Title&#39;]#&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'>              <span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#aBookmarks[i][&#39;Description&#39;]#&quot;</span> <span class="o">/&gt;</span>       
-</span><span class='line'>          <span class="p">)</span><span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">i</span> <span class="nx">LT</span> <span class="nx">arrayLen</span><span class="p">(</span><span class="nx">aBookmarks</span><span class="p">)</span><span class="o">&gt;</span><span class="p">,</span><span class="o">&lt;</span><span class="err">/cfif&gt;                </span>
+</span><span class='line'>              <span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#aBookmarks[i][&#39;Description&#39;]#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>          <span class="p">)</span><span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">i</span> <span class="nx">LT</span> <span class="nx">arrayLen</span><span class="p">(</span><span class="nx">aBookmarks</span><span class="p">)</span><span class="o">&gt;</span><span class="p">,</span><span class="o">&lt;</span><span class="err">/cfif&gt;</span>
 </span><span class='line'>      <span class="o">&lt;</span><span class="err">/cfloop&gt;</span>
 </span><span class='line'><span class="o">&lt;</span><span class="err">/cfquery&gt;</span>
 </span></code></pre></td></tr></table></div></figure>
@@ -620,11 +620,11 @@
 
 <p>Without caching the list array (and using a table with 56,000 rows) I got the following times from the entire block of code (including getting the Id list):</p>
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2008/03/cftimer.jpg" alt="cftimer" /></p>
+<p><img src="/images/uploads/2008/03/cftimer.jpg" alt="cftimer" /></p>
 
 <p>When I cached the array in application scope, cftimer was giving me 0ms :)</p>
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2008/03/cftimer_2.jpg" alt="cftimer2" /></p>
+<p><img src="/images/uploads/2008/03/cftimer_2.jpg" alt="cftimer2" /></p>
 
 <p>This was of course on my local machine. Although these results could be more accurate in a proper environment, they do show another solution in retrieving random query results.</p>
 
@@ -745,21 +745,21 @@
 
 <p>Solution 1 - average 4021ms</p>
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2008/03/solution1.jpg" alt="mysql_solution1" /></p>
+<p><img src="/images/uploads/2008/03/solution1.jpg" alt="mysql_solution1" /></p>
 
 <p>Solution 3 - average 32.1ms</p>
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2008/03/solution3.jpg" alt="mysql_solution3" /></p>
+<p><img src="/images/uploads/2008/03/solution3.jpg" alt="mysql_solution3" /></p>
 
 <p>Second with only 150 rows:</p>
 
 <p>Solution 1 - average 13.25ms</p>
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2008/03/solution1_1501.jpg" alt="solution1_150_2" /></p>
+<p><img src="/images/uploads/2008/03/solution1_1501.jpg" alt="solution1_150_2" /></p>
 
 <p>Solution 3 - average 1.55ms</p>
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2008/03/solution3_150.jpg" alt="solution3_150" /></p>
+<p><img src="/images/uploads/2008/03/solution3_150.jpg" alt="solution3_150" /></p>
 
 <p>So when you only want 1 random row returned the best bet by far is solution 3. I ran the same test returning 10 rows and got very similar results for all 4 tests, you just need to watch for the case where the OFFSET is too high (check that #recordCount# - #theOffset# > 10 etc) and that only the &#8216;seed&#8217; row is random.</p>
 

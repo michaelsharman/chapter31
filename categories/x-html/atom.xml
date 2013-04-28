@@ -4,7 +4,7 @@
   <title><![CDATA[Category: (X)HTML | chapter31 &raquo;]]></title>
   <link href="http://chapter31.com/categories/x-html/atom.xml" rel="self"/>
   <link href="http://chapter31.com/"/>
-  <updated>2013-04-28T22:29:57+10:00</updated>
+  <updated>2013-04-28T22:39:59+10:00</updated>
   <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
@@ -33,17 +33,17 @@
 
 <p>My form was very basic:</p>
 
-<p><a href="http://www.chapter31.com/wp-content/uploads/2008/10/form.png"><img src="http://www.chapter31.com/wp-content/uploads/2008/10/form.png" alt="" /></a></p>
+<p><a href="/images/uploads/2008/10/form.png"><img src="/images/uploads/2008/10/form.png" alt="" /></a></p>
 
 <p>If this form is submitted by clicking the submit button ("Go") in all browsers I get the following form struct:</p>
 
-<p><a href="http://www.chapter31.com/wp-content/uploads/2008/10/picture-3.png"><img src="http://www.chapter31.com/wp-content/uploads/2008/10/picture-3.png" alt="" /></a></p>
+<p><a href="/images/uploads/2008/10/picture-3.png"><img src="/images/uploads/2008/10/picture-3.png" alt="" /></a></p>
 
 <p>Notice that I have <em>2 form elements</em> in the form dump, "btnSearch" which is the submit button and "searchCriteria" which is the text box. So far so good, but what happens when I submit the form by hitting the "enter" key (when I have focus in the text box)?</p>
 
 <p>In most browsers you get the same form dump as above...not so with IE where I get the following:</p>
 
-<p><a href="http://www.chapter31.com/wp-content/uploads/2008/10/picture-2.png"><img src="http://www.chapter31.com/wp-content/uploads/2008/10/picture-2.png" alt="" /></a></p>
+<p><a href="/images/uploads/2008/10/picture-2.png"><img src="/images/uploads/2008/10/picture-2.png" alt="" /></a></p>
 
 <p>As you can see, my submit button (btnSearch) <em><strong>does not exist in the form struct!</strong></em>.</p>
 
@@ -150,7 +150,7 @@
 
 <p>A basic tool which you might find useful, but would be better with some additions for customising like adding table id's or th's etc</p>
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2008/07/kotsatsu.png" alt="" /></p>
+<p><img src="/images/uploads/2008/07/kotsatsu.png" alt="" /></p>
 ]]></content>
   </entry>
   
@@ -223,7 +223,7 @@
 
 <p><a href="http://www.dynarch.com/demos/jscalendar/">Click here</a> for the demo page</p>
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2007/03/dynarch.gif" alt="Dynarch" /></p>
+<p><img src="/images/uploads/2007/03/dynarch.gif" alt="Dynarch" /></p>
 ]]></content>
   </entry>
   

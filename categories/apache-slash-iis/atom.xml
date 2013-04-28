@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Apache/IIS | chapter31 &raquo;]]></title>
   <link href="http://chapter31.com/categories/apache-slash-iis/atom.xml" rel="self"/>
   <link href="http://chapter31.com/"/>
-  <updated>2013-04-28T22:29:57+10:00</updated>
+  <updated>2013-04-28T22:39:59+10:00</updated>
   <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
@@ -151,7 +151,7 @@ sudo apt-get install subversion
 
 <p>Just how popular is Apache? Have a look at Netcrafts <a href="http://news.netcraft.com/archives/web_server_survey.html">Web Server Survey</a> to September 2006.</p>
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2006/09/overallc.thumbnail.gif" alt="Netcraft web server survey September 2006" /></p>
+<p><img src="/images/uploads/2006/09/overallc.thumbnail.gif" alt="Netcraft web server survey September 2006" /></p>
 ]]></content>
   </entry>
   

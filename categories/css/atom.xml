@@ -4,7 +4,7 @@
   <title><![CDATA[Category: CSS | chapter31 &raquo;]]></title>
   <link href="http://chapter31.com/categories/css/atom.xml" rel="self"/>
   <link href="http://chapter31.com/"/>
-  <updated>2013-04-28T22:29:57+10:00</updated>
+  <updated>2013-04-28T22:39:59+10:00</updated>
   <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
@@ -24,7 +24,7 @@
 
 <p>Here is a screen grab of an example, certainly not to pick on this particular blog but just one of the few examples I come across on my daily travels thru <a href="http://www.fullasagoog.com/">fullasagoog</a>.</p>
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2007/06/mac.jpg" alt="Fonts on mac" /></p>
+<p><img src="/images/uploads/2007/06/mac.jpg" alt="Fonts on mac" /></p>
 
 <p>Of course I can easily bump up the text size (apple +), but that makes the rest of the page unviewable!</p>
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Railo | chapter31 &raquo;]]></title>
   <link href="http://chapter31.com/categories/railo/atom.xml" rel="self"/>
   <link href="http://chapter31.com/"/>
-  <updated>2013-04-28T22:29:57+10:00</updated>
+  <updated>2013-04-28T22:39:59+10:00</updated>
   <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
@@ -65,7 +65,7 @@
     <id>http://chapter31.com/2011/07/01/farcry-tip-enable-cfcs-in-your-railo-proxypassmatch</id>
     <content type="html"><![CDATA[<p>I ran into an issue today while working on a FarCry project, basically when I opened up the "Related Content" popup from the WYSIWYG editor it was blank. Nothing. Not the usual tabs for Images, File, Flash etc.</p>
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2011/07/relatedcontent.png" alt="" /></p>
+<p><img src="/images/uploads/2011/07/relatedcontent.png" alt="" /></p>
 
 <p>The Railo logs were empty but Apache was throwing a strange error which I hadn't seen before: <em>"Couldn't initialize from remote server, JRun server(s) probably down."</em>. Funny as I'm not even using JRun!</p>
 
@@ -91,7 +91,7 @@
 
 <p>And of course now the related content popup works :)</p>
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2011/07/relatedcontent2.png" alt="" /></p>
+<p><img src="/images/uploads/2011/07/relatedcontent2.png" alt="" /></p>
 ]]></content>
   </entry>
   
@@ -240,12 +240,12 @@
 </ul>
 
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2011/05/farcrytomura_setdns.png" alt="" />
-<img src="http://www.chapter31.com/wp-content/uploads/2011/05/farcrytomura_setmurasiteid.png" alt="" />
-<img src="http://www.chapter31.com/wp-content/uploads/2011/05/farcrytomura_checkfarcry.png" alt="" />
-<img src="http://www.chapter31.com/wp-content/uploads/2011/05/farcrytomura_checkmura.png" alt="" />
-<img src="http://www.chapter31.com/wp-content/uploads/2011/05/farcrytomura_domigration.png" alt="" />
-<img src="http://www.chapter31.com/wp-content/uploads/2011/05/farcrytomura_help.png" alt="" /></p>
+<p><img src="/images/uploads/2011/05/farcrytomura_setdns.png" alt="" />
+<img src="/images/uploads/2011/05/farcrytomura_setmurasiteid.png" alt="" />
+<img src="/images/uploads/2011/05/farcrytomura_checkfarcry.png" alt="" />
+<img src="/images/uploads/2011/05/farcrytomura_checkmura.png" alt="" />
+<img src="/images/uploads/2011/05/farcrytomura_domigration.png" alt="" />
+<img src="/images/uploads/2011/05/farcrytomura_help.png" alt="" /></p>
 ]]></content>
   </entry>
   

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Mac | chapter31 &raquo;]]></title>
   <link href="http://chapter31.com/categories/mac/atom.xml" rel="self"/>
   <link href="http://chapter31.com/"/>
-  <updated>2013-04-28T22:29:57+10:00</updated>
+  <updated>2013-04-28T22:39:59+10:00</updated>
   <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
@@ -51,37 +51,37 @@
 
 <p><code>od -c filename | sed 4q</code></p>
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2012/05/dos2unix_before1.png" alt="" /></p>
+<p><img src="/images/uploads/2012/05/dos2unix_before1.png" alt="" /></p>
 
 <p>You can see the offending <em>\r</em> which was breaking the bash program. The unix tool <em>dos2unix</em> was suggested to clean up the file. Unfortunately this wasn't available on Mac by default. MacPorts to the rescue (I assume homebrew would be a good option as well):</p>
 
 <p><code>bash
-sudo port install dos2unix  
-Password:  
----&gt;  Fetching dos2unix  
----&gt;  Attempting to fetch dos2unix-3.1.tar.gz from http://fresh.t-systems-sfr.com/linux/src/  
----&gt;  Verifying checksum(s) for dos2unix  
----&gt;  Extracting dos2unix  
----&gt;  Configuring dos2unix  
----&gt;  Building dos2unix with target all  
----&gt;  Staging dos2unix into destroot  
----&gt;  Installing dos2unix 3.1_0  
----&gt;  Activating dos2unix 3.1_0  
+sudo port install dos2unix
+Password:
+---&gt;  Fetching dos2unix
+---&gt;  Attempting to fetch dos2unix-3.1.tar.gz from http://fresh.t-systems-sfr.com/linux/src/
+---&gt;  Verifying checksum(s) for dos2unix
+---&gt;  Extracting dos2unix
+---&gt;  Configuring dos2unix
+---&gt;  Building dos2unix with target all
+---&gt;  Staging dos2unix into destroot
+---&gt;  Installing dos2unix 3.1_0
+---&gt;  Activating dos2unix 3.1_0
 ---&gt;  Cleaning dos2unix
 </code></p>
 
 <p>Then run the program to clean up the invalid line feed (on 2 files).</p>
 
 <p><code>bash
-dos2unix -n dirwatcher2 dirwatcher2_2  
-dos2unix: converting file dirwatcher2 to file dirwatcher2_2 in UNIX format ...  
-dos2unix -n processPDF processPDF_2  
+dos2unix -n dirwatcher2 dirwatcher2_2
+dos2unix: converting file dirwatcher2 to file dirwatcher2_2 in UNIX format ...
+dos2unix -n processPDF processPDF_2
 dos2unix: converting file processPDF to file processPDF_2 in UNIX format ...
 </code></p>
 
 <p>Nice! The changes are:</p>
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2012/05/dos2unix_after.png" alt="" /></p>
+<p><img src="/images/uploads/2012/05/dos2unix_after.png" alt="" /></p>
 
 <p>No \r</p>
 
@@ -109,9 +109,9 @@ dos2unix: converting file processPDF to file processPDF_2 in UNIX format ...
 
 <p>Breathe a sigh of relief :)</p>
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2012/03/sys_prefs.jpg" alt="mac system preferences" /></p>
+<p><img src="/images/uploads/2012/03/sys_prefs.jpg" alt="mac system preferences" /></p>
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2012/03/voiceover_off.jpg" alt="Mac voice over off" /></p>
+<p><img src="/images/uploads/2012/03/voiceover_off.jpg" alt="Mac voice over off" /></p>
 ]]></content>
   </entry>
   

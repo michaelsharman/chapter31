@@ -4,7 +4,7 @@
   <title><![CDATA[Category: cfeclipse | chapter31 &raquo;]]></title>
   <link href="http://chapter31.com/categories/cfeclipse/atom.xml" rel="self"/>
   <link href="http://chapter31.com/"/>
-  <updated>2013-04-28T22:29:57+10:00</updated>
+  <updated>2013-04-28T22:39:59+10:00</updated>
   <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
@@ -81,17 +81,17 @@ sudo apt-get install subversion
 
 <p>Normally when writing a function or tag like <cfhttp>, when you hit the space bar and wait a second a little popup appears detailing exactly what you can do with this tag.</p>
 
-<p><a href="http://www.chapter31.com/wp-content/uploads/2008/02/cfhttp_insight.jpg"><img src="http://www.chapter31.com/wp-content/uploads/2008/02/cfhttp_insight.thumbnail.jpg" alt="cfhttp tag insight" /></a></p>
+<p><a href="/images/uploads/2008/02/cfhttp_insight.jpg"><img src="/images/uploads/2008/02/cfhttp_insight.thumbnail.jpg" alt="cfhttp tag insight" /></a></p>
 
 <p>Now this is all lovely except I find that the <em>default time</em> it takes for this to appear (which is 500ms in cfeclipse) is just a little too short for me so that it is more annoying than helpful as it constantly appears when I don't want it to (like after pasting some code it pops up to display all local variables etc).</p>
 
-<p><a href="http://www.chapter31.com/wp-content/uploads/2008/02/taginsight.jpg"><img src="http://www.chapter31.com/wp-content/uploads/2008/02/taginsight.thumbnail.jpg" alt="tag insight" /></a></p>
+<p><a href="/images/uploads/2008/02/taginsight.jpg"><img src="/images/uploads/2008/02/taginsight.thumbnail.jpg" alt="tag insight" /></a></p>
 
 <p>Luckily it's a snap to change these little things :)</p>
 
 <p>Window -> Preferences -> CFEclipse -> Editor</p>
 
-<p><a href="http://www.chapter31.com/wp-content/uploads/2008/02/preferences.jpg"><img src="http://www.chapter31.com/wp-content/uploads/2008/02/preferences.thumbnail.jpg" alt="cfeclipse preferences" /></a></p>
+<p><a href="/images/uploads/2008/02/preferences.jpg"><img src="/images/uploads/2008/02/preferences.thumbnail.jpg" alt="cfeclipse preferences" /></a></p>
 
 <p>Then change the <em>Insight Delay</em> value. I now have 1500 which is working nicely.</p>
 
@@ -112,7 +112,7 @@ sudo apt-get install subversion
 
 <p>I was running an Aptana update yesterday when the network went down. Everything seemed fine until I went to restart Apatana and got the following:</p>
 
-<p><img src="http://www.chapter31.com/wp-content/uploads/2007/08/aptana.jpg" alt="Aptana error" /></p>
+<p><img src="/images/uploads/2007/08/aptana.jpg" alt="Aptana error" /></p>
 
 <p>Damn</p>
 

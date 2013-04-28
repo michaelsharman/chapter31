@@ -4,7 +4,7 @@
   <title><![CDATA[Category: SVN | chapter31 &raquo;]]></title>
   <link href="http://chapter31.com/categories/svn/atom.xml" rel="self"/>
   <link href="http://chapter31.com/"/>
-  <updated>2013-04-28T22:29:57+10:00</updated>
+  <updated>2013-04-28T22:39:59+10:00</updated>
   <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
@@ -155,7 +155,7 @@ sudo apt-get install subversion
 
 <p>Using subclipse (in the Eclipse IDE) you can link a separate svn repository in the middle of your project by adding an <em>svn:externals</em> property. Right click the parent directory you want to import the external repository into and choose "Team -> Set Property"</p>
 
-<p><a href="http://www.chapter31.com/wp-content/uploads/2008/05/cfeclipse-svnproperties.png"><img src="http://www.chapter31.com/wp-content/uploads/2008/05/cfeclipse-svnproperties-281x300.png" alt="" /></a></p>
+<p><a href="/images/uploads/2008/05/cfeclipse-svnproperties.png"><img src="/images/uploads/2008/05/cfeclipse-svnproperties-281x300.png" alt="" /></a></p>
 
 <p>Once you load the properties dialog window you need to add the following into the property field:</p>
 
@@ -169,7 +169,7 @@ sudo apt-get install subversion
 e.g. jquery-validation -r98 https://myhome.com/svn/repos/jquery-validation/trunk
 </code></p>
 
-<p><a href="http://www.chapter31.com/wp-content/uploads/2008/05/screenshot-set-a-svn-property.png"><img src="http://www.chapter31.com/wp-content/uploads/2008/05/screenshot-set-a-svn-property-300x233.png" alt="" /></a></p>
+<p><a href="/images/uploads/2008/05/screenshot-set-a-svn-property.png"><img src="/images/uploads/2008/05/screenshot-set-a-svn-property-300x233.png" alt="" /></a></p>
 
 <p>In the above example a directory called "jquery-validation" will be created with the contents of the repository located at "https://myhome.com/svn/repos/jquery-validation/trunk".</p>
 

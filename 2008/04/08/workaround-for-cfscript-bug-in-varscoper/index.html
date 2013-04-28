@@ -94,7 +94,7 @@
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
 </pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfscript</span><span class="o">&gt;</span>
-</span><span class='line'>          
+</span><span class='line'>
 </span><span class='line'>  <span class="kd">var</span> <span class="nx">column</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>       <span class="c1">//which column the pod is in</span>
 </span><span class='line'>  <span class="kd">var</span> <span class="nx">row</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>      <span class="c1">//which row the pod is on</span>
 </span><span class='line'>  <span class="kd">var</span> <span class="nx">newRow</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
@@ -105,7 +105,7 @@
 
 <p>In the above example Varscoper tells me that &#8220;newRow&#8221; is not var scoped when clearly it is.</p>
 
-<p><a href="http://www.chapter31.com/wp-content/uploads/2008/04/varscoper.jpg"><img src="http://www.chapter31.com/wp-content/uploads/2008/04/varscoper-300x38.jpg" alt="" /></a></p>
+<p><a href="/images/uploads/2008/04/varscoper.jpg"><img src="/images/uploads/2008/04/varscoper-300x38.jpg" alt="" /></a></p>
 
 <p>This is usually fine, but if you start to get a lot of these false positives there is a quick little workaround. Place a semi-colon at the end of the last comment which effectively tells varscoper where the statement finishes and fixes the problem.</p>
 
@@ -117,7 +117,7 @@
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
 </pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfscript</span><span class="o">&gt;</span>
-</span><span class='line'>          
+</span><span class='line'>
 </span><span class='line'>  <span class="kd">var</span> <span class="nx">column</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>       <span class="c1">//which column the pod is in</span>
 </span><span class='line'>  <span class="kd">var</span> <span class="nx">row</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>      <span class="c1">//which row the pod is on;</span>
 </span><span class='line'>  <span class="kd">var</span> <span class="nx">newRow</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
