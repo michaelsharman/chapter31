@@ -1,0 +1,1009 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>My Octopress Blog</title>
+	<meta name="author" content="Your Name">
+
+	
+	<meta name="description" content="When you use WebServices with ColdFusion, the WSDL &#8216;stub&#8217; is cached in CF Administrator (presumably for performance reasons). This can &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">My Octopress Blog</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+	</form>
+</nav>
+
+</header>
+	
+		
+
+	
+	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2008/04/07/flushing-a-cached-web-service/">
+		
+			Flushing a Cached Web Service</a>
+	</h2>
+	<div class="entry-content">
+		<p>When you use WebServices with ColdFusion, the WSDL &#8216;stub&#8217; is cached in CF Administrator (presumably for performance reasons).</p>
+
+<p>This can be a pain when you need to change the WSDL and you don&#8217;t have access to CF Admin to flush the service which is the scenario I found myself in today.</p>
+
+<p>Luckily for me I sit near some ColdFusion peeps who sorted me out with a little Java method (courtesy of the ServiceFactory) to flush a WSDL from a ColdFusion template.</p>
+
+<p>Basically all you need to do is:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">wsdl</span> <span class="o">=</span> <span class="s2">&quot;yourwsdlpath.wsdl&quot;</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfobject</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;java&quot;</span> <span class="nx">action</span><span class="o">=</span><span class="s2">&quot;Create&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;factory&quot;</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;coldfusion.server.ServiceFactory&quot;</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">RpcService</span> <span class="o">=</span> <span class="nx">factory</span><span class="p">.</span><span class="nx">XmlRpcService</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">RpcService</span><span class="p">.</span><span class="nx">refreshWebService</span><span class="p">(</span><span class="nx">wsdl</span><span class="p">)</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I also wrapped it up in a little function:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cffunction</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;flushWebService&quot;</span> <span class="nx">access</span><span class="o">=</span><span class="s2">&quot;public&quot;</span> <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="nx">returnType</span><span class="o">=</span><span class="s2">&quot;void&quot;</span> <span class="nx">hint</span><span class="o">=</span><span class="s2">&quot;Flush a cached WebService in ColdFusion Administrator&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;wsdlURL&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;string&quot;</span> <span class="nx">required</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="k">default</span><span class="o">=</span><span class="s2">&quot;#getWSDLURL()#&quot;</span> <span class="nx">hint</span><span class="o">=</span><span class="s2">&quot;URL of the WSDL to flush&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfscript</span><span class="o">&gt;</span>
+</span><span class='line'>      
+</span><span class='line'>      <span class="kd">var</span> <span class="nx">oFactory</span> <span class="o">=</span> <span class="nx">createObject</span><span class="p">(</span><span class="s2">&quot;java&quot;</span><span class="p">,</span> <span class="s2">&quot;coldfusion.server.ServiceFactory&quot;</span><span class="p">);</span>
+</span><span class='line'>      
+</span><span class='line'>      <span class="nx">oFactory</span><span class="p">.</span><span class="nx">XmlRpcService</span><span class="p">.</span><span class="nx">refreshWebService</span><span class="p">(</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">wsdlURL</span><span class="p">);</span>
+</span><span class='line'>      <span class="k">return</span><span class="p">;</span>
+</span><span class='line'>      
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cfscript&gt;</span>
+</span><span class='line'>      
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cffunction&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Thanks <a href="http://www.lynchconsulting.com.au/blog/">Marko (and Mark)</a></p>
+
+<p>After the fact I did some googling and found a great read from <a href="http://www.dougboude.com/blog/">Doug Boude</a> on <a href="http://www.dougboude.com/blog/1/2006/06/Refreshing-Cached-ColdFusion-Webservices-Through-the-Back-Door.cfm">Refreshing Cached ColdFusion Webservices Through the Back Door</a> in case you&#8217;re interested.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-04-07T16:07:39+10:00" pubdate data-updated="true">Apr 7<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2008/04/03/combining-multiple-insert-statements-with-mysql/">
+		
+			Combining Multiple INSERT Statements With MySQL</a>
+	</h2>
+	<div class="entry-content">
+		<p>As all developers know, one of the most common bottlenecks in a web application is the database. Database optimisation is therefore a huge part of building a streamlined application capable of handling more concurrent users.</p>
+
+<p>Often you might have the need to perform multiple INSERT&#8217;s against a database from a single user form submission.</p>
+
+<p>Let&#8217;s say you had a form allowing a user to add their own web bookmarks (think a simple <a href="http://del.icio.us/">del.icio.us</a>). To make things easier for the user they can add multiple &#8216;bookmarks&#8217; at a time.</p>
+
+<p><a href="http://www.chapter31.com/wp-content/uploads/2008/04/multiple_entry_form.jpg"><img src="http://www.chapter31.com/wp-content/uploads/2008/04/multiple_entry_form-300x101.jpg" alt="multiple_entry_form" /></a></p>
+
+<p>For the sake of our argument when a user submits this form we transform the data into an array of structures (but it can really be anything you can loop over) so that each bookmark <em>row</em> from the form is an element of the array.</p>
+
+<p><a href="http://www.chapter31.com/wp-content/uploads/2008/04/multi_insert_struct.gif"><img src="http://www.chapter31.com/wp-content/uploads/2008/04/multi_insert_struct.gif" alt="Structure" /></a></p>
+
+<p>Normally you might INSERT the data with something like the following:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfloop</span> <span class="nx">from</span><span class="o">=</span><span class="s2">&quot;1&quot;</span> <span class="nx">to</span><span class="o">=</span><span class="s2">&quot;#arrayLen(aBookmarks)#&quot;</span> <span class="nx">index</span><span class="o">=</span><span class="s2">&quot;i&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfquery</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;qAddBookmarks&quot;</span> <span class="nx">datasource</span><span class="o">=</span><span class="s2">&quot;#getDSN()#&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="nx">INSERT</span> <span class="nx">INTO</span> <span class="nx">Bookmarks</span>
+</span><span class='line'>          <span class="p">(</span>
+</span><span class='line'>              <span class="nx">BookmarkId</span>
+</span><span class='line'>              <span class="p">,</span> <span class="nx">URL</span>
+</span><span class='line'>              <span class="p">,</span> <span class="nx">Title</span>
+</span><span class='line'>              <span class="p">,</span> <span class="nx">Description</span>
+</span><span class='line'>          <span class="p">)</span>
+</span><span class='line'>      <span class="nx">VALUES</span>
+</span><span class='line'>          <span class="p">(</span>                        
+</span><span class='line'>              <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#createUUID()#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>              <span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#aBookmarks[i][&#39;URL&#39;]#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>              <span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#aBookmarks[i][&#39;Title&#39;]#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>              <span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#aBookmarks[i][&#39;Description&#39;]#&quot;</span> <span class="o">/&gt;</span>       
+</span><span class='line'>          <span class="p">)</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cfquery&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfloop&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>While this works fine it certainly isn&#8217;t the best option because it sends multiple requests (INSERT&#8217;s) to the database. So if the array count is 4, MySQL will process 4 separate INSERT statements which really isn&#8217;t optimal.</p>
+
+<p>Fortunately MySQL gives you a super cool way of handling these types of <a href="http://dev.mysql.com/doc/refman/5.0/en/insert.html">INSERT</a> situations:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfquery</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;qAddBookmarks&quot;</span> <span class="nx">datasource</span><span class="o">=</span><span class="s2">&quot;#getDSN()#&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="nx">INSERT</span> <span class="nx">INTO</span> <span class="nx">Bookmarks</span>
+</span><span class='line'>      <span class="p">(</span>
+</span><span class='line'>          <span class="nx">BookmarkId</span>
+</span><span class='line'>          <span class="p">,</span> <span class="nx">URL</span>
+</span><span class='line'>          <span class="p">,</span> <span class="nx">Title</span>
+</span><span class='line'>          <span class="p">,</span> <span class="nx">Description</span>
+</span><span class='line'>      <span class="p">)</span>
+</span><span class='line'>  <span class="nx">VALUES</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfloop</span> <span class="nx">from</span><span class="o">=</span><span class="s2">&quot;1&quot;</span> <span class="nx">to</span><span class="o">=</span><span class="s2">&quot;#arrayLen(aBookmarks)#&quot;</span> <span class="nx">index</span><span class="o">=</span><span class="s2">&quot;i&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>          <span class="p">(</span>                        
+</span><span class='line'>              <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#createUUID()#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>              <span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#aBookmarks[i][&#39;URL&#39;]#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>              <span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#aBookmarks[i][&#39;Title&#39;]#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>              <span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#aBookmarks[i][&#39;Description&#39;]#&quot;</span> <span class="o">/&gt;</span>       
+</span><span class='line'>          <span class="p">)</span><span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">i</span> <span class="nx">LT</span> <span class="nx">arrayLen</span><span class="p">(</span><span class="nx">aBookmarks</span><span class="p">)</span><span class="o">&gt;</span><span class="p">,</span><span class="o">&lt;</span><span class="err">/cfif&gt;                </span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="err">/cfloop&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfquery&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It&#8217;s quite simple, we have 1 <cfquery> tag, but we loop over the <em>VALUES</em> part of the DML statement. The best thing about this is that MySQL only processes 1 INSERT statement! That&#8217;s a huge performance increase particularly in a high traffic environment.</p>
+
+<p>The only real thing to note is that each VALUES block must be in parenthesis (as normal) and must be comma separated (except the last block). To handle this we just look to see if we are at the final array index. If not then add a comma.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">i</span> <span class="nx">LT</span> <span class="nx">arrayLen</span><span class="p">(</span><span class="nx">aBookmarks</span><span class="p">)</span><span class="o">&gt;</span><span class="p">,</span><span class="o">&lt;</span><span class="err">/cfif&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The more I use MySQL the more I&#8217;m impressed with it. I&#8217;m not sure if you can do this in other database engines though.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-04-03T23:24:26+11:00" pubdate data-updated="true">Apr 3<span>rd</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/blog/categories/databases/'>Databases</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2008/03/28/evaluating-coldfusion-unscoped-query-variables/">
+		
+			Evaluating (ColdFusion) Unscoped Query Variables</a>
+	</h2>
+	<div class="entry-content">
+		<p>Most developers know that if you reference a variable without a scope prefix (such as variables, form, URL etc) ColdFusion will check <em>each</em> of the available scopes until it finds a variable of the name you are looking for.</p>
+
+<p>The <a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=Variables_32.html">order in which ColdFusion checks</a> is:</p>
+
+<ol>
+<li>Function local (UDFs and CFCs only)</li>
+<li>Thread local (inside threads only)</li>
+<li>Arguments</li>
+<li>Variables (local scope)</li>
+<li>Thread</li>
+<li>CGI</li>
+<li>Cffile</li>
+<li>URL</li>
+<li>Form</li>
+<li>Cookie</li>
+<li>Client</li>
+</ol>
+
+
+<p><em><strong>* Note:</strong> Although the order above came from the Adobe docs I&#8217;m not sure about &#8220;cffile&#8221;. It doesn&#8217;t seem like a scope, more like a return variable much like cfquery. But see below for that</em> :)</p>
+
+<p>Of course this means if you are trying to output #myVar#, and that variable exists in the URL as well as the form scope then #URL.myVar# is what ColdFusion will evaluate. This might not be what you want however, leading to frustrating inconsistencies.</p>
+
+<p>Another downside of not scoping your variables is performance, why make ColdFusion look behind each door (scope) for a variable? Most times you will know exactly where the variable is, so you can improve things by clearly specifying which scope you are using.</p>
+
+<p>But what about query variables either in <cfoutput query=""> or <cfloop query="">?</p>
+
+<p>&#8220;Query&#8221; isn&#8217;t a scope as such but can still be effected by the order of evaluation if you have variable naming conflicts with columns from your query.</p>
+
+<p>How often do you prefix your recordset variables with the query name? I bet most developers out there don&#8217;t prefix their query variables, instead take the easy way out with something like:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfloop</span> <span class="nx">query</span><span class="o">=</span><span class="s2">&quot;myQuery&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="err">#</span><span class="nx">firstName</span><span class="err">#</span>
+</span><span class='line'>  <span class="err">#</span><span class="nx">lastName</span><span class="err">#</span>
+</span><span class='line'>  <span class="err">#</span><span class="nx">email</span><span class="err">#</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfloop&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Most of the time this will be fine, but what if this loop was in a function which also had an argument called &#8220;firstName&#8221;? Enter a naming conflict leading to dirty data.</p>
+
+<p>I came across a similar situation today (because I didn&#8217;t prefix my query variables!) and found that my query was only outputting the value of the argument (which had the same name as one of my query columns), not the actual query value.</p>
+
+<p>Prefixing the variables with the query name of course will fix up any conflicting issues:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfloop</span> <span class="nx">query</span><span class="o">=</span><span class="s2">&quot;myQuery&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="err">#</span><span class="nx">myQuery</span><span class="p">.</span><span class="nx">firstName</span><span class="err">#</span>
+</span><span class='line'>  <span class="err">#</span><span class="nx">myQuery</span><span class="p">.</span><span class="nx">lastName</span><span class="err">#</span>
+</span><span class='line'>  <span class="err">#</span><span class="nx">myQuery</span><span class="p">.</span><span class="nx">email</span><span class="err">#</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfloop&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Although it can be convenient to take advantage of not scoping your variables, it&#8217;s really a &#8220;best practice&#8221; to scope everything unless you have a reason not to.</p>
+
+<p>Don&#8217;t forget the performance (and internal documenting for all developers) benefits which comes as well, although admittedly you would probably only notice any degradation at very high traffic levels. But that&#8217;s what we should be aiming for right? :)</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-03-28T12:29:24+11:00" pubdate data-updated="true">Mar 28<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2008/03/24/installing-php5-with-mysql-extensions/">
+		
+			Installing PHP5 With MySQL Extensions</a>
+	</h2>
+	<div class="entry-content">
+		<p>I&#8217;m generally a ColdFusion programmer but occasionally I need to install PHP for one reason or another, the last couple of times has been to use <a href="http://wordpress.org/">Wordpress</a>.</p>
+
+<p>I remember the last time I did this (maybe 6 months ago) I had problems with connecting to MySQL because <a href="http://www.php.net/manual/en/faq.databases.php#faq.databases.mysql.php5">PHP 5 no longer bundles MySQL client libraries</a> for the following reasons:</p>
+
+<ul>
+<li>Most systems these days already have the client library installed.</li>
+<li>Given the above, having multiple versions of the library can get messy. For example, if you link mod_auth_mysql against one version and PHP against another, and then enable both in Apache, you get a nice fat crash. Also, the bundled library didn&#8217;t always play well with the installed server version. The most obvious symptom of this being disagreement over where to find the mysql.socket Unix domain socket file.</li>
+<li>Maintenance was somewhat lax and it was falling further and further behind the released version.</li>
+<li>Future versions of the library are under the GPL and thus we don&#8217;t have an upgrade path since we cannot bundle a GPL&#8217;ed library in a BSD/Apache-style licensed project. A clean break in PHP 5 seemed like the best option.</li>
+</ul>
+
+
+<p>Ok fine, no problems. There are even some fairly easy to find instructions for Windows users (which I am at home):</p>
+
+<ul>
+<li>Windows users may enable the extension php_mysql.dll inside php.ini</li>
+<li>Also, be sure libmysql.dll is available to the systems PATH.</li>
+</ul>
+
+
+<p>No prob, you can even put libmysql.dll in the C:/windows/ directory which isn&#8217;t a best practice, but is easy!</p>
+
+<p>So I fire up my Wordpress site and get the following error:</p>
+
+<p><em>&#8220;Your PHP installation appears to be missing the MySQL which is required for WordPress.&#8221;</em></p>
+
+<p>A few rounds in Google told me I needed to uncomment some files in php.ini:</p>
+
+<ul>
+<li>extension=php_mysql.dll</li>
+<li>extension=php_mysqli.dll</li>
+</ul>
+
+
+<p>Hmmm&#8230;.I don&#8217;t have those files nor do I have those lines in my php.ini file, that&#8217;s strange.</p>
+
+<p>Ok&#8230;so what was my problem? When installing I didn&#8217;t select any extra &#8216;extensions&#8217; for MySQL. The installer actually makes it nice and simple, so this is just a note for next time I need to do this to be careful and choose the extensions I need when installing.</p>
+
+<p>Luckily you can just run the installer again to change the configuration of your installation, including adding necessary extensions :)</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-03-24T15:59:51+11:00" pubdate data-updated="true">Mar 24<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/php/'>PHP</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2008/03/22/update-for-java-6/">
+		
+			Update for Java 6</a>
+	</h2>
+	<div class="entry-content">
+		<p>Sun have just released Java 6 update 5, looking at the <a href="http://java.sun.com/javase/6/webnotes/ReleaseNotes.html#160_05">release notes</a> it doesn&#8217;t look as though the <a href="http://www.compoundtheory.com/?action=displayPost&amp;ID=270">CFC</a> <a href="http://corfield.org/blog/index.cfm/do/blog.entry/entry/Java_6_and_ColdFusion_8">issues</a> for ColdFusion have been addressed yet, we can only hope though!</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-03-22T15:20:05+11:00" pubdate data-updated="true">Mar 22<span>nd</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2008/03/21/random-database-results-with-coldfusion/">
+		
+			Random Database Results With ColdFusion</a>
+	</h2>
+	<div class="entry-content">
+		<p>Today I was looking at <a href="http://www.chapter31.com/2008/03/21/returning-random-results-with-mysql/">returning random records purely from MySQL</a> but was limited with large tables in getting all random results (not just a random starting seed).</p>
+
+<p>I tried a ColdFusion solution instead.</p>
+
+<p>First get all the primary keys from the table in question and create an array of the values (this works for numeric and non-numeric keys):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfquery</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;qGetPKs&quot;</span> <span class="nx">datasource</span><span class="o">=</span><span class="s2">&quot;dsn&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="nx">SELECT</span>      <span class="nx">Id</span>
+</span><span class='line'>  <span class="nx">FROM</span>        <span class="nx">myTable</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfquery&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">aIds</span> <span class="o">=</span> <span class="nx">listToArray</span><span class="p">(</span><span class="nx">valueList</span><span class="p">(</span><span class="nx">qGetPKs</span><span class="p">.</span><span class="nx">Id</span><span class="p">))</span> <span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Next create a list of random primary keys from our array:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">numberOfRows</span> <span class="o">=</span> <span class="mi">20</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">ids</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfloop</span> <span class="nx">from</span><span class="o">=</span><span class="s2">&quot;1&quot;</span> <span class="nx">to</span><span class="o">=</span><span class="s2">&quot;#numberOfRows#&quot;</span> <span class="nx">index</span><span class="o">=</span><span class="s2">&quot;i&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">ids</span> <span class="o">=</span> <span class="nx">listAppend</span><span class="p">(</span><span class="nx">ids</span><span class="p">,</span> <span class="nx">aIds</span><span class="p">[</span><span class="nx">randRange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nx">arrayLen</span><span class="p">(</span><span class="nx">aIds</span><span class="p">))])</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfloop&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>With smaller tables you may need to do this step a little differently in case the randRange() returns duplicate Ids.</p>
+
+<p>Finally we pass the list of random primary keys to the WHERE clause via cfqueryparam:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfquery</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;q&quot;</span> <span class="nx">datasource</span><span class="o">=</span><span class="s2">&quot;dsn&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="nx">SELECT</span>      <span class="o">*</span>
+</span><span class='line'>  <span class="nx">FROM</span>        <span class="nx">myTable</span>
+</span><span class='line'>  <span class="nx">WHERE</span>       <span class="nx">Id</span> <span class="nx">IN</span><span class="p">(</span><span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">list</span><span class="o">=</span><span class="s2">&quot;true&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#ids#&quot;</span><span class="o">&gt;</span><span class="p">)</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfquery&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Depending on your situation you can cache the array of primary keys (in session or application scope) and refresh the list whenever your database changes. Then generate your random list of Id&#8217;s to pass to a query.</p>
+
+<p>Without caching the list array (and using a table with 56,000 rows) I got the following times from the entire block of code (including getting the Id list):</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2008/03/cftimer.jpg" alt="cftimer" /></p>
+
+<p>When I cached the array in application scope, cftimer was giving me 0ms :)</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2008/03/cftimer_2.jpg" alt="cftimer2" /></p>
+
+<p>This was of course on my local machine. Although these results could be more accurate in a proper environment, they do show another solution in retrieving random query results.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-03-21T14:58:45+11:00" pubdate data-updated="true">Mar 21<span>st</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/blog/categories/databases/'>Databases</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2008/03/21/returning-random-results-with-mysql/">
+		
+			Returning Random Results With MySQL</a>
+	</h2>
+	<div class="entry-content">
+		<p>Selecting random query results is something we often need to do, whether it be a single row or a small record set. You may want to display a random list of &#8220;tips&#8221; or &#8220;facts&#8221;, a random &#8220;user&#8221; or &#8220;related product&#8221; etc.</p>
+
+<p>The simplest and most common solution you find uses the MySQL <a href="http://dev.mysql.com/doc/refman/5.0/en/mathematical-functions.html#function_rand">rand()</a> function (which can be used to create an integer from 0 to 1.0)</p>
+
+<h3>Solution 1</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">SELECT</span>     <span class="p">[...]</span>
+</span><span class='line'><span class="nx">FROM</span>      <span class="nx">Users</span>
+</span><span class='line'><span class="nx">ORDER</span> <span class="nx">BY</span>  <span class="nx">rand</span><span class="p">()</span>
+</span><span class='line'><span class="nx">LIMIT</span>     <span class="mi">1</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will return 1 random record from the &#8216;Users&#8217; table. Sometimes however simplest is not the best, this can often one of those times depending on the table size.</p>
+
+<p>The reason you won&#8217;t want to do this is because once the table grows larger the operation will be very slow as MySQL will have to process ALL the records in the table (performing a full table scan), order them randomly and then return the first row of the ordered result. This is of course quite intensive the larger your table size and really not a recommended practise for anything other than small lookup tables.</p>
+
+<p>Another often used solution (where the primary key is an auto-incrementing integer) is to use 2 queries, the first gets the min() and max() &#8216;ID&#8217; values and the second returns a recordset using a random number (between the min(Id) and max(Id)) in the WHERE clause.</p>
+
+<h3>Solution 2</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">SELECT</span> <span class="nx">min</span><span class="p">(</span><span class="nx">Id</span><span class="p">)</span> <span class="nx">as</span> <span class="nx">minId</span><span class="p">,</span> <span class="nx">max</span><span class="p">(</span><span class="nx">Id</span><span class="p">)</span> <span class="nx">as</span> <span class="nx">maxId</span>
+</span><span class='line'><span class="nx">FROM</span>  <span class="nx">Users</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">SELECT</span>    <span class="o">*</span>
+</span><span class='line'><span class="nx">FROM</span>  <span class="nx">Users</span>
+</span><span class='line'><span class="nx">WHERE</span>     <span class="nx">Id</span> <span class="o">&gt;=</span> <span class="err">#</span><span class="nx">randRange</span><span class="p">(</span><span class="nx">minId</span><span class="p">,</span> <span class="nx">maxId</span><span class="p">)</span><span class="err">#</span>
+</span><span class='line'><span class="nx">LIMIT</span>     <span class="mi">0</span><span class="p">,</span>   <span class="mi">1</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can increase the LIMIT to return more rows, but why might you not use this one? Well it uses 2 queries for a start (you could actually put this in a sub query but this method won&#8217;t work if you want more than 1 result returned), but this mightn&#8217;t be so bad. Another constraint is that it assumes an integer primary key which you <a href="http://www.chapter31.com/2007/01/30/coldfusion-uuids-and-mssql-newid/">may not be using</a>, meaning the randRange() won&#8217;t work. Also what happens if you don&#8217;t have sequential &#8216;Ids&#8217;? You may have deleted some rows for example which could render this solution invalid.</p>
+
+<p>Yet another way is to use the OFFSET argument to the LIMIT clause to get a random starting point to return your results from. First we query to get a random row number, then we query again using that random number as the OFFSET:</p>
+
+<h3>Solution 3</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">SELECT</span> <span class="nx">floor</span><span class="p">(</span><span class="nx">rand</span><span class="p">()</span> <span class="o">*</span> <span class="nx">count</span><span class="p">(</span><span class="o">*</span><span class="p">))</span> <span class="nx">AS</span> <span class="nx">theOffset</span>
+</span><span class='line'><span class="nx">FROM</span>  <span class="nx">Users</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//Then use that random &#39;seed&#39;</span>
+</span><span class='line'><span class="nx">SELECT</span>    <span class="o">*</span>
+</span><span class='line'><span class="nx">FROM</span>  <span class="nx">Users</span>
+</span><span class='line'><span class="nx">LIMIT</span>     <span class="err">#</span><span class="nx">theOffset</span><span class="err">#</span><span class="p">,</span> <span class="mi">1</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This one (again although it has 2 queries) works great, but if you want more than 1 row returned (by increasing the second argument in the LIMIT clause) only the <em>starting point</em> will be random, you will then get the next <em>x</em> rows returned <em>in order</em> which might not be what you are after.</p>
+
+<p>Another issue with this option is if the starting row returned (the OFFSET) from the initial query is too high than the amount of records you want returned, i.e. if there are 1000 records and the OFFSET value is 998 and you want 10 records&#8230;you&#8217;re not going to get 10 records, only 2!</p>
+
+<h2>Benchmarks</h2>
+
+<p>I wanted to see just how these solutions performed using 2 different tables, one with 56,000 rows and one with 150 rows (I&#8217;m only testing with solution 1 and 3):</p>
+
+<p>First with 56,000 rows:</p>
+
+<p>Solution 1 - average 4021ms</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2008/03/solution1.jpg" alt="mysql_solution1" /></p>
+
+<p>Solution 3 - average 32.1ms</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2008/03/solution3.jpg" alt="mysql_solution3" /></p>
+
+<p>Second with only 150 rows:</p>
+
+<p>Solution 1 - average 13.25ms</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2008/03/solution1_1501.jpg" alt="solution1_150_2" /></p>
+
+<p>Solution 3 - average 1.55ms</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2008/03/solution3_150.jpg" alt="solution3_150" /></p>
+
+<p>So when you only want 1 random row returned the best bet by far is solution 3. I ran the same test returning 10 rows and got very similar results for all 4 tests, you just need to watch for the case where the OFFSET is too high (check that #recordCount# - #theOffset# > 10 etc) and that only the &#8216;seed&#8217; row is random.</p>
+
+<p>Of course if you want 10 random rows from a small table (around 150) then solution 1 will perform fine.</p>
+
+<p>There are many other ways to achieve this <a href="http://www.chapter31.com/2008/03/21/random-database-results-with-coldfusion/">particularly when using a server side language like ColdFusion</a> but hopefully this sparks some purely MySQL ideas.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-03-21T14:20:13+11:00" pubdate data-updated="true">Mar 21<span>st</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/databases/'>Databases</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2008/03/17/options-for-accessing-the-coldfusion-8-documentation/">
+		
+			Options for Accessing the ColdFusion 8 Documentation</a>
+	</h2>
+	<div class="entry-content">
+		<p>ColdFusion developers have quite a few options when wanting to access full help documentation for ColdFusion 8 including:</p>
+
+<ul>
+<li><a href="http://livedocs.adobe.com/coldfusion/8/">Livedocs</a></li>
+<li><a href="http://www.cfquickdocs.com/">CFQuickdocs</a></li>
+<li><a href="http://coldfusiondocs.com/app/#/abs/">ColdFusionDocs.com</a></li>
+<li><a href="http://blog.brianflove.com/articles/2008/02/19/cfdocs-on-air">CFDocs on AIR</a></li>
+<li><a href="http://blogs.adobe.com/flexdoc/2007/08/cfml_reference_docs_for_the_ip_1.html">CFML Reference Docs for the iPod</a></li>
+<li><a href="http://www.adobe.com/support/coldfusion/downloads.html#cfdevtools">ColdFusion 8 Help Files for Eclipse</a></li>
+</ul>
+
+
+<p>The &#8216;source&#8217; of all these is the same (Livedocs) so which do you go with? Funnily enough the offical Adobe Livedocs is probably the last one I&#8217;d choose simply because it&#8217;s a little slow :)</p>
+
+<p>CFQuickdocs was one of the first non-adobe help sites that I became aware of (and was for CF7 I believe). It&#8217;s still great and uses Ajax to speed things up but the newer ColdFusionDocs.com is even quicker with a cool Flex interface!</p>
+
+<p>Of course CFDocs on AIR is fantastic (can&#8217;t beat running locally!) unless you&#8217;re working on Linux then you need to wait for Adobe to release AIR for Linux :(</p>
+
+<p>Today I added the <a href="http://livedocs.adobe.com/coldfusion/8/com.adobe.coldfusion_help_8_1.0.1.jar">help docs</a> for Eclipse from the <a href="http://www.adobe.com/support/coldfusion/downloads.html#cfdevtools">cfdevtools page</a>. All you need to do is copy the .jar file into your Flex Builder or Eclipse installation&#8217;s plugins folder then restart Eclipse and you&#8217;re good to go.</p>
+
+<p>This is great to have the ColdFusion docs locally right at your fingertips open in a separate Eclipse window (click &#8220;Help -> Dynamic Help&#8221;). Another reason why Eclipse is the premier IDE for ColdFusion developers.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-03-17T09:46:00+11:00" pubdate data-updated="true">Mar 17<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2008/03/16/vince-bonfanti-and-the-differences-between-bluedragon-versions/">
+		
+			Vince Bonfanti and the Differences Between BlueDragon Versions?</a>
+	</h2>
+	<div class="entry-content">
+		<p>More news on the differences between the commercial and open source offerings for Blue Dragon on <a href="http://blog.newatlanta.com/index.cfm?mode=entry&amp;entry=721992F3-B1B8-4975-8E3A1D3EB33AA435">Vince Bonfanti&#8217;s blog</a> as well as the <a href="http://forums.newatlanta.com/messages.cfm?threadid=B46928CD-9285-40B6-A9661BE30A4E512D">New Atlanta forums</a>;</p>
+
+<p>&#8220;The free open source edition of BlueDragon/J2EE will be fully featured, with only minor differences to remove dependencies on commercial libraries.&#8221;</p>
+
+<p>Vince elaborated more on the NA Product forums:</p>
+
+<blockquote><p>There will be three differences between the commericial and open source editions of BlueDragon/J2EE:</p>
+
+<p>1) The JTurbo JDBC driver for Microsoft SQL Server will not be included with the open source edition. JTurbo is a commercial product of New Atlanta&#8217;s that we are choosing not to release as open source. However, we plan to add support for Microsoft&#8217;s free JDBC driver for SQL Server (http://msdn2.microsoft.com/en-us/data/aa937724.aspx) so there should be no loss of functionality for the open source edition.</p>
+
+<p>2) The CFDOCUMENT implementation is based on commercial libraries from ICEsoft Technologies Inc. (http://www.icesoft.com/) that cannot be included with the open source BD edition. We are investigating whether it will be possible to keep the &#8220;hooks&#8221; for the ICEsoft libraries in the open source BD edition, and then allow customers to purchase the libraries for ICEsoft if they need this feature.</p>
+
+<p>3) The BD admin console contains New Atlanta trademarks and copyrighted material for which we do not wish to relinquish our intellectual property rights (for similar reasons that RedHat removes its trademarks and copyrighted material from Fedora). Therefore, the open source BD edition will not include the existing admin console and will need to be configured by editing the XML configuration file (bluedragon.xml). We expect that one of the first tasks identified by the BD open source steering committee will be the creation of a new admin console (but maybe not, hand-editing configuration files is pretty standard in the open source world). Certainly we&#8217;ll need to provide documentation on how to edit bluedragon.xml.</p>
+
+<p>That&#8217;s it. Those will be the only three differences between the open source and commercial editions of BD/J2EE.</p></blockquote>
+
+<p>That&#8217;s really pretty exciting, especially if cfdocument is really the only &#8216;functional&#8217; tag which won&#8217;t be included but you&#8217;ll still have the option to get a &#8220;plugin&#8221; from a commercial package. Nice.</p>
+
+<p>I really recommend reading <a href="http://blog.newatlanta.com/index.cfm?mode=entry&amp;entry=721992F3-B1B8-4975-8E3A1D3EB33AA435">Vince&#8217;s post</a> where he addresses some of the community feedback from the last week or so.</p>
+
+<p>One thing I really want to see is some good (recent) benchmarks detailing performance of <a href="http://www.newatlanta.com/products/bluedragon/index.cfm">BlueDragon</a> vs <a href="http://www.adobe.com/products/coldfusion/">ColdFusion</a> vs <a href="http://www.railo.ch/">Railo</a> (all with the latest releases of each). I&#8217;ve read in the past that BlueDragon and Railo were at least holding their (in terms of performance) against CF, but with recent releases across the board it would be excellent to get some updated numbers.</p>
+
+<p>Of course with 3+ CF engines out there (well 4 as we&#8217;re not forgetting <a href="http://www.smithproject.org/">Smith</a>!) it may come down to price vs features for each, maybe Adobe will have an edge here particularly if they can leverage features from the rest of their product range into CF Server.</p>
+
+<p>The good thing is that competition is great for the end users and if ColdFusion 8 is the most successful release in its history, you can be sure that Adobe don&#8217;t want any other ColdFusion &#8220;Server&#8221; vendors grabbing a slice of their pie.</p>
+
+<p>One things for sure&#8230;it&#8217;s a great time to be developing in &#8220;ColdFusion&#8221; whatever flavour of server you choose!</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-03-16T15:47:42+11:00" pubdate data-updated="true">Mar 16<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/bluedragon/'>BlueDragon</a>, <a class='category' href='/blog/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2008/03/11/passing-extra-parameters-to-prototype-observer-handlers/">
+		
+			Passing Extra Parameters to Prototype Observer Handlers</a>
+	</h2>
+	<div class="entry-content">
+		<p>Another tip from my <a href="http://www.prototypejs.org/">Prototype</a> travels&#8230;</p>
+
+<p>&#8216;Observers&#8217; let you create a listener for a user event, for example on a form submission you may want to run some client side validation before actually submitting the form.</p>
+
+<p>Of course you can add &#8216;onsubmit()&#8217; in your <form> tag, but isn&#8217;t it much nicer to keep your markup clean of this type of thing?</p>
+
+<p>In your dom:loaded observer you can &#8216;listen&#8217; for a form submission as follows:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;myForm&#39;</span><span class="p">).</span><span class="nx">observe</span><span class="p">(</span><span class="s1">&#39;submit&#39;</span><span class="p">,</span> <span class="nx">validateMyForm</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Whenever a form with and Id of &#8216;myForm&#8217; is submitted the function &#8216;validateMyForm&#8217; will fire and automagically be passed an &#8216;event&#8217; which will essentially be a reference to the form. This is great, but sometimes you may want to pass extra parameters to the function you want to execute which might be localised to the specific user event (the function might be rather generic etc).</p>
+
+<p>T.J. Crowder gave me a great workaround for this situation on the <a href="http://groups.google.com/group/rubyonrails-spinoffs/">Prototype groups</a>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;myForm&#39;</span><span class="p">).</span><span class="nx">observe</span><span class="p">(</span><span class="s1">&#39;submit&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">validateMyForm</span><span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">param1</span><span class="p">,</span> <span class="nx">param2</span><span class="p">);</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note that you need to add an anonymous function here, you can&#8217;t just add the parameters with the normal syntax.</p>
+
+<p>Any extra parameters can of course be strings or variables set outside of the observer (as long as they&#8217;re within the parent function of course).</p>
+
+<p>Thanks T.J.</p>
+
+<p>:)</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-03-11T13:26:12+11:00" pubdate data-updated="true">Mar 11<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/javascript/'>Javascript</a>
+
+
+</div>
+	
+</div></article>
+
+<nav id="pagenavi">
+    
+        <a href="/blog/page/11/" class="prev">Prev</a>
+    
+    
+        <a href="/blog/page/13/" class="next">Next</a>
+    
+    <div class="center"><a href="/blog/archives">Blog Archives</a></div>
+</nav></div>
+	<footer id="footer" class="inner">Copyright &copy; 2013
+
+    Your Name
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,186 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>How to find the size of a directory? - My Octopress Blog</title>
+	<meta name="author" content="Your Name">
+
+	
+	<meta name="description" content="Here is an article from coldfusion cookbook. 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+&lt;cfdirectory directory=&quot;c:\cfusionmx&quot; action=&quot;list&quot &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">My Octopress Blog</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+	</form>
+</nav>
+
+</header>
+	
+		
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">How to Find the Size of a Directory?</h2>
+	<div class="entry-content"><p>Here is an <a href="http://www.coldfusioncookbook.com/entry/79/How-do-I-find-the-size-of-a-directory?">article</a> from <a href="http://www.coldfusioncookbook.com/">coldfusion cookbook</a>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfdirectory</span>
+</span><span class='line'>  <span class="nx">directory</span><span class="o">=</span><span class="s2">&quot;c:\cfusionmx&quot;</span>
+</span><span class='line'>  <span class="nx">action</span><span class="o">=</span><span class="s2">&quot;list&quot;</span>
+</span><span class='line'>  <span class="nx">recurse</span><span class="o">=</span><span class="s2">&quot;true&quot;</span>
+</span><span class='line'>  <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;cfDir&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfquery</span> <span class="nx">dbtype</span><span class="o">=</span><span class="s2">&quot;query&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;dirSize&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>   <span class="nx">select</span> <span class="nx">sum</span><span class="p">(</span><span class="nx">size</span><span class="p">)</span> <span class="nx">as</span> <span class="nx">size</span> <span class="nx">from</span> <span class="nx">cfDir</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfquery&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">sizemb</span><span class="o">=</span><span class="s2">&quot;dirSize.size/1000000&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfoutput</span><span class="o">&gt;</span><span class="err">#</span><span class="nx">numberFormat</span><span class="p">(</span><span class="nx">sizeMB</span><span class="p">,</span><span class="s2">&quot;,.99&quot;</span><span class="p">)</span><span class="err">#</span><span class="o">&lt;</span><span class="err">/cfoutput&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note the &#8216;recurse&#8217; option, this will get the size of the current and all sub-directories. If you only need the size of the current directory, change recurse to false.</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-03-31T12:36:43+11:00" pubdate data-updated="true">Mar 31<span>st</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2013
+
+    Your Name
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,169 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Using Google Mail as your local SMTP server - My Octopress Blog</title>
+	<meta name="author" content="Your Name">
+
+	
+	<meta name="description" content="As a server-side developer you are often sending emails from your web application, whether those emails be for debugging/exception handling or actual &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">My Octopress Blog</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+	</form>
+</nav>
+
+</header>
+	
+		
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">Using Google Mail as Your Local SMTP Server</h2>
+	<div class="entry-content"><p>As a server-side developer you are often sending emails from your web application, whether those emails be for debugging/exception handling or actual application functionality (such as a contact form etc).</p>
+
+<p>Although some developers decide to turn off mail debugging locally (and instead view the errors inline), you pretty much always have the need to send emails from your development environment.</p>
+
+<p>In the past I have either connected to a staging mail server or used a free SMTP server (installed locally on my workstation) like <a href="http://www.mailenable.com/">MailEnable</a>. Well today <a href="http://www.lynchconsulting.com.au/blog/">Marko Tomic</a> let me in on something which is probably already well known! You can setup <a href="http://www.gmail.com/">GMail</a> as an SMTP server in ColdFusion Administrator :)</p>
+
+<p>What this means is you now don&#8217;t have to bother installing your own SMTP server or getting mail details from your systems administrator&#8230;you can just use your very own gmail account! Nice.</p>
+
+<p>Note that I did also google this a bit and found a couple of posts including <a href="http://groups.google.com/group/mach-ii-for-coldfusion/browse_thread/thread/608cdead2943930d">this one</a> suggesting you use TLS (via the Administrator or cfmail attributes), but I needed to use SSL instead. I had no success with TLS.</p>
+
+<p>Also reading <a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=Tags_m-o_01.html">the docs</a> I&#8217;m not sure if this will work pre-CF8, as SSL and TLS were added as attributes in CF8.</p>
+
+<p>Below are some examples of setting this up either in Administrator or in code, note the port number is <strong>not 25</strong> as is the default, instead you must use port 465:</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2007/11/mail.png" alt="ColdFusion Administrator - mail" /></p>
+
+<p>And in CFML:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfmail</span> <span class="nx">to</span><span class="o">=</span><span class="s2">&quot;me@wherever.com&quot;</span> <span class="nx">subject</span><span class="o">=</span><span class="s2">&quot;Read me&quot;</span> <span class="nx">from</span><span class="o">=</span><span class="s2">&quot;you@wherever.com&quot;</span> <span class="nx">server</span><span class="o">=</span><span class="s2">&quot;smtp.gmail.com&quot;</span> <span class="nx">useSSL</span><span class="o">=</span><span class="s2">&quot;true&quot;</span> <span class="nx">username</span><span class="o">=</span><span class="s2">&quot;gmailUsername&quot;</span> <span class="nx">password</span><span class="o">=</span><span class="s2">&quot;gmailPassword&quot;</span> <span class="nx">port</span><span class="o">=</span><span class="s2">&quot;465&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="nx">This</span> <span class="nx">is</span> <span class="nx">a</span> <span class="nx">test</span> <span class="nx">email</span><span class="o">!</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfmail&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The nice thing about doing this in ColdFusion administrator (apart from not having to specify a cfmail server and username/password etc in your code) is that you can verify your connection to the SMTP server.</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-11-13T15:27:59+11:00" pubdate data-updated="true">Nov 13<span>th</span>, 2007</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2013
+
+    Your Name
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,168 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Vince Bonfanti and the differences between BlueDragon versions? - My Octopress Blog</title>
+	<meta name="author" content="Your Name">
+
+	
+	<meta name="description" content="More news on the differences between the commercial and open source offerings for Blue Dragon on Vince Bonfanti&#8217;s blog as well as the New &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">My Octopress Blog</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+	</form>
+</nav>
+
+</header>
+	
+		
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">Vince Bonfanti and the Differences Between BlueDragon Versions?</h2>
+	<div class="entry-content"><p>More news on the differences between the commercial and open source offerings for Blue Dragon on <a href="http://blog.newatlanta.com/index.cfm?mode=entry&amp;entry=721992F3-B1B8-4975-8E3A1D3EB33AA435">Vince Bonfanti&#8217;s blog</a> as well as the <a href="http://forums.newatlanta.com/messages.cfm?threadid=B46928CD-9285-40B6-A9661BE30A4E512D">New Atlanta forums</a>;</p>
+
+<p>&#8220;The free open source edition of BlueDragon/J2EE will be fully featured, with only minor differences to remove dependencies on commercial libraries.&#8221;</p>
+
+<p>Vince elaborated more on the NA Product forums:</p>
+
+<blockquote><p>There will be three differences between the commericial and open source editions of BlueDragon/J2EE:</p>
+
+<p>1) The JTurbo JDBC driver for Microsoft SQL Server will not be included with the open source edition. JTurbo is a commercial product of New Atlanta&#8217;s that we are choosing not to release as open source. However, we plan to add support for Microsoft&#8217;s free JDBC driver for SQL Server (http://msdn2.microsoft.com/en-us/data/aa937724.aspx) so there should be no loss of functionality for the open source edition.</p>
+
+<p>2) The CFDOCUMENT implementation is based on commercial libraries from ICEsoft Technologies Inc. (http://www.icesoft.com/) that cannot be included with the open source BD edition. We are investigating whether it will be possible to keep the &#8220;hooks&#8221; for the ICEsoft libraries in the open source BD edition, and then allow customers to purchase the libraries for ICEsoft if they need this feature.</p>
+
+<p>3) The BD admin console contains New Atlanta trademarks and copyrighted material for which we do not wish to relinquish our intellectual property rights (for similar reasons that RedHat removes its trademarks and copyrighted material from Fedora). Therefore, the open source BD edition will not include the existing admin console and will need to be configured by editing the XML configuration file (bluedragon.xml). We expect that one of the first tasks identified by the BD open source steering committee will be the creation of a new admin console (but maybe not, hand-editing configuration files is pretty standard in the open source world). Certainly we&#8217;ll need to provide documentation on how to edit bluedragon.xml.</p>
+
+<p>That&#8217;s it. Those will be the only three differences between the open source and commercial editions of BD/J2EE.</p></blockquote>
+
+<p>That&#8217;s really pretty exciting, especially if cfdocument is really the only &#8216;functional&#8217; tag which won&#8217;t be included but you&#8217;ll still have the option to get a &#8220;plugin&#8221; from a commercial package. Nice.</p>
+
+<p>I really recommend reading <a href="http://blog.newatlanta.com/index.cfm?mode=entry&amp;entry=721992F3-B1B8-4975-8E3A1D3EB33AA435">Vince&#8217;s post</a> where he addresses some of the community feedback from the last week or so.</p>
+
+<p>One thing I really want to see is some good (recent) benchmarks detailing performance of <a href="http://www.newatlanta.com/products/bluedragon/index.cfm">BlueDragon</a> vs <a href="http://www.adobe.com/products/coldfusion/">ColdFusion</a> vs <a href="http://www.railo.ch/">Railo</a> (all with the latest releases of each). I&#8217;ve read in the past that BlueDragon and Railo were at least holding their (in terms of performance) against CF, but with recent releases across the board it would be excellent to get some updated numbers.</p>
+
+<p>Of course with 3+ CF engines out there (well 4 as we&#8217;re not forgetting <a href="http://www.smithproject.org/">Smith</a>!) it may come down to price vs features for each, maybe Adobe will have an edge here particularly if they can leverage features from the rest of their product range into CF Server.</p>
+
+<p>The good thing is that competition is great for the end users and if ColdFusion 8 is the most successful release in its history, you can be sure that Adobe don&#8217;t want any other ColdFusion &#8220;Server&#8221; vendors grabbing a slice of their pie.</p>
+
+<p>One things for sure&#8230;it&#8217;s a great time to be developing in &#8220;ColdFusion&#8221; whatever flavour of server you choose!</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-03-16T15:47:42+11:00" pubdate data-updated="true">Mar 16<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/bluedragon/'>BlueDragon</a>, <a class='category' href='/blog/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2013
+
+    Your Name
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+
+
+
+
+</body>
+</html>

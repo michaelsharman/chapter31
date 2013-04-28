@@ -1,0 +1,198 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>cfeclipse snippets - My Octopress Blog</title>
+	<meta name="author" content="Your Name">
+
+	
+	<meta name="description" content="The eclipse/cfeclipse combinations makes for a pretty powerfull developing tool for ColdFusion programmers, even those who miss the good old days of &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">My Octopress Blog</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+	</form>
+</nav>
+
+</header>
+	
+		
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">Cfeclipse Snippets</h2>
+	<div class="entry-content"><p>The eclipse/cfeclipse combinations makes for a pretty powerfull developing tool for ColdFusion programmers, even those who miss the good old days of using Homesite!</p>
+
+<p>One of the cool things cfeclipse brought over from Homesite is <a href="http://www.cfeclipse.org/go/documentation/user-docs/snippets">snippets</a>, but cfeclipse has a few extra goodies to make them better than ever :)</p>
+
+<p>Whereas in Homesite you would assign a keyboard shortcut directly to a snippet, cfeclipse has an invoke/trigger key combination which stays the same while allowing you to use ANY key(s) as the actual trigger text for the snippet.</p>
+
+<p>For example I have a cfabort snippet with a trigger text of &#8216;a&#8217;. Now in eclipse 3.2 the invoke/trigger combination is ctrl + j, so if I type the letter &#8216;a&#8217;, then press ctrl + j I get a lovely cfabort tag! Doing things this way allows me to have the same invoke key (ctrl + j) then simply remember my trigger text for each snippet. Nice :)</p>
+
+<p>In common with Homesite is the idea of snippet variables, most handy if your snippet text requires or relies upon a user defined parameter value. An example here is cfinclude where you must specify the &#8216;template&#8217; attribute.</p>
+
+<p>To setup snippet variables you use the $${variable:default} format. My trigger text is &#8216;i&#8217; for cfinclude, so when I invoke the snippet I get asked to enter a parameter value as follows:</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2006/10/snippet.jpg" alt="cfeclipse snippet variable" /></p>
+
+<p>My entire snippet looks like this: <cfinclude template="$${template:.cfm}" />></p>
+
+<p>There are a number of built in snippet variables:</p>
+
+<p>$${DATE}<br/>
+$${MONTH}<br/>
+$${TIME}<br/>
+$${DATETIME}<br/>
+$${DAYOFWEEK}<br/>
+$${CURRENTFILE} - Current file name (just the file)<br/>
+$${CURRENTFOLDER} - Current folder (The path to the containing folder)<br/>
+$${CURRENTPATH} - Current path (full file name)<br/>
+$${CURRENTPRJPATH} - Just the folder<br/>
+$${USERNAME} - Current user<br/>
+$${MONTHNUMBER} - Month as a number<br/>
+$${DAYOFMONTH} - Day of month as a number<br/>
+$${DAYOFWEEKNUMBER} - Day of week (the week starts on Sunday)<br/>
+$${DATETIME24} - DateTime24 - a 24 hour clock version of datetime.<br/>
+$${YEAR} - Current year.<br/>
+$${YEAR2DIGIT} - Current two digit year.</p>
+
+<p>Other than those, you&#8217;re free to name your variables as you wish.</p>
+
+<p>Another SUPER cool feature is the ability to choose a default value from a range. So for my cflocation snippet I have:</p>
+
+<pre><code>&lt;cflocation url="$${url:.cfm}" addToken="$${addToken:false|true}" /&gt;
+</code></pre>
+
+<p>Note the use of the pipe (|). There is even more than this on the cfeclipse.org site so take a peek. Some of the snippets I use are:</p>
+
+<p>cfabort<br/>
+cfcomment<br/>
+cfdump<br/>
+cfinclude<br/>
+cflocation<br/>
+cfoutput<br/>
+cfquery<br/>
+cfscript<br/>
+html comment (used with xml files)</p>
+
+<p>I also use tonnes of snippets for HTML, (strong, em etc). Using snippets is easy to learn and saves you a LOT of time when you&#8217;re used to invoking them with ease!</p>
+
+<p><a href="http://www.chapter31.com/cfeclipse-snippets/">Have a look here</a> for a complete list of my snippets, you can also download them for easy use</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-10-22T11:13:47+10:00" pubdate data-updated="true">Oct 22<span>nd</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2013
+
+    Your Name
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+
+
+
+
+</body>
+</html>

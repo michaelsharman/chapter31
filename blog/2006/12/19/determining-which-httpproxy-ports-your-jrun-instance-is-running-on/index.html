@@ -1,0 +1,192 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Determining which http/proxy ports your JRun instance is running on - My Octopress Blog</title>
+	<meta name="author" content="Your Name">
+
+	
+	<meta name="description" content="At Daemon we often run ColdFusion in multi-server mode (on top of JRun) which enables us to cleanly separate projects which require different server &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">My Octopress Blog</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+	</form>
+</nav>
+
+</header>
+	
+		
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">Determining Which Http/proxy Ports Your JRun Instance Is Running On</h2>
+	<div class="entry-content"><p>At Daemon we often run ColdFusion in multi-server mode (on top of JRun) which enables us to cleanly separate projects which require different server settings from one another.</p>
+
+<p>Typically I have a ColdFusion instance per <a href="http://www.farcrycms.org/">Farcry</a> version, at the moment that would be:</p>
+
+<ul>
+<li>p300 (v3)</li>
+<li>gonzales (v4)</li>
+</ul>
+
+
+<p>When ColdFusion first installs in multi-server mode you get the default &#8216;cfusion&#8217; instance, but you also get the &#8216;admin&#8217; JRun instance which is really only used when you need to access the JRun Management Console&#8230;not very often for most people!</p>
+
+<p>That being the case I often switch it off (in Control Panel/Administrative Tools/Services) and set its start option to manual, i.e. I&#8217;ll start it if I want to use it because I don&#8217;t want it taking up any system resources when I don&#8217;t specifically need it :)</p>
+
+<p><em>Sometimes</em> this is a pain when you need to double check the http and/or proxy port of a particular ColdFusion instance, usually when I need to access ColdFusion administrator or when I&#8217;m setting a bootstrap in my apache config.</p>
+
+<p>To save me starting the &#8216;admin&#8217; JRun instance purely to see the proxy port value, I can open up the jrun.xml file in my server-inf directory and look for the <port> setting under ProxyService.</p>
+
+<p>For me this is located in C:\JRun4\servers\cfusion_gonzales\SERVER-INF</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;!-- ================================================================== --&gt;
+</span><span class='line'>&lt;!-- This is the built-in JRun Web Server --&gt;
+</span><span class='line'>&lt;!-- ================================================================== --&gt;
+</span><span class='line'>&lt;attribute name="port"&gt;8301&lt;/attribute&gt;&lt;/code&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;!-- ========================================================================= --&gt;
+</span><span class='line'>&lt;!-- This service is for communicating with a native (IIS, Apache, Netscape) --&gt;
+</span><span class='line'>&lt;!-- web server. --&gt;
+</span><span class='line'>&lt;!-- To run this service in a secure mode via SSL, set the keyStore, --&gt;
+</span><span class='line'>&lt;!-- keyStorePassWord, trustStore and socketFactoryName attributes. --&gt;
+</span><span class='line'>&lt;!-- ========================================================================= --&gt;
+</span><span class='line'>&lt;attribute name="port"&gt;51000&lt;/attribute&gt;&lt;/code&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Believe it or not this is actually easier for me than starting (and then stopping) my admin JRun instance! Now you can just add this to your folder of explorer shortcuts.</p>
+
+<p>Ah it&#8217;s the little things&#8230;</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-12-19T16:00:51+11:00" pubdate data-updated="true">Dec 19<span>th</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2013
+
+    Your Name
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+
+
+
+
+</body>
+</html>

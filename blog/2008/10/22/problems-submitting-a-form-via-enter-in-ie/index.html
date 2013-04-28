@@ -1,0 +1,258 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Problems submitting a form via 'enter' in IE - My Octopress Blog</title>
+	<meta name="author" content="Your Name">
+
+	
+	<meta name="description" content="Like many things, handling form submissions with ColdFusion can be done many many ways. A preferred method which I&#8217;ve been using for years now &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">My Octopress Blog</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+	</form>
+</nav>
+
+</header>
+	
+		
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">Problems Submitting a Form via 'Enter' in IE</h2>
+	<div class="entry-content"><p>Like many things, handling form submissions with <a href="http://www.adobe.com/products/coldfusion/">ColdFusion</a> can be done many many ways. A preferred method which I&#8217;ve been using for years now is looking for a specific element in the form struct. Something like:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">structKeyExists</span><span class="p">(</span><span class="nx">form</span><span class="p">,</span> <span class="s2">&quot;myelement&quot;</span><span class="p">)</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="c">&lt;!--</span><span class="o">-</span> <span class="nx">handle</span> <span class="nx">form</span> <span class="nx">submission</span> <span class="nx">here</span> <span class="o">---&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfif&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Most times I use a hidden field as the form element to look for (in my <a href="http://www.cfquickdocs.com/#StructKeyExists">structKeyExists()</a>), but I came across something funny today where I happened to be looking for the <em>name</em> of a submit button.</p>
+
+<p>My form was very basic:</p>
+
+<p><a href="http://www.chapter31.com/wp-content/uploads/2008/10/form.png"><img src="http://www.chapter31.com/wp-content/uploads/2008/10/form.png" alt="" /></a></p>
+
+<p>If this form is submitted by clicking the submit button (&#8220;Go&#8221;) in all browsers I get the following form struct:</p>
+
+<p><a href="http://www.chapter31.com/wp-content/uploads/2008/10/picture-3.png"><img src="http://www.chapter31.com/wp-content/uploads/2008/10/picture-3.png" alt="" /></a></p>
+
+<p>Notice that I have <em>2 form elements</em> in the form dump, &#8220;btnSearch&#8221; which is the submit button and &#8220;searchCriteria&#8221; which is the text box. So far so good, but what happens when I submit the form by hitting the &#8220;enter&#8221; key (when I have focus in the text box)?</p>
+
+<p>In most browsers you get the same form dump as above&#8230;not so with IE where I get the following:</p>
+
+<p><a href="http://www.chapter31.com/wp-content/uploads/2008/10/picture-2.png"><img src="http://www.chapter31.com/wp-content/uploads/2008/10/picture-2.png" alt="" /></a></p>
+
+<p>As you can see, my submit button (btnSearch) <em><strong>does not exist in the form struct!</strong></em>.</p>
+
+<p>The submit button HTML was:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;submit&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;btnSearch&quot;</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;btnSearch&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;Go&quot;</span> <span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>After discussions with <a href="http://www.lynchconsulting.com.au/blog/">Mark Lynch</a> and some testing it appears that this only happens when you have <em>a single text element</em> on the page. If you have 2 or more textboxes then the form submit button appears in the form struct as expected</p>
+
+<p>For those asking whether it&#8217;s really important, after all how often will you have a form with a single text box. Ever used a search form? :)</p>
+
+<p>The easy way around this <em>bug</em> is to never look for a submit button, instead look for a hidden field or a text box.</p>
+
+<p>For those who sometimes use 2 submit buttons on the same page and take action depending on which one was clicked&#8230;the same thing happens i.e. neither submit button exists in the form struct (in IE) if you hit &#8220;enter&#8221;. In Firefox the submit button which appears first in the form markup exists in the form!</p>
+
+<p>All in all I&#8217;d recommend never using the name of a submit button to determine the action of a form submission. The only exception is if you have multiple submit buttons and you understand and are happy with the default action in IE (the first submit button existing etc).</p>
+
+<p>Some might say you could have a 2nd textbox on the form and hide it using CSS. While this would work it just feels wrong and a bit of a hack.</p>
+
+<p>If you&#8217;re curious, here&#8217;s a small compatibility table of my findings on Mac OSX (except IE of course which was on Windows XP):</p>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th> Browser </th>
+<th> Submit exists on enter </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td> Firefox 3.0.3 </td>
+<td> Yes</td>
+</tr>
+<tr>
+<td></td>
+<td> </td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td> Internet Explorer 7 (7.0.5730.13) </td>
+<td> No</td>
+</tr>
+<tr>
+<td></td>
+<td> </td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td> Internet Explorer 6 SP2 (6.0.2900.2180) </td>
+<td> No</td>
+</tr>
+<tr>
+<td></td>
+<td> </td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td> Opera 9.52/9.61 </td>
+<td> Yes</td>
+</tr>
+<tr>
+<td></td>
+<td> </td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td> Safari 3.1.2 </td>
+<td> Yes</td>
+</tr>
+<tr>
+<td></td>
+<td> </td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td> Camino 1.6.4 </td>
+<td> Yes</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-10-22T13:35:25+11:00" pubdate data-updated="true">Oct 22<span>nd</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/x-html/'>(X)HTML</a>
+
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2013
+
+    Your Name
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+
+
+
+
+</body>
+</html>

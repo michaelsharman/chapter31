@@ -1,0 +1,191 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Coding standards, do you use them? - My Octopress Blog</title>
+	<meta name="author" content="Your Name">
+
+	
+	<meta name="description" content="Reading a blog entry this morning got me thinking. Essentially the author had experienced problems (after installing the latest ColdFusion hotfix) &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">My Octopress Blog</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+	</form>
+</nav>
+
+</header>
+	
+		
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">Coding Standards, Do You Use Them?</h2>
+	<div class="entry-content"><p>Reading a <a href="http://www.mkville.com/blog/index.cfm/2008/7/16/Custom-Tag-and-CFC-Case-Issue-Followup-and-Workaround">blog entry</a> this morning got me thinking. Essentially the author had experienced problems (after installing the latest ColdFusion hotfix) with case sensitivity on a Linux server. Two of the issues where based around calling custom tags and createObject(), where the actual filename was in a different &#8220;case&#8221; to the code calling the tag or instansiating the object.</p>
+
+<p>Why did this get me thinking? Coding standards.</p>
+
+<p>What standards do you use when developing? The kind of standards which dictate the naming of methods, variables and filenames. Do you name your variables and functions <em>semantically?</em></p>
+
+<p>For instance to return information about a product do you call a method like <em>getProduct()</em> or <em>getProductById()</em> or do you use something like <em>prod()</em> (I&#8217;m hoping for the former as the latter really isn&#8217;t that descriptive).</p>
+
+<p>How about variables? ColdFusion can be a funny beast with its scoping, particularly inside component methods where local variables are actually global (in the <em>variables</em> scope) to the cfc unless you <em>var</em> scope them. This being the case a lot of people have <a href="http://www.chapter31.com/2007/06/14/using-variablesinstance-inside-your-components/">global cfc variables inside a struct</a>, often called something like variables.instance. This enables you to easily distinguish calls to global variables (like <em>variables.instance.dsn</em>) and local variables (like using <em>i</em> as a loop counter).</p>
+
+<p>What about the actual variable name? Do you use prefixes depending on the &#8220;type&#8221; of variable? Something like:</p>
+
+<ul>
+<li>a for arrays - aEmployees</li>
+<li>i for integers - iEmployeeCount</li>
+<li>o for objects - oEmployee</li>
+<li>q for queries - qEmployees</li>
+<li>st for structs - stEmployees</li>
+</ul>
+
+
+<p>How about filenames (the original topic which got me thinking)? Do you have a standard for the naming of files? You should. You might develop on Windows but is your production environment on Linux (which is usually case sensitive)? Will it ever be ported to Linux? Are you writing code which may be released as a commercial or open source offering so you really don&#8217;t know where the code will end up?</p>
+
+<p>An often used standard (at least in my experience) is thus:</p>
+
+<p>ColdFusion components use camel case;</p>
+
+<ul>
+<li>Product.cfc</li>
+<li>ProductService.cfc</li>
+</ul>
+
+
+<p>All other .cfm templates (including custom tags) use headless (mixed) camel case;</p>
+
+<ul>
+<li>displayProduct.cfm</li>
+<li>inc_Header.cfm</li>
+</ul>
+
+
+<p>Some people might totally disagree with the examples I&#8217;ve listed (perhaps their standard is that all filenames are lowercase to prevent any possible mixups with case sensitivity), however the point is that there is really no excuse for not using coding standards, whatever they may be.</p>
+
+<p>The important thing is that your entire development team follow a single agreed upon standard. This will prevent the completely unnecessary headache of your code breaking if/when you test your code in a different environment such as Linux.</p>
+
+<p>It also (imho) makes your codebase infinitely more readable as you already have expectations about naming conventions etc.</p>
+
+<p>There are of course many other topics to be discussed around coding standards, from database table names to commenting (or not!) or code. What standards do you use in your organisation?</p>
+
+<p>Some <a href="http://livedocs.adobe.com/wtg/public/coding_standards/contents.html">further reading</a> which is quite old but still relevant.</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-07-18T08:52:08+10:00" pubdate data-updated="true">Jul 18<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2013
+
+    Your Name
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+
+
+
+
+</body>
+</html>

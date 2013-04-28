@@ -1,0 +1,1185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[My Octopress Blog]]></title>
+  <link href="http://michaelsharman.github.io/chapter31/atom.xml" rel="self"/>
+  <link href="http://michaelsharman.github.io/chapter31/"/>
+  <updated>2013-04-28T21:52:25+10:00</updated>
+  <id>http://michaelsharman.github.io/chapter31/</id>
+  <author>
+    <name><![CDATA[Your Name]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Managing pathnames on OSX]]></title>
+    <link href="http://michaelsharman.github.io/chapter31/blog/2013/03/31/managing-pathnames-on-osx/"/>
+    <updated>2013-03-31T20:37:00+11:00</updated>
+    <id>http://michaelsharman.github.io/chapter31/blog/2013/03/31/managing-pathnames-on-osx</id>
+    <content type="html"><![CDATA[<p>You can set environment variables on your Mac in several different ways.</p>
+
+<p>If you want to set a PATH variable just for the current user, you can edit your ~/.bash_profile file. Eg</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>export PATH=/usr/local/share/python:$PATH"</span></code></pre></td></tr></table></div></figure>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Adding a global ignore file for git]]></title>
+    <link href="http://michaelsharman.github.io/chapter31/blog/2013/01/21/adding-a-global-ignore-file-for-git/"/>
+    <updated>2013-01-21T23:02:46+11:00</updated>
+    <id>http://michaelsharman.github.io/chapter31/blog/2013/01/21/adding-a-global-ignore-file-for-git</id>
+    <content type="html"><![CDATA[<p>Quick setup of ignore files for Git. You can of course set these up per repo, but that gets a little old. Instead you can setup a single ignore file and link to it so that every repo refers to it.</p>
+
+<p>For example, create a git ignore file in your home directory:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>~/.gitignore_global</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Fill it with regular files that you want to ignore:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#.gitignore</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Railo files #</span>
+</span><span class='line'><span class="c">######################</span>
+</span><span class='line'>WEB-INF/
+</span><span class='line'>
+</span><span class='line'><span class="c"># Sublime files #</span>
+</span><span class='line'><span class="c">######################</span>
+</span><span class='line'>*.sublime-project
+</span><span class='line'>*.sublime-workspace
+</span><span class='line'>
+</span><span class='line'><span class="c"># Misc files #</span>
+</span><span class='line'><span class="c">######################</span>
+</span><span class='line'>*.yml
+</span><span class='line'>*.buildpath
+</span><span class='line'>*.settings
+</span><span class='line'>*.cache
+</span><span class='line'>
+</span><span class='line'><span class="c"># OS generated files #</span>
+</span><span class='line'><span class="c">######################</span>
+</span><span class='line'>.DS_Store
+</span><span class='line'>ehthumbs.db
+</span><span class='line'>Icon?
+</span><span class='line'>Thumbs.db
+</span><span class='line'>.project
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Edit your main git config file (~/.gitconfig) and add a reference to this new global ignore file:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>user<span class="o">]</span>
+</span><span class='line'>        <span class="nv">name</span> <span class="o">=</span> xxxx xxxx
+</span><span class='line'>        <span class="nv">email</span> <span class="o">=</span> joe@xxx.com
+</span><span class='line'>
+</span><span class='line'><span class="o">[</span>core<span class="o">]</span>
+</span><span class='line'>        <span class="nv">excludesfile</span> <span class="o">=</span> /Users/computername/.gitignore_global
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Or you can run the following command:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>git config --global core.excludesfile ~/.gitignore_global
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now all your git projects will share the same ignore file :)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Showing hidden files in Finder on mac osx]]></title>
+    <link href="http://michaelsharman.github.io/chapter31/blog/2013/01/21/showing-hidden-files-in-finder-on-mac-osx/"/>
+    <updated>2013-01-21T22:37:37+11:00</updated>
+    <id>http://michaelsharman.github.io/chapter31/blog/2013/01/21/showing-hidden-files-in-finder-on-mac-osx</id>
+    <content type="html"><![CDATA[<p>Short and sweet, MAC OSX has this annoying trait where hidden files (dotfiles) are not visible by default in Finder. No probs, I&#8217;ll just go to the &#8220;View&#8221; menu and turn them on. Nope&#8230;nada, zip.</p>
+
+<p>Turns out you have to enter a command in the terminal, nice. Here it is for future reference:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>defaults write com.apple.finder AppleShowAllFiles TRUE</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then kill Finder to have the changes take effect.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>killall Finder</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you ever want to turn hidden files off?</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>defaults write com.apple.finder AppleShowAllFiles FALSE</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Downloading youtube videos]]></title>
+    <link href="http://michaelsharman.github.io/chapter31/blog/2013/01/01/downloading-youtube-videos/"/>
+    <updated>2013-01-01T13:48:27+11:00</updated>
+    <id>http://michaelsharman.github.io/chapter31/blog/2013/01/01/downloading-youtube-videos</id>
+    <content type="html"><![CDATA[<p>I wanted to grab some youtube videos for the kids and found this cool <a href="http://rg3.github.com/youtube-dl/">CLI utility called youtube-dl</a> to handle it. I downloaded it from the website (you may need to chmod 755):</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>wget https://github.com/downloads/rg3/youtube-dl/youtube-dl -O /usr/local/bin/youtube-dl</span></code></pre></td></tr></table></div></figure>
+
+
+<p>However you can get it via brew if you want:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>brew install youtube-dl</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The basic process is the following:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>youtube-dl [video URL]</span></code></pre></td></tr></table></div></figure>
+
+
+<p>By default that should download the highest quality format available (in case you didn&#8217;t know, youtube usually has multiple versions of a file for different qualities etc). If you want to see what formats are available, try:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>youtube-dl -F [URL]</span></code></pre></td></tr></table></div></figure>
+
+
+<p>For example:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>youtube-dl -F http://www.youtube.com/watch?v<span class="o">=</span>iThX9rbOqXY
+</span><span class='line'><span class="o">[</span>youtube<span class="o">]</span> Setting language
+</span><span class='line'><span class="o">[</span>youtube<span class="o">]</span> iThX9rbOqXY: Downloading video webpage
+</span><span class='line'><span class="o">[</span>youtube<span class="o">]</span> iThX9rbOqXY: Downloading video info webpage
+</span><span class='line'><span class="o">[</span>youtube<span class="o">]</span> iThX9rbOqXY: Extracting video information
+</span><span class='line'>Available formats:
+</span><span class='line'>34 : flv <span class="o">[</span>360x640<span class="o">]</span>
+</span><span class='line'>18 : mp4 <span class="o">[</span>360x640<span class="o">]</span>
+</span><span class='line'>43 : webm <span class="o">[</span>360x640<span class="o">]</span>
+</span><span class='line'>5 : flv <span class="o">[</span>240x400<span class="o">]</span>
+</span><span class='line'>17 : mp4 <span class="o">[</span>144x176<span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then you can select whichever you want to download by choosing the number next to the format you want:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>youtube-dl -f <span class="o">[</span>format number<span class="o">]</span> <span class="o">[</span>URL<span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So if I wanted the highest quality mp4 available in the example above I&#8217;d  type (note the number corresponds to the video I want) the following, note the lowercase f:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>youtube-dl -f 18 http://www.youtube.com/watch?v<span class="o">=</span>iThX9rbOqXY
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can also pass in a file containing a list of URLs (one on ea to handle batch downloading:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>youtube-dl -a urls.txt
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you want to rename the file as you download it (by default it&#8217;s the filename on youtube which isn&#8217;t really that useful):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>youtube-dl -f 18 -o <span class="s2">&quot;myfilename.mp4&quot;</span> <span class="o">[</span>URL<span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can do other cool things like extracting the audio only (and choosing which audio format you want). There are also <a href="http://rg3.github.com/youtube-dl/documentation.html#d4">LOTS of sites</a> that are supported&#8230;not just youtube.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[JSON undefined issues on IE8 and IE9]]></title>
+    <link href="http://michaelsharman.github.io/chapter31/blog/2012/11/21/json-undefined-issues-on-ie8-and-ie9/"/>
+    <updated>2012-11-21T16:48:57+11:00</updated>
+    <id>http://michaelsharman.github.io/chapter31/blog/2012/11/21/json-undefined-issues-on-ie8-and-ie9</id>
+    <content type="html"><![CDATA[<p>I had some issues today while testing in IE, where &#8220;JSON&#8221; was undefined. This was happening in IE8 and IE9, which is strange because the JSON functions are in those IE versions. The problem was IE&#8217;s compatibility view, which triggers rendering in sort-of-IE7 mode. Classy. This was making JSON undefined ;(</p>
+
+<p>The usual fix for this is to add a meta tag to force IE to use &#8220;edge&#8221; (or a specific version if you like):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">&quot;X-UA-Compatible&quot;</span> <span class="na">content=</span><span class="s">&quot;IE=edge&quot;</span><span class="nt">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>However we&#8217;ve had problems with this in the past where it doesn&#8217;t always seem to work, especially on corporate networks and intranets. We now use an Apache header (and not use the meta tag at all) to achieve IE=edge. Here&#8217;s the Apache header (to go in your .htaccess, note that you need mod_headers enabled for this to work):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'>Header set X-UA-Compatible &quot;IE=edge&quot;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Update</h3>
+
+<p>You can use the Apache header above, combined with a check to only send the header for Internet Explorer</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'>BrowserMatch MSIE ie
+</span><span class='line'>Header set X-UA-Compatible &quot;IE=edge,chrome=1&quot; env=ie
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To be safe, if you can&#8217;t use the Apache header above (which we found to always work as opposed to the meta tag) you might want to load <a href="https://github.com/douglascrockford/JSON-js/blob/master/json2.js">json2.js</a> for IE8 and 9 because you can&#8217;t control if a user is in compatibility view. If they are, then JSON will be undefined. The cool thing about json2 is that if it detects that JSON is defined alread, it won&#8217;t do anything at all. But it&#8217;s there if the older browsers need it (IE7) or you somehow have visitors in compatibility view.</p>
+
+<p>You can also load json2.js from a CDN:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'>http://cdnjs.cloudflare.com/ajax/libs/json2/20110223/json2.js
+</span><span class='line'>or minified
+</span><span class='line'>http://cdnjs.cloudflare.com/ajax/libs/json2/20110223/json2.min.js
+</span><span class='line'>
+</span><span class='line'>or
+</span><span class='line'>
+</span><span class='line'>http://ajax.cdnjs.com/ajax/libs/json2/20110223/json2.js
+</span><span class='line'>or minified
+</span><span class='line'>http://ajax.cdnjs.com/ajax/libs/json2/20110223/json2.min.js
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Generating a powerset in ColdFusion]]></title>
+    <link href="http://michaelsharman.github.io/chapter31/blog/2012/10/04/generating-a-powerset-in-coldfusion/"/>
+    <updated>2012-10-04T21:20:46+10:00</updated>
+    <id>http://michaelsharman.github.io/chapter31/blog/2012/10/04/generating-a-powerset-in-coldfusion</id>
+    <content type="html"><![CDATA[<p>I recently needed to generate a <a href="http://en.wikipedia.org/wiki/Power_set">powerset</a> (a set of all subsets) of 3 HTML select boxes. The idea was that a user could choose 1-many options from each box, and they had to choose a value from all 3 boxes (none could be empty).</p>
+
+<p>Select #1 had 4 values<br/>
+Select #2 had 7 values<br/>
+Select #3 had 13 values</p>
+
+<p>Now, I needed to generate every possible permutation for these 3 select boxes based on the rules I defined above. That meant the possible number of combinations for each box was:</p>
+
+<p>Select #1 had 16<em> possible combinations<br/>
+Select #2 had 128</em> possible combinations<br/>
+Select #3 had 8192* possible combinations</p>
+
+<p>* It was actually 1 less than that, because a powerset take into consideration an empty selection, so in reality the numbers would have been 15, 127 and 8191.</p>
+
+<p>This was calculated using 2n, where <em>n</em> is an number (integer) of options in a set, so 24, 27 and 213</p>
+
+<p>Now, how did I go about calculating these powersets? I cheated :smile:</p>
+
+<p>I grabbed a JavaScript function from <a href="http://rosettacode.org/wiki/Power_set#JavaScript">Rosetta Code</a> and ported it to ColdFusion.</p>
+
+<p>Here is the function to generate a powerset from a set (array) of data:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kr">public</span> <span class="nx">array</span> <span class="kd">function</span> <span class="nx">calculate</span><span class="p">(</span><span class="nx">required</span> <span class="nx">array</span> <span class="nx">data</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">ps</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">];</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">d</span> <span class="o">=</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">data</span><span class="p">;</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">lenData</span> <span class="o">=</span> <span class="nx">arrayLen</span><span class="p">(</span><span class="nx">d</span><span class="p">);</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">lenPS</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="nx">LTE</span> <span class="nx">lenData</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>    <span class="nx">lenPS</span> <span class="o">=</span> <span class="nx">arrayLen</span><span class="p">(</span><span class="nx">ps</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">j</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">j</span> <span class="nx">LTE</span> <span class="nx">lenPS</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>      <span class="nx">arrayAppend</span><span class="p">(</span><span class="nx">ps</span><span class="p">,</span> <span class="nx">listAppend</span><span class="p">(</span><span class="nx">ps</span><span class="p">[</span><span class="nx">j</span><span class="p">],</span> <span class="nx">d</span><span class="p">[</span><span class="nx">i</span><span class="p">]));</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">return</span> <span class="nx">ps</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A sample powerset of 4 values (in this case 1,2,3,4) would be:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">Powerset</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Powerset</span><span class="p">();</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">res</span> <span class="o">=</span> <span class="nx">Powerset</span><span class="p">.</span><span class="nx">calculate</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]);</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">Outputs</span><span class="o">:</span>
+</span><span class='line'><span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="s2">&quot;1&quot;</span><span class="p">,</span><span class="s2">&quot;2&quot;</span><span class="p">,</span><span class="s2">&quot;1,2&quot;</span><span class="p">,</span><span class="s2">&quot;3&quot;</span><span class="p">,</span><span class="s2">&quot;1,3&quot;</span><span class="p">,</span><span class="s2">&quot;2,3&quot;</span><span class="p">,</span><span class="s2">&quot;1,2,3&quot;</span><span class="p">,</span><span class="s2">&quot;4&quot;</span><span class="p">,</span><span class="s2">&quot;1,4&quot;</span><span class="p">,</span><span class="s2">&quot;2,4&quot;</span><span class="p">,</span><span class="s2">&quot;1,2,4&quot;</span><span class="p">,</span><span class="s2">&quot;3,4&quot;</span><span class="p">,</span><span class="s2">&quot;1,3,4&quot;</span><span class="p">,</span><span class="s2">&quot;2,3,4&quot;</span><span class="p">,</span><span class="s2">&quot;1,2,3,4&quot;</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>By the way, my total combination across all 3 sets was a mere 16,777,216.</p>
+
+<p><a href="https://github.com/michaelsharman/Powerset">Grab from github</a> if you prefer the CFC</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Modifying FW/1 variables.framework properties]]></title>
+    <link href="http://michaelsharman.github.io/chapter31/blog/2012/09/30/modifying-fw1-variables-framework-properties/"/>
+    <updated>2012-09-30T16:54:59+10:00</updated>
+    <id>http://michaelsharman.github.io/chapter31/blog/2012/09/30/modifying-fw1-variables-framework-properties</id>
+    <content type="html"><![CDATA[<p><a href="https://github.com/seancorfield/fw1/">FW/1</a> gives you a nice, clean way to manage framework configuration properties. They&#8217;re all wrapped up inside Application.cfc in a structure called <em>variables.framework</em>, <a href="https://github.com/seancorfield/fw1/wiki/Developing-Applications-Manual">you can read more about them here</a> under <em>Configuring FW/1 Applications</em>.</p>
+
+<p><a href="http://www.learnosity.com">Our applications</a> often have a need to use different values for these properties, depending on which environment the application is running in (development, testing, staging, production etc). An example of this might be <em>reloadApplicationOnEveryRequest</em>, which we want as <em>true</em> in development, but <em>false</em> elsewhere else.</p>
+
+<p>So our defaults (at the top of Application.cfc) might be to set the reload property as false:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">variables</span><span class="p">.</span><span class="nx">framework</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">reloadApplicationOnEveryRequest</span> <span class="o">=</span> <span class="kc">false</span><span class="p">,</span>
+</span><span class='line'>  <span class="nx">disableReloadApplication</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">...</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>These are good values for production, but we want to override them if we&#8217;re in development. Here&#8217;s how:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="cm">/**</span>
+</span><span class='line'><span class="cm">* @hint We need to override variables.framework values, only way to do this is pre-fw/1 onRequestStart() as setupRequest() is called later in the call stack</span>
+</span><span class='line'><span class="cm">**/</span>
+</span><span class='line'><span class="kr">public</span> <span class="nx">any</span> <span class="kd">function</span> <span class="nx">onRequestStart</span><span class="p">(</span><span class="nx">string</span> <span class="nx">targetPath</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="nx">isDefined</span><span class="p">(</span><span class="s2">&quot;application.config.mode&quot;</span><span class="p">))</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="nx">application</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">mode</span> <span class="o">==</span> <span class="s2">&quot;dev&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>      <span class="nx">variables</span><span class="p">.</span><span class="nx">framework</span><span class="p">.</span><span class="nx">reloadApplicationOnEveryRequest</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+</span><span class='line'>      <span class="nx">variables</span><span class="p">.</span><span class="nx">framework</span><span class="p">.</span><span class="nx">disableReloadApplication</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="kr">super</span><span class="p">.</span><span class="nx">onRequestStart</span><span class="p">(</span><span class="nx">targetPath</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can see in the example above that we override the default values we set initially, so that if we&#8217;re in <em>development</em> mode we not only <a href="http://www.chapter31.com/2012/09/27/preventing-fw1-from-reinitialising-an-app-via-the-url/">have the ability to reload the application (using a custom property called <em>disableReloadApplication</em>)</a>, but we also reload the application on every request.</p>
+
+<p>2 things to note here, are that we can&#8217;t use setupRequest() for this, as it&#8217;s called too late by framework.cfc and won&#8217;t enable us to override any <em>variables.framework</em> properties. So instead we use onRequestStart(), which gives us the 2nd thing to watch out for, and that is that you must be careful to call super.onRequestStart(targetPath); at the conclusion of this method. Or you might get strange results.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Preventing FW/1 from reinitialising an app via the URL]]></title>
+    <link href="http://michaelsharman.github.io/chapter31/blog/2012/09/27/preventing-fw1-from-reinitialising-an-app-via-the-url/"/>
+    <updated>2012-09-27T22:57:23+10:00</updated>
+    <id>http://michaelsharman.github.io/chapter31/blog/2012/09/27/preventing-fw1-from-reinitialising-an-app-via-the-url</id>
+    <content type="html"><![CDATA[<p>One of the things that <a href="https://github.com/seancorfield/fw1">FW/1</a> allows you to do is configure a reload &#8220;key&#8221; and &#8220;password&#8221; which you can use to reinit your application via URL.</p>
+
+<p>So inside your Application.cfc you might have:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>variables.framework = {
+</span><span class='line'>  reload = 'reinit',
+</span><span class='line'>  password = "mysecretkey"
+</span><span class='line'>  …
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So you can reinit your application (flush the application scope by re-running onApplicationStart()) by calling something like:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>http://www.example.com/?reinit=mysecretkey</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The &#8220;reload&#8221; and &#8220;password&#8221; properties can be changed to whatever you want for securities sake.</p>
+
+<p>We wanted a little extra security, that being the option to never allow an application to be reinitialised via a URL. Typically we want this in a production environment only. What you lose in flexibility, being able to reinit the application quickly and easily after a release/deployment, you (arguably) gain in security. Perhaps this is being a little over-cautious, but we like to be better safe than sorry, especially when reducing possible DOS vectors. Also it makes life easier when dealing with system administrators and/or security audits :)</p>
+
+<p>To achieve this we simply added a new property to the <em>variables.framework</em> structure inside Application.cfc, called &#8220;disableReloadApplication&#8221;, which accepts true|false. If <em>true</em>, then even if you know the &#8220;reload&#8221; and &#8220;password&#8221; values…the application cannot be reinitialised via the URL. So the following would NOT reinit the app:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>http://www.example.com/?reinit=mysecretkey</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A few extra lines were needed inside framework.cfc to make this happen:</p>
+
+<p>setupFrameworkDefaults()</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>…
+</span><span class='line'>if ( !structKeyExists(variables.framework, 'disableReloadApplication') ) {
+</span><span class='line'>  variables.framework.disableReloadApplication = false;
+</span><span class='line'>}
+</span><span class='line'>…</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and isFrameworkReloadRequest()</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>return ( !variables.framework.disableReloadApplication &&
+</span><span class='line'>  ((isDefined( 'URL' ) &&
+</span><span class='line'>  structKeyExists( URL, variables.framework.reload ) &&
+</span><span class='line'>  URL[ variables.framework.reload ] == variables.framework.password ) ||
+</span><span class='line'>  variables.framework.reloadApplicationOnEveryRequest));</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Although we could have extended framework.cfc with our own file (and just defined these 2 methods), we just altered the original framework.cfc as we store a local copy in source control that all our projects can draw from.</p>
+
+<p><a href="https://github.com/michaelsharman/fw1">Here is the fork of FW/1</a> (really just a change to framework.cfc), version 2.0.1.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Adding a mail server to a Railo instance]]></title>
+    <link href="http://michaelsharman.github.io/chapter31/blog/2012/09/27/adding-a-mail-server-to-a-railo-instance/"/>
+    <updated>2012-09-27T08:04:33+10:00</updated>
+    <id>http://michaelsharman.github.io/chapter31/blog/2012/09/27/adding-a-mail-server-to-a-railo-instance</id>
+    <content type="html"><![CDATA[<p>We turn off all GUI based administration consoles in our production environments, this includes Railo&#8217;s admin area.</p>
+
+<p>If you need to configure your Railo instance to include an SMTP server, you can add a line in WEB-INF/railo/railo-web.xml.cfm</p>
+
+<p>Open up that file (probably as sudo), look for the <mail> tag (which is empty by default) and insert the following:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;server port="25" smtp="127.0.0.1" /&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The &#8220;smtp&#8221; attribute should be the IP address of your SMTP server. Also, if your SMTP server requires a username and password, you can add them like so:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;server port="25" smtp="127.0.0.1" username="myusername" password="mypassword" /&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>At the end of the day your config entry should look something like:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;mail log="{railo-web}/logs/mail.log"&gt;
+</span><span class='line'>  &lt;server port="25" smtp="127.0.0.1"/&gt;
+</span><span class='line'>&lt;/mail&gt; </span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Update - January 2013</h2>
+
+<p>I was googling something else when I came across a post on the Railo groups indicating that by default only <em>error</em> logging is enabled for mail. This means that in the event of an error (where Railo is unable to send the mail) you can check the WEB-INF/railo/logs/mail.log for information.</p>
+
+<p>However, you can turn on <em>info</em> logging as well to presumably track whenever mail is actually sent. This can be done in either railo-server.xml or railo-web.xml. Eg:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;mail log-level="info" log="{railo-web}/logs/mail.log"&gt;
+</span><span class='line'>  &lt;server port="25" smtp="127.0.0.1"/&gt;
+</span><span class='line'>&lt;/mail&gt; </span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is really handy for us as we disallow access to the Railo admin GUI.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Installing new fonts on Ubuntu server]]></title>
+    <link href="http://michaelsharman.github.io/chapter31/blog/2012/09/24/installing-new-fonts-on-ubuntu-server/"/>
+    <updated>2012-09-24T13:41:55+10:00</updated>
+    <id>http://michaelsharman.github.io/chapter31/blog/2012/09/24/installing-new-fonts-on-ubuntu-server</id>
+    <content type="html"><![CDATA[<p>I had some new fonts to install on our test server that runs Ubuntu server. Pretty simple really, just noting it down here for next time:</p>
+
+<ul>
+<li>Upload/ssh the font(s) to your home folder on the server</li>
+<li>Copy font to the system fonts folder, this way it can be used by all users on the system
+
+<pre><code>sudo cp -R ~/trade-gothic /usr/share/fonts/truetype/    
+</code></pre></li>
+<li>Check permissions
+
+<pre><code>sudo chmod 755 /usr/share/fonts/truetype/trade-gothic/
+</code></pre></li>
+<li>Install the fonts so applications can use them
+
+<pre><code>sudo fc-cache -f -v
+</code></pre></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Whitespace issues in cfscript based functions]]></title>
+    <link href="http://michaelsharman.github.io/chapter31/blog/2012/09/20/whitespace-issues-in-cfscript-based-functions/"/>
+    <updated>2012-09-20T17:28:08+10:00</updated>
+    <id>http://michaelsharman.github.io/chapter31/blog/2012/09/20/whitespace-issues-in-cfscript-based-functions</id>
+    <content type="html"><![CDATA[<p>Ok now we all know that ColdFusion is kind of lame when it comes to whitespace management, unless you specifically have &#8220;whitespace management&#8221; turned on for your server.</p>
+
+<p>I have a function that is used to build the <em>href</em> value of a hyperlink. Nothing special there. However when I viewed the source of the page I was a little surprised to see a mountain of whitespace coming back from the function.</p>
+
+<p>All I do is return a string from the function, I don&#8217;t output any text from within the function.</p>
+
+<p>Here it is:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kr">public</span> <span class="nx">string</span> <span class="kd">function</span> <span class="nx">getFullPageURI</span><span class="p">(</span><span class="nx">required</span> <span class="nx">string</span> <span class="nx">pagename</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">pages</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">lib</span><span class="p">.</span><span class="nx">services</span><span class="p">.</span><span class="nx">pages</span><span class="p">();</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">page</span> <span class="o">=</span> <span class="nx">pages</span><span class="p">.</span><span class="nx">getPageByNavURL</span><span class="p">(</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">pagename</span><span class="p">,</span> <span class="nx">getId</span><span class="p">());</span>
+</span><span class='line'>  <span class="k">return</span> <span class="nx">page</span><span class="p">.</span><span class="nx">getPageURI</span><span class="p">();</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And the link source:</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2012/09/Screen-shot-2012-09-20-at-5.24.32-PM.png" alt="" /></p>
+
+<p>Hmm, could that suck any more? Now what happens if I add output=&#8221;false&#8221; (not particularly intuitive) to the end of the function, like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kr">public</span> <span class="nx">string</span> <span class="kd">function</span> <span class="nx">getFullPageURI</span><span class="p">(</span><span class="nx">required</span> <span class="nx">string</span> <span class="nx">pagename</span><span class="p">)</span> <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;false&quot;</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">pages</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">lib</span><span class="p">.</span><span class="nx">services</span><span class="p">.</span><span class="nx">pages</span><span class="p">();</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">page</span> <span class="o">=</span> <span class="nx">pages</span><span class="p">.</span><span class="nx">getPageByNavURL</span><span class="p">(</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">pagename</span><span class="p">,</span> <span class="nx">getId</span><span class="p">());</span>
+</span><span class='line'>  <span class="k">return</span> <span class="nx">page</span><span class="p">.</span><span class="nx">getPageURI</span><span class="p">();</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now I get:</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2012/09/Screen-shot-2012-09-20-at-5.25.54-PM.png" alt="" /></p>
+
+<p>Sorry but that&#8217;s just insane. cfscript should behave like cfsilent all the time unless you specify a writeOutput();</p>
+
+<p>Hope this helps any other people out there. The lesson learned is that you can specify output=&#8221;false&#8221; in a cfscript based function, but ONLY AFTER THE METHOD SIGNATAURE!</p>
+
+<p>So if you did this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kr">public</span> <span class="nx">string</span> <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="kd">function</span> <span class="nx">getFullPageURI</span><span class="p">(</span><span class="nx">required</span> <span class="nx">string</span> <span class="nx">pagename</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If would fail. It needs to occur after the parens.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[jQuery UI dialog focus on first tabable element]]></title>
+    <link href="http://michaelsharman.github.io/chapter31/blog/2012/09/14/jquery-ui-dialog-focus-on-first-tabable-element/"/>
+    <updated>2012-09-14T16:27:29+10:00</updated>
+    <id>http://michaelsharman.github.io/chapter31/blog/2012/09/14/jquery-ui-dialog-focus-on-first-tabable-element</id>
+    <content type="html"><![CDATA[<p>I&#8217;ve been using the <a href="http://jqueryui.com/demos/dialog/">jQuery UI dialog</a> for a project recently, one thing that bugged me though, was that upon opening a dialog the first tabable element always gets focussed. This can be:</p>
+
+<ul>
+<li>hyperlinks</li>
+<li>input boxes</li>
+<li>select boxes</li>
+<li>buttons</li>
+<li>textareas etc</li>
+</ul>
+
+
+<p>An example of this is:</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2012/09/Screen-shot-2012-09-14-at-4.06.09-PM.png" alt="" /></p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2012/09/Screen-shot-2012-09-14-at-4.06.30-PM.png" alt="" /></p>
+
+<p>A quick way around this is to fire a <a href="http://api.jquery.com/blur/">blur()</a> method, targeting the first <em>tabable</em> element type of your dialog. So if I open up a dialog window with an id of <em>dialog</em>, I can do:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#dialog&#39;</span><span class="p">).</span><span class="nx">dialog</span><span class="p">(</span><span class="s1">&#39;open&#39;</span><span class="p">);</span>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#dialog&#39;</span><span class="p">).</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;a, select, input, textarea, button&#39;</span><span class="p">).</span><span class="nx">first</span><span class="p">().</span><span class="nx">blur</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I was hoping to put this inside the open() method of the dialog, but it doesn&#8217;t seem to parse the contents of the dialog within that method. So the following did not work for me:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#dialog&#39;</span><span class="p">).</span><span class="nx">dialog</span><span class="p">({</span>
+</span><span class='line'>  <span class="nx">autoOpen</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+</span><span class='line'>  <span class="nx">maxWidth</span><span class="o">:</span> <span class="mi">600</span><span class="p">,</span>
+</span><span class='line'>  <span class="nx">minWidth</span><span class="o">:</span> <span class="mi">500</span><span class="p">,</span>
+</span><span class='line'>  <span class="nx">modal</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+</span><span class='line'>  <span class="nx">resizable</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+</span><span class='line'>  <span class="nx">open</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;a, select, input, textarea, button&#39;</span><span class="p">).</span><span class="nx">first</span><span class="p">().</span><span class="nx">blur</span><span class="p">();</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Timing synchronous JavaScript operations]]></title>
+    <link href="http://michaelsharman.github.io/chapter31/blog/2012/08/14/timing-synchronous-javascript-operations/"/>
+    <updated>2012-08-14T07:24:05+10:00</updated>
+    <id>http://michaelsharman.github.io/chapter31/blog/2012/08/14/timing-synchronous-javascript-operations</id>
+    <content type="html"><![CDATA[<p>There&#8217;s a cool little method on the <em>console</em> object that allows you to track how long an operation took to run. It&#8217;s called <a href="https://developer.mozilla.org/en-US/docs/DOM/console.time">console.time</a>.</p>
+
+<p>Basically you just start a timer at the top of the code you want to time, like so:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">time</span><span class="p">(</span><span class="s1">&#39;timer-name&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// your javascript goes here</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">timeEnd</span><span class="p">(</span><span class="s1">&#39;timer-name&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Each <em>timer</em> block should have a unique name (in the example above I called my timer &#8216;timer-name&#8217;), and you can have up to 10,000 timers running on a single page.</p>
+
+<p>By calling <em>console.timeEnd()</em>, the browser will write to the console how long (in milliseconds) the code took to run since you first called console.time();</p>
+
+<p>This works in Chrome 2+, Firefox 10+, Opera and Safari 4+. Typically IE support is a little sketchy, however I <a href="http://stackoverflow.com/questions/3516515/console-time-in-ie8-developer-tools?answertab=active#tab-top">found a cool custom function</a> on Stack Overflow that allows you to use console.time/timeEnd in IE7/8 etc.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c1">//console.time implementation for IE</span>
+</span><span class='line'><span class="k">if</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">console</span> <span class="o">&amp;&amp;</span> <span class="k">typeof</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">console</span><span class="p">.</span><span class="nx">time</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;undefined&quot;</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">time</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">reset</span><span class="p">){</span>
+</span><span class='line'>        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span><span class="p">;</span> <span class="p">}</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">time</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">().</span><span class="nx">getTime</span><span class="p">();</span>
+</span><span class='line'>        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">console</span><span class="p">.</span><span class="nx">timeCounters</span><span class="p">)</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">timeCounters</span> <span class="o">=</span> <span class="p">{}</span> <span class="p">};</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">key</span> <span class="o">=</span> <span class="s2">&quot;KEY&quot;</span> <span class="o">+</span> <span class="nx">name</span><span class="p">.</span><span class="nx">toString</span><span class="p">();</span>
+</span><span class='line'>        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">reset</span> <span class="o">&amp;&amp;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">timeCounters</span><span class="p">[</span><span class="nx">key</span><span class="p">])</span> <span class="p">{</span> <span class="k">return</span><span class="p">;</span> <span class="p">}</span>
+</span><span class='line'>            <span class="nx">console</span><span class="p">.</span><span class="nx">timeCounters</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">time</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">timeEnd</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">){</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">time</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">().</span><span class="nx">getTime</span><span class="p">();</span>
+</span><span class='line'>        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">console</span><span class="p">.</span><span class="nx">timeCounters</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span><span class="p">;</span> <span class="p">}</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">key</span> <span class="o">=</span> <span class="s2">&quot;KEY&quot;</span> <span class="o">+</span> <span class="nx">name</span><span class="p">.</span><span class="nx">toString</span><span class="p">();</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">timeCounter</span> <span class="o">=</span> <span class="nx">console</span><span class="p">.</span><span class="nx">timeCounters</span><span class="p">[</span><span class="nx">key</span><span class="p">];</span>
+</span><span class='line'>        <span class="k">if</span><span class="p">(</span><span class="nx">timeCounter</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="kd">var</span> <span class="nx">diff</span> <span class="o">=</span> <span class="nx">time</span> <span class="o">-</span> <span class="nx">timeCounter</span><span class="p">;</span>
+</span><span class='line'>            <span class="kd">var</span> <span class="nx">label</span> <span class="o">=</span> <span class="nx">name</span> <span class="o">+</span> <span class="s2">&quot;: &quot;</span> <span class="o">+</span> <span class="nx">diff</span> <span class="o">+</span> <span class="s2">&quot;ms&quot;</span><span class="p">;</span>
+</span><span class='line'>            <span class="nx">console</span><span class="p">.</span><span class="nx">info</span><span class="p">(</span><span class="nx">label</span><span class="p">);</span>
+</span><span class='line'>            <span class="k">delete</span> <span class="nx">console</span><span class="p">.</span><span class="nx">timeCounters</span><span class="p">[</span><span class="nx">key</span><span class="p">];</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nx">diff</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">};</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Setting font MIME types in apache]]></title>
+    <link href="http://michaelsharman.github.io/chapter31/blog/2012/08/10/setting-font-mime-types-in-apache/"/>
+    <updated>2012-08-10T09:40:00+10:00</updated>
+    <id>http://michaelsharman.github.io/chapter31/blog/2012/08/10/setting-font-mime-types-in-apache</id>
+    <content type="html"><![CDATA[<p>If your website is using custom fonts, you may see this line in your Chrome console:</p>
+
+<blockquote><p>Resource interpreted as Font but transferred with MIME type application/octet-stream</p></blockquote>
+
+<p>This is really kinda annoying, if you want to get rid of that warning then add the following directives to your apache conf/.htaccess:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">AddType</span> <span class="nx">application</span><span class="o">/</span><span class="nx">vnd</span><span class="p">.</span><span class="nx">ms</span><span class="o">-</span><span class="nx">fontobject</span> <span class="nx">eot</span>
+</span><span class='line'><span class="nx">AddType</span> <span class="nx">font</span><span class="o">/</span><span class="nx">opentype</span> <span class="nx">otf</span>
+</span><span class='line'><span class="nx">AddType</span> <span class="nx">font</span><span class="o">/</span><span class="nx">truetype</span> <span class="nx">ttf</span>
+</span><span class='line'><span class="nx">AddType</span> <span class="nx">application</span><span class="o">/</span><span class="nx">x</span><span class="o">-</span><span class="nx">font</span><span class="o">-</span><span class="nx">woff</span> <span class="p">.</span><span class="nx">woff</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="http://www.jbarker.com/blog/2011/resource-interpreted-font-transferred-mime-type">See here for more information.</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Turning off sessions for non-https traffic]]></title>
+    <link href="http://michaelsharman.github.io/chapter31/blog/2012/08/06/turning-off-sessions-for-non-https-traffic/"/>
+    <updated>2012-08-06T17:05:22+10:00</updated>
+    <id>http://michaelsharman.github.io/chapter31/blog/2012/08/06/turning-off-sessions-for-non-https-traffic</id>
+    <content type="html"><![CDATA[<p>Today I wanted to configure an application to only set <em>secure</em> cookies. Those are cookies that are only sent back to the server if over a secure (https) connection.</p>
+
+<p>The main reason for this is to prevent session hijacking, where a bad guy might sniff the cookie values which links a user to the session &#8220;state&#8221; on the server. If they managed to do that, (which they could if the session was started on an <em>http://</em> connection, then if/when the user logged on and was transferred to <em>https://</em>) the bad guy would still have their cookie values and thus would be able to visit the website as the logged in user. No good. You can read more on <a href="http://www.12robots.com/index.cfm/2009/1/5/mmmmMMmmmmmmm-Cookies--Security-Series-12">Jason Dean&#8217;s great series on security</a></p>
+
+<p>Another thing to consider when it comes to securing your sessions/cookies is using <em>httpOnly</em> cookies. These are ones that reside in the browser memory, so that when you close down your browser (not just a tab, the whole browser) the cookie expires. So if somebody comes along after you and opens up a browser…they won&#8217;t access any previous logged in sessions you may have left open. Another cool thing about <em>httpOnly</em> cookies is that they can&#8217;t be read from JavaScript which helps to mitigate CSRF attacks :)</p>
+
+<p>As ColdFusion sets a new session by default upon every first visit (if you have <em>sessionManagement</em> turned on), you have a couple of options to mitigate session hijacking. One of these is <em>secure</em> cookies, ColdFusion has a few options for this (as well as <em>httpOnly</em>). <a href="http://www.12robots.com/index.cfm/2009/5/6/Making-the-JSESSIONID-Session-Token-Cookie-SECURE-and-HTTPOnly-and-settings-its-PATH">12Robots has a great page</a> with code sample on how to set these up, however I wanted to take things one step further and that was to simply turn off <em>sessionManagement</em> if NOT over SSL. This also has the benefit of not allowing bots to clog up your server RAM with sessions that your site/application just doesn&#8217;t need.</p>
+
+<p>Here is the code I used to only have session management turned on over SSL and not for traffic over port 80. Also included is the code from 12Robots to set <em>secure</em> and <em>httpOnly</em> cookies.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">component</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s2">&quot;myappname&quot;</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">this</span><span class="p">.</span><span class="nx">applicationTimeout</span> <span class="o">=</span> <span class="nx">createTimeSpan</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">//Get the page context to test HTTPS, if on http then DON&#39;T set sessions/cookies (for bots and security), otherwise set sessions</span>
+</span><span class='line'>  <span class="nx">currRequest</span> <span class="o">=</span> <span class="nx">getPageContext</span><span class="p">().</span><span class="nx">getRequest</span><span class="p">();</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="nx">currRequest</span><span class="p">.</span><span class="nx">isSecure</span><span class="p">())</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="k">this</span><span class="p">.</span><span class="nx">sessionManagement</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+</span><span class='line'>      <span class="k">this</span><span class="p">.</span><span class="nx">sessionTimeout</span> <span class="o">=</span> <span class="nx">createTimeSpan</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">else</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="k">this</span><span class="p">.</span><span class="nx">sessionManagement</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">this</span><span class="p">.</span><span class="nx">setClientCookies</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">this</span><span class="p">.</span><span class="nx">clientManagement</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// This method only fires if this.sessionManagement = true</span>
+</span><span class='line'>  <span class="kr">public</span> <span class="k">void</span> <span class="kd">function</span> <span class="nx">onSessionStart</span><span class="p">()</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="kd">var</span> <span class="nx">response</span> <span class="o">=</span> <span class="nx">getPageContext</span><span class="p">().</span><span class="nx">getResponse</span><span class="p">();</span>
+</span><span class='line'>      <span class="kd">var</span> <span class="nx">path</span> <span class="o">=</span> <span class="s2">&quot;/&quot;</span><span class="p">;</span>
+</span><span class='line'>      <span class="kd">var</span> <span class="nx">domain</span> <span class="o">=</span> <span class="nx">application</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">httpsURL</span><span class="p">;</span>
+</span><span class='line'>      <span class="kd">var</span> <span class="nx">secure</span> <span class="o">=</span> <span class="s2">&quot;Secure&quot;</span><span class="p">;</span>
+</span><span class='line'>      <span class="kd">var</span> <span class="nx">HTTPOnly</span> <span class="o">=</span> <span class="s2">&quot;HTTPOnly&quot;</span><span class="p">;</span>
+</span><span class='line'>      <span class="kd">var</span> <span class="nx">header</span> <span class="o">=</span> <span class="s2">&quot;jsessionid=#session.sessionid#;domain=#domain#;path=#path#;#secure#;#HTTPOnly#&quot;</span><span class="p">;</span>
+</span><span class='line'>      <span class="nx">response</span><span class="p">.</span><span class="nx">addHeader</span><span class="p">(</span><span class="s2">&quot;Set-Cookie&quot;</span><span class="p">,</span> <span class="nx">header</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// the rest of your Application.cfc</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Editing svn:ignore on the terminal]]></title>
+    <link href="http://michaelsharman.github.io/chapter31/blog/2012/07/10/editing-svnignore-on-the-terminal/"/>
+    <updated>2012-07-10T22:49:19+10:00</updated>
+    <id>http://michaelsharman.github.io/chapter31/blog/2012/07/10/editing-svnignore-on-the-terminal</id>
+    <content type="html"><![CDATA[<p><em>svn:ignore</em> is a great way to exclude certain files or folders from being added to your subversion repository. Typically I&#8217;ll manage this via an IDE plugin like subclipse (in Eclipse), but if you want to do it via the terminal instead (bash)&#8230;here&#8217;s how.</p>
+
+<h2>Crappy way</h2>
+
+<p>You can add single values to your svn:ignore by running this command either at the root of your project or wherever directory you want the ignore to take effect:</p>
+
+<pre><code>svn propset svn:ignore "*.project" .
+</code></pre>
+
+<p>However that command seems not only to add an ignore rule, but also it clears any rules you may have had on that directory and only inserts the single rule you just specified. No good.</p>
+
+<h2>Better way</h2>
+
+<p>There are a couple of ways to enter multiple ignore values into your ignore file, I like simply opening up the ignore editor. Try this command:</p>
+
+<pre><code>svn propedit svn:ignore .
+</code></pre>
+
+<p>If you get the following error it means you haven&#8217;t associated an editor with svn:ignore</p>
+
+<blockquote><p>svn: None of the environment variables SVN_EDITOR, VISUAL or EDITOR are set, and no &#8216;editor-cmd&#8217; run-time configuration option was found</p></blockquote>
+
+<p>You can quickly associate the editor with nano (or another editor of your choice) by running:</p>
+
+<pre><code>export SVN_EDITOR=nano
+</code></pre>
+
+<p>That&#8217;s not ideal as it&#8217;ll only work in the current bash session, when you close your terminal window that export will be lost. The best bet is to add it to your ~/.bash_profile (or ~/.bash_login).</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd ~
+</span><span class='line'>nano .bash_profile
+</span><span class='line'>export SVN_EDITOR=nano</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now you&#8217;ll always be able to edit your svn:ignore file. So let&#8217;s try again:</p>
+
+<pre><code>svn propedit svn:ignore .
+</code></pre>
+
+<p>Nano (or whatever editor you specified) should open allowing you to enter whatever you want :)</p>
+
+<p>Here&#8217;s a simple list of mine:</p>
+
+<pre><code>*.DS_Store  
+*.project  
+*.sublime-project  
+*.sublime-workspace  
+htdocs/WEB-INF
+</code></pre>
+
+<p>If you actually want to see all your files (including those that you&#8217;ve ignored) via the terminal, run:</p>
+
+<pre><code>svn status --no-ignore
+</code></pre>
+
+<h2>Externals</h2>
+
+<p>Note that you can also edit any svn:externals using the same technique.</p>
+
+<pre><code>svn propedit svn:externals .
+</code></pre>
+
+<p>Remember that you need to be in the location of the directory that contains any externals for this to work properly.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Concatenating values into a single column with MySQL group_concat]]></title>
+    <link href="http://michaelsharman.github.io/chapter31/blog/2012/07/06/concatenating-values-into-a-single-column-with-mysql-group_concat/"/>
+    <updated>2012-07-06T07:15:31+10:00</updated>
+    <id>http://michaelsharman.github.io/chapter31/blog/2012/07/06/concatenating-values-into-a-single-column-with-mysql-group_concat</id>
+    <content type="html"><![CDATA[<p>How many times have you wanted to return a list of grouped values from a database, in a single column, per row of your recordset? Actually I&#8217;ve wanted to do that a few times! Most of the time I&#8217;ll let the application layer handle that, but sometimes letting the database do the hard work fits the bill.</p>
+
+<p>My not-so-theoretical example is <em>course subjects</em> (think English, Maths etc) that have 1-<em>n</em> &#8220;stages&#8221; (think categories) attached to them. If I want to return a recordset of all courses, with the attached stages, I might write a query like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">SELECT</span> <span class="n">sy</span><span class="p">.</span><span class="n">title</span> <span class="k">as</span> <span class="n">course</span><span class="p">,</span> <span class="n">st</span><span class="p">.</span><span class="n">stage</span>
+</span><span class='line'><span class="k">FROM</span> <span class="n">syllabus</span> <span class="n">sy</span> <span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">syllabus_stages</span> <span class="n">sy_st</span>
+</span><span class='line'><span class="k">ON</span> <span class="n">sy</span><span class="p">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">sy_st</span><span class="p">.</span><span class="n">syllabus_id</span>
+</span><span class='line'><span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">stages</span> <span class="n">st</span>
+</span><span class='line'><span class="k">ON</span> <span class="n">sy_st</span><span class="p">.</span><span class="n">stage_id</span> <span class="o">=</span> <span class="n">st</span><span class="p">.</span><span class="n">id</span>
+</span><span class='line'><span class="k">GROUP</span> <span class="k">BY</span> <span class="n">sy</span><span class="p">.</span><span class="n">title</span><span class="p">,</span> <span class="n">stage</span>
+</span><span class='line'><span class="k">ORDER</span> <span class="k">BY</span> <span class="n">sy</span><span class="p">.</span><span class="n">title</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Looks pretty standard, with something like that I&#8217;d get the following:</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2012/07/Screen-shot-2012-07-06-at-6.50.45-AM.png" alt="" /></p>
+
+<p>But now the application has to handle the grouping, not a huge problem by any means. Also don&#8217;t get me wrong&#8230;this is where you normally would want to do this (sql is a data retrieval language and in most instances shouldn&#8217;t be handling presentation aspects). However, if I just wanted to display a list of stages (categories), I can use <a href="http://dev.mysql.com/doc/refman/5.0/en/group-by-functions.html#function_group-concat">group_concat</a> to make life a litte easier.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">SELECT</span> <span class="n">sy</span><span class="p">.</span><span class="n">title</span> <span class="k">as</span> <span class="n">course</span><span class="p">,</span> <span class="n">group_concat</span><span class="p">(</span><span class="n">st</span><span class="p">.</span><span class="n">stage</span> <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">st</span><span class="p">.</span><span class="n">stage</span><span class="p">)</span> <span class="k">as</span> <span class="n">stage</span>
+</span><span class='line'><span class="k">FROM</span> <span class="n">syllabus</span> <span class="n">sy</span> <span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">syllabus_stages</span> <span class="n">sy_st</span>
+</span><span class='line'><span class="k">ON</span> <span class="n">sy</span><span class="p">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">sy_st</span><span class="p">.</span><span class="n">syllabus_id</span>
+</span><span class='line'><span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">stages</span> <span class="n">st</span>
+</span><span class='line'><span class="k">ON</span> <span class="n">sy_st</span><span class="p">.</span><span class="n">stage_id</span> <span class="o">=</span> <span class="n">st</span><span class="p">.</span><span class="n">id</span>
+</span><span class='line'><span class="k">GROUP</span> <span class="k">BY</span> <span class="n">sy</span><span class="p">.</span><span class="n">title</span>
+</span><span class='line'><span class="k">ORDER</span> <span class="k">BY</span> <span class="n">sy</span><span class="p">.</span><span class="n">title</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This gives me:</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2012/07/Screen-shot-2012-07-06-at-6.53.14-AM.png" alt="" /></p>
+
+<p>Pretty cool eh?</p>
+
+<p>The default list separator is a comma, but you can also specify your own.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">SELECT</span> <span class="n">sy</span><span class="p">.</span><span class="n">title</span> <span class="k">as</span> <span class="n">course</span><span class="p">,</span> <span class="n">group_concat</span><span class="p">(</span><span class="n">st</span><span class="p">.</span><span class="n">stage</span> <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">st</span><span class="p">.</span><span class="n">stage</span> <span class="n">SEPARATOR</span> <span class="s1">&#39; | &#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">stage</span>
+</span><span class='line'><span class="k">FROM</span> <span class="n">syllabus</span> <span class="n">sy</span> <span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">syllabus_stages</span> <span class="n">sy_st</span>
+</span><span class='line'><span class="k">ON</span> <span class="n">sy</span><span class="p">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">sy_st</span><span class="p">.</span><span class="n">syllabus_id</span>
+</span><span class='line'><span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">stages</span> <span class="n">st</span>
+</span><span class='line'><span class="k">ON</span> <span class="n">sy_st</span><span class="p">.</span><span class="n">stage_id</span> <span class="o">=</span> <span class="n">st</span><span class="p">.</span><span class="n">id</span>
+</span><span class='line'><span class="k">GROUP</span> <span class="k">BY</span> <span class="n">sy</span><span class="p">.</span><span class="n">title</span>
+</span><span class='line'><span class="k">ORDER</span> <span class="k">BY</span> <span class="n">sy</span><span class="p">.</span><span class="n">title</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2012/07/Screen-shot-2012-07-06-at-7.12.02-AM.png" alt="" /></p>
+
+<p><a href="http://dev.mysql.com/doc/refman/5.0/en/group-by-functions.html#function_group-concat">See the group_concat page</a> for more details.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[jQuery tinyMCE issue with $.attr();]]></title>
+    <link href="http://michaelsharman.github.io/chapter31/blog/2012/07/05/jquery-tinymce-issue-with-attr/"/>
+    <updated>2012-07-05T09:05:02+10:00</updated>
+    <id>http://michaelsharman.github.io/chapter31/blog/2012/07/05/jquery-tinymce-issue-with-attr</id>
+    <content type="html"><![CDATA[<p>I had some strange behaviour with the jQuery verion of tinyMCE (3.4.6). Basically I was <a href="http://harvesthq.github.com/chosen/">integrating the chosen library</a> (which is build as a jQuery plugin), but it seems the $.attr(&#8216;id&#8217;) from within chosen.js was returning a JavaScript element reference instead of the value of the &#8220;id&#8221; field.</p>
+
+<p><a href="http://www.chapter31.com/wp-content/uploads/2012/07/tiny_error.png"><img src="http://www.chapter31.com/wp-content/uploads/2012/07/tiny_error.png" alt="" /></a></p>
+
+<p>Some basic tracing showed the strange error:</p>
+
+<p><a href="http://www.chapter31.com/wp-content/uploads/2012/07/tiny_trace.png"><img src="http://www.chapter31.com/wp-content/uploads/2012/07/tiny_trace.png" alt="" /></a></p>
+
+<p>The solution for me was moving to tinyMCE 3.5.4.1 (and jQuery 1.7.2, previously I was on 1.6.4). All good now, just thought I&#8217;d throw up a quick post if anyone was being caught by this.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Apache permission denied on Mac OSX Lion]]></title>
+    <link href="http://michaelsharman.github.io/chapter31/blog/2012/06/06/apache-permission-denied-on-mac-osx-lion/"/>
+    <updated>2012-06-06T00:52:49+10:00</updated>
+    <id>http://michaelsharman.github.io/chapter31/blog/2012/06/06/apache-permission-denied-on-mac-osx-lion</id>
+    <content type="html"><![CDATA[<p>I&#8217;ve just upgraded to OSX Lion and had some trouble getting Apache to load a vhost. I kept getting a 403 permission denied error, but all my vhosts had the correct permission directives set.</p>
+
+<p>Now by default your webserver document root is located in <em>/Library/WebServer/Documents</em>. I don&#8217;t really like that for my local machine, I&#8217;d rather store web files under my user account. Just tends to make things easier.</p>
+
+<p>However&#8230;if you&#8217;re getting a 403 error, and something like this in your apache error log (/var/log/apache2/error_log):</p>
+
+<pre><code>[Wed Jun 06 00:36:02 2012] [crit] [client 127.0.0.1] (13)Permission denied: /Users/[username]/Documents/.htaccess pcfg_openfile: unable to check htaccess file, ensure it is readable
+</code></pre>
+
+<p>Then check your directory permissions. The interesting thing is that I don&#8217;t have an .htaccess file in my Documents directory. Even adding one did nothing, so I&#8217;m not quite sure why Apache was complaining about this.</p>
+
+<p>The answer was simple, I didn&#8217;t have &#8220;group&#8221; read or execute permissions on the <em>Documents</em> directory, once I ran a chmod&#8230;everything started working ok :)</p>
+
+<pre><code>chmod 755 Documents
+</code></pre>
+
+<p>The actual path to my site was <em>/Users/[username]/Documents/workspaces/sitename/htdocs</em>, but still&#8230;without the requisite permissions on the <em>Documents</em> folder Apache couldn&#8217;t access the vhost.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Strange linefeed characters appearing on Mac]]></title>
+    <link href="http://michaelsharman.github.io/chapter31/blog/2012/05/24/strange-linefeed-characters-appearing-on-mac/"/>
+    <updated>2012-05-24T14:14:47+10:00</updated>
+    <id>http://michaelsharman.github.io/chapter31/blog/2012/05/24/strange-linefeed-characters-appearing-on-mac</id>
+    <content type="html"><![CDATA[<p>Had a funny situation today where I was emailed a bash program file, but simply downloading the attachment from gmail (in Chrome) added a linefeed (\r) to the file.</p>
+
+<p>This is strange because I never actually opened the file to edit, so I&#8217;m not sure what was writing those chars to the file. I&#8217;m on a Mac (OSX 10.6.8), so I get the line feed character in general, but just not in this case as the file was never opened.</p>
+
+<p>The following command shows (among other things) the non-printing characters:</p>
+
+<p><code>od -c filename | sed 4q</code></p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2012/05/dos2unix_before1.png" alt="" /></p>
+
+<p>You can see the offending <em>\r</em> which was breaking the bash program. The unix tool <em>dos2unix</em> was suggested to clean up the file. Unfortunately this wasn&#8217;t available on Mac by default. MacPorts to the rescue (I assume homebrew would be a good option as well):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo port install dos2unix
+</span><span class='line'>Password:
+</span><span class='line'>---&gt;  Fetching dos2unix
+</span><span class='line'>---&gt;  Attempting to fetch dos2unix-3.1.tar.gz from http://fresh.t-systems-sfr.com/linux/src/
+</span><span class='line'>---&gt;  Verifying checksum<span class="o">(</span>s<span class="o">)</span> <span class="k">for </span>dos2unix
+</span><span class='line'>---&gt;  Extracting dos2unix
+</span><span class='line'>---&gt;  Configuring dos2unix
+</span><span class='line'>---&gt;  Building dos2unix with target all
+</span><span class='line'>---&gt;  Staging dos2unix into destroot
+</span><span class='line'>---&gt;  Installing dos2unix 3.1_0
+</span><span class='line'>---&gt;  Activating dos2unix 3.1_0
+</span><span class='line'>---&gt;  Cleaning dos2unix
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then run the program to clean up the invalid line feed (on 2 files).</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>dos2unix -n dirwatcher2 dirwatcher2_2
+</span><span class='line'>dos2unix: converting file dirwatcher2 to file dirwatcher2_2 in UNIX format ...
+</span><span class='line'>dos2unix -n processPDF processPDF_2
+</span><span class='line'>dos2unix: converting file processPDF to file processPDF_2 in UNIX format ...
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Nice! The changes are:</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2012/05/dos2unix_after.png" alt="" /></p>
+
+<p>No \r</p>
+
+<p>:)</p>
+]]></content>
+  </entry>
+  
+</feed>

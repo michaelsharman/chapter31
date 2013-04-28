@@ -1,0 +1,203 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>generateRandomKey() UDF with several handy options - My Octopress Blog</title>
+	<meta name="author" content="Your Name">
+
+	
+	<meta name="description" content="Working on a ColdFusion project recently I had the need to generate a random key; the format of which was based on a specific set of business rules. &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">My Octopress Blog</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+	</form>
+</nav>
+
+</header>
+	
+		
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">generateRandomKey() UDF With Several Handy Options</h2>
+	<div class="entry-content"><p>Working on a ColdFusion project recently I had the need to generate a random key; the format of which was based on a specific set of business rules. I actually ended up writing a basic UDF to handle this but after the fact I went looking to see if I could find something which provided some of the features I was after.</p>
+
+<p>Although I found several through google and <a href="http://cflib.org/">cflib</a> they weren&#8217;t completely what I was after. Not finding exactly what I needed inspired me to write my own one based on the following requirements:</p>
+
+<ul>
+<li>Users can set the length of the returned key</li>
+<li>Key can be UPPER, lower or MixEd case</li>
+<li>Format can include numeric, string, alphanumeric (a-zA-Z0-9) and special characters</li>
+<li>Potentially confusing characters (e.g. o, i, l, s, O, I, L, S etc) are ignored by default and users can pass in their own list of special characters (overriding the default list) to be ignored from the returned key</li>
+<li>Users can pass a fixed prefix or suffix, handy if your business needs to generate order numbers which all start with &#8220;CF-&#8221; etc</li>
+<li>Users can specify that the first (or last) &#8216;x&#8217; characters in the key are numeric, the rest of the key follows the &#8220;format&#8221; argument</li>
+</ul>
+
+
+<p>Some examples:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">generateRandomKey</span><span class="p">();</span>
+</span><span class='line'><span class="c1">//DCE8YDEK</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">generateRandomKey</span><span class="p">(</span><span class="k">case</span><span class="o">=</span><span class="s2">&quot;mixed&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="c1">//wYu3Kbaj</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">generateRandomKey</span><span class="p">(</span><span class="k">case</span><span class="o">=</span><span class="s2">&quot;mixed&quot;</span><span class="p">,</span> <span class="nx">format</span><span class="o">=</span><span class="s2">&quot;alphanumeric&quot;</span><span class="p">,</span> <span class="nx">length</span><span class="o">=</span><span class="s2">&quot;10&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="c1">//7hE3hv4Yzr</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">generateRandomKey</span><span class="p">(</span><span class="nx">format</span><span class="o">=</span><span class="s2">&quot;special&quot;</span><span class="p">,</span> <span class="nx">fixedPrefix</span><span class="o">=</span><span class="s2">&quot;MPS&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="c1">//MPS&gt;M_!{</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">generateRandomKey</span><span class="p">(</span><span class="k">case</span><span class="o">=</span><span class="s2">&quot;upper&quot;</span><span class="p">,</span> <span class="nx">format</span><span class="o">=</span><span class="s2">&quot;string&quot;</span><span class="p">,</span> <span class="nx">numericPrefix</span><span class="o">=</span><span class="s2">&quot;3&quot;</span><span class="p">,</span> <span class="nx">length</span><span class="o">=</span><span class="s2">&quot;12&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="c1">//193TYTVDYJFZ</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">generateRandomKey</span><span class="p">(</span><span class="nx">format</span><span class="o">=</span><span class="s2">&quot;numeric&quot;</span><span class="p">,</span> <span class="nx">length</span><span class="o">=</span><span class="s2">&quot;12&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="c1">//692490463609</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">generateRandomKey</span><span class="p">(</span><span class="k">case</span><span class="o">=</span><span class="s2">&quot;lower&quot;</span><span class="p">,</span> <span class="nx">format</span><span class="o">=</span><span class="s2">&quot;special&quot;</span><span class="p">,</span> <span class="nx">specialChars</span><span class="o">=</span><span class="s2">&quot;*,&amp;&quot;</span><span class="p">,</span> <span class="nx">length</span><span class="o">=</span><span class="s2">&quot;12&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="c1">//fqr74mhb*cq&amp;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If anyone is interested you can <a href="http://www.chapter31.com/wp-content/uploads/2008/10/generaterandomkey1.txt">download the UDF here</a>.</p>
+
+<p>As usual comments and critiques are always welcome :)</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-10-14T00:29:14+11:00" pubdate data-updated="true">Oct 14<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2013
+
+    Your Name
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+
+
+
+
+</body>
+</html>

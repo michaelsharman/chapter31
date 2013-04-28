@@ -1,0 +1,189 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Caveat using dateDiff() to compare difference in days - My Octopress Blog</title>
+	<meta name="author" content="Your Name">
+
+	
+	<meta name="description" content="I had some problems a little while ago using dateCompare() and the same thing bit me recently with dateDiff(). Well really I had a problem with &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">My Octopress Blog</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+	</form>
+</nav>
+
+</header>
+	
+		
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">Caveat Using dateDiff() to Compare Difference in Days</h2>
+	<div class="entry-content"><p>I had <a href="http://www.chapter31.com/2007/10/05/createodbcdate-returns-time-as-well/">some problems a little while ago</a> using dateCompare() and the same thing bit me recently with dateDiff(). Well really I had a problem with createODBCDate(), but let me explain.</p>
+
+<p>I wanted to compare the &#8220;day&#8221; value between 2 dates like;</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfscript</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="nx">date1</span> <span class="o">=</span> <span class="nx">now</span><span class="p">();</span>
+</span><span class='line'>  <span class="nx">date2</span> <span class="o">=</span> <span class="nx">myQuery</span><span class="p">.</span><span class="nx">dateCreated</span><span class="p">;</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="nx">dateDifference</span> <span class="o">=</span> <span class="nx">dateDiff</span><span class="p">(</span><span class="s2">&quot;d&quot;</span><span class="p">,</span> <span class="nx">date1</span><span class="p">,</span> <span class="nx">date2</span><span class="p">);</span>  
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfscript&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The initial problem was that &#8220;myQuery.dateCreated&#8221; has a time value associated with it, as does the value of now(). This meant that where I should have had (or expected to have) a value of &#8220;1&#8221; if date2 was the next day, I wasn&#8217;t because the times were being calculated and both dates where within a 24-hour range. Makes sense.</p>
+
+<p>My first simple fix (which was <a href="http://www.chapter31.com/2007/10/05/createodbcdate-returns-time-as-well/">what I tried before</a>) was to add a <em>createODBCDate()</em> around my dates.</p>
+
+<p>This doesn&#8217;t work though, indeed when you ouput the results of createODBCDate() it looks as though you have a date object with no time but you really DO have a time&#8230;you just can&#8217;t see it :(</p>
+
+<p>2 ways around this both involve stripping out the time part&#8230;using createDate() which is a bit unwieldy:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfscript</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="nx">date1</span> <span class="o">=</span> <span class="nx">createDate</span><span class="p">(</span><span class="nx">year</span><span class="p">(</span><span class="nx">now</span><span class="p">()),</span> <span class="nx">month</span><span class="p">(</span><span class="nx">now</span><span class="p">()),</span> <span class="nx">day</span><span class="p">(</span><span class="nx">now</span><span class="p">()));</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfscript&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Or using dateFormat():</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfscript</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="nx">date1</span> <span class="o">=</span> <span class="nx">dateFormat</span><span class="p">(</span><span class="nx">now</span><span class="p">(),</span> <span class="s2">&quot;yyyy/mmm/dd&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfscript&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So another note to self&#8230;whenever you want to do any sort of date comparisons watch out for the &#8220;time&#8221; values unless of course you want the times as part of your comparison!</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-11-03T17:34:48+11:00" pubdate data-updated="true">Nov 3<span>rd</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2013
+
+    Your Name
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+
+
+
+
+</body>
+</html>

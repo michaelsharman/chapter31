@@ -1,0 +1,207 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Editing svn:ignore on the terminal - My Octopress Blog</title>
+	<meta name="author" content="Your Name">
+
+	
+	<meta name="description" content="svn:ignore is a great way to exclude certain files or folders from being added to your subversion repository. Typically I&#8217;ll manage this via an &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">My Octopress Blog</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+	</form>
+</nav>
+
+</header>
+	
+		
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">Editing Svn:ignore on the Terminal</h2>
+	<div class="entry-content"><p><em>svn:ignore</em> is a great way to exclude certain files or folders from being added to your subversion repository. Typically I&#8217;ll manage this via an IDE plugin like subclipse (in Eclipse), but if you want to do it via the terminal instead (bash)&#8230;here&#8217;s how.</p>
+
+<h2>Crappy way</h2>
+
+<p>You can add single values to your svn:ignore by running this command either at the root of your project or wherever directory you want the ignore to take effect:</p>
+
+<pre><code>svn propset svn:ignore "*.project" .
+</code></pre>
+
+<p>However that command seems not only to add an ignore rule, but also it clears any rules you may have had on that directory and only inserts the single rule you just specified. No good.</p>
+
+<h2>Better way</h2>
+
+<p>There are a couple of ways to enter multiple ignore values into your ignore file, I like simply opening up the ignore editor. Try this command:</p>
+
+<pre><code>svn propedit svn:ignore .
+</code></pre>
+
+<p>If you get the following error it means you haven&#8217;t associated an editor with svn:ignore</p>
+
+<blockquote><p>svn: None of the environment variables SVN_EDITOR, VISUAL or EDITOR are set, and no &#8216;editor-cmd&#8217; run-time configuration option was found</p></blockquote>
+
+<p>You can quickly associate the editor with nano (or another editor of your choice) by running:</p>
+
+<pre><code>export SVN_EDITOR=nano
+</code></pre>
+
+<p>That&#8217;s not ideal as it&#8217;ll only work in the current bash session, when you close your terminal window that export will be lost. The best bet is to add it to your ~/.bash_profile (or ~/.bash_login).</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd ~
+</span><span class='line'>nano .bash_profile
+</span><span class='line'>export SVN_EDITOR=nano</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now you&#8217;ll always be able to edit your svn:ignore file. So let&#8217;s try again:</p>
+
+<pre><code>svn propedit svn:ignore .
+</code></pre>
+
+<p>Nano (or whatever editor you specified) should open allowing you to enter whatever you want :)</p>
+
+<p>Here&#8217;s a simple list of mine:</p>
+
+<pre><code>*.DS_Store  
+*.project  
+*.sublime-project  
+*.sublime-workspace  
+htdocs/WEB-INF
+</code></pre>
+
+<p>If you actually want to see all your files (including those that you&#8217;ve ignored) via the terminal, run:</p>
+
+<pre><code>svn status --no-ignore
+</code></pre>
+
+<h2>Externals</h2>
+
+<p>Note that you can also edit any svn:externals using the same technique.</p>
+
+<pre><code>svn propedit svn:externals .
+</code></pre>
+
+<p>Remember that you need to be in the location of the directory that contains any externals for this to work properly.</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-07-10T22:49:19+10:00" pubdate data-updated="true">Jul 10<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/svn/'>SVN</a>
+
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2013
+
+    Your Name
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+
+
+
+
+</body>
+</html>

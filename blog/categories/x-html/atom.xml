@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: (X)HTML | My Octopress Blog]]></title>
+  <link href="http://michaelsharman.github.io/chapter31/blog/categories/x-html/atom.xml" rel="self"/>
+  <link href="http://michaelsharman.github.io/chapter31/"/>
+  <updated>2013-04-28T21:52:25+10:00</updated>
+  <id>http://michaelsharman.github.io/chapter31/</id>
+  <author>
+    <name><![CDATA[Your Name]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Problems submitting a form via 'enter' in IE]]></title>
+    <link href="http://michaelsharman.github.io/chapter31/blog/2008/10/22/problems-submitting-a-form-via-enter-in-ie/"/>
+    <updated>2008-10-22T13:35:25+11:00</updated>
+    <id>http://michaelsharman.github.io/chapter31/blog/2008/10/22/problems-submitting-a-form-via-enter-in-ie</id>
+    <content type="html"><![CDATA[<p>Like many things, handling form submissions with <a href="http://www.adobe.com/products/coldfusion/">ColdFusion</a> can be done many many ways. A preferred method which I've been using for years now is looking for a specific element in the form struct. Something like:</p>
+
+<p>``` javascript
+<cfif structKeyExists(form, "myelement")></p>
+
+<pre><code>&lt;!--- handle form submission here ---&gt;
+</code></pre>
+
+<p></cfif>
+```</p>
+
+<p>Most times I use a hidden field as the form element to look for (in my <a href="http://www.cfquickdocs.com/#StructKeyExists">structKeyExists()</a>), but I came across something funny today where I happened to be looking for the <em>name</em> of a submit button.</p>
+
+<p>My form was very basic:</p>
+
+<p><a href="http://www.chapter31.com/wp-content/uploads/2008/10/form.png"><img src="http://www.chapter31.com/wp-content/uploads/2008/10/form.png" alt="" /></a></p>
+
+<p>If this form is submitted by clicking the submit button ("Go") in all browsers I get the following form struct:</p>
+
+<p><a href="http://www.chapter31.com/wp-content/uploads/2008/10/picture-3.png"><img src="http://www.chapter31.com/wp-content/uploads/2008/10/picture-3.png" alt="" /></a></p>
+
+<p>Notice that I have <em>2 form elements</em> in the form dump, "btnSearch" which is the submit button and "searchCriteria" which is the text box. So far so good, but what happens when I submit the form by hitting the "enter" key (when I have focus in the text box)?</p>
+
+<p>In most browsers you get the same form dump as above...not so with IE where I get the following:</p>
+
+<p><a href="http://www.chapter31.com/wp-content/uploads/2008/10/picture-2.png"><img src="http://www.chapter31.com/wp-content/uploads/2008/10/picture-2.png" alt="" /></a></p>
+
+<p>As you can see, my submit button (btnSearch) <em><strong>does not exist in the form struct!</strong></em>.</p>
+
+<p>The submit button HTML was:</p>
+
+<p><code>javascript
+&lt;input type="submit" name="btnSearch" id="btnSearch" value="Go" /&gt;
+</code></p>
+
+<p>After discussions with <a href="http://www.lynchconsulting.com.au/blog/">Mark Lynch</a> and some testing it appears that this only happens when you have <em>a single text element</em> on the page. If you have 2 or more textboxes then the form submit button appears in the form struct as expected</p>
+
+<p>For those asking whether it's really important, after all how often will you have a form with a single text box. Ever used a search form? :)</p>
+
+<p>The easy way around this <em>bug</em> is to never look for a submit button, instead look for a hidden field or a text box.</p>
+
+<p>For those who sometimes use 2 submit buttons on the same page and take action depending on which one was clicked...the same thing happens i.e. neither submit button exists in the form struct (in IE) if you hit "enter". In Firefox the submit button which appears first in the form markup exists in the form!</p>
+
+<p>All in all I'd recommend never using the name of a submit button to determine the action of a form submission. The only exception is if you have multiple submit buttons and you understand and are happy with the default action in IE (the first submit button existing etc).</p>
+
+<p>Some might say you could have a 2nd textbox on the form and hide it using CSS. While this would work it just feels wrong and a bit of a hack.</p>
+
+<p>If you're curious, here's a small compatibility table of my findings on Mac OSX (except IE of course which was on Windows XP):</p>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th> Browser </th>
+<th> Submit exists on enter </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td> Firefox 3.0.3 </td>
+<td> Yes</td>
+</tr>
+<tr>
+<td></td>
+<td> </td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td> Internet Explorer 7 (7.0.5730.13) </td>
+<td> No</td>
+</tr>
+<tr>
+<td></td>
+<td> </td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td> Internet Explorer 6 SP2 (6.0.2900.2180) </td>
+<td> No</td>
+</tr>
+<tr>
+<td></td>
+<td> </td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td> Opera 9.52/9.61 </td>
+<td> Yes</td>
+</tr>
+<tr>
+<td></td>
+<td> </td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td> Safari 3.1.2 </td>
+<td> Yes</td>
+</tr>
+<tr>
+<td></td>
+<td> </td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td> Camino 1.6.4 </td>
+<td> Yes</td>
+</tr>
+</tbody>
+</table>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Kotatsu - a simple html table generator]]></title>
+    <link href="http://michaelsharman.github.io/chapter31/blog/2008/07/08/kotatsu-a-simple-html-table-generator/"/>
+    <updated>2008-07-08T19:53:23+10:00</updated>
+    <id>http://michaelsharman.github.io/chapter31/blog/2008/07/08/kotatsu-a-simple-html-table-generator</id>
+    <content type="html"><![CDATA[<p>Sometimes you want to create an HTML table by hand and don't have the luxury (if you consider it a luxury!) of having Dreamweaver around. Of course, creating HTML tables really isn't all that difficult or time consuming, but considering we use snippets for just about everything else why not have a tool to generate these tables for us?</p>
+
+<p><a href="http://www.askthecssguy.com/kotatsu/index.html">Kotatsu</a> is an online tool to do just that, sure it is very simple (doesn't support col/rowspans or accessibility attributes etc) but when you want to churn out a basic custom table it just might save you some time.</p>
+
+<p>About the only other thing you can do (apart from rows and columns) is add a css class per column which can come in handy.</p>
+
+<p>A basic tool which you might find useful, but would be better with some additions for customising like adding table id's or th's etc</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2008/07/kotsatsu.png" alt="" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[When to use form POST vs GET?]]></title>
+    <link href="http://michaelsharman.github.io/chapter31/blog/2008/01/24/when-to-use-form-post-vs-get/"/>
+    <updated>2008-01-24T14:01:30+11:00</updated>
+    <id>http://michaelsharman.github.io/chapter31/blog/2008/01/24/when-to-use-form-post-vs-get</id>
+    <content type="html"><![CDATA[<p>I read <a href="http://www.coldfusionmuse.com/index.cfm/2008/1/23/web.logs.security">a post</a> today from <a href="http://www.coldfusionmuse.com/">Mark Kruger</a> where he was warning against the possible side effects when using GET as a form submit <em>method</em>.</p>
+
+<p>I think I (unintentionally) offended Mark with my comment where I asked <em>why would anyone EVER use GET?</em> because I pretty much always use POST so was wondering why you would use GET.</p>
+
+<p>In my search for answers I asked <a href="http://www.lynchconsulting.com.au/">Mark Lynch</a> who seems to always have the answer to my questions :)</p>
+
+<p>So in summary (from <a href="http://weblogs.asp.net/mschwarz/archive/2006/12/04/post-vs-get.aspx">Michael Schwarz</a>);</p>
+
+<blockquote><p>POST</p>
+
+<ol>
+<li>By default no proxy server or web browser is caching this data, you will always get the real data from you web server.</li>
+<li>The length of data you can send to the web server is only restricted by the web server itself, but there is no real restriction.</li>
+<li>Character encoding can be done easily using application/x-www-form-urlencoded.</li>
+</ol>
+
+
+<p>GET</p>
+
+<ol>
+<li>Running a http request with GET can be cached on your web browser or a configured proxy server.</li>
+<li>To get the live data from you web server you have to modify the url that is used in your XHR invoke, simply by using a counter or new Date().getTime() which will generate a unique url.</li>
+<li>Maximum URL length is 2,083 characters in Internet Explorer (see MaxClientRequestBuffer: Use POST instead of GET to Send Large Amounts of Data in Request)</li>
+<li>In particular, the convention has been established that the GET and HEAD methods SHOULD NOT have the significance of taking an action other than retrieval. [RFC 2616 sec 9]</li>
+<li>Character encoding will reduce the amount of data that can be used because of url encoding entities (i.e. three Japanese characters are converted to this: %26%2312454%3B%26%2312455%3B%26%2312502%3B)</li>
+</ol>
+</blockquote>
+
+<p>There is also a <a href="http://www.cs.tut.fi/~jkorpela/forms/methods.html">great article here</a> if you want some further reading on this subject.</p>
+
+<p>For me (at this stage) this really only has an effect when doing Ajax. If I'm purely wanting to retrieve data (just HTML for example) from the server then I'll use GET, but if I want to do something else with server <em>side effects</em> (such as posting data to be saved to a database) then I'll use POST.</p>
+
+<p>Phew...you learn something new everyday!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[The 'coolest' DHTML calendar]]></title>
+    <link href="http://michaelsharman.github.io/chapter31/blog/2007/03/25/the-coolest-dhtml-calendar/"/>
+    <updated>2007-03-25T17:25:13+10:00</updated>
+    <id>http://michaelsharman.github.io/chapter31/blog/2007/03/25/the-coolest-dhtml-calendar</id>
+    <content type="html"><![CDATA[<p>As web developers we are often some of the first people to see the newer techniques and tools available for use in web applications. This can be great as we can then hurry off and implement these things into our new projects.</p>
+
+<p>But of course there are still millions of older sites (which will no doubt still be around for years to come!) using <em>old</em> techniques and tools. Ugh!</p>
+
+<p>One of the more common things you find is the age old popup calendar window which is SLOW and could be blocked by the numerous popup blockers out there today. I don't know why but I really dislike sites that use this approach. Of course for older sites (when other solutions weren't readily available) this is fine, but for newly released sites there is no excuse!</p>
+
+<p>A technique which is definitely not so new but oh so cool, is using DHTML to display a calendar for users to choose a date. Although there are a lot of these solutions out there the one I keep coming back to is offered by <a href="http://www.dynarch.com/projects/calendar/">Dynarch.com</a> and has been around for over 2 years :)</p>
+
+<p>The benefits of this type of approach are numerous:</p>
+
+<ul>
+<li><p>Cosmetic - DHTML calendars look so much better than their popup counterparts and can be easily modified with CSS</p></li>
+<li><p>Speed - as the DHTML is loaded in the browser is is MUCH quicker and more responsive</p></li>
+<li><p>Popup blockers - as it's just HTML it won't be blocked</p></li>
+<li><p>Configuration - easy as pie, just a little javascript tweaking</p></li>
+<li><p>Cross browser support</p></li>
+</ul>
+
+
+<p>Another great thing about the Dynarch solution is that it's open source under the <a href="http://www.gnu.org/licenses/lgpl.html">GNU Lesser General Public License</a>.</p>
+
+<p><a href="http://www.dynarch.com/demos/jscalendar/">Click here</a> for the demo page</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2007/03/dynarch.gif" alt="Dynarch" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Including js files from within js files]]></title>
+    <link href="http://michaelsharman.github.io/chapter31/blog/2006/12/08/including-js-files-from-within-js-files/"/>
+    <updated>2006-12-08T10:05:24+11:00</updated>
+    <id>http://michaelsharman.github.io/chapter31/blog/2006/12/08/including-js-files-from-within-js-files</id>
+    <content type="html"><![CDATA[<p>I'm working on an application which stores a lot of data in the application scope. Part of the data stored is a config CFC that has a method which loads 'external assets' (javascript and css files etc) into the <head> of the html document via <a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/wwhelp/wwhimpl/common/html/wwhelp.htm?context=ColdFusion_Documentation&amp;file=00000271.htm"><cfhtmlhead></a>. I love that tag :)</p>
+
+<p>My part in this application development is limited to a particular section only, but there was already a lot of external assets present in the header and things were getting very messy. I was looking for a way to simulate <cfinclude> but from within a .js file so I could clean up my output a bit, fortunately there is a way!</p>
+
+<p>I now have a master js file to add to the <head> section of my document:</p>
+
+<p>``` javascript</p>
+
+<script src="js/master.js" type="text/javascript"></script>
+
+
+<p>```</p>
+
+<p>From within this master.js file I can 'include' any js files I want.</p>
+
+<p>master.js</p>
+
+<p>``` javascript
+//this function includes all necessary js files for the application
+function include(file)
+{</p>
+
+<p>  var script  = document.createElement('script');
+  script.src  = file;
+  script.type = 'text/javascript';
+  script.defer = true;</p>
+
+<p>  document.getElementsByTagName('head').item(0).appendChild(script);</p>
+
+<p>}</p>
+
+<p>/<em> include any js files here </em>/
+include('js/myFile1.js');
+include('js/myFile2.js');
+```</p>
+
+<p>The above code includes myFile1.js and myFile2.js, both of which are located in the relative 'js/' directory.</p>
+
+<p>Not only does this clean up my output, but as my config file was stored in application scope every time I wanted to add/remove an asset from my application I need to refresh the scope...annoying. But now I am happy :)</p>
+]]></content>
+  </entry>
+  
+</feed>

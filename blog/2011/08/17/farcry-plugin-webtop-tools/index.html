@@ -1,0 +1,195 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>FarCry Plugin - Webtop Tools - My Octopress Blog</title>
+	<meta name="author" content="Your Name">
+
+	
+	<meta name="description" content="We&#8217;re starting to compile a list of internal tools used when developing a FarCry application. I thought it might be simpler to create a small &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">My Octopress Blog</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+	</form>
+</nav>
+
+</header>
+	
+		
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">FarCry Plugin - Webtop Tools</h2>
+	<div class="entry-content"><p>We&#8217;re starting to compile a list of internal tools used when developing a FarCry application. I thought it might be simpler to create a small FarCry plugin to keep them all in the same place, makes it easier to use across multiple projects.</p>
+
+<p><a href="https://github.com/michaelsharman/lcwebtoptools">The plugin</a> currently contains 2 scripts:</p>
+
+<ul>
+<li>FarCry database diff (MySQL only at this stage)</li>
+<li>Content Object Meta</li>
+</ul>
+
+
+<p>The database diff looks for case-sensitivity differences between your ColdFusion components and the actual MySQL table names (MySQL only). Historically we&#8217;ve had issues because we are on Linux, this tool has helped quickly iron out any differences in &#8220;case&#8221;.</p>
+
+<p>The Content Object Meta assists in finding information about content of any &#8220;type&#8221; in FarCry, based on the title, objectId or friendly URL. What does this mean? Well any &#8220;content object&#8221; you want information on can be found using this tool. Whether you have an objectId and you don&#8217;t know if it belongs to dmNavigation, dmHTML, dmNews or a custom type. Or you might have part of a friendly URL or content label/title. This tool can help tell you what the content type is, whether it&#8217;s approved, where it sits in the site tree (if relevant) etc.</p>
+
+<p>For example; if I wanted to know everything in FarCry that had a label LIKE &#8216;credential&#8217; (wildcards are automatically added to your search term) I might get results like the following:</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2011/08/contenttitle.png" alt="" /></p>
+
+<p>From that initial resultset, if I clicked on an objectid for dmNavigation:</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2011/08/objectid.png" alt="" /></p>
+
+<p>Or if I clicked on an objectid for dmHTML:</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2011/08/objectid_dmhtml.png" alt="" /></p>
+
+<p>Note that there is a collapsed cfdump that you can expand for further info.</p>
+
+<h2>Requirements</h2>
+
+<p>Railo 3.2+ or ColdFusion 7+<br/>
+FarCry 6+<br/>
+MySQL 5+</p>
+
+<h2>Installation</h2>
+
+<p>&#8220;Official&#8221; notes on installing FarCry plugins can be found here: <a href="https://farcry.jira.com/wiki/pages/viewpage.action?pageId=12943398">https://farcry.jira.com/wiki/pages/viewpage.action?pageId=12943398</a></p>
+
+<p>It&#8217;s pretty simple though:</p>
+
+<ul>
+<li>add the &#8220;lcwebtoptools&#8221; directory from git into /farcry/plugins/</li>
+<li>add &#8220;lcwebtoptools&#8221; to THIS.plugins in farcryConstructor.cfm (in your project webroot)</li>
+</ul>
+
+
+<p>e.g.</p>
+
+<pre><code>&lt;cfset THIS.plugins = "farcrycms,lcwebtoptools"&gt;
+</code></pre>
+
+<p>Restart your app, that&#8217;s it. No coapi changes need to be made. To access the current tools, go to the &#8220;Admin&#8221; tab and choose &#8220;Webtop Tools&#8221; from the drop down.</p>
+
+<p>The plugin is <a href="https://github.com/michaelsharman/lcwebtoptools">hosted on github</a>, for a direct download to the zip <a href="https://github.com/michaelsharman/lcwebtoptools/zipball/master">click here</a>.</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-17T10:38:33+10:00" pubdate data-updated="true">Aug 17<span>th</span>, 2011</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/farcry/'>Farcry</a>
+
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2013
+
+    Your Name
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+
+
+
+
+</body>
+</html>

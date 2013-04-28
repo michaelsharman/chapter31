@@ -1,0 +1,842 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>My Octopress Blog</title>
+	<meta name="author" content="Your Name">
+
+	
+	<meta name="description" content="One of the annoying things about cfscript is it&#8217;s lack of support for a lot of CFML tags. and are 2 tags I always use in development, &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">My Octopress Blog</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+	</form>
+</nav>
+
+</header>
+	
+		
+
+	
+	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2006/04/28/dumping-and-aborting-with/">
+		
+			Dumping and Aborting With <cfscript></a>
+	</h2>
+	<div class="entry-content">
+		<p>One of the annoying things about cfscript is it&#8217;s lack of support for a lot of CFML tags.</p>
+
+<p><cfdump> and <cfabort> are 2 tags I always use in development, especially for debugging. A way to use this functionality is to create a UDF to do these types of functions.</p>
+
+<p><strong>For example</strong></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cffunction</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;dump&quot;</span> <span class="nx">access</span><span class="o">=</span><span class="s2">&quot;public&quot;</span> <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;true&quot;</span> <span class="nx">returntype</span><span class="o">=</span><span class="s2">&quot;struct&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;arg&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="nx">cfdump</span> <span class="kd">var</span><span class="o">=</span><span class="s2">&quot;#arg#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cffunction&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cffunction</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;abort&quot;</span> <span class="nx">access</span><span class="o">=</span><span class="s2">&quot;public&quot;</span> <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="nx">returntype</span><span class="o">=</span><span class="s2">&quot;void&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="nx">cfabort</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cffunction&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This function can be stored in a simple utilities component and stored in application scope, that way you can call it from anywhere.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-04-28T15:01:55+10:00" pubdate data-updated="true">Apr 28<span>th</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2006/04/20/isvalid/">
+		
+			isValid()</a>
+	</h2>
+	<div class="entry-content">
+		<p>New to ColdFusion MX7 the isValid() function tests whether a value meets a validation or data type rule and returns True if the value conforms to the rule; False, otherwise.</p>
+
+<p>Function syntax</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">isValid</span><span class="p">(</span><span class="nx">type</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span>
+</span><span class='line'><span class="nx">isValid</span><span class="p">(</span><span class="s2">&quot;range&quot;</span><span class="p">,</span> <span class="nx">value</span><span class="p">,</span> <span class="nx">min</span><span class="p">,</span> <span class="nx">max</span><span class="p">)</span>
+</span><span class='line'><span class="nx">isValid</span><span class="p">(</span><span class="s2">&quot;regex&quot;</span> <span class="nx">or</span> <span class="s2">&quot;regular_expression&quot;</span><span class="p">,</span> <span class="nx">value</span><span class="p">,</span> <span class="nx">pattern</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Example:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">IsValid</span><span class="p">(</span><span class="s2">&quot;integer&quot;</span><span class="p">,</span> <span class="nx">url</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span><span class="o">&gt;</span>
+</span><span class='line'>   <span class="nx">Valid</span> <span class="nx">integer</span><span class="o">!</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfelse</span><span class="o">&gt;</span>
+</span><span class='line'>   <span class="nx">Invalid</span> <span class="nx">Integer</span><span class="o">!</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfif&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">IsValid</span><span class="p">(</span><span class="s2">&quot;range&quot;</span><span class="p">,</span> <span class="nx">url</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span><span class="o">&gt;</span>
+</span><span class='line'>   <span class="nx">Value</span> <span class="nx">is</span> <span class="nx">between</span> <span class="mi">1</span> <span class="nx">and</span> <span class="mi">100</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfelse</span><span class="o">&gt;</span>
+</span><span class='line'>   <span class="nx">Value</span> <span class="nx">is</span> <span class="nx">not</span> <span class="nx">between</span> <span class="mi">1</span> <span class="nx">and</span> <span class="mi">100</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfif&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">IsValid</span><span class="p">(</span><span class="s2">&quot;regex&quot;</span><span class="p">,</span> <span class="nx">url</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="s2">&quot;[A-Z][a-z]+&quot;</span><span class="p">)</span><span class="o">&gt;</span>
+</span><span class='line'>   <span class="nx">Word</span> <span class="nx">starts</span> <span class="kd">with</span> <span class="nx">a</span> <span class="nx">capital</span> <span class="nx">letter</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfelse</span><span class="o">&gt;</span>
+</span><span class='line'>   <span class="nx">Word</span> <span class="nx">does</span> <span class="nx">not</span> <span class="nx">match</span> <span class="nx">pattern</span><span class="p">.</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfif&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>There are a lot of pre-existing functions that can already do a lot of what isValid() offers like:</p>
+
+<ul>
+<li>isNumeric()</li>
+<li>isBoolean()</li>
+<li>isArray()</li>
+<li>isQuery()</li>
+<li>isStruct</li>
+</ul>
+
+
+<p>But with isValid() you can do those as well as things like:</p>
+
+<ul>
+<li>creditcard (mod10 checks for credit cards)</li>
+<li>email</li>
+<li>eurodate</li>
+<li>guid</li>
+<li>range</li>
+<li>regex</li>
+<li>url</li>
+<li>usdate</li>
+<li>variablename (a string formatted according to ColdFusion variable naming conventions)</li>
+</ul>
+
+
+<p>There are also a few US specific test conditions as well like “ssn” and “telephone” etc.</p>
+
+<p>All in all this is an extremely versatile tag to use for validation and will save you oodles of time!</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-04-20T13:28:30+10:00" pubdate data-updated="true">Apr 20<span>th</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2006/04/11/cfdump-goodies/">
+		
+			Cfdump Goodies</a>
+	</h2>
+	<div class="entry-content">
+		<p><a href="http://livedocs.macromedia.com/coldfusion/6.1/htmldocs/tags-p21.htm">&lt;cfdump&gt;</a> is a fantastic debugging tool which can be used to display the values/results of simple and complex variables. But there are a couple of little known attributes you can take advantage of to make your life just peachy, namely:</p>
+
+<ul>
+<li>expand</li>
+<li>top</li>
+</ul>
+
+
+<p>Expand is great when you&#8217;re working with large data structures which might take a long time to load etc. This attribute can take 2 values, either yes or no (the default being yes). &#8216;Yes&#8217; expands all structure(s) both top level and nested, and &#8216;No&#8217; collapses them which can be handy if you only want to view top level elements only or if you want to drill down to a certain key only.</p>
+
+<p><strong>For example:</strong></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfdump</span> <span class="kd">var</span><span class="o">=</span><span class="s2">&quot;#myVar#&quot;</span> <span class="nx">expand</span><span class="o">=</span><span class="s2">&quot;no&quot;</span><span class="o">&gt;&lt;</span><span class="err">/cfdump&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Top is used to display the top &#8216;x&#8217; nested levels of the structure. So if you are dumping a complex variable which holds many nested complex types (queries, structures etc) you can choose which level to load up to.</p>
+
+<p><strong>For example:</strong></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfdump</span> <span class="kd">var</span><span class="o">=</span><span class="s2">&quot;#myVar#&quot;</span> <span class="nx">top</span><span class="o">=</span><span class="s2">&quot;2&quot;</span><span class="o">&gt;&lt;</span><span class="err">/cfdump&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-04-11T15:56:51+10:00" pubdate data-updated="true">Apr 11<span>th</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2006/04/01/how-do-i-trim-the-contents-of-a-form/">
+		
+			How Do I Trim the Contents of a Form?</a>
+	</h2>
+	<div class="entry-content">
+		<p>From <a href="http://www.coldfusioncookbook.com/">ColdFusion Cookbook</a>:</p>
+
+<p>Trimming is an essential part of dealing with an data coming from form textfields or textareas etc. You can of couse trim as and when you need (before validation or database inserts etc) but if you can trim all fields quickly and easily!</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfloop</span> <span class="nx">collection</span><span class="o">=</span><span class="s2">&quot;#form#&quot;</span> <span class="nx">item</span><span class="o">=</span><span class="s2">&quot;formfield&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">form</span><span class="p">[</span><span class="nx">formfield</span><span class="p">]</span> <span class="o">=</span> <span class="nx">trim</span><span class="p">(</span><span class="nx">form</span><span class="p">[</span><span class="nx">formfield</span><span class="p">])</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfloop&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This basically loops over a form structure and trims each element. You can use this loop in a function before handing it to your validation or database methods.</p>
+
+<p><a href="http://www.coldfusioncookbook.com/entry/28/How-do-I-trim-the-contents-of-a-form?">Read the full article</a></p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-04-01T16:27:37+11:00" pubdate data-updated="true">Apr 1<span>st</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2006/03/31/how-to-find-the-size-of-a-directory/">
+		
+			How to Find the Size of a Directory?</a>
+	</h2>
+	<div class="entry-content">
+		<p>Here is an <a href="http://www.coldfusioncookbook.com/entry/79/How-do-I-find-the-size-of-a-directory?">article</a> from <a href="http://www.coldfusioncookbook.com/">coldfusion cookbook</a>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfdirectory</span>
+</span><span class='line'>  <span class="nx">directory</span><span class="o">=</span><span class="s2">&quot;c:\cfusionmx&quot;</span>
+</span><span class='line'>  <span class="nx">action</span><span class="o">=</span><span class="s2">&quot;list&quot;</span>
+</span><span class='line'>  <span class="nx">recurse</span><span class="o">=</span><span class="s2">&quot;true&quot;</span>
+</span><span class='line'>  <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;cfDir&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfquery</span> <span class="nx">dbtype</span><span class="o">=</span><span class="s2">&quot;query&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;dirSize&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>   <span class="nx">select</span> <span class="nx">sum</span><span class="p">(</span><span class="nx">size</span><span class="p">)</span> <span class="nx">as</span> <span class="nx">size</span> <span class="nx">from</span> <span class="nx">cfDir</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfquery&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">sizemb</span><span class="o">=</span><span class="s2">&quot;dirSize.size/1000000&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfoutput</span><span class="o">&gt;</span><span class="err">#</span><span class="nx">numberFormat</span><span class="p">(</span><span class="nx">sizeMB</span><span class="p">,</span><span class="s2">&quot;,.99&quot;</span><span class="p">)</span><span class="err">#</span><span class="o">&lt;</span><span class="err">/cfoutput&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note the &#8216;recurse&#8217; option, this will get the size of the current and all sub-directories. If you only need the size of the current directory, change recurse to false.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-03-31T12:36:43+11:00" pubdate data-updated="true">Mar 31<span>st</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2006/03/29/how-do-i-make-sure-a-string-is-safe-to-use-with-javascript/">
+		
+			How Do I Make Sure a String Is Safe to Use With JavaScript?</a>
+	</h2>
+	<div class="entry-content">
+		<p>An <a href="http://www.coldfusioncookbook.com/entry/78/How-do-I-make-sure-a-string-is-safe-to-use-with-JavaScript?">article</a> from <a href="http://www.coldfusioncookbook.com/">coldfusion cookbook</a> using <a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000543.htm#1106993">jSStringFormat()</a>:</p>
+
+<p>&#8220;If you are dynamically populating a JavaScript variable, you may find that your code breaks with &#8220;unterminated string constant&#8221; or similar error messages. This is probably a case of your JavaScript variables containing characters that are considers to be &#8220;special&#8221; characters by JavaScript. You will need to &#8220;escape&#8221; these special characters so that JavaScript can process them.&#8221;</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-03-29T12:45:09+11:00" pubdate data-updated="true">Mar 29<span>th</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2006/03/16/cfstoredproc-vs-cfquery/">
+		
+			Cfstoredproc vs Cfquery</a>
+	</h2>
+	<div class="entry-content">
+		<p>There are of course pros and cons to using each method to perform CRUD operations on a database.</p>
+
+<p><strong>cfstoredproc Pros:</strong></p>
+
+<ul>
+<li>With stored procedures you can control security in the database as well as the web pages.</li>
+<li>Transactions are handled at the database level, stored procedures are ideal here.</li>
+<li>Stored procedures provide greater performance, because the execution plan for the sql doesn&#8217;t have to be recreated and if a page has multiple calls to the database, you can combine them all in one stored procedure, meaning only one trip to and back from the db.</li>
+<li>Putting all of your sql in stored procedures provides centralization of your database code, so if your table structure or business rules change, all of your sql is located in your database stored procedures instead of distributed throughout your application code.</li>
+</ul>
+
+
+<p><strong>cfstoredproc Cons</strong></p>
+
+<ul>
+<li><del>You can have ColdFusion cache the query - which it doesn&#8217;t do with stored procedures.</del> <strong>Update Nov 2006</strong>: you can actually cache stored procedures! <a href="http://www.chapter31.com/2006/11/08/caching-stored-procedures/">See here for more info</a></li>
+<li>It often seems a waste to create a stored proc for a simple select statement.</li>
+<li>cfquery gives you maximum flexibility in terms of creating the sql for the query. there are many ways to make stored procedures &#8220;dynamic&#8221;, such as providing parameters for a where clause, the fields used in an order by clause, etc., but many of these sql solutions are clunky (involving multiple CASE statements) or impossible (dynamically assigning the table to do the query on).</li>
+</ul>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-03-16T11:30:18+11:00" pubdate data-updated="true">Mar 16<span>th</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2006/03/16/cfstoredproc-in-mx7/">
+		
+			New &#8216;Result&#8217; Attribute in MX7 Cfstoredproc</a>
+	</h2>
+	<div class="entry-content">
+		<p>In CFMX7 Macromedia introduced a new (and optional) attribute to the cfstoredproc tag called &#8220;result&#8221; which specifies a name for the structure in which cfstoredproc returns the statusCode and ExecutionTime variables. If set, this value replaces cfstoredproc as the prefix to use when accessing those variables.</p>
+
+<p>The result attribute provides a way for stored procedures that are called from multiple pages, possibly at the same time, to avoid overwriting the results of one call with another. If you set the result attribute to myResult, for example, you would access ExecutionTime as myResult.ExecutionTime. Otherwise, you would access it as cfstoredproc.ExecutionTime.</p>
+
+<p>e.g.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfstoredproc</span>
+</span><span class='line'>  <span class="nx">procedure</span> <span class="o">=</span> <span class="s2">&quot;foo_proc&quot;</span>
+</span><span class='line'>  <span class="nx">dataSource</span> <span class="o">=</span> <span class="s2">&quot;myDSN&quot;</span>
+</span><span class='line'>  <span class="nx">returnCode</span> <span class="o">=</span> <span class="s2">&quot;myResultStats&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="o">&lt;</span><span class="nx">cfprocresult</span> <span class="nx">name</span> <span class="o">=</span> <span class="s2">&quot;RS1&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfstoredproc&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>instead of using #cfstoredproc.executionTime# you can use #myResultStats.executionTime#</p>
+
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/wwhelp/wwhimpl/common/html/wwhelp.htm?context=ColdFusion_Documentation&amp;file=00000338.htm">cfstoredproc Livedocs</a></p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-03-16T10:51:57+11:00" pubdate data-updated="true">Mar 16<span>th</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2006/03/15/double-checked-locking/">
+		
+			Double-checked Locking</a>
+	</h2>
+	<div class="entry-content">
+		<p>Mark Kruger has a nice article (with mention from <a href="http://corfield.org">Sean Corfield</a>) on APPLICATION variable locking.</p>
+
+<p>Sean basically added that in the initial example (BAD code) if 2 users hit the <cfif> condition at the same time, only one will have a lock on the code while the other will wait.
+The problem lies in the fact that the 2nd user is waiting for the lock to expire, then they will perform a write operation NOT checking the <cfif> condition again!</p>
+
+<p>The article is <a href="http://mkruger.cfwebtools.com/index.cfm?mode=entry&amp;entry=DEAF10EF-C648-7C00-3F815AEB5E49E4E5">here</a>.</p>
+
+<p>BAD code snippet:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">NOT</span> <span class="nx">isDefined</span><span class="p">(</span><span class="s1">&#39;Application.curIps&#39;</span><span class="p">)</span><span class="nx">OR</span> <span class="nx">IsDefined</span><span class="p">(</span><span class="s1">&#39;url.forceAp&#39;</span><span class="p">)</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cflock</span> <span class="nx">scope</span><span class="o">=</span><span class="s2">&quot;APPLICATION&quot;</span> <span class="nx">timeout</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="nx">cfscript</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="nx">curIps</span> <span class="o">=</span> <span class="nx">queryNew</span><span class="p">(</span><span class="s2">&quot;IP&quot;</span><span class="p">);</span>
+</span><span class='line'>      <span class="nx">queryAddRow</span><span class="p">(</span><span class="nx">curIps</span><span class="p">);</span>
+</span><span class='line'>      <span class="nx">querySetCell</span><span class="p">(</span><span class="nx">curIps</span><span class="p">,</span><span class="s2">&quot;IP&quot;</span><span class="p">,</span><span class="nx">cgi</span><span class="p">.</span><span class="nx">remote_addr</span><span class="p">);</span>
+</span><span class='line'>      <span class="nx">Application</span><span class="p">.</span><span class="nx">curIps</span> <span class="o">=</span> <span class="nx">curIps</span><span class="p">;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="err">/cfscript&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cflock&gt;  </span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>GOOD code snippet:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c">&lt;!--</span><span class="o">-</span> <span class="nx">check</span> <span class="nx">condition</span> <span class="o">---&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">NOT</span> <span class="nx">isDefined</span><span class="p">(</span><span class="s1">&#39;Application.curIps&#39;</span><span class="p">)</span> <span class="nx">OR</span> <span class="nx">IsDefined</span><span class="p">(</span><span class="s1">&#39;url.forceAp&#39;</span><span class="p">)</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&gt;!---</span> <span class="nx">Use</span> <span class="nx">a</span> <span class="nx">named</span> <span class="nx">lock</span> <span class="o">---&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cflock</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;ipInitialize&quot;</span> <span class="nx">timeout</span><span class="o">=</span><span class="s2">&quot;1&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;exclusive&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="c">&lt;!--</span><span class="o">-</span> <span class="nx">check</span> <span class="nx">to</span> <span class="nx">make</span> <span class="nx">sure</span> <span class="nx">condition</span> <span class="nx">is</span> <span class="nx">still</span> <span class="kc">true</span> <span class="o">---&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">NOT</span> <span class="nx">IsDefined</span><span class="p">(</span><span class="s1">&#39;Application.curIps&#39;</span><span class="p">)</span> <span class="nx">OR</span> <span class="nx">IsDefined</span><span class="p">(</span><span class="s1">&#39;url.forceAp&#39;</span><span class="p">)</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="nx">cfscript</span><span class="o">&gt;</span>
+</span><span class='line'>         <span class="nx">curIps</span> <span class="o">=</span> <span class="nx">queryNew</span><span class="p">(</span><span class="s2">&quot;IP&quot;</span><span class="p">);</span>
+</span><span class='line'>        <span class="nx">queryAddRow</span><span class="p">(</span><span class="nx">curIps</span><span class="p">);</span>
+</span><span class='line'>        <span class="nx">querySetCell</span><span class="p">(</span><span class="nx">curIps</span><span class="p">,</span><span class="s2">&quot;IP&quot;</span><span class="p">,</span><span class="nx">cgi</span><span class="p">.</span><span class="nx">remote_addr</span><span class="p">);</span>
+</span><span class='line'>        <span class="nx">Application</span><span class="p">.</span><span class="nx">curIps</span> <span class="o">=</span> <span class="nx">curIps</span><span class="p">;</span>
+</span><span class='line'>   <span class="o">&lt;</span><span class="err">/cfscript&gt;  </span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfif&gt;  </span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cflock&gt;  </span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfif&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Another useful mention is that this seems redundant when using CFMX7 due to applicationOnStart in application.cfc unless you want to restart the application manually</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-03-15T10:19:47+11:00" pubdate data-updated="true">Mar 15<span>th</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2006/03/13/session-and-client-variable-handling-in-cfmx/">
+		
+			Session and Client Variable Handling in CFMX</a>
+	</h2>
+	<div class="entry-content">
+		<p>With CFMX there are a few new features you can take advantage of in relation to session and client variable handling, namely:</p>
+
+<ul>
+<li>URLSessionFormat()</li>
+<li>Using UUID for the CFToken value</li>
+<li>Using J2EE Session Variables</li>
+</ul>
+
+
+<p><strong>URLSessionFormat()</strong></p>
+
+<p>We all know that using session variables <em>primarily</em> relies on the user have enabled cookies in their browser, otherwise you need to pass CFIDE and CFTOKEN along the URL. This can be painful as you need to ensure you pass this client identity along with every request, whether it be an</p>
+
+<pre><code>&lt;a href&gt;
+</code></pre>
+
+<p>or</p>
+
+<pre><code>&lt;cflocation&gt;
+</code></pre>
+
+<p>etc.</p>
+
+<p>With URLSessionFormat() ColdFusion automatically detects whether templates are passing the required cookie, if it isn&#8217;t then it will pass the values along the URL for you!</p>
+
+<p>So with the following:</p>
+
+<pre><code>&lt;a href="#URLSessionFormat("order.cfm?orderID=123")#"&gt;Order Page&lt;/a&gt;
+</code></pre>
+
+<p>You get:</p>
+
+<pre><code>&lt;a href="order.cfm?orderID=123&amp;cfid;=xxxx&amp;cftoken;=xxxxxxxx"&gt;Order Page&lt;/a&gt;
+</code></pre>
+
+<p>:)</p>
+
+<p>If cookies are being accepted then CFIDE and CFTOKEN won&#8217;t be passed.</p>
+
+<p><strong>UUID for CFTOKEN value</strong></p>
+
+<p>In ColdFusion Administrator on the &#8216;Server settings/Settings&#8217; page you can choose to &#8220;Use UUID for cftoken&#8221;. This guarantees a unique identifier for the token, instead of a normal 8 digit number which could be guessed by a malicious user.</p>
+
+<p><img src="http://www.chapter31.com/images/cfadmin.jpg" alt="ColdFusion Administrator" /></p>
+
+<p><strong>J2EE Session Variables</strong></p>
+
+<p>Work the same way as CFIDE and CFTOKEN but use a JSessionID instead. One of the coolest things about jsessionid&#8217;s is that when a user closes his or her browser the session terminates because the cookie set is non-persistant, held only in the browsers memory!</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-03-13T15:45:02+11:00" pubdate data-updated="true">Mar 13<span>th</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+</div></article>
+
+<nav id="pagenavi">
+    
+        <a href="/blog/page/23/" class="prev">Prev</a>
+    
+    
+        <a href="/blog/page/25/" class="next">Next</a>
+    
+    <div class="center"><a href="/blog/archives">Blog Archives</a></div>
+</nav></div>
+	<footer id="footer" class="inner">Copyright &copy; 2013
+
+    Your Name
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,175 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>FarCry Tip - Enable cfc's in your Railo ProxyPassMatch - My Octopress Blog</title>
+	<meta name="author" content="Your Name">
+
+	
+	<meta name="description" content="I ran into an issue today while working on a FarCry project, basically when I opened up the &#8220;Related Content&#8221; popup from the WYSIWYG &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">My Octopress Blog</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+	</form>
+</nav>
+
+</header>
+	
+		
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">FarCry Tip - Enable Cfc's in Your Railo ProxyPassMatch</h2>
+	<div class="entry-content"><p>I ran into an issue today while working on a FarCry project, basically when I opened up the &#8220;Related Content&#8221; popup from the WYSIWYG editor it was blank. Nothing. Not the usual tabs for Images, File, Flash etc.</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2011/07/relatedcontent.png" alt="" /></p>
+
+<p>The Railo logs were empty but Apache was throwing a strange error which I hadn&#8217;t seen before: <em>&#8220;Couldn&#8217;t initialize from remote server, JRun server(s) probably down.&#8221;</em>. Funny as I&#8217;m not even using JRun!</p>
+
+<p>Looking at the Chrome console I could see that opening the popup made a request directly to a cfc (/webtop/facade/tinyMCE.cfc?method=ajaxGetTemplateDropdowns) and returned the following error: &#8221;<em>Failed to load resource: the server responded with a status of 500 (Internal Server Error)</em>&#8221;</p>
+
+<p>Eventually <a href="http://www.learnosity.com/techblog/">Mark</a> pointed me in the right direction which was kind of obvious if I&#8217;d actually read the error properly! Our config for Apache -> Railo is for cfm&#8217;s only&#8230;not cfc&#8217;s. I don&#8217;t really like the approach of calling cfc&#8217;s directly at all, which is why it&#8217;s not in our Apache -> Railo proxy. But it wasn&#8217;t a big deal to add it for FarCry projects.</p>
+
+<p>Here is the config we now use, note we now pass requests for cfm and cfc to Railo:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>    <span class="o">&lt;</span><span class="nx">IfModule</span> <span class="nx">mod_proxy_ajp</span><span class="p">.</span><span class="nx">c</span><span class="o">&gt;</span>
+</span><span class='line'>            <span class="o">&lt;</span><span class="nx">Proxy</span> <span class="o">*&gt;</span>
+</span><span class='line'>                    <span class="nx">Order</span> <span class="nx">deny</span><span class="p">,</span><span class="nx">allow</span>
+</span><span class='line'>                    <span class="nx">Allow</span> <span class="nx">from</span> <span class="nx">all</span>
+</span><span class='line'>            <span class="o">&lt;</span><span class="err">/Proxy&gt;</span>
+</span><span class='line'>            <span class="nx">ProxyPassMatch</span> <span class="o">^</span><span class="sr">/(.*\.cf[cm])$ ajp:/</span><span class="o">/</span><span class="mf">127.0</span><span class="p">.</span><span class="mf">0.1</span><span class="o">:</span><span class="mi">8009</span><span class="o">/</span><span class="nx">$1</span>
+</span><span class='line'>            <span class="nx">ProxyPassReverse</span>  <span class="o">/</span>  <span class="nx">ajp</span><span class="o">:</span><span class="c1">//127.0.0.1:8009/</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="err">/IfModule&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And of course now the related content popup works :)</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2011/07/relatedcontent2.png" alt="" /></p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-01T14:04:20+10:00" pubdate data-updated="true">Jul 1<span>st</span>, 2011</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/farcry/'>Farcry</a>, <a class='category' href='/blog/categories/railo/'>Railo</a>
+
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2013
+
+    Your Name
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,1054 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>My Octopress Blog</title>
+	<meta name="author" content="Your Name">
+
+	
+	<meta name="description" content="Often when creating ColdFusion components developers will create a structure to hold component instance data. This data is stored in the components &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">My Octopress Blog</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+	</form>
+</nav>
+
+</header>
+	
+		
+
+	
+	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2007/06/14/using-variablesinstance-inside-your-components/">
+		
+			Using variables.instance Inside Your Components</a>
+	</h2>
+	<div class="entry-content">
+		<p>Often when creating ColdFusion components developers will create a structure to hold component instance data. This data is stored in the components &#8216;variables&#8217; scope and is therefore available to all methods.</p>
+
+<p>Here is an example from the <a href="http://rooibos.maestropublishing.com/">rooibos component generator</a>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfcomponent</span>
+</span><span class='line'>  <span class="nx">displayname</span><span class="o">=</span><span class="s2">&quot;sample&quot;</span>
+</span><span class='line'>  <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;false&quot;</span>
+</span><span class='line'>  <span class="nx">hint</span><span class="o">=</span><span class="s2">&quot;A bean which models the form.&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c">&lt;!--</span><span class="o">-</span>
+</span><span class='line'>  <span class="nx">PROPERTIES</span>
+</span><span class='line'>  <span class="o">---&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">variables</span><span class="p">.</span><span class="nx">instance</span> <span class="o">=</span> <span class="nx">StructNew</span><span class="p">()</span> <span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now some of you may be wondering why you would use the extra struct level of &#8216;instance&#8217; when we already know everything in that struct is in the components instance (variables) scope.</p>
+
+<p>A quick question to <a href="http://www.daemon.com.au/">Geoff Bowers</a> gave me a few answers.</p>
+
+<ul>
+<li><p>It&#8217;s obvious everywhere you reference this that it is instance data in the variables scope</p></li>
+<li><p>You can dump all the components instance data by using <cfdump var="#variables.instance#" />. The benefit of this is that only dumping the <em>variables</em> scope will give you a lot more than just your instance data! Think method signatures etc</p></li>
+<li><p>You can (if you want) separate &#8216;types&#8217; of instance data. e.g. you might pass in a DAO or Gateway component and assign it to the variables scope (variables.UserDAO)</p></li>
+</ul>
+
+
+<p>Another great example of dumping variables.instance quickly and easily (from the Rooibos generator):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c">&lt;!--</span><span class="o">-</span>
+</span><span class='line'><span class="nx">DUMP</span>
+</span><span class='line'><span class="o">---&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cffunction</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;dump&quot;</span> <span class="nx">access</span><span class="o">=</span><span class="s2">&quot;public&quot;</span> <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;true&quot;</span> <span class="k">return</span><span class="o">=</span><span class="s2">&quot;void&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;abort&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;boolean&quot;</span> <span class="k">default</span><span class="o">=</span><span class="s2">&quot;FALSE&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfdump</span> <span class="kd">var</span><span class="o">=</span><span class="s2">&quot;#variables.instance#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">abort</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfabort</span> <span class="o">/&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cfif&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cffunction&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-06-14T18:36:02+10:00" pubdate data-updated="true">Jun 14<span>th</span>, 2007</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2007/06/14/reading-blogs-on-a-mac-using-firefox/">
+		
+			Reading Blogs on a Mac Using Firefox</a>
+	</h2>
+	<div class="entry-content">
+		<p>I&#8217;ve been on a Mac (OSX) for a little while now and generally I&#8217;m having a nice time, except when it comes to reading some (but only some) blogs!</p>
+
+<p>We all know that font sizes are different across browser and platform, but Firefox on a mac occasionally makes life a little difficult particularly when it comes to reading comments and code snippets.</p>
+
+<p>Here is a screen grab of an example, certainly not to pick on this particular blog but just one of the few examples I come across on my daily travels thru <a href="http://www.fullasagoog.com/">fullasagoog</a>.</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2007/06/mac.jpg" alt="Fonts on mac" /></p>
+
+<p>Of course I can easily bump up the text size (apple +), but that makes the rest of the page unviewable!</p>
+
+<p>Interesting to note that I don&#8217;t have the same problem with Safari.</p>
+
+<p>The <a href="http://developer.yahoo.com/">Yahoo Developer Network</a> has some amazing tools including <a href="http://developer.yahoo.com/yui/fonts/">fonts</a> to provide consistent font sizing and line height and is well worth checking out.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-06-14T09:54:27+10:00" pubdate data-updated="true">Jun 14<span>th</span>, 2007</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/css/'>CSS</a>, <a class='category' href='/blog/categories/misc/'>Misc</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2007/04/26/image-manipulation-with-imagecfc-v214/">
+		
+			Image Manipulation With imageCFC v2.14</a>
+	</h2>
+	<div class="entry-content">
+		<p><strong>Update:</strong> as of May 30th 2007 version 2.17 has been released! <a href="http://www.opensourcecf.com/imagecfc/">See the site</a> for more information</p>
+
+<p>Ok so I&#8217;m a little late on this one, but the new version of <a href="http://www.opensourcecf.com/imagecfc/">imageCFC</a> (v2.14) was released on March 7th 2007. The big feature add is exact size thumbnails using the &#8220;cropToExact&#8221; argument of the &#8220;resize()&#8221; method:</p>
+
+<blockquote><p>This argument, when combined with a specified width, specified height, and the preserveAspect argument being set to true will cause a image to be resized then cropped to fit exactly within the specified dimensions.</p></blockquote>
+
+<p>The nice thing about using imageCFC is that it leverages Java so is easily portable (you don&#8217;t need to install a cfx_ which can be painful in a shared hosting environment).</p>
+
+<p>A list of features:</p>
+
+<ul>
+<li>READ jpg, gif, and PNG files, and provide dimensions and other details.</li>
+<li>Images can be read from local files <em>OR</em> URLs.</li>
+<li>scale images to a specific width or height</li>
+<li>resize images to a specific width AND height</li>
+<li>rotate images at 90 degree angles</li>
+<li>flip images horizontally and vertically</li>
+<li>Add text overlays to images using TrueType fonts</li>
+<li>Watermark one image with another image</li>
+<li>Image filters: fast blur, gaussian blur, box blur, sharpen, posterize</li>
+<li>Control compression quality of JPG images.</li>
+<li>WRITE images in JPG and PNG format</li>
+</ul>
+
+
+<p><strong>Note:</strong> GIF files can be read and manipulated but they have to be saved as PNGs)</p>
+
+<p>Yes&#8230;make sure you read that line again. Java cannot <strong>write</strong> to gif files so you have to save as a .png instead after you resize/crop etc. Of course you can read information about a gif, just not manipulate and save as a gif.</p>
+
+<p>My initial tests with resizing a gif and saving as a png produced mixed results which unfortunately were often not great. I&#8217;ll have to keep testing and play with the compression settings etc, but at this stage it looks as though jpg gives the best results.</p>
+
+<p>Doug Hughes has a nice little workaround for the <a href="http://www.alagad.com/">alagad</a> image component (commercial but also based on Java) which you can <a href="http://www.doughughes.net/index.cfm?event=viewEntry&amp;entryId=88">see here</a>.</p>
+
+<p>I don&#8217;t know how good this work around would be for some uses as you need to extract a package to the Java class path. This would more than likely be an issue for those in a shared hosting environment.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-04-26T09:20:26+10:00" pubdate data-updated="true">Apr 26<span>th</span>, 2007</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2007/04/24/unwanted-coldfusion-form-validation/">
+		
+			Unwanted ColdFusion Form Validation</a>
+	</h2>
+	<div class="entry-content">
+		<p>I came across something strange today when developing a web form.</p>
+
+<p>Basically I had a form field with a name/id of &#8220;restoration_required&#8221; but when I submitted the form I got the following error:</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2007/04/formerror.gif" alt="Form Error" /></p>
+
+<p>Now <a href="http://www.daemon.com.au/">Geoff Bowers</a> happened to be standing nearby and was kind enough to point out that this looked like a <cfform> validation error, only I wasn&#8217;t using cfform!</p>
+
+<p>A quick test (on WinXP, CFMX 7.0.2) showed everything working as expected when I renamed the field as &#8220;restoration_isRequired&#8221;.</p>
+
+<p>Of course what was really strange was the fact that this was happening when using a normal <form> tag&#8230;not <cfform>.</p>
+
+<h3>Update 25th April 2007</h3>
+
+<p>In response to Todd&#8217;s last comment I did a little bit of testing, and when I create a <cfform> ColdFusion will (as expected) generate an HTML form for me.</p>
+
+<p>If I then add the validation attributes (for validateat=&#8221;onserver&#8221;) ColdFusion will validate any fields where I specify &#8220;required=&#8217;true&#8217;&#8221;. In that situation I will get the same error message as before&#8230;not that I know where you&#8217;d use this because you don&#8217;t really seem to get any control over the message!</p>
+
+<p>But&#8230;</p>
+
+<p>Even with a <cfform> if I name a field something which ends with &#8220;_required&#8221; I get that server side validation message whether I&#8217;ve entered a value or not!</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfform</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;myForm&quot;</span> <span class="nx">action</span><span class="o">=</span><span class="s2">&quot;&quot;</span> <span class="nx">format</span><span class="o">=</span><span class="s2">&quot;html&quot;</span> <span class="nx">method</span><span class="o">=</span><span class="s2">&quot;post&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfinput</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;firstName_required&quot;</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;firstName_required&quot;</span> <span class="nx">required</span><span class="o">=</span><span class="s2">&quot;true&quot;</span> <span class="nx">validateat</span><span class="o">=</span><span class="s2">&quot;onServer&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfinput</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;submit&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;Submit&quot;</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;Submit&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;Send&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>  
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfform&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2007/04/form1.gif" alt="Sample form" /></p>
+
+<p>Submitting this gives me the following error:</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2007/04/formerror2.gif" alt="Form Error 2" /></p>
+
+<p>In my opinion that is a bug which basically means whether you&#8217;re using &lt;cfform&gt; or &lt;form&gt; you can&#8217;t name any fields ending with &#8220;_required&#8221;.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-04-24T18:06:58+10:00" pubdate data-updated="true">Apr 24<span>th</span>, 2007</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2007/04/23/farcry-40-filename-standards/">
+		
+			Farcry 4.0 Filename Standards</a>
+	</h2>
+	<div class="entry-content">
+		<p>Here at Daemon we are looking at standardising the <a href="http://www.farcrycms.org/">FarCry</a> core codebase in an effort to reduce any case-sensitivity issues that may be found when running FarCry on different platforms.</p>
+
+<p>These problems usually arise when dealing with filenames of any type (.cfc, .cfm etc), indeed I ran into an issue today with an external developer who had created their own templates which weren&#8217;t showing up in the FarCry webtop. Filename case-sensitivity was the culprit :)</p>
+
+<p>The standard (which isn&#8217;t really all that new to <a href="http://www.daemon.com.au/">Daemon</a> developers) is simple and is one which many people use (although I&#8217;ve seen it referenced with different terms), all filenames which reside in the FarCry core directory should be named in a &#8220;Lower Camel Case&#8221; format.</p>
+
+<p>For example:</p>
+
+<pre><code>displayPageStandard.cfm  
+displayTeaserStandard.cfm  
+dmNews.cfc  
+myCustom.cfc
+</code></pre>
+
+<p>I know this goes against the often used standard of naming components in upper camel case (e.g. MyCustom.cfc), however this way not only is there just one standard for all files but it also helps as this happens to be the current naming style of most &#8216;core&#8217; components.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-04-23T23:21:53+10:00" pubdate data-updated="true">Apr 23<span>rd</span>, 2007</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/blog/categories/farcry/'>Farcry</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2007/04/11/combining-update-and-insert-sql-logic/">
+		
+			Combining Insert and Update SQL Logic</a>
+	</h2>
+	<div class="entry-content">
+		<p><strong>*Note</strong> that this example is using MSSQL with an Identity set to generate the primary key automatically.</p>
+
+<p>An all too common process developers go through when building database driven web applications is creating logic to INSERT a record when one doesn&#8217;t exist, and UPDATE a record when one does exist.</p>
+
+<p>This often leads to conditional logic within your application (inside a Service layer perhaps) and then running one of 2 SQL statements depending on the existance of a primary key value which may be coming from a form or URL.</p>
+
+<p>You would more than likely have separate methods for INSERTING and UPDATING, but for the sake of simplicity these will be together:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">len</span><span class="p">(</span><span class="nx">form</span><span class="p">.</span><span class="nx">myPrimaryKey</span><span class="p">)</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c">&lt;!--</span><span class="o">-</span> <span class="nx">there</span> <span class="nx">is</span> <span class="nx">a</span> <span class="nx">primary</span> <span class="nx">key</span> <span class="nx">meaning</span> <span class="nx">a</span> <span class="nx">record</span> <span class="nx">exists</span><span class="p">,</span> <span class="nx">UPDATE</span> <span class="o">---&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfquery</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;qSetData&quot;</span> <span class="nx">datasource</span><span class="o">=</span><span class="s2">&quot;dsn&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="nx">UPDATE</span>  <span class="nx">myTable</span>
+</span><span class='line'>      <span class="nx">SET</span>     <span class="nx">field1</span> <span class="o">=</span> <span class="s1">&#39;#trim(form.field1)#&#39;</span>
+</span><span class='line'>              <span class="p">,</span> <span class="nx">field2</span> <span class="o">=</span> <span class="s1">&#39;#trim(form.field1)#&#39;</span>
+</span><span class='line'>      <span class="nx">WHERE</span>   <span class="nx">myPrimaryKey</span> <span class="o">=</span> <span class="err">#</span><span class="nx">form</span><span class="p">.</span><span class="nx">myPrimaryKey</span><span class="err">#</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cfquery&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfelse</span><span class="o">&gt;</span>
+</span><span class='line'>  
+</span><span class='line'><span class="c">&lt;!--</span><span class="o">-</span> <span class="nx">there</span> <span class="nx">is</span> <span class="nx">no</span> <span class="nx">primary</span> <span class="nx">key</span> <span class="nx">meaning</span> <span class="nx">a</span> <span class="nx">record</span> <span class="nx">doesn</span><span class="s1">&#39;t exists, INSERT a new row ---&gt;</span>
+</span><span class='line'><span class="s1"> &lt;cfquery name=&quot;qCreateData&quot; datasource=&quot;dsn&quot;&gt;</span>
+</span><span class='line'><span class="s1">     INSERT INTO myTable (field1, field2)</span>
+</span><span class='line'><span class="s1">     VALUES              (&#39;</span><span class="err">#</span><span class="nx">trim</span><span class="p">(</span><span class="nx">form</span><span class="p">.</span><span class="nx">field1</span><span class="p">)</span><span class="err">#</span><span class="s1">&#39;, &#39;</span><span class="err">#</span><span class="nx">trim</span><span class="p">(</span><span class="nx">form</span><span class="p">.</span><span class="nx">field1</span><span class="p">)</span><span class="err">#&#39;</span><span class="p">)</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cfquery&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfif&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That&#8217;s it, this approach is a nice way to start examining you DAO&#8217;s.</p>
+
+<p>Another way to achieve this is by using a stored procedure (there are many, many positive reasons for using a stored procedure. See <a href="http://www.chapter31.com/2006/03/16/cfstoredproc-vs-cfquery/">here</a> and <a href="http://www.chapter31.com/2007/02/04/cfqueryparam-and-conditional-handling-of-nulls/">here</a> for more information).</p>
+
+<p>Using a stored procedure can be cleaner as you just need the one piece of code in your application leaving the rest of the logic to be handled in the database.</p>
+
+<p>The following example is for scenarios where you <strong>don&#8217;t</strong> pass a primary key value, the <cfprocparam> will pass null=&#8221;true&#8221; to the stored procedure. This is how the SQL will know to run an INSERT statement.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfscript</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="c1">//as there is no value here an INSERT statement will be run</span>
+</span><span class='line'>  <span class="nx">myPrimaryKey</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+</span><span class='line'>  <span class="nx">firstName</span> <span class="o">=</span> <span class="s2">&quot;Michael&quot;</span><span class="p">;</span>
+</span><span class='line'>  <span class="nx">lastName</span> <span class="o">=</span> <span class="s2">&quot;Sharman&quot;</span><span class="p">;</span>
+</span><span class='line'>  <span class="nx">email</span> <span class="o">=</span> <span class="s2">&quot;michael@wherever.com&quot;</span><span class="p">;</span>
+</span><span class='line'>  <span class="nx">age</span> <span class="o">=</span> <span class="s2">&quot;31&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfscript&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfstoredproc</span> <span class="nx">datasource</span><span class="o">=</span><span class="s2">&quot;dsn&quot;</span> <span class="nx">procedure</span><span class="o">=</span><span class="s2">&quot;setUser&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfprocparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;CF_SQL_INTEGER&quot;</span> <span class="kc">null</span><span class="o">=</span><span class="s2">&quot;#NOT len(trim(myPrimaryKey))#&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#myPrimaryKey#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfprocparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;CF_SQL_VARCHAR&quot;</span> <span class="kc">null</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#firstName#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfprocparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;CF_SQL_VARCHAR&quot;</span> <span class="kc">null</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#lastName#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfprocparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;CF_SQL_VARCHAR&quot;</span> <span class="kc">null</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#email#&quot;</span> <span class="o">/&gt;</span>      
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfprocparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;CF_SQL_INTEGER&quot;</span> <span class="kc">null</span><span class="o">=</span><span class="s2">&quot;#age#&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#age#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfstoredproc&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>On the other hand if I have a primary key value, the <cfprocparam> will pass the value (with null=&#8221;false&#8221;) and my stored procedure will run an UPDATE.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfscript</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="c1">//as there is a value here an UPDATE statement will be run</span>
+</span><span class='line'>  <span class="nx">myPrimaryKey</span> <span class="o">=</span> <span class="s2">&quot;13&quot;</span><span class="p">;</span>
+</span><span class='line'>  <span class="nx">firstName</span> <span class="o">=</span> <span class="s2">&quot;Michael&quot;</span><span class="p">;</span>
+</span><span class='line'>  <span class="nx">lastName</span> <span class="o">=</span> <span class="s2">&quot;Sharman&quot;</span><span class="p">;</span>
+</span><span class='line'>  <span class="nx">email</span> <span class="o">=</span> <span class="s2">&quot;michael@wherever.com&quot;</span><span class="p">;</span>
+</span><span class='line'>  <span class="nx">age</span> <span class="o">=</span> <span class="s2">&quot;31&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfscript&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfstoredproc</span> <span class="nx">datasource</span><span class="o">=</span><span class="s2">&quot;dsn&quot;</span> <span class="nx">procedure</span><span class="o">=</span><span class="s2">&quot;setUser&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfprocparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;CF_SQL_INTEGER&quot;</span> <span class="kc">null</span><span class="o">=</span><span class="s2">&quot;#NOT len(trim(myPrimaryKey))#&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#myPrimaryKey#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfprocparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;CF_SQL_VARCHAR&quot;</span> <span class="kc">null</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#firstName#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfprocparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;CF_SQL_VARCHAR&quot;</span> <span class="kc">null</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#lastName#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfprocparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;CF_SQL_VARCHAR&quot;</span> <span class="kc">null</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#email#&quot;</span> <span class="o">/&gt;</span>      
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfprocparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;CF_SQL_INTEGER&quot;</span> <span class="kc">null</span><span class="o">=</span><span class="s2">&quot;#age#&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#age#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfstoredproc&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can see that the only change was that in the second example <em>myPrimaryKey</em> actually had a value.</p>
+
+<p>And now for the simple stored procedure. Note I&#8217;m setting a default value of <strong>null</strong> for the @myPrimaryKey parameter, this is how the stored procedure can handle both scenarios. You can of course set default values for all of your parameters.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">CREATE</span> <span class="nx">PROCEDURE</span> <span class="nx">setUser</span>
+</span><span class='line'><span class="p">(</span>
+</span><span class='line'><span class="err">@</span><span class="nx">myPrimaryKey</span> <span class="kr">int</span> <span class="o">=</span> <span class="kc">null</span>
+</span><span class='line'><span class="p">,</span><span class="err">@</span><span class="nx">firstName</span> <span class="nx">varchar</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+</span><span class='line'><span class="p">,</span><span class="err">@</span><span class="nx">lastName</span> <span class="nx">varchar</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+</span><span class='line'><span class="p">,</span><span class="err">@</span><span class="nx">email</span> <span class="nx">varchar</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+</span><span class='line'><span class="p">,</span> <span class="err">@</span><span class="nx">age</span> <span class="kr">int</span>
+</span><span class='line'><span class="p">)</span>
+</span><span class='line'><span class="nx">AS</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">IF</span> <span class="p">(</span><span class="err">@</span><span class="nx">myPrimaryKey</span> <span class="nx">Is</span> <span class="nx">Null</span><span class="p">)</span>
+</span><span class='line'><span class="nx">BEGIN</span>
+</span><span class='line'>  <span class="o">--</span><span class="nx">no</span> <span class="nx">record</span> <span class="nx">exists</span> <span class="nx">so</span> <span class="nx">run</span> <span class="nx">an</span> <span class="nx">INSERT</span> <span class="nx">statement</span>
+</span><span class='line'>  <span class="nx">INSERT</span> <span class="nx">INTO</span> <span class="nx">myTable</span><span class="p">(</span><span class="nx">FirstName</span><span class="p">,</span> <span class="nx">LastName</span><span class="p">,</span> <span class="nx">Email</span><span class="p">,</span> <span class="nx">Age</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">VALUES</span>      <span class="p">(</span><span class="err">@</span><span class="nx">firstName</span><span class="p">,</span> <span class="err">@</span><span class="nx">lastName</span><span class="p">,</span> <span class="err">@</span><span class="nx">email</span><span class="p">,</span> <span class="err">@</span><span class="nx">age</span><span class="p">)</span>
+</span><span class='line'><span class="nx">END</span>
+</span><span class='line'><span class="nx">ELSE</span>
+</span><span class='line'><span class="nx">BEGIN</span>
+</span><span class='line'>  <span class="o">--</span><span class="nx">we</span> <span class="nx">have</span> <span class="nx">a</span> <span class="nx">record</span><span class="p">,</span> <span class="nx">run</span> <span class="nx">an</span> <span class="nx">UPDATE</span>
+</span><span class='line'>  <span class="nx">UPDATE</span>  <span class="nx">myTable</span>
+</span><span class='line'>  <span class="nx">SET</span>     <span class="nx">firstName</span> <span class="o">=</span> <span class="err">@</span><span class="nx">firstName</span>
+</span><span class='line'>          <span class="p">,</span> <span class="nx">lastName</span> <span class="o">=</span> <span class="err">@</span><span class="nx">lastName</span>
+</span><span class='line'>          <span class="p">,</span> <span class="nx">email</span> <span class="o">=</span> <span class="err">@</span><span class="nx">email</span>
+</span><span class='line'>          <span class="p">,</span> <span class="nx">age</span> <span class="o">=</span> <span class="err">@</span><span class="nx">age</span>
+</span><span class='line'>  <span class="nx">WHERE</span>   <span class="nx">myPrimaryKey</span> <span class="o">=</span> <span class="err">@</span><span class="nx">myPrimaryKey</span>
+</span><span class='line'><span class="nx">END</span>
+</span><span class='line'><span class="nx">GO</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-04-11T16:40:48+10:00" pubdate data-updated="true">Apr 11<span>th</span>, 2007</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/blog/categories/databases/'>Databases</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2007/04/10/cfquery-result-attribute-caveat/">
+		
+			Cfquery &#8216;Result&#8217; Attribute Caveat</a>
+	</h2>
+	<div class="entry-content">
+		<p>A great feature of <cfquery> which was introduced in CFMX7 is the addition of the &#8216;result&#8217; attribute. When used, a developer can access a Structure of query result variables including the following keys:</p>
+
+<ul>
+<li>Cache</li>
+<li>ColumnList</li>
+<li>ExecutionTime</li>
+<li>RecordCount</li>
+<li>SQL</li>
+<li>SQLParameters</li>
+</ul>
+
+
+<p>You can read more about the &#8216;result&#8217; attribute in a <a href="http://www.chapter31.com/2006/03/11/new-attribute-and-object-variable-in-for-cfmx7/">previous post</a> or at <a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/wwhelp/wwhimpl/common/html/wwhelp.htm?context=ColdFusion_Documentation&amp;file=00000316.htm">Live docs</a>.</p>
+
+<p>One thing I&#8217;ve come across is that the structure returned (by using the result attribute) is created <em>where</em> the query is executed and the value of &#8216;result&#8217; references this struct in the local variable scope.</p>
+
+<p>So an inline query followed by a reference to the &#8216;result&#8217; struct would run fine:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfquery</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;qData&quot;</span> <span class="nx">dsn</span><span class="o">=</span><span class="s2">&quot;myDSN&quot;</span> <span class="nx">result</span><span class="o">=</span><span class="s2">&quot;stResult&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="nx">SELECT</span>  <span class="o">*</span>
+</span><span class='line'>  <span class="nx">FROM</span>    <span class="nx">MyTable</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfquery&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfoutput</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="err">#</span><span class="nx">stResult</span><span class="p">.</span><span class="nx">sql</span><span class="err">#</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfoutput&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But a problem exists when you have a query in a Component that is being returned by a method call. In this case the structure won&#8217;t exist in the calling templates &#8216;local&#8217; scope and an exception will be thrown.</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2007/04/stresulterrors.jpg" alt="stResult exception" /></p>
+
+<p>The simple way around this is to declare the &#8216;result&#8217; attribute in the request scope:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfquery</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;qData&quot;</span> <span class="nx">dsn</span><span class="o">=</span><span class="s2">&quot;myDSN&quot;</span> <span class="nx">result</span><span class="o">=</span><span class="s2">&quot;request.stResult&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="nx">SELECT</span>  <span class="o">*</span>
+</span><span class='line'>  <span class="nx">FROM</span>    <span class="nx">MyTable</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfquery&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now you can reference the structure inside the calling template using the request scope:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfoutput</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="err">#</span><span class="nx">request</span><span class="p">.</span><span class="nx">stResult</span><span class="p">.</span><span class="nx">sql</span><span class="err">#</span>
+</span><span class='line'>  <span class="err">#</span><span class="nx">request</span><span class="p">.</span><span class="nx">stResult</span><span class="p">.</span><span class="nx">cached</span>
+</span><span class='line'>  <span class="nx">etc</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfoutput&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-04-10T13:40:26+10:00" pubdate data-updated="true">Apr 10<span>th</span>, 2007</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2007/03/25/the-coolest-dhtml-calendar/">
+		
+			The &#8216;Coolest&#8217; DHTML Calendar</a>
+	</h2>
+	<div class="entry-content">
+		<p>As web developers we are often some of the first people to see the newer techniques and tools available for use in web applications. This can be great as we can then hurry off and implement these things into our new projects.</p>
+
+<p>But of course there are still millions of older sites (which will no doubt still be around for years to come!) using <em>old</em> techniques and tools. Ugh!</p>
+
+<p>One of the more common things you find is the age old popup calendar window which is SLOW and could be blocked by the numerous popup blockers out there today. I don&#8217;t know why but I really dislike sites that use this approach. Of course for older sites (when other solutions weren&#8217;t readily available) this is fine, but for newly released sites there is no excuse!</p>
+
+<p>A technique which is definitely not so new but oh so cool, is using DHTML to display a calendar for users to choose a date. Although there are a lot of these solutions out there the one I keep coming back to is offered by <a href="http://www.dynarch.com/projects/calendar/">Dynarch.com</a> and has been around for over 2 years :)</p>
+
+<p>The benefits of this type of approach are numerous:</p>
+
+<ul>
+<li><p>Cosmetic - DHTML calendars look so much better than their popup counterparts and can be easily modified with CSS</p></li>
+<li><p>Speed - as the DHTML is loaded in the browser is is MUCH quicker and more responsive</p></li>
+<li><p>Popup blockers - as it&#8217;s just HTML it won&#8217;t be blocked</p></li>
+<li><p>Configuration - easy as pie, just a little javascript tweaking</p></li>
+<li><p>Cross browser support</p></li>
+</ul>
+
+
+<p>Another great thing about the Dynarch solution is that it&#8217;s open source under the <a href="http://www.gnu.org/licenses/lgpl.html">GNU Lesser General Public License</a>.</p>
+
+<p><a href="http://www.dynarch.com/demos/jscalendar/">Click here</a> for the demo page</p>
+
+<p><img src="http://www.chapter31.com/wp-content/uploads/2007/03/dynarch.gif" alt="Dynarch" /></p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-03-25T17:25:13+10:00" pubdate data-updated="true">Mar 25<span>th</span>, 2007</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/x-html/'>(X)HTML</a>, <a class='category' href='/blog/categories/javascript/'>Javascript</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2007/02/04/adobe-feature-requestbug-report-form/">
+		
+			Adobe Feature Request/Bug Report Form</a>
+	</h2>
+	<div class="entry-content">
+		<p>There was a lot of talk flying around the blogosphere over the last few months regarding the much anticipated ColdFusion 8 with a lot of people blogging their &#8216;wishlist&#8217; for the new version (codenamed Scorpio).</p>
+
+<p>But one thing you might not have known (I certainly didn&#8217;t) is that there is an official form on the Adobe site where you can post a &#8216;bug&#8217; or request a new &#8216;feature&#8217;. Another &#8220;can&#8217;t believe I didn&#8217;t know that&#8221; :)</p>
+
+<p>An excerpt from the site:</p>
+
+<blockquote><p>We normally do not send personal replies to feature requests or bug reports. We do,however, read each and every message. We use the information to improve our products and services.</p></blockquote>
+
+<p>The form is <a href="http://www.adobe.com/cfusion/mmform/index.cfm?name=wishform">found here</a>.</p>
+
+<p>Too late I&#8217;m sure for CF8 but always good to give feedback to the people who can actually do something with it!</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-02-04T18:50:08+11:00" pubdate data-updated="true">Feb 4<span>th</span>, 2007</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2007/02/04/cfqueryparam-and-conditional-handling-of-nulls/">
+		
+			Cfqueryparam and Conditional Handling of NULL&#8217;s</a>
+	</h2>
+	<div class="entry-content">
+		<p>Most people know that you should always use <a href="http://livedocs.macromedia.com/coldfusion/6.1/htmldocs/tags-b20.htm">cfqueryparam</a> on your query parameters when querying a database to (among other things):</p>
+
+<ul>
+<li>secure your database from unauthorised/malicious users</li>
+<li>perform data validation</li>
+<li>take advantage of SQL bind parameters</li>
+</ul>
+
+
+<p>The cfqueryparam tag can and should be used whether the query be a SELECT, UPDATE, DELETE or INSERT.</p>
+
+<p>One of the problems I&#8217;ve had in the past is when I want to either INSERT or UPDATE a column which has an INT datatype (MSSQL), but that column is not mandatory and therefore allows NULL values. Traditionally (if not using a stored procedure) I would have an approach as follows:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&lt;</span><span class="n">cfquery</span> <span class="nb">name</span><span class="o">=</span><span class="s2">&quot;qAddUser&quot;</span> <span class="n">datasource</span><span class="o">=</span><span class="s2">&quot;#application.dsn#&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="no">INSERT</span> <span class="no">INTO</span> <span class="no">MyUsers</span>
+</span><span class='line'>  <span class="p">(</span>
+</span><span class='line'>  <span class="no">Age</span><span class="p">,</span>
+</span><span class='line'>  <span class="no">FirstName</span><span class="p">,</span>
+</span><span class='line'>  <span class="no">LastName</span>
+</span><span class='line'>  <span class="p">)</span>
+</span><span class='line'>  <span class="no">VALUES</span>
+</span><span class='line'>  <span class="p">(</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="n">cfqueryparam</span> <span class="n">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_integer&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s2">&quot;#trim(form.iAge)#&quot;</span> <span class="n">maxlength</span><span class="o">=</span><span class="s2">&quot;3&quot;</span> <span class="sr">/&gt;,</span>
+</span><span class='line'><span class="sr"> &lt;cfqueryparam cfsqltype=&quot;cf_sql_varchar&quot; value=&quot;#trim(form.sFirstName)#&quot; maxlength=&quot;50&quot; /</span><span class="o">&gt;</span><span class="p">,</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="n">cfqueryparam</span> <span class="n">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s2">&quot;#trim(form.sLastName)#&quot;</span> <span class="n">maxlength</span><span class="o">=</span><span class="s2">&quot;50&quot;</span> <span class="sr">/&gt;</span>
+</span><span class='line'><span class="sr"> )</span>
+</span><span class='line'><span class="sr">&lt;/</span><span class="n">cfquery</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This works nicely except remember that &#8216;Age&#8217; isn&#8217;t a mandatory column in the database, so if the user leaves that form field blank I&#8217;ll be passing through an empty string (form.iAge) to the cfqueryparam. Because the database is expecting an INT value it really won&#8217;t like my empty string so I&#8217;ll get a nice big error. Now to get around this I have a couple of immediate options.</p>
+
+<ul>
+<li>use a database default (e.g. 0)</li>
+<li>Use conditional logic to set the empty string to an INT, like 0</li>
+<li>Use conditional logic to use the NULL attribute of cfqueryparam</li>
+</ul>
+
+
+<p>Number 3 is my preferred option, I don&#8217;t want the value &#8216;0&#8217; in the database when I don&#8217;t know if it&#8217;s really a valid value. Did the user type in &#8216;0&#8217; or is it my default database value? Sure I could use something like &#8216;-1&#8217; instead or code my application to know that if a &#8216;0&#8217; (or &#8216;-1&#8217;) was found then I know that it&#8217;s actually a NULL value. But that just seems messy to me.</p>
+
+<p>The NULL attribute of cfqueryparam can take a value of &#8216;yes|true&#8217; or &#8216;no|false&#8217; and if set to &#8216;yes|true&#8217; then anything in the &#8216;value&#8217; attribute is ignored and a NULL is passed to the database. This is what we want! Unfortunately though if I do use null=&#8221;yes&#8221; and I also have a &#8216;value&#8217;, then that value will be ignored and NULL will be used instead. To get around this I need to do something like:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&lt;</span><span class="n">cfif</span> <span class="no">NOT</span> <span class="n">len</span><span class="p">(</span><span class="n">trim</span><span class="p">(</span><span class="n">form</span><span class="o">.</span><span class="n">iAge</span><span class="p">))</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="n">cfqueryparam</span> <span class="n">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_integer&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s2">&quot;#trim(form.iAge)#&quot;</span> <span class="n">maxlength</span><span class="o">=</span><span class="s2">&quot;3&quot;</span> <span class="n">null</span><span class="o">=</span><span class="s2">&quot;yes&quot;</span> <span class="sr">/&gt;</span>
+</span><span class='line'><span class="sr">&lt;cfelse&gt;</span>
+</span><span class='line'><span class="sr"> &lt;cfqueryparam cfsqltype=&quot;cf_sql_integer&quot; value=&quot;#trim(form.iAge)#&quot; maxlength=&quot;3&quot; /</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="sr">/cfif&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That would work but it&#8217;s not really that neat or optimal (in terms of coding and reading).</p>
+
+<p>As usual it&#8217;s always the simple solutions which are right in front of you that work the best! Today I saw a nice solution to this all too common problem from Ian Skinner over on <a href="http://groups.google.com/group/macromedia.coldfusion.cfml_general_discussion/topics">Google groups</a> where Ian used the yesNoFormat() and len() functions to conditionally pass in null or a value like:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&lt;</span><span class="n">cfqueryparam</span> <span class="n">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_integer&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s2">&quot;#trim(form.iAge)#&quot;</span> <span class="n">maxlength</span><span class="o">=</span><span class="s2">&quot;3&quot;</span> <span class="n">null</span><span class="o">=</span><span class="s2">&quot;#yesNoFormat(NOT len(trim(form.iAge)))#&quot;</span> <span class="sr">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is nice an simple, the len() function will return the length of the string (0 or more) and the yesNoFormat() will translate that into the boolean value we need for the NULL attribute.</p>
+
+<p>However because we want to use the NULL attribute if the string DOESN&#8217;T have a length&#8230;we use the NOT boolean operator to reverse the results.</p>
+
+<p>Note that because we are using NOT, our result will be the desired boolean therefore negating the need to use yesNoFormat(). That leaves us with:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&lt;</span><span class="n">cfqueryparam</span> <span class="n">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_integer&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s2">&quot;#trim(form.iAge)#&quot;</span> <span class="n">maxlength</span><span class="o">=</span><span class="s2">&quot;3&quot;</span> <span class="n">null</span><span class="o">=</span><span class="s2">&quot;#NOT len(trim(form.iAge))#&quot;</span> <span class="sr">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Nice and clean :)</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-02-04T17:45:38+11:00" pubdate data-updated="true">Feb 4<span>th</span>, 2007</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+</div></article>
+
+<nav id="pagenavi">
+    
+        <a href="/blog/page/16/" class="prev">Prev</a>
+    
+    
+        <a href="/blog/page/18/" class="next">Next</a>
+    
+    <div class="center"><a href="/blog/archives">Blog Archives</a></div>
+</nav></div>
+	<footer id="footer" class="inner">Copyright &copy; 2013
+
+    Your Name
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+
+
+
+
+</body>
+</html>

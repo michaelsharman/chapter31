@@ -1,0 +1,173 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Can't set a scheduled task 'End Date'  - My Octopress Blog</title>
+	<meta name="author" content="Your Name">
+
+	
+	<meta name="description" content="I&#8217;ve just created some functionality which will be executed by a ColdFusion (8 standard on Win 2003) scheduled task daily, but only for 1 month &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">My Octopress Blog</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+	</form>
+</nav>
+
+</header>
+	
+		
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">Can't Set a Scheduled Task 'End Date'</h2>
+	<div class="entry-content"><p>I&#8217;ve just created some functionality which will be executed by a ColdFusion (8 standard on Win 2003) scheduled task daily, but only for 1 month.</p>
+
+<p>When I add my new task in ColdFusion administrator I can set the &#8216;Start Date&#8217; ok, but not the &#8216;End Date&#8217;. The reason? Well I&#8217;m not sure, but it looks like a conflict in US/European date formats (I&#8217;m located in Australia and the server region settings are English/Australia).</p>
+
+<p>Why oh why oh why oh why are there different date formats like mm/dd/yyyy and dd/mm/yyyy? Does this not annoy the HELL out of all developers out there who don&#8217;t reside in the US?</p>
+
+<p>I want my task to begin on the 10th of October and end on the 7th of November. But try as I might I cannot enter the 7th of November as an end date in ColdFusion administrator, I keep getting either an invalid &#8216;End Date&#8217; format or that the end date is earlier than my start date.</p>
+
+<p>Note that when you hover over the Start/End Date form fields the tooltip tells you the format should be entered as &#8216;mm/dd/yyyy&#8217;.</p>
+
+<p>I&#8217;ve tried the following formats:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">Start</span> <span class="nb">Date</span>     <span class="nx">End</span> <span class="nb">Date</span>
+</span><span class='line'><span class="mi">10</span><span class="o">/</span><span class="mi">10</span><span class="o">/</span><span class="mi">2007</span>      <span class="mi">11</span><span class="o">/</span><span class="mi">07</span><span class="o">/</span><span class="mi">2007</span>
+</span><span class='line'><span class="mi">10</span><span class="o">/</span><span class="mi">10</span><span class="o">/</span><span class="mi">2007</span>      <span class="mi">07</span><span class="o">/</span><span class="mi">11</span><span class="o">/</span><span class="mi">2007</span>
+</span><span class='line'><span class="mi">10</span><span class="o">/</span><span class="mi">10</span><span class="o">/</span><span class="mi">2007</span>      <span class="mi">11</span><span class="o">/</span><span class="mi">07</span><span class="o">/</span><span class="mi">2007</span>
+</span><span class='line'><span class="mi">10</span><span class="o">/</span><span class="mi">10</span><span class="o">/</span><span class="mi">2007</span>      <span class="p">{</span><span class="nx">ts</span> <span class="s1">&#39;2007-07-11 00:00:00&#39;</span><span class="p">}</span>
+</span><span class='line'><span class="mi">10</span><span class="o">/</span><span class="mi">10</span><span class="o">/</span><span class="mi">2007</span>      <span class="p">{</span><span class="nx">ts</span> <span class="s1">&#39;2007-11-07 00:00:00&#39;</span><span class="p">}</span>
+</span><span class='line'><span class="mi">10</span><span class="o">/</span><span class="mi">10</span><span class="o">/</span><span class="mi">2007</span>      <span class="s1">&#39;07/November/2007&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I can of course stop the code actually executing by checking the date etc then aborting, and then remove the task in ColdFusion administrator by hand. But, what am I doing wrong here? Has anyone else experienced this?</p>
+
+<p>Thoughts?</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-10-08T15:06:12+10:00" pubdate data-updated="true">Oct 8<span>th</span>, 2007</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2013
+
+    Your Name
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+
+
+
+
+</body>
+</html>

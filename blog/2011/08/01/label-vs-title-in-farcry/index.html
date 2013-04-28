@@ -1,0 +1,164 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Label vs Title in FarCry - My Octopress Blog</title>
+	<meta name="author" content="Your Name">
+
+	
+	<meta name="description" content="All system content objects (and those custom types which extend &#8220;types&#8221; or &#8220;versions&#8221; etc) in FarCry have the &#8220;label&# &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">My Octopress Blog</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+	</form>
+</nav>
+
+</header>
+	
+		
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">Label vs Title in FarCry</h2>
+	<div class="entry-content"><p>All system content objects (and those custom types which extend &#8220;types&#8221; or &#8220;versions&#8221; etc) in FarCry have the &#8220;label&#8221; and &#8220;title&#8221; properties. Most of the time the value of these are identical, I find myself typically using the &#8220;title&#8221; property in formtools as well as any display methods. The question of course is why have both these if they&#8217;re always exactly the same?</p>
+
+<p>A note on the FarCry forums suggested that this was a handy way split what you might want to use in a display method vs an admin screen or any other scenario etc. Well today I had need to do exactly this, and combined with some of the custom metadata for your <em>type components</em> I&#8217;ve found that this is yet another simple but powerful feature of FarCry core.</p>
+
+<h2>Scenario</h2>
+
+<p>I have a custom type, a &#8220;topic&#8221;. Now these topics have titles but also &#8220;codes&#8221; associated with them. Sometimes I&#8217;ll want to output just the title, but sometimes I&#8217;ll want to output the code + title together. Sure <em>stObj</em> gives me the simple ability to access these singularly, but having the ability to store this composite value in the label field (as well as the single title in the &#8220;title&#8221; field) gives me freedom to display this in places like the object admin screen, generic nav, breadcrumbs etc. Very very nice.</p>
+
+<h2>How</h2>
+
+<p>Ok first you need to enable auto labels for your type:</p>
+
+<pre><code>&lt;cfcomponent extends="farcry.core.packages.types.versions" displayname="ACE Topic" bUseInTree="0" bFriendly="1" fuAlias="acetopic" bObjectBroker="0" bAutoSetLabel="true"&gt;
+</code></pre>
+
+<p>Then for each property you&#8217;d like combined for your label, set a <em>bLabel</em> attribute to true.</p>
+
+<pre><code>&lt;cfproperty name="Code" type="string" required="no" default="" ftSeq="1" ftwizardStep="Content" ftValidation="required" ftFieldset="General Details" bLabel="true"&gt;
+
+&lt;cfproperty name="Title" type="string" hint="Title of content item." required="no" default="" ftSeq="2" ftwizardStep="Content" ftFieldset="General Details" ftValidation="required" bLabel="true"&gt;
+</code></pre>
+
+<p>What this now does (after you edit a content object) is save the &#8220;code + title&#8221; in the label field. Cool :)</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-01T09:16:01+10:00" pubdate data-updated="true">Aug 1<span>st</span>, 2011</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/farcry/'>Farcry</a>
+
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2013
+
+    Your Name
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+
+
+
+
+</body>
+</html>

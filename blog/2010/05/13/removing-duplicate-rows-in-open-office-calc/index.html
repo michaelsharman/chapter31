@@ -1,0 +1,175 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Removing duplicate rows in Open Office (calc) - My Octopress Blog</title>
+	<meta name="author" content="Your Name">
+
+	
+	<meta name="description" content="I needed to de-dupe a spreadsheet the other day and found a great how-to from google. Thought I&#8217;d post it here for my own future purposes: &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">My Octopress Blog</a></h1>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main-navigation">
+  <li><a href="/about">about</a></li>
+  <li><a href="https://github.com/michaelsharman/">projects</a></li>
+  <li><a href="/shell-commands">shell</a></li>
+  <li><a href="http://tools.chapter31.com/">tools</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:michaelsharman.github.io/chapter31">
+	</form>
+</nav>
+
+</header>
+	
+		
+
+	
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">Removing Duplicate Rows in Open Office (Calc)</h2>
+	<div class="entry-content"><p>I needed to de-dupe a spreadsheet the other day and <a href="http://blogs.sun.com/oootnt/entry/removing_duplicate_rows_in_calc">found a great how-to</a> from google. Thought I&#8217;d post it here for my own future purposes:</p>
+
+<hr />
+
+<p>There is no automatic function to remove duplicate rows. Follow these steps to delete all rows that have duplicate values in column A:</p>
+
+<ol>
+<li><p>Select all cells of the current data range.</p>
+
+<p> On most systems, you can click any cell inside the data range, then press Ctrl+Multiplication key on the numeric keypad.</p></li>
+<li><p>Sort the data range by column A.</p>
+
+<p> Choose Data - Sort.</p></li>
+<li><p>Click an empty cell in the first row. Let&#8217;s assume it is cell C1. Enter the formula:</p>
+
+<p> =IF(A1=A2;1;0)</p>
+
+<p> This will display 1 if the current row has the same value in column A as the next row. It will display 0 if the values are different.</p></li>
+<li><p>Copy the formula down for all rows of the data range.</p>
+
+<p> Drag the lower right edge of the cell C1 down to the last row.</p></li>
+<li><p>Now the formulas must be replaced by their values to freeze the contents.</p>
+
+<p> While the column C is still highlighted, press Ctrl+C to copy all selected cells to the clipboard.</p></li>
+<li><p>Press Shift+Ctrl+V to open the Paste Special dialog box.</p>
+
+<p> In the Selection area, enable only the Numbers command; disable the other Selection commands. Click OK.</p></li>
+<li><p>Select the whole data range including the new column C and sort the range by column C.</p>
+
+<p> Choose Data - Sort.</p></li>
+<li><p>Select all rows which have a value 1 in column C, then press Del key.</p></li>
+<li><p>Optional steps: Delete column C. Select the remaining rows and sort them again by column A.</p></li>
+</ol>
+
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-05-13T15:05:04+10:00" pubdate data-updated="true">May 13<span>th</span>, 2010</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+</div></article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2013
+
+    Your Name
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+
+
+
+
+</body>
+</html>
