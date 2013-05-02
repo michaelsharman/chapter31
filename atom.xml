@@ -4,7 +4,7 @@
   <title><![CDATA[chapter31 &raquo;]]></title>
   <link href="http://chapter31.com/atom.xml" rel="self"/>
   <link href="http://chapter31.com/"/>
-  <updated>2013-05-03T08:45:38+10:00</updated>
+  <updated>2013-05-03T08:49:26+10:00</updated>
   <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
@@ -893,9 +893,9 @@ Select #3 had 8192* possible combinations</p>
   
   <entry>
     <title type="html"><![CDATA[Timing synchronous JavaScript operations]]></title>
-    <link href="http://chapter31.com/2012/08/14/timing-synchronous-javascript-operations/"/>
-    <updated>2012-08-14T07:24:05+10:00</updated>
-    <id>http://chapter31.com/2012/08/14/timing-synchronous-javascript-operations</id>
+    <link href="http://chapter31.com/2012/08/13/timing-synchronous-javascript-operations/"/>
+    <updated>2012-08-13T21:24:00+10:00</updated>
+    <id>http://chapter31.com/2012/08/13/timing-synchronous-javascript-operations</id>
     <content type="html"><![CDATA[<p>There&#8217;s a cool little method on the <em>console</em> object that allows you to track how long an operation took to run. It&#8217;s called <a href="https://developer.mozilla.org/en-US/docs/DOM/console.time">console.time</a>.</p>
 
 <p>Basically you just start a timer at the top of the code you want to time, like so:</p>
@@ -1244,9 +1244,9 @@ htdocs/WEB-INF
   
   <entry>
     <title type="html"><![CDATA[jQuery tinyMCE issue with $.attr();]]></title>
-    <link href="http://chapter31.com/2012/07/05/jquery-tinymce-issue-with-attr/"/>
-    <updated>2012-07-05T09:05:02+10:00</updated>
-    <id>http://chapter31.com/2012/07/05/jquery-tinymce-issue-with-attr</id>
+    <link href="http://chapter31.com/2012/07/04/jquery-tinymce-issue-with-attr/"/>
+    <updated>2012-07-04T23:05:00+10:00</updated>
+    <id>http://chapter31.com/2012/07/04/jquery-tinymce-issue-with-attr</id>
     <content type="html"><![CDATA[<p>I had some strange behaviour with the jQuery verion of tinyMCE (3.4.6). Basically I was <a href="http://harvesthq.github.com/chosen/">integrating the chosen library</a> (which is build as a jQuery plugin), but it seems the $.attr(&#8216;id&#8217;) from within chosen.js was returning a JavaScript element reference instead of the value of the &#8220;id&#8221; field.</p>
 
 <p><a href="http://chapter31.com/images/uploads/2012/07/tiny_error.png"><img src="http://chapter31.com/images/uploads/2012/07/tiny_error.png" alt="" /></a></p>

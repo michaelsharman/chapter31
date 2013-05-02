@@ -91,6 +91,10 @@
         <lastmod>2013-04-28T22:16:39+10:00</lastmod>
     </url>
     <url>
+        <loc>http://chapter31.com/2006/09/06/end-of-paragraph-widow/</loc>
+        <lastmod>2013-04-28T22:16:39+10:00</lastmod>
+    </url>
+    <url>
         <loc>http://chapter31.com/2006/09/06/multi-step-forms/</loc>
         <lastmod>2013-04-28T22:16:39+10:00</lastmod>
     </url>
@@ -152,9 +156,9 @@
     </url>
     <url>
         <loc>
-            http://chapter31.com/2006/10/05/finding-cpu-andor-memory-leak-issues-with-coldfusion/
+            http://chapter31.com/2006/10/04/finding-cpu-andor-memory-leak-issues-with-coldfusion/
         </loc>
-        <lastmod>2013-04-28T22:16:39+10:00</lastmod>
+        <lastmod>2013-05-03T08:49:22+10:00</lastmod>
     </url>
     <url>
         <loc>http://chapter31.com/2006/10/05/broken-image-on-google-search-results-page/</loc>
@@ -187,8 +191,8 @@
         <lastmod>2013-04-28T22:16:39+10:00</lastmod>
     </url>
     <url>
-        <loc>http://chapter31.com/2006/10/18/making-coldfusion-sleep/</loc>
-        <lastmod>2013-04-28T22:16:39+10:00</lastmod>
+        <loc>http://chapter31.com/2006/10/17/making-coldfusion-sleep/</loc>
+        <lastmod>2013-05-03T08:46:36+10:00</lastmod>
     </url>
     <url>
         <loc>http://chapter31.com/2006/10/19/varscoper-10-has-been-released/</loc>
@@ -677,8 +681,8 @@
         <lastmod>2013-04-28T22:16:39+10:00</lastmod>
     </url>
     <url>
-        <loc>http://chapter31.com/2008/07/23/how-do-you-lock-your-screen-on-a-mac/</loc>
-        <lastmod>2013-04-28T22:16:39+10:00</lastmod>
+        <loc>http://chapter31.com/2008/07/22/how-do-you-lock-your-screen-on-a-mac/</loc>
+        <lastmod>2013-05-03T08:48:23+10:00</lastmod>
     </url>
     <url>
         <loc>http://chapter31.com/2008/07/25/wordpress-for-mobile-devices/</loc>
@@ -1005,8 +1009,8 @@
         <lastmod>2013-05-03T08:17:50+10:00</lastmod>
     </url>
     <url>
-        <loc>http://chapter31.com/2012/07/05/jquery-tinymce-issue-with-attr/</loc>
-        <lastmod>2013-04-28T22:35:39+10:00</lastmod>
+        <loc>http://chapter31.com/2012/07/04/jquery-tinymce-issue-with-attr/</loc>
+        <lastmod>2013-05-03T08:48:55+10:00</lastmod>
     </url>
     <url>
         <loc>
@@ -1027,8 +1031,8 @@
         <lastmod>2013-05-03T08:35:56+10:00</lastmod>
     </url>
     <url>
-        <loc>http://chapter31.com/2012/08/14/timing-synchronous-javascript-operations/</loc>
-        <lastmod>2013-04-28T22:16:39+10:00</lastmod>
+        <loc>http://chapter31.com/2012/08/13/timing-synchronous-javascript-operations/</loc>
+        <lastmod>2013-05-03T08:47:31+10:00</lastmod>
     </url>
     <url>
         <loc>
@@ -1083,6 +1087,10 @@
         <lastmod>2013-04-28T22:16:39+10:00</lastmod>
     </url>
     <url>
+        <loc>http://chapter31.com/2013/04/30/managing-configuration-options-in-coldfusion/</loc>
+        <lastmod>2013-05-02T23:37:15+10:00</lastmod>
+    </url>
+    <url>
         <loc>http://chapter31.com/2013/05/02/installing-sonar-source-on-mac-osx/</loc>
         <lastmod>2013-05-02T23:34:21+10:00</lastmod>
     </url>
@@ -1092,11 +1100,11 @@
     </url>
     <url>
         <loc>http://chapter31.com/blog/archives/</loc>
-        <lastmod>2013-05-03T08:45:33+10:00</lastmod>
+        <lastmod>2013-05-03T08:49:22+10:00</lastmod>
     </url>
     <url>
         <loc>http://chapter31.com/</loc>
-        <lastmod>2013-05-03T08:45:33+10:00</lastmod>
+        <lastmod>2013-05-03T08:49:22+10:00</lastmod>
     </url>
     <url>
         <loc>http://chapter31.com/projects/</loc>
