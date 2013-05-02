@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: git | chapter31 &raquo;]]></title>
+  <link href="http://chapter31.com/categories/git/atom.xml" rel="self"/>
+  <link href="http://chapter31.com/"/>
+  <updated>2013-05-02T23:40:20+10:00</updated>
+  <id>http://chapter31.com/</id>
+  <author>
+    <name><![CDATA[Michael Sharman]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Adding a global ignore file for git]]></title>
+    <link href="http://chapter31.com/2013/01/21/adding-a-global-ignore-file-for-git/"/>
+    <updated>2013-01-21T23:02:46+11:00</updated>
+    <id>http://chapter31.com/2013/01/21/adding-a-global-ignore-file-for-git</id>
+    <content type="html"><![CDATA[<p>Quick setup of ignore files for Git. You can of course set these up per repo, but that gets a little old. Instead you can setup a single ignore file and link to it so that every repo refers to it.</p>
+
+<p>For example, create a git ignore file in your home directory:</p>
+
+<p><code>
+~/.gitignore_global
+</code></p>
+
+<p>Fill it with regular files that you want to ignore:</p>
+
+<p>``` bash</p>
+
+<h1>.gitignore</h1>
+
+<h1>Railo files</h1>
+
+<h6>#</h6>
+
+<p>WEB-INF/</p>
+
+<h1>Sublime files</h1>
+
+<h6>#</h6>
+
+<p><em>.sublime-project
+</em>.sublime-workspace</p>
+
+<h1>Misc files</h1>
+
+<h6>#</h6>
+
+<p><em>.yml
+</em>.buildpath
+<em>.settings
+</em>.cache</p>
+
+<h1>OS generated files</h1>
+
+<h6>#</h6>
+
+<p>.DS_Store
+ehthumbs.db
+Icon?
+Thumbs.db
+.project
+```</p>
+
+<p>Edit your main git config file (~/.gitconfig) and add a reference to this new global ignore file:</p>
+
+<p>``` bash
+[user]</p>
+
+<pre><code>    name = xxxx xxxx
+    email = joe@xxx.com
+</code></pre>
+
+<p>[core]</p>
+
+<pre><code>    excludesfile = /Users/computername/.gitignore_global
+</code></pre>
+
+<p>```</p>
+
+<p>Or you can run the following command:</p>
+
+<p><code>
+git config --global core.excludesfile ~/.gitignore_global
+</code></p>
+
+<p>Now all your git projects will share the same ignore file :)</p>
+]]></content>
+  </entry>
+  
+</feed>

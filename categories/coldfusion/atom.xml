@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ColdFusion | chapter31 &raquo;]]></title>
   <link href="http://chapter31.com/categories/coldfusion/atom.xml" rel="self"/>
   <link href="http://chapter31.com/"/>
-  <updated>2013-04-30T22:42:24+10:00</updated>
+  <updated>2013-05-02T23:40:20+10:00</updated>
   <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
@@ -12,84 +12,6 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
-  
-  <entry>
-    <title type="html"><![CDATA[Adding a global ignore file for git]]></title>
-    <link href="http://chapter31.com/2013/01/21/adding-a-global-ignore-file-for-git/"/>
-    <updated>2013-01-21T23:02:46+11:00</updated>
-    <id>http://chapter31.com/2013/01/21/adding-a-global-ignore-file-for-git</id>
-    <content type="html"><![CDATA[<p>Quick setup of ignore files for Git. You can of course set these up per repo, but that gets a little old. Instead you can setup a single ignore file and link to it so that every repo refers to it.</p>
-
-<p>For example, create a git ignore file in your home directory:</p>
-
-<p><code>
-~/.gitignore_global
-</code></p>
-
-<p>Fill it with regular files that you want to ignore:</p>
-
-<p>``` bash</p>
-
-<h1>.gitignore</h1>
-
-<h1>Railo files</h1>
-
-<h6>#</h6>
-
-<p>WEB-INF/</p>
-
-<h1>Sublime files</h1>
-
-<h6>#</h6>
-
-<p><em>.sublime-project
-</em>.sublime-workspace</p>
-
-<h1>Misc files</h1>
-
-<h6>#</h6>
-
-<p><em>.yml
-</em>.buildpath
-<em>.settings
-</em>.cache</p>
-
-<h1>OS generated files</h1>
-
-<h6>#</h6>
-
-<p>.DS_Store
-ehthumbs.db
-Icon?
-Thumbs.db
-.project
-```</p>
-
-<p>Edit your main git config file (~/.gitconfig) and add a reference to this new global ignore file:</p>
-
-<p>``` bash
-[user]</p>
-
-<pre><code>    name = xxxx xxxx
-    email = joe@xxx.com
-</code></pre>
-
-<p>[core]</p>
-
-<pre><code>    excludesfile = /Users/computername/.gitignore_global
-</code></pre>
-
-<p>```</p>
-
-<p>Or you can run the following command:</p>
-
-<p><code>
-git config --global core.excludesfile ~/.gitignore_global
-</code></p>
-
-<p>Now all your git projects will share the same ignore file :)</p>
-]]></content>
-  </entry>
   
   <entry>
     <title type="html"><![CDATA[Showing hidden files in Finder on mac osx]]></title>
@@ -292,6 +214,67 @@ public any function onRequestStart(string targetPath)
 <p>You can see in the example above that we override the default values we set initially, so that if we're in <em>development</em> mode we not only <a href="http://www.chapter31.com/2012/09/27/preventing-fw1-from-reinitialising-an-app-via-the-url/">have the ability to reload the application (using a custom property called <em>disableReloadApplication</em>)</a>, but we also reload the application on every request.</p>
 
 <p>2 things to note here, are that we can't use setupRequest() for this, as it's called too late by framework.cfc and won't enable us to override any <em>variables.framework</em> properties. So instead we use onRequestStart(), which gives us the 2nd thing to watch out for, and that is that you must be careful to call super.onRequestStart(targetPath); at the conclusion of this method. Or you might get strange results.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Preventing FW/1 from reinitialising an app via the URL]]></title>
+    <link href="http://chapter31.com/2012/09/27/preventing-fw1-from-reinitialising-an-app-via-the-url/"/>
+    <updated>2012-09-27T22:57:23+10:00</updated>
+    <id>http://chapter31.com/2012/09/27/preventing-fw1-from-reinitialising-an-app-via-the-url</id>
+    <content type="html"><![CDATA[<p>One of the things that <a href="https://github.com/seancorfield/fw1">FW/1</a> allows you to do is configure a reload "key" and "password" which you can use to reinit your application via URL.</p>
+
+<p>So inside your Application.cfc you might have:</p>
+
+<p><code>
+variables.framework = {
+  reload = 'reinit',
+  password = "mysecretkey"
+  …
+}
+</code></p>
+
+<p>So you can reinit your application (flush the application scope by re-running onApplicationStart()) by calling something like:</p>
+
+<p><code>
+http://www.example.com/?reinit=mysecretkey
+</code></p>
+
+<p>The "reload" and "password" properties can be changed to whatever you want for securities sake.</p>
+
+<p>We wanted a little extra security, that being the option to never allow an application to be reinitialised via a URL. Typically we want this in a production environment only. What you lose in flexibility, being able to reinit the application quickly and easily after a release/deployment, you (arguably) gain in security. Perhaps this is being a little over-cautious, but we like to be better safe than sorry, especially when reducing possible DOS vectors. Also it makes life easier when dealing with system administrators and/or security audits :)</p>
+
+<p>To achieve this we simply added a new property to the <em>variables.framework</em> structure inside Application.cfc, called "disableReloadApplication", which accepts true|false. If <em>true</em>, then even if you know the "reload" and "password" values…the application cannot be reinitialised via the URL. So the following would NOT reinit the app:</p>
+
+<p><code>
+http://www.example.com/?reinit=mysecretkey
+</code></p>
+
+<p>A few extra lines were needed inside framework.cfc to make this happen:</p>
+
+<p>setupFrameworkDefaults()</p>
+
+<p><code>
+…
+if ( !structKeyExists(variables.framework, 'disableReloadApplication') ) {
+  variables.framework.disableReloadApplication = false;
+}
+…
+</code></p>
+
+<p>and isFrameworkReloadRequest()</p>
+
+<p><code>
+return ( !variables.framework.disableReloadApplication &amp;&amp;
+  ((isDefined( 'URL' ) &amp;&amp;
+  structKeyExists( URL, variables.framework.reload ) &amp;&amp;
+  URL[ variables.framework.reload ] == variables.framework.password ) ||
+  variables.framework.reloadApplicationOnEveryRequest));
+</code></p>
+
+<p>Although we could have extended framework.cfc with our own file (and just defined these 2 methods), we just altered the original framework.cfc as we store a local copy in source control that all our projects can draw from.</p>
+
+<p><a href="https://github.com/michaelsharman/fw1">Here is the fork of FW/1</a> (really just a change to framework.cfc), version 2.0.1.</p>
 ]]></content>
   </entry>
   

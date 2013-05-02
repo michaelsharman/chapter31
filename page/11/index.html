@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Looking forward to another WebDU starting tomorrow in beautiful Sydney. Geoff, Julie and the rest of the Daemon gang have brought us yet another &hellip;">
+	<meta name="description" content="Unfortunately WebDU has been and gone, all the good things go by so quickly :( It was a fantastic event yet again and a HUGE thank you to Geoff, &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,70 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/06/13/webdu-over-for-another-year/">
+		
+			WebDU Over for Another Year :(</a>
+	</h2>
+	<div class="entry-content">
+		<p>Unfortunately <a href="http://www.webdu.com.au/">WebDU</a> has been and gone, all the good things go by so quickly :(</p>
+
+<p>It was a fantastic event yet again and a HUGE thank you to Geoff, Julie, Vanessa and all the <a href="http://www.daemon.com.au/">Daemonites</a> for putting on a spectacular couple of days.</p>
+
+<p>I don&#8217;t know what the highlight was, the great speakers/topics or the night of activities (bowling, pool, laser skirmish and drinking&#8230;lots of drinking!).</p>
+
+<p>One of the cool things about WebDU is the calibre of speakers it attracts from all over the globe. It was great to meet and chat with people from all walks of life including heavyweights from Adobe. It was fun trying to get <a href="http://www.adrocknaphobia.com/">Adam Lehman</a> to give me the inside scoop on ColdFusion 9 after he&#8217;d had a few beers. Didn&#8217;t work though ;)</p>
+
+<p>Can&#8217;t wait for next year, if you missed out this time try to make it next time.</p>
+
+<p>Some quick session highlights:</p>
+
+<ul>
+<li>Mike Downey&#8217;s keynote on day 1</li>
+<li>Phil Truesdale&#8217;s &#8220;Mayo Clinic&#8221; case study</li>
+<li>Adam Lehman&#8217;s CF performance monitoring</li>
+<li>Thursday night&#8217;s activities :)</li>
+<li>Mike Labriola&#8217;s under the hood breakdown when Flex compiles</li>
+<li>Mark Mandel&#8217;s Transfer</li>
+</ul>
+
+
+<p>Congratulations and well done to all of the speakers.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-06-13T20:23:05+10:00" pubdate data-updated="true">Jun 13<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/misc/'>Misc</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/06/13/webdu-over-for-another-year//page/11/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -722,92 +786,6 @@ Avg: 529</p>
 </div>
 	
 		<div class="comments"><a href="/2008/04/17/i-hate-spam-spambot-cracks-live-hotmail-captcha//page/11/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2008/04/08/workaround-for-cfscript-bug-in-varscoper/">
-		
-			Workaround for Cfscript Bug in Varscoper</a>
-	</h2>
-	<div class="entry-content">
-		<p>Those that use the sensational <a href="http://www.schierberl.com/varScoper/">varscoper tool</a> from Mike Schierberl know that cfscript is still a little experimental with the current release.</p>
-
-<p>One of the things it can do is return variables that <em>are</em> actually &#8220;var&#8221; scoped as <em>not var</em> scoped when using cfscript. This seems to happen most often when you have a comment directly above the variable in question.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfscript</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="kd">var</span> <span class="nx">column</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>       <span class="c1">//which column the pod is in</span>
-</span><span class='line'>  <span class="kd">var</span> <span class="nx">row</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>      <span class="c1">//which row the pod is on</span>
-</span><span class='line'>  <span class="kd">var</span> <span class="nx">newRow</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/cfscript&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>In the above example Varscoper tells me that &#8220;newRow&#8221; is not var scoped when clearly it is.</p>
-
-<p><a href="/images/uploads/2008/04/varscoper.jpg"><img src="/images/uploads/2008/04/varscoper-300x38.jpg" alt="" /></a></p>
-
-<p>This is usually fine, but if you start to get a lot of these false positives there is a quick little workaround. Place a semi-colon at the end of the last comment which effectively tells varscoper where the statement finishes and fixes the problem.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfscript</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="kd">var</span> <span class="nx">column</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>       <span class="c1">//which column the pod is in</span>
-</span><span class='line'>  <span class="kd">var</span> <span class="nx">row</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>      <span class="c1">//which row the pod is on;</span>
-</span><span class='line'>  <span class="kd">var</span> <span class="nx">newRow</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/cfscript&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Note the semi-colon after the 2nd comment. Now my reports are nice and clean :)</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-04-08T12:32:08+10:00" pubdate data-updated="true">Apr 8<span>th</span>, 2008</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2008/04/08/workaround-for-cfscript-bug-in-varscoper//page/11/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 
