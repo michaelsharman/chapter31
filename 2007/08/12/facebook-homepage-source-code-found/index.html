@@ -3,11 +3,11 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Setting font MIME types in apache - chapter31 &raquo;</title>
+	<title>Facebook homepage source code found! - chapter31 &raquo;</title>
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="If your website is using custom fonts, you may see this line in your Chrome console: Resource interpreted as Font but transferred with MIME type &hellip;">
+	<meta name="description" content="Hmm, seems a problem with the .htaccess file made the source for Facebooks homepage available. Nik Cubrilovic offers an explanation from a technical &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,25 +81,16 @@
 
 	
 	<div id="content" class="inner"><article class="post">
-	<h2 class="title">Setting Font MIME Types in Apache</h2>
-	<div class="entry-content"><p>If your website is using custom fonts, you may see this line in your Chrome console:</p>
+	<h2 class="title">Facebook Homepage Source Code Found!</h2>
+	<div class="entry-content"><p>Hmm, seems a problem with the .htaccess file made the source for <a href="http://www.facebook.com/">Facebooks</a> homepage available.</p>
 
-<blockquote><p>Resource interpreted as Font but transferred with MIME type application/octet-stream</p></blockquote>
+<p><a href="http://www.nik.com.au/archives/2007/08/11/learning-from-facebook-preventing-php-leakage/">Nik Cubrilovic</a> offers an explanation from a technical standpoint:</p>
 
-<p>This is really kinda annoying, if you want to get rid of that warning then add the following directives to your apache conf/.htaccess:</p>
+<blockquote><p>PHP has always been notorious for sometimes not processing requests poorly and sending back the source code for pages to the client. Because of the way mod_php works with apache, if mod_php fails in intercepting and processing the request, then apache will just serve it back to the client as an ordinary text file.</p></blockquote>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">AddType</span> <span class="nx">application</span><span class="o">/</span><span class="nx">vnd</span><span class="p">.</span><span class="nx">ms</span><span class="o">-</span><span class="nx">fontobject</span> <span class="nx">eot</span>
-</span><span class='line'><span class="nx">AddType</span> <span class="nx">font</span><span class="o">/</span><span class="nx">opentype</span> <span class="nx">otf</span>
-</span><span class='line'><span class="nx">AddType</span> <span class="nx">font</span><span class="o">/</span><span class="nx">truetype</span> <span class="nx">ttf</span>
-</span><span class='line'><span class="nx">AddType</span> <span class="nx">application</span><span class="o">/</span><span class="nx">x</span><span class="o">-</span><span class="nx">font</span><span class="o">-</span><span class="nx">woff</span> <span class="p">.</span><span class="nx">woff</span>
-</span></code></pre></td></tr></table></div></figure>
+<p>He also goes on to suggest good security practices with PHP/Apache which is well worth a read for any developer.</p>
 
-
-<p><a href="http://www.jbarker.com/blog/2011/resource-interpreted-font-transferred-mime-type">See here for more information.</a></p>
+<p><a href="http://facebooksecrets.blogspot.com/2007/08/facebook-home-page-code.html">Click here</a> to see the actual code and more Facebook &#8216;secrets&#8217;</p>
 </div>
 
 
@@ -116,16 +107,16 @@
   
 
 
-<time datetime="2012-08-10T09:40:00+10:00" pubdate data-updated="true">Aug 10<span>th</span>, 2012</time></div>
+<time datetime="2007-08-12T22:45:00+10:00" pubdate data-updated="true">Aug 12<span>th</span>, 2007</time></div>
 	<div class="tags">
 
 
-	<a class='category' href='/categories/apache-slash-iis/'>Apache/IIS</a>
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
 
 
 </div>
 	
-		<div class="comments"><a href="/2012/08/10/setting-font-mime-types-in-apache/#disqus_thread">Comments</a></div>
+		<div class="comments"><a href="/2007/08/12/facebook-homepage-source-code-found/#disqus_thread">Comments</a></div>
 	
 </div></article>
 
@@ -166,8 +157,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://chapter31.com/2012/08/10/setting-font-mime-types-in-apache/';
-        var disqus_url = 'http://chapter31.com/2012/08/10/setting-font-mime-types-in-apache/';
+        var disqus_identifier = 'http://chapter31.com/2007/08/12/facebook-homepage-source-code-found/';
+        var disqus_url = 'http://chapter31.com/2007/08/12/facebook-homepage-source-code-found/';
         var disqus_script = 'embed.js';
       
     (function () {

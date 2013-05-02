@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Databases | chapter31 &raquo;]]></title>
   <link href="http://chapter31.com/categories/databases/atom.xml" rel="self"/>
   <link href="http://chapter31.com/"/>
-  <updated>2013-05-03T08:34:27+10:00</updated>
+  <updated>2013-05-03T08:38:56+10:00</updated>
   <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
@@ -107,10 +107,10 @@ mysqldump --compatible=ansi -h127.0.0.1 -umyuser -p mydatabase | gzip &gt; mydat
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[MySQL alternative to MSSQL's isNull() ]]></title>
-    <link href="http://chapter31.com/2011/03/04/mysql-alternative-to-mssqls-isnull/"/>
-    <updated>2011-03-04T10:22:53+11:00</updated>
-    <id>http://chapter31.com/2011/03/04/mysql-alternative-to-mssqls-isnull</id>
+    <title type="html"><![CDATA[MySQL alternative to MSSQL''s isNull()]]></title>
+    <link href="http://chapter31.com/2011/03/03/mysql-alternative-to-mssqls-isnull/"/>
+    <updated>2011-03-03T23:22:00+11:00</updated>
+    <id>http://chapter31.com/2011/03/03/mysql-alternative-to-mssqls-isnull</id>
     <content type="html"><![CDATA[<p>I was looking for a way to do isNull() in MySQL the other day, for those that don't know this means you can do something like:</p>
 
 <p><code>javascript

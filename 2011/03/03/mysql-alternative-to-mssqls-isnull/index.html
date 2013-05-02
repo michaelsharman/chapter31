@@ -3,11 +3,12 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Adding a mail server to a Railo instance - chapter31 &raquo;</title>
+	<title>MySQL alternative to MSSQL''s isNull() - chapter31 &raquo;</title>
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="We turn off all GUI based administration consoles in our production environments, this includes Railo&#8217;s admin area. If you need to configure &hellip;">
+	<meta name="description" content="I was looking for a way to do isNull() in MySQL the other day, for those that don&#8217;t know this means you can do something like: 1
+SELECT isNull( &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,48 +82,20 @@
 
 	
 	<div id="content" class="inner"><article class="post">
-	<h2 class="title">Adding a Mail Server to a Railo Instance</h2>
-	<div class="entry-content"><p>We turn off all GUI based administration consoles in our production environments, this includes Railo&#8217;s admin area.</p>
+	<h2 class="title">MySQL Alternative to MSSQL''s isNull()</h2>
+	<div class="entry-content"><p>I was looking for a way to do isNull() in MySQL the other day, for those that don&#8217;t know this means you can do something like:</p>
 
-<p>If you need to configure your Railo instance to include an SMTP server, you can add a line in WEB-INF/railo/railo-web.xml.cfm</p>
-
-<p>Open up that file (probably as sudo), look for the <mail> tag (which is empty by default) and insert the following:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;server port="25" smtp="127.0.0.1" /&gt;</span></code></pre></td></tr></table></div></figure>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">SELECT</span> <span class="nx">isNull</span><span class="p">(</span><span class="nx">mycolumn</span><span class="p">,</span> <span class="s1">&#39;blah&#39;</span><span class="p">)</span> <span class="nx">FROM</span> <span class="nx">myTable</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
-<p>The &#8220;smtp&#8221; attribute should be the IP address of your SMTP server. Also, if your SMTP server requires a username and password, you can add them like so:</p>
+<p>If the value in <em>mycolumn</em> is NULL, then &#8216;blah&#8217; is returned, this can of course be any string literal/numeric value you want. MySQL doesn&#8217;t have isNull() but it does have <a href="http://dev.mysql.com/doc/refman/5.0/en/control-flow-functions.html#function_ifnull">ifNull()</a> which is basically the same.</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;server port="25" smtp="127.0.0.1" username="myusername" password="mypassword" /&gt;</span></code></pre></td></tr></table></div></figure>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">SELECT</span> <span class="nx">ifNull</span><span class="p">(</span><span class="nx">mycolumn</span><span class="p">,</span> <span class="s1">&#39;blah&#39;</span><span class="p">)</span> <span class="nx">FROM</span> <span class="nx">myTable</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
 
-
-<p>At the end of the day your config entry should look something like:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;mail log="{railo-web}/logs/mail.log"&gt;
-</span><span class='line'>  &lt;server port="25" smtp="127.0.0.1"/&gt;
-</span><span class='line'>&lt;/mail&gt; </span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Update - January 2013</h2>
-
-<p>I was googling something else when I came across a post on the Railo groups indicating that by default only <em>error</em> logging is enabled for mail. This means that in the event of an error (where Railo is unable to send the mail) you can check the WEB-INF/railo/logs/mail.log for information.</p>
-
-<p>However, you can turn on <em>info</em> logging as well to presumably track whenever mail is actually sent. This can be done in either railo-server.xml or railo-web.xml. Eg:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;mail log-level="info" log="{railo-web}/logs/mail.log"&gt;
-</span><span class='line'>  &lt;server port="25" smtp="127.0.0.1"/&gt;
-</span><span class='line'>&lt;/mail&gt; </span></code></pre></td></tr></table></div></figure>
-
-
-<p>This is really handy for us as we disallow access to the Railo admin GUI.</p>
 </div>
 
 
@@ -139,16 +112,16 @@
   
 
 
-<time datetime="2012-09-27T08:04:33+10:00" pubdate data-updated="true">Sep 27<span>th</span>, 2012</time></div>
+<time datetime="2011-03-03T23:22:00+11:00" pubdate data-updated="true">Mar 3<span>rd</span>, 2011</time></div>
 	<div class="tags">
 
 
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/railo/'>Railo</a>
+	<a class='category' href='/categories/databases/'>Databases</a>
 
 
 </div>
 	
-		<div class="comments"><a href="/2012/09/27/adding-a-mail-server-to-a-railo-instance/#disqus_thread">Comments</a></div>
+		<div class="comments"><a href="/2011/03/03/mysql-alternative-to-mssqls-isnull/#disqus_thread">Comments</a></div>
 	
 </div></article>
 
@@ -189,8 +162,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://chapter31.com/2012/09/27/adding-a-mail-server-to-a-railo-instance/';
-        var disqus_url = 'http://chapter31.com/2012/09/27/adding-a-mail-server-to-a-railo-instance/';
+        var disqus_identifier = 'http://chapter31.com/2011/03/03/mysql-alternative-to-mssqls-isnull/';
+        var disqus_url = 'http://chapter31.com/2011/03/03/mysql-alternative-to-mssqls-isnull/';
         var disqus_script = 'embed.js';
       
     (function () {

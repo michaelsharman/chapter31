@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Railo | chapter31 &raquo;]]></title>
   <link href="http://chapter31.com/categories/railo/atom.xml" rel="self"/>
   <link href="http://chapter31.com/"/>
-  <updated>2013-05-03T08:34:27+10:00</updated>
+  <updated>2013-05-03T08:38:56+10:00</updated>
   <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Adding a mail server to a Railo instance]]></title>
-    <link href="http://chapter31.com/2012/09/27/adding-a-mail-server-to-a-railo-instance/"/>
-    <updated>2012-09-27T08:04:33+10:00</updated>
-    <id>http://chapter31.com/2012/09/27/adding-a-mail-server-to-a-railo-instance</id>
+    <link href="http://chapter31.com/2012/09/26/adding-a-mail-server-to-a-railo-instance/"/>
+    <updated>2012-09-26T22:04:00+10:00</updated>
+    <id>http://chapter31.com/2012/09/26/adding-a-mail-server-to-a-railo-instance</id>
     <content type="html"><![CDATA[<p>We turn off all GUI based administration consoles in our production environments, this includes Railo's admin area.</p>
 
 <p>If you need to configure your Railo instance to include an SMTP server, you can add a line in WEB-INF/railo/railo-web.xml.cfm</p>

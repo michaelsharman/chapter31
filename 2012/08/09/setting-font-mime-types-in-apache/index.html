@@ -3,12 +3,11 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>MySQL alternative to MSSQL's isNull()  - chapter31 &raquo;</title>
+	<title>Setting font MIME types in apache - chapter31 &raquo;</title>
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="I was looking for a way to do isNull() in MySQL the other day, for those that don&#8217;t know this means you can do something like: 1
-SELECT isNull( &hellip;">
+	<meta name="description" content="If your website is using custom fonts, you may see this line in your Chrome console: Resource interpreted as Font but transferred with MIME type &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -82,20 +81,25 @@ SELECT isNull( &hellip;">
 
 	
 	<div id="content" class="inner"><article class="post">
-	<h2 class="title">MySQL Alternative to MSSQL's isNull()</h2>
-	<div class="entry-content"><p>I was looking for a way to do isNull() in MySQL the other day, for those that don&#8217;t know this means you can do something like:</p>
+	<h2 class="title">Setting Font MIME Types in Apache</h2>
+	<div class="entry-content"><p>If your website is using custom fonts, you may see this line in your Chrome console:</p>
+
+<blockquote><p>Resource interpreted as Font but transferred with MIME type application/octet-stream</p></blockquote>
+
+<p>This is really kinda annoying, if you want to get rid of that warning then add the following directives to your apache conf/.htaccess:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">SELECT</span> <span class="nx">isNull</span><span class="p">(</span><span class="nx">mycolumn</span><span class="p">,</span> <span class="s1">&#39;blah&#39;</span><span class="p">)</span> <span class="nx">FROM</span> <span class="nx">myTable</span><span class="p">;</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">AddType</span> <span class="nx">application</span><span class="o">/</span><span class="nx">vnd</span><span class="p">.</span><span class="nx">ms</span><span class="o">-</span><span class="nx">fontobject</span> <span class="nx">eot</span>
+</span><span class='line'><span class="nx">AddType</span> <span class="nx">font</span><span class="o">/</span><span class="nx">opentype</span> <span class="nx">otf</span>
+</span><span class='line'><span class="nx">AddType</span> <span class="nx">font</span><span class="o">/</span><span class="nx">truetype</span> <span class="nx">ttf</span>
+</span><span class='line'><span class="nx">AddType</span> <span class="nx">application</span><span class="o">/</span><span class="nx">x</span><span class="o">-</span><span class="nx">font</span><span class="o">-</span><span class="nx">woff</span> <span class="p">.</span><span class="nx">woff</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>If the value in <em>mycolumn</em> is NULL, then &#8216;blah&#8217; is returned, this can of course be any string literal/numeric value you want. MySQL doesn&#8217;t have isNull() but it does have <a href="http://dev.mysql.com/doc/refman/5.0/en/control-flow-functions.html#function_ifnull">ifNull()</a> which is basically the same.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">SELECT</span> <span class="nx">ifNull</span><span class="p">(</span><span class="nx">mycolumn</span><span class="p">,</span> <span class="s1">&#39;blah&#39;</span><span class="p">)</span> <span class="nx">FROM</span> <span class="nx">myTable</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<p><a href="http://www.jbarker.com/blog/2011/resource-interpreted-font-transferred-mime-type">See here for more information.</a></p>
 </div>
 
 
@@ -112,16 +116,16 @@ SELECT isNull( &hellip;">
   
 
 
-<time datetime="2011-03-04T10:22:53+11:00" pubdate data-updated="true">Mar 4<span>th</span>, 2011</time></div>
+<time datetime="2012-08-09T23:40:00+10:00" pubdate data-updated="true">Aug 9<span>th</span>, 2012</time></div>
 	<div class="tags">
 
 
-	<a class='category' href='/categories/databases/'>Databases</a>
+	<a class='category' href='/categories/apache-slash-iis/'>Apache/IIS</a>
 
 
 </div>
 	
-		<div class="comments"><a href="/2011/03/04/mysql-alternative-to-mssqls-isnull/#disqus_thread">Comments</a></div>
+		<div class="comments"><a href="/2012/08/09/setting-font-mime-types-in-apache/#disqus_thread">Comments</a></div>
 	
 </div></article>
 
@@ -162,8 +166,8 @@ SELECT isNull( &hellip;">
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://chapter31.com/2011/03/04/mysql-alternative-to-mssqls-isnull/';
-        var disqus_url = 'http://chapter31.com/2011/03/04/mysql-alternative-to-mssqls-isnull/';
+        var disqus_identifier = 'http://chapter31.com/2012/08/09/setting-font-mime-types-in-apache/';
+        var disqus_url = 'http://chapter31.com/2012/08/09/setting-font-mime-types-in-apache/';
         var disqus_script = 'embed.js';
       
     (function () {
