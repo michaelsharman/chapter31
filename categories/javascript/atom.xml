@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Javascript | chapter31 &raquo;]]></title>
   <link href="http://chapter31.com/categories/javascript/atom.xml" rel="self"/>
   <link href="http://chapter31.com/"/>
-  <updated>2013-05-03T08:42:37+10:00</updated>
+  <updated>2013-05-03T08:45:38+10:00</updated>
   <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
@@ -183,9 +183,9 @@ console.timeEnd = function(name){
   
   <entry>
     <title type="html"><![CDATA[Adding Prototype methods to jQuery]]></title>
-    <link href="http://chapter31.com/2010/12/08/adding-prototype-methods-to-jquery/"/>
-    <updated>2010-12-08T09:41:50+11:00</updated>
-    <id>http://chapter31.com/2010/12/08/adding-prototype-methods-to-jquery</id>
+    <link href="http://chapter31.com/2010/12/07/adding-prototype-methods-to-jquery/"/>
+    <updated>2010-12-07T22:41:00+11:00</updated>
+    <id>http://chapter31.com/2010/12/07/adding-prototype-methods-to-jquery</id>
     <content type="html"><![CDATA[<p>We recently upgraded a project which was using the Prototype JavaScript framework to use jQuery and ran into a few methods which didn't exist in jQuery at all.</p>
 
 <p>A quick search gave us an easy solution; by adding a prototype property (not related to the Prototype framework) to String.prototype we can give every <code>string</code> in our codebase access to these methods as if they were part of the JavaScript spec (or the jQuery library).</p>

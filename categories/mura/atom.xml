@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Mura | chapter31 &raquo;]]></title>
   <link href="http://chapter31.com/categories/mura/atom.xml" rel="self"/>
   <link href="http://chapter31.com/"/>
-  <updated>2013-05-03T08:42:37+10:00</updated>
+  <updated>2013-05-03T08:45:38+10:00</updated>
   <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
@@ -69,9 +69,9 @@
   
   <entry>
     <title type="html"><![CDATA[FarCry to Mura - migrating data from FarCry to Mura CMS]]></title>
-    <link href="http://chapter31.com/2011/05/30/farcry-to-mura-migrating-data-from-farcry-to-mura-cms/"/>
-    <updated>2011-05-30T09:00:27+10:00</updated>
-    <id>http://chapter31.com/2011/05/30/farcry-to-mura-migrating-data-from-farcry-to-mura-cms</id>
+    <link href="http://chapter31.com/2011/05/29/farcry-to-mura-migrating-data-from-farcry-to-mura-cms/"/>
+    <updated>2011-05-29T23:00:00+10:00</updated>
+    <id>http://chapter31.com/2011/05/29/farcry-to-mura-migrating-data-from-farcry-to-mura-cms</id>
     <content type="html"><![CDATA[<p>For years <a href="http://www.learnosity.com/">here at Learnosity</a> we've been using <a href="http://www.farcrycore.org/">FarCry</a> for most of our CMS requirements (yes, I know that FarCry, or rather farcrycms, is a lot more than just a CMS).</p>
 
 <p>For one reason or another we decided it was time to look at some of the other options for content management in the ColdFusion sphere, <a href="http://www.getmura.com/">Mura CMS</a> was a likely candidate for evalutation.</p>
