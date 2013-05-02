@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Railo | chapter31 &raquo;]]></title>
   <link href="http://chapter31.com/categories/railo/atom.xml" rel="self"/>
   <link href="http://chapter31.com/"/>
-  <updated>2013-05-03T08:38:56+10:00</updated>
+  <updated>2013-05-03T08:42:37+10:00</updated>
   <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
@@ -97,9 +97,9 @@
   
   <entry>
     <title type="html"><![CDATA[Mura - overriding dspCrumblistLinks]]></title>
-    <link href="http://chapter31.com/2011/06/01/mura-overriding-dspcrumblistlinks/"/>
-    <updated>2011-06-01T08:31:03+10:00</updated>
-    <id>http://chapter31.com/2011/06/01/mura-overriding-dspcrumblistlinks</id>
+    <link href="http://chapter31.com/2011/05/31/mura-overriding-dspcrumblistlinks/"/>
+    <updated>2011-05-31T22:31:00+10:00</updated>
+    <id>http://chapter31.com/2011/05/31/mura-overriding-dspcrumblistlinks</id>
     <content type="html"><![CDATA[<p>Like most CMS solutions out there, Mura CMS gives you some cool hooks to override core functionality. <a href="http://docs.getmura.com/index.cfm/developer-guides/">See the developer guides</a> for more information.</p>
 
 <p>I've created a <a href="https://github.com/michaelsharman/muracustomisations/">repository on github</a> to store any customisations or extensions that could be cherry picked for use in any Mura app.</p>
