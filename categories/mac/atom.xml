@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Mac | chapter31 &raquo;]]></title>
   <link href="http://chapter31.com/categories/mac/atom.xml" rel="self"/>
   <link href="http://chapter31.com/"/>
-  <updated>2013-05-02T23:40:20+10:00</updated>
+  <updated>2013-05-03T08:24:04+10:00</updated>
   <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Apache permission denied on Mac OSX Lion]]></title>
-    <link href="http://chapter31.com/2012/06/06/apache-permission-denied-on-mac-osx-lion/"/>
-    <updated>2012-06-06T00:52:49+10:00</updated>
-    <id>http://chapter31.com/2012/06/06/apache-permission-denied-on-mac-osx-lion</id>
+    <link href="http://chapter31.com/2012/06/05/apache-permission-denied-on-mac-osx-lion/"/>
+    <updated>2012-06-05T14:52:00+10:00</updated>
+    <id>http://chapter31.com/2012/06/05/apache-permission-denied-on-mac-osx-lion</id>
     <content type="html"><![CDATA[<p>I've just upgraded to OSX Lion and had some trouble getting Apache to load a vhost. I kept getting a 403 permission denied error, but all my vhosts had the correct permission directives set.</p>
 
 <p>Now by default your webserver document root is located in <em>/Library/WebServer/Documents</em>. I don't really like that for my local machine, I'd rather store web files under my user account. Just tends to make things easier.</p>

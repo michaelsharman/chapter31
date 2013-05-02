@@ -261,8 +261,8 @@
         <lastmod>2013-04-28T22:16:39+10:00</lastmod>
     </url>
     <url>
-        <loc>http://chapter31.com/2006/12/08/including-js-files-from-within-js-files/</loc>
-        <lastmod>2013-04-28T22:16:39+10:00</lastmod>
+        <loc>http://chapter31.com/2006/12/07/including-js-files-from-within-js-files/</loc>
+        <lastmod>2013-05-03T08:21:30+10:00</lastmod>
     </url>
     <url>
         <loc>http://chapter31.com/2006/12/13/outputting-content-from-within-a-method/</loc>
@@ -597,8 +597,8 @@
         <lastmod>2013-04-28T22:35:39+10:00</lastmod>
     </url>
     <url>
-        <loc>http://chapter31.com/2008/05/23/insert-delayed-with-mysql/</loc>
-        <lastmod>2013-04-28T22:16:39+10:00</lastmod>
+        <loc>http://chapter31.com/2008/05/22/insert-delayed-with-mysql/</loc>
+        <lastmod>2013-05-03T08:22:37+10:00</lastmod>
     </url>
     <url>
         <loc>http://chapter31.com/2008/05/30/password-strength-checker/</loc>
@@ -783,8 +783,8 @@
         <lastmod>2013-04-28T22:35:39+10:00</lastmod>
     </url>
     <url>
-        <loc>http://chapter31.com/2008/11/20/logging-all-mysql-queries-on-mac-osx/</loc>
-        <lastmod>2013-04-28T22:35:39+10:00</lastmod>
+        <loc>http://chapter31.com/2008/11/19/logging-all-mysql-queries-on-mac-osx/</loc>
+        <lastmod>2013-05-03T08:23:05+10:00</lastmod>
     </url>
     <url>
         <loc>
@@ -1001,8 +1001,8 @@
         <lastmod>2013-04-28T22:35:39+10:00</lastmod>
     </url>
     <url>
-        <loc>http://chapter31.com/2012/06/06/apache-permission-denied-on-mac-osx-lion/</loc>
-        <lastmod>2013-04-28T22:16:39+10:00</lastmod>
+        <loc>http://chapter31.com/2012/06/05/apache-permission-denied-on-mac-osx-lion/</loc>
+        <lastmod>2013-05-03T08:17:50+10:00</lastmod>
     </url>
     <url>
         <loc>http://chapter31.com/2012/07/05/jquery-tinymce-issue-with-attr/</loc>
@@ -1010,9 +1010,9 @@
     </url>
     <url>
         <loc>
-            http://chapter31.com/2012/07/06/concatenating-values-into-a-single-column-with-mysql-group_concat/
+            http://chapter31.com/2012/07/05/concatenating-values-into-a-single-column-with-mysql-group_concat/
         </loc>
-        <lastmod>2013-04-28T22:35:39+10:00</lastmod>
+        <lastmod>2013-05-03T08:20:07+10:00</lastmod>
     </url>
     <url>
         <loc>http://chapter31.com/2012/07/10/editing-svnignore-on-the-terminal/</loc>
@@ -1092,11 +1092,11 @@
     </url>
     <url>
         <loc>http://chapter31.com/blog/archives/</loc>
-        <lastmod>2013-05-02T23:34:21+10:00</lastmod>
+        <lastmod>2013-05-03T08:23:05+10:00</lastmod>
     </url>
     <url>
         <loc>http://chapter31.com/</loc>
-        <lastmod>2013-05-02T23:34:21+10:00</lastmod>
+        <lastmod>2013-05-03T08:23:05+10:00</lastmod>
     </url>
     <url>
         <loc>http://chapter31.com/projects/</loc>
