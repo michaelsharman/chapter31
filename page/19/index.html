@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Snap is a nice little search engine which displays your results in a left window pane and a site preview of your search result in the right. It&# &hellip;">
+	<meta name="description" content="When developing for the web there is often a need to view the (X)HTML source code of a page to see exactly what ColdFusion (or your server side &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,58 +81,6 @@
 
 	
 	<div id="content" class="inner">
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2006/12/05/snapa-google-competitor-and-cool-site-preview-tool/">
-		
-			snap. ..a Google Competitor and Cool Site Preview Tool</a>
-	</h2>
-	<div class="entry-content">
-		<p><a href="http://www.snap.com/">Snap</a> is a nice little search engine which displays your results in a left window pane and a site preview of your search result in the right. It&#8217;s very Ajax-y and includes personalised settings, email a friend, result ratings and more. They even made the Time <a href="http://www.time.com/time/business/article/0,8599,1222614,00.html#snap">50 coolest websites of 2006</a>.</p>
-
-<p>Snap is also a free preview tool for your website which enables visitors to catch a glimpse of what websites you are linking to. All you need to do is hover your mouse over a hyperlink to see a thumbnail of the linked site.</p>
-
-<p><a href="http://www.daemon.com.au/">Try it here</a></p>
-
-<p>I&#8217;ll admit that this one is a bit gimmicky but it&#8217;s still kind of fun :)</p>
-
-<p>By default snap only gives you previews of external URL&#8217;s, but you can turn on internal URL&#8217;s as well as play with a few extra options. <a href="http://www.snap.com/about/spa_faq.php">See their FAQ&#8217;s</a> for more.</p>
-
-<p>Setting up takes approximately 2 minutes, just fill out a tiny form and copy/paste a link to a javascript file in your site header. That&#8217;s it!</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2006-12-05T17:20:57+11:00" pubdate data-updated="true">Dec 5<span>th</span>, 2006</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/misc/'>Misc</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2006/12/05/snapa-google-competitor-and-cool-site-preview-tool//page/19/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
 
 
     <article class="post">
@@ -755,6 +703,81 @@
 </div>
 	
 		<div class="comments"><a href="/2006/11/08/browser-testing-your-site-design//page/19/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2006/11/08/caching-stored-procedures/">
+		
+			Caching Stored Procedures</a>
+	</h2>
+	<div class="entry-content">
+		<p>Stored procedures are great for many reasons but one of the reasons I might not use them is you can&#8217;t cache them&#8230;or can you?</p>
+
+<p>A discussion at work enlightened me to a simple way around the lack of the cachedwithin attribute inside the <cfstoredproc> tag. Simply use the <cfquery> tag instead!</p>
+
+<p>Ok, so normally if I wanted to use a stored procedure I might do something like:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfstoredproc</span> <span class="nx">procedure</span><span class="o">=</span><span class="s2">&quot;qGetUser&quot;</span> <span class="nx">datasource</span><span class="o">=</span><span class="s2">&quot;#application.dsn#&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfprocparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;CF_SQL_INTEGER&quot;</span> <span class="kc">null</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;in&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.userId#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfstoredproc&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But did you know that you can execute your stored procedures from within the <cfquery> tag? Well you can, that way you can also take advantage of the cachedwithin attribute!:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfquery</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;qGetUser&quot;</span> <span class="nx">datasource</span><span class="o">=</span><span class="s2">&quot;#application.dsn#&quot;</span> <span class="nx">cachedwithin</span><span class="o">=</span><span class="s2">&quot;#createTimeSpan(0,2,0,0)#&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="nx">exec</span> <span class="nx">usp_getUser</span> <span class="err">#</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">userId</span><span class="err">#</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfquery&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>One thing though is that this will only work when you return a <strong>single record set</strong>, if you need to return multiple record sets (which I often do) then <cfstoredproc> is your only option as you can use the <cfprocresult> tag like:</p>
+
+<pre><code>&lt;cfprocresult name="myResultOne" resultset="2" /&gt;
+</code></pre>
+
+<p>It always amazes me when you get simple solutions to problems you have using what you already know in a creative way, at least creative or new to you!</p>
+
+<p>Always look to refactor your code, you never know what you&#8217;ll learn to save you time and effort in the future :)</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-11-08T12:29:59+11:00" pubdate data-updated="true">Nov 8<span>th</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2006/11/08/caching-stored-procedures//page/19/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

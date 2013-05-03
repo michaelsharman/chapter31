@@ -284,52 +284,6 @@
     <article class="post">
 	<h2 class="title">
 		
-		<a href="/2013/03/31/managing-pathnames-on-osx/">
-		
-			Managing Pathnames on OSX</a>
-	</h2>
-	<div class="entry-content">
-		<p>You can set environment variables on your Mac in several different ways.</p>
-
-<p>If you want to set a PATH variable just for the current user, you can edit your ~/.bash_profile file. Eg</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>export PATH=/usr/local/share/python:$PATH"</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-03-31T20:37:00+11:00" pubdate data-updated="true">Mar 31<span>st</span>, 2013</time></div>
-	<div class="tags">
-
-</div>
-	
-		<div class="comments"><a href="/2013/03/31/managing-pathnames-on-osx//index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
 		<a href="/2013/01/21/adding-a-global-ignore-file-for-git/">
 		
 			Adding a Global Ignore File for Git</a>
@@ -1127,6 +1081,65 @@ Select #3 had 8192* possible combinations</p>
 </div>
 	
 		<div class="comments"><a href="/2012/09/26/adding-a-mail-server-to-a-railo-instance//index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2012/09/24/installing-new-fonts-on-ubuntu-server/">
+		
+			Installing New Fonts on Ubuntu Server</a>
+	</h2>
+	<div class="entry-content">
+		<p>I had some new fonts to install on our test server that runs Ubuntu server. Pretty simple really, just noting it down here for next time:</p>
+
+<ul>
+<li>Upload/ssh the font(s) to your home folder on the server</li>
+<li>Copy font to the system fonts folder, this way it can be used by all users on the system
+
+<pre><code>sudo cp -R ~/trade-gothic /usr/share/fonts/truetype/    
+</code></pre></li>
+<li>Check permissions
+
+<pre><code>sudo chmod 755 /usr/share/fonts/truetype/trade-gothic/
+</code></pre></li>
+<li>Install the fonts so applications can use them
+
+<pre><code>sudo fc-cache -f -v
+</code></pre></li>
+</ul>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-24T13:41:55+10:00" pubdate data-updated="true">Sep 24<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/misc/'>Misc</a>, <a class='category' href='/categories/ubuntu/'>Ubuntu</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2012/09/24/installing-new-fonts-on-ubuntu-server//index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

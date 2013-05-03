@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Had a funny situation today where I was emailed a bash program file, but simply downloading the attachment from gmail (in Chrome) added a linefeed &hellip;">
+	<meta name="description" content="Often with doing a find and replace you want to use line breaks in the find (or replace) criteria. Sometimes I&#8217;ll have a column of data from a &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,106 +81,6 @@
 
 	
 	<div id="content" class="inner">
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2012/05/24/strange-linefeed-characters-appearing-on-mac/">
-		
-			Strange Linefeed Characters Appearing on Mac</a>
-	</h2>
-	<div class="entry-content">
-		<p>Had a funny situation today where I was emailed a bash program file, but simply downloading the attachment from gmail (in Chrome) added a linefeed (\r) to the file.</p>
-
-<p>This is strange because I never actually opened the file to edit, so I&#8217;m not sure what was writing those chars to the file. I&#8217;m on a Mac (OSX 10.6.8), so I get the line feed character in general, but just not in this case as the file was never opened.</p>
-
-<p>The following command shows (among other things) the non-printing characters:</p>
-
-<p><code>od -c filename | sed 4q</code></p>
-
-<p><img src="/images/uploads/2012/05/dos2unix_before1.png" alt="" /></p>
-
-<p>You can see the offending <em>\r</em> which was breaking the bash program. The unix tool <em>dos2unix</em> was suggested to clean up the file. Unfortunately this wasn&#8217;t available on Mac by default. MacPorts to the rescue (I assume homebrew would be a good option as well):</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo port install dos2unix
-</span><span class='line'>Password:
-</span><span class='line'>---&gt;  Fetching dos2unix
-</span><span class='line'>---&gt;  Attempting to fetch dos2unix-3.1.tar.gz from http://fresh.t-systems-sfr.com/linux/src/
-</span><span class='line'>---&gt;  Verifying checksum<span class="o">(</span>s<span class="o">)</span> <span class="k">for </span>dos2unix
-</span><span class='line'>---&gt;  Extracting dos2unix
-</span><span class='line'>---&gt;  Configuring dos2unix
-</span><span class='line'>---&gt;  Building dos2unix with target all
-</span><span class='line'>---&gt;  Staging dos2unix into destroot
-</span><span class='line'>---&gt;  Installing dos2unix 3.1_0
-</span><span class='line'>---&gt;  Activating dos2unix 3.1_0
-</span><span class='line'>---&gt;  Cleaning dos2unix
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Then run the program to clean up the invalid line feed (on 2 files).</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>dos2unix -n dirwatcher2 dirwatcher2_2
-</span><span class='line'>dos2unix: converting file dirwatcher2 to file dirwatcher2_2 in UNIX format ...
-</span><span class='line'>dos2unix -n processPDF processPDF_2
-</span><span class='line'>dos2unix: converting file processPDF to file processPDF_2 in UNIX format ...
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Nice! The changes are:</p>
-
-<p><img src="/images/uploads/2012/05/dos2unix_after.png" alt="" /></p>
-
-<p>No \r</p>
-
-<p>:)</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-05-24T14:14:47+10:00" pubdate data-updated="true">May 24<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/mac/'>Mac</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2012/05/24/strange-linefeed-characters-appearing-on-mac//page/3/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
 
 
     <article class="post">
@@ -1272,6 +1172,56 @@ MySQL 5+</p>
 </div>
 	
 		<div class="comments"><a href="/2011/07/01/farcry-grouping-formtool-category-items//page/3/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2011/06/30/farcry-tip-remove-install-directory/">
+		
+			FarCry Tip - Remove Install Directory</a>
+	</h2>
+	<div class="entry-content">
+		<p>After you install FarCry you must make sure to delete the &#8220;install&#8221; folder(s) that FarCry leaves behind. Otherwise it&#8217;s possible for anyone to access the installer wizard again from your production website, and as it&#8217;s the installer they don&#8217;t even need to be logged in to cause real havoc. Not good.</p>
+
+<p>By default, as of FarCry 6.1.x, there are 2 install folders to delete:</p>
+
+<ul>
+<li>farcry.core.webtop.install</li>
+<li>farcry.plugins.farcrycms.install</li>
+</ul>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-06-30T10:39:14+10:00" pubdate data-updated="true">Jun 30<span>th</span>, 2011</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/farcry/'>Farcry</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2011/06/30/farcry-tip-remove-install-directory//page/3/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 
