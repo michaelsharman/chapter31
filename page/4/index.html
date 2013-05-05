@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Like most CMS solutions out there, Mura CMS gives you some cool hooks to override core functionality. See the developer guides for more information &hellip;">
+	<meta name="description" content="After you install FarCry you must make sure to delete the &#8220;install&#8221; folder(s) that FarCry leaves behind. Otherwise it&#8217;s possible &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,56 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2011/06/30/farcry-tip-remove-install-directory/">
+		
+			FarCry Tip - Remove Install Directory</a>
+	</h2>
+	<div class="entry-content">
+		<p>After you install FarCry you must make sure to delete the &#8220;install&#8221; folder(s) that FarCry leaves behind. Otherwise it&#8217;s possible for anyone to access the installer wizard again from your production website, and as it&#8217;s the installer they don&#8217;t even need to be logged in to cause real havoc. Not good.</p>
+
+<p>By default, as of FarCry 6.1.x, there are 2 install folders to delete:</p>
+
+<ul>
+<li>farcry.core.webtop.install</li>
+<li>farcry.plugins.farcrycms.install</li>
+</ul>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-06-30T10:39:14+10:00" pubdate data-updated="true">Jun 30<span>th</span>, 2011</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/farcry/'>Farcry</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2011/06/30/farcry-tip-remove-install-directory//page/4/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -803,93 +853,6 @@ MySQL / MSSQL (or whatever database your version of FarCry supports)</p>
 </div>
 	
 		<div class="comments"><a href="/2010/12/07/adding-prototype-methods-to-jquery//page/4/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2010/11/15/importing-a-csv-into-mysql-using-the-command-line/">
-		
-			Importing a Csv Into MySQL Using the Command Line</a>
-	</h2>
-	<div class="entry-content">
-		<p><strong><em>UPDATE 16th Nov 2010: I had some issues with the import which I noted in the first code example below</em></strong></p>
-
-<p>Today I had to import csv into a single mysql table. The destination table only had 5 columns and the csv was around 22MB (around 400,000 records). The csv also contained more columns that I needed for the import. Sometimes I&#8217;ll use a GUI to do this as I usually have one open, but it never ceases to amaze me how much slower GUI tools are compared to the command line.</p>
-
-<p>To import the file via Aqua Data Studio took around 20 mins to import on my machine (over the network to the staging server took over 40mins!). As I need to do this more and more I though I&#8217;d look at a few command line options. I actually wanted to do this in 2 steps; firstly import the csv, them export it as a sql file and import it into &#8220;production&#8221; from there.</p>
-
-<p>First we need to import the original .csv, ignoring certrain columns which the destination table didn&#8217;t need. Why not open this in excel/open office and <code>clean</code> the csv first? Too many rows, by default open office won&#8217;t read that many rows, plus it slows the machine down to even try that, double plus it&#8217;s super simple to ignore columns you don&#8217;t need:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">mysql</span><span class="o">&gt;</span> <span class="nx">LOAD</span> <span class="nx">DATA</span> <span class="nx">LOCAL</span> <span class="nx">INFILE</span> <span class="s1">&#39;/pathtofile/myfile.csv&#39;</span>
-</span><span class='line'>    <span class="o">-&gt;</span> <span class="nx">INTO</span> <span class="nx">TABLE</span> <span class="nx">MyTable</span>
-</span><span class='line'>    <span class="o">-&gt;</span> <span class="nx">FIELDS</span> <span class="nx">TERMINATED</span> <span class="nx">BY</span> <span class="s1">&#39;,&#39;</span>
-</span><span class='line'>    <span class="o">-&gt;</span> <span class="nx">ENCLOSED</span> <span class="nx">BY</span> <span class="s1">&#39;&quot;&#39;</span>
-</span><span class='line'>    <span class="o">-&gt;</span> <span class="nx">LINES</span> <span class="nx">TERMINATED</span> <span class="nx">BY</span> <span class="s1">&#39;\r\n&#39;</span>
-</span><span class='line'>    <span class="o">-&gt;</span> <span class="p">(</span><span class="nx">col1</span><span class="p">,</span><span class="nx">col2</span><span class="p">,</span><span class="err">@</span><span class="nx">ignore</span><span class="p">,</span><span class="nx">col3</span><span class="p">,</span><span class="nx">col4</span><span class="p">,</span><span class="err">@</span><span class="nx">ignore</span><span class="p">,</span><span class="nx">col5</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Note the LINES TERMINATED BY&#8230;you really need &#8216;\r\n&#8217;, especially if you .csv had been generated from a Windows machine! Otherwise your import will be kinda funky :(</p>
-
-<p>Also note the ENCLOSED BY &#8216;&#8221;&#8217;, if you skip that option then any data in the .csv what was enclosed by double quotes (strings for eg) will actually import the double quotes into your database which is more than likely not what you want.</p>
-
-<p>Note the <code>@ignore</code> user variables specified in the column list. Basically that&#8217;s saying that there are extra columns in the csv which I don&#8217;t want to import into the database. So by assigning the csv column to a user variable and not assigning the variable to an actual table column you effectively ignore it. You can call the user variable anything you want (prefixed with <code>@</code> of course). Calling it <code>@ignore</code> made sense to me.</p>
-
-<p>Great now we have our data in the table, took about 2 seconds to run as opposed to 20min in the GUI tool :/</p>
-
-<p>Then I had to quickly massage the data via sql as defined by the business rules as the original csv was <code>incomplete</code> in terms of the application requirements. After that was done I exported the table into a sql file:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">mysqldump</span> <span class="o">-</span><span class="nx">uroot</span> <span class="o">-</span><span class="nx">p</span> <span class="p">[</span><span class="nx">local_database_name</span><span class="p">]</span> <span class="p">[</span><span class="nx">table_to_export</span><span class="p">]</span> <span class="o">--</span><span class="nx">skip</span><span class="o">-</span><span class="nx">opt</span> <span class="o">--</span><span class="nx">compact</span> <span class="o">--</span><span class="nx">disable</span><span class="o">-</span><span class="nx">keys</span> <span class="o">--</span><span class="nx">extended</span><span class="o">-</span><span class="nx">insert</span> <span class="o">--</span><span class="nx">no</span><span class="o">-</span><span class="nx">create</span><span class="o">-</span><span class="nx">info</span> <span class="o">&gt;</span> <span class="nx">mytable</span><span class="p">.</span><span class="nx">sql</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The options used here skip things in the .sql file like CREATE TABLE etc. They also combine INSERTS and disable the keys to improve the speed of the import. Finally import the production ready sql into:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">mysql</span> <span class="o">-</span><span class="nx">uroot</span> <span class="o">-</span><span class="nx">p</span> <span class="p">[</span><span class="nx">production_database</span><span class="p">]</span> <span class="o">&lt;</span> <span class="nx">mytable</span><span class="p">.</span><span class="nx">sql</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Again, the point of this is pure performance. The speed difference is incredible, even on a local machine I don&#8217;t know why anyone would bother using GUI tools to import/export data unless you were working with tiny databases/tables.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-11-15T10:38:10+11:00" pubdate data-updated="true">Nov 15<span>th</span>, 2010</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/databases/'>Databases</a>, <a class='category' href='/categories/mac/'>Mac</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2010/11/15/importing-a-csv-into-mysql-using-the-command-line//page/4/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

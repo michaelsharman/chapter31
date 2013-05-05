@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Sonar Source is a an open source, browser based tool to manage code quality. You download and install it, setup some language specific plugins then &hellip;">
+	<meta name="description" content="I often want to tail log files on remote server(s) when running diagnostics for an application. You can either login to the remote server via an SSH &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,86 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2013/05/05/stopping-a-remote-process-after-killing-an-ssh-session/">
+		
+			Stopping a Remote Process After Killing an Ssh Session</a>
+	</h2>
+	<div class="entry-content">
+		<p>I often want to tail log files on remote server(s) when running diagnostics for an application. You can either login to the remote server via an SSH session, then execute the <em>tail</em> command. Or you can do it from a local shell (without explicitly logging onto the remote server first). That&#8217;s pretty simple:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>ssh myRemoteServer tail -f /path/to/logs/myapp.log
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The problem here, is when you ctrl-c out of this command to kill the <em>tail</em>, the process is still running on the remote machine. Some googling told me that this is because of the lack of a controlling terminal for the running process.</p>
+
+<p>From <a href="http://superuser.com/a/20708">superuser.com</a>:</p>
+
+<pre><code>This behaviour stems from the lack of a controlling terminal for the running process.
+When the remote process does not have a controlling terminal, the remote ssh process handling your session
+is unable to kill the command, which is left hanging in a zombie state to be eventually cleaned up by init.
+</code></pre>
+
+<p>So although the process on the remote server(s) will eventually be cleaned up, it&#8217;s not great to leave a lot of zombie processes lying around. And you certainly don&#8217;t want to logon to every server and <em>ps ax</em> to kill them. Crazy.</p>
+
+<p>The answer, as described on superuser, is that you simply add the <em>-t</em> flag when you connect via SSH from a local terminal. Essentially that makes the remote process terminate when you ctrl+c your tail locally.</p>
+
+<p>So for the initial example at the top:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>ssh -t myRemoteServer tail -f /path/to/logs/myapp.log
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I often use <a href="http://www.vanheusden.com/multitail/">multitail</a> a lot because it facilitates tailing log files on a remote servers from one command, a sample multi-tail script is now (with <em>-t</em>):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/bash</span>
+</span><span class='line'>
+</span><span class='line'>multitail -l <span class="s2">&quot;ssh -t myRemote1 tail -f /path/to/logs/myapp.log&quot;</span> <span class="se">\</span>
+</span><span class='line'>        -l <span class="s2">&quot;ssh -t myRemote2 tail -f /path/to/logs/myapp.log&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-05T11:19:00+10:00" pubdate data-updated="true">May 5<span>th</span>, 2013</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/shell/'>shell</a>, <a class='category' href='/categories/ssh/'>ssh</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2013/05/05/stopping-a-remote-process-after-killing-an-ssh-session//index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -1081,65 +1161,6 @@ Select #3 had 8192* possible combinations</p>
 </div>
 	
 		<div class="comments"><a href="/2012/09/26/adding-a-mail-server-to-a-railo-instance//index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2012/09/24/installing-new-fonts-on-ubuntu-server/">
-		
-			Installing New Fonts on Ubuntu Server</a>
-	</h2>
-	<div class="entry-content">
-		<p>I had some new fonts to install on our test server that runs Ubuntu server. Pretty simple really, just noting it down here for next time:</p>
-
-<ul>
-<li>Upload/ssh the font(s) to your home folder on the server</li>
-<li>Copy font to the system fonts folder, this way it can be used by all users on the system
-
-<pre><code>sudo cp -R ~/trade-gothic /usr/share/fonts/truetype/    
-</code></pre></li>
-<li>Check permissions
-
-<pre><code>sudo chmod 755 /usr/share/fonts/truetype/trade-gothic/
-</code></pre></li>
-<li>Install the fonts so applications can use them
-
-<pre><code>sudo fc-cache -f -v
-</code></pre></li>
-</ul>
-
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-09-24T13:41:55+10:00" pubdate data-updated="true">Sep 24<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/misc/'>Misc</a>, <a class='category' href='/categories/ubuntu/'>Ubuntu</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2012/09/24/installing-new-fonts-on-ubuntu-server//index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

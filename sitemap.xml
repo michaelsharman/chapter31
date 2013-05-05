@@ -1083,16 +1083,22 @@
         <lastmod>2013-05-02T23:34:21+10:00</lastmod>
     </url>
     <url>
+        <loc>
+            http://chapter31.com/2013/05/05/stopping-a-remote-process-after-killing-an-ssh-session/
+        </loc>
+        <lastmod>2013-05-05T13:10:51+10:00</lastmod>
+    </url>
+    <url>
         <loc>http://chapter31.com/about/</loc>
         <lastmod>2013-04-28T22:35:15+10:00</lastmod>
     </url>
     <url>
         <loc>http://chapter31.com/blog/archives/</loc>
-        <lastmod>2013-05-03T08:49:22+10:00</lastmod>
+        <lastmod>2013-05-05T13:10:51+10:00</lastmod>
     </url>
     <url>
         <loc>http://chapter31.com/</loc>
-        <lastmod>2013-05-03T08:49:22+10:00</lastmod>
+        <lastmod>2013-05-05T13:10:51+10:00</lastmod>
     </url>
     <url>
         <loc>http://chapter31.com/projects/</loc>

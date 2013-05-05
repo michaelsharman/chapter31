@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: shell | chapter31 &raquo;]]></title>
+  <link href="http://chapter31.com/categories/shell/atom.xml" rel="self"/>
+  <link href="http://chapter31.com/"/>
+  <updated>2013-05-05T13:12:24+10:00</updated>
+  <id>http://chapter31.com/</id>
+  <author>
+    <name><![CDATA[Michael Sharman]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Stopping a remote process after killing an ssh session]]></title>
+    <link href="http://chapter31.com/2013/05/05/stopping-a-remote-process-after-killing-an-ssh-session/"/>
+    <updated>2013-05-05T11:19:00+10:00</updated>
+    <id>http://chapter31.com/2013/05/05/stopping-a-remote-process-after-killing-an-ssh-session</id>
+    <content type="html"><![CDATA[<p>I often want to tail log files on remote server(s) when running diagnostics for an application. You can either login to the remote server via an SSH session, then execute the <em>tail</em> command. Or you can do it from a local shell (without explicitly logging onto the remote server first). That's pretty simple:</p>
+
+<p><code>bash
+ssh myRemoteServer tail -f /path/to/logs/myapp.log
+</code></p>
+
+<p>The problem here, is when you ctrl-c out of this command to kill the <em>tail</em>, the process is still running on the remote machine. Some googling told me that this is because of the lack of a controlling terminal for the running process.</p>
+
+<p>From <a href="http://superuser.com/a/20708">superuser.com</a>:</p>
+
+<pre><code>This behaviour stems from the lack of a controlling terminal for the running process.
+When the remote process does not have a controlling terminal, the remote ssh process handling your session
+is unable to kill the command, which is left hanging in a zombie state to be eventually cleaned up by init.
+</code></pre>
+
+<p>So although the process on the remote server(s) will eventually be cleaned up, it's not great to leave a lot of zombie processes lying around. And you certainly don't want to logon to every server and <em>ps ax</em> to kill them. Crazy.</p>
+
+<p>The answer, as described on superuser, is that you simply add the <em>-t</em> flag when you connect via SSH from a local terminal. Essentially that makes the remote process terminate when you ctrl+c your tail locally.</p>
+
+<p>So for the initial example at the top:</p>
+
+<p><code>bash
+ssh -t myRemoteServer tail -f /path/to/logs/myapp.log
+</code></p>
+
+<p>I often use <a href="http://www.vanheusden.com/multitail/">multitail</a> a lot because it facilitates tailing log files on a remote servers from one command, a sample multi-tail script is now (with <em>-t</em>):</p>
+
+<p>```bash</p>
+
+<h1>!/bin/bash</h1>
+
+<p>multitail -l "ssh -t myRemote1 tail -f /path/to/logs/myapp.log" \</p>
+
+<pre><code>    -l "ssh -t myRemote2 tail -f /path/to/logs/myapp.log"
+</code></pre>
+
+<p>```</p>
+]]></content>
+  </entry>
+  
+</feed>

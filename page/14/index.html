@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content=" A friend of mine Don sent me this yesterday: Gold! :) Feb 7th, 2008 Misc Comments ">
+	<meta name="description" content="Another couple of cool Firefox features which most people probably already know about. How many times have you closed a tab only to realise &#8221; &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,65 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/02/19/a-couple-more-cool-firefox-tips/">
+		
+			A Couple More Cool Firefox Tips</a>
+	</h2>
+	<div class="entry-content">
+		<p>Another couple of cool Firefox features which most people probably already know about.</p>
+
+<p>How many times have you closed a tab only to realise &#8221;<em>Damn&#8230;I still wanted that open!</em>&#8221;? Well I do that about everyday and although you have the general history manager&#8230;if you&#8217;ve visited 100 sites that day it&#8217;s a pain to wade through to find the tab you just closed.</p>
+
+<p>Instead you can visit the History menu and see the item &#8220;Recently Closed Tabs&#8221; for a list of the last 10 viewed tabs. From memory there is also an addon which allows you to &#8220;undo&#8221; a close operation on a tab, but this menu option is cool!</p>
+
+<p>Another thing is making sure you get alerted whenever there is a JavaScript error, I think this is quite important as a developer and although you do have the &#8220;console&#8221; it&#8217;s nice to have an &#8220;in your face&#8221; reminder that there is an error on your page.</p>
+
+<p>To turn this on using the invaluable <a href="http://chrispederick.com/work/web-developer/">Web Developer Toolbar</a> addon, click Tools -> Web Developer -> Options -> Options and under &#8220;Miscellaneous&#8221; you can choose up to 3 options for opening the console (you can also get to this from Options -> Options on the actual Web Developer Toolbar):</p>
+
+<ul>
+<li>When there is a CSS error</li>
+<li>When there is a JavaScript warning</li>
+<li>When there is a JavaScript error</li>
+</ul>
+
+
+<p>It&#8217;s this last option that I turn on during development to get an error popup. Note that it is sometimes best to turn this off when surfing the web as there are SO many sites which have little JavaScript errors, causing popup hell :(</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-02-19T07:50:05+11:00" pubdate data-updated="true">Feb 19<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/misc/'>Misc</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/02/19/a-couple-more-cool-firefox-tips//page/14/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -948,104 +1007,6 @@
 </div>
 	
 		<div class="comments"><a href="/2007/11/13/using-google-mail-as-your-local-smtp-server//page/14/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2007/11/02/making-your-web-applications-platform-independant/">
-		
-			Making Your Web Applications Platform Independant</a>
-	</h2>
-	<div class="entry-content">
-		<p>I was looking for some information the other day about line separators across Windows/MAC/Linux etc when I stumbled upon 3 great articles from <a href="http://weblogs.macromedia.com/cantrell/">Christian Cantrell</a>.</p>
-
-<p>Although the articles are quite old they were very informative for me so I thought I&#8217;d share them in case others didn&#8217;t know this already.</p>
-
-<p><a href="http://weblogs.macromedia.com/cantrell/archives/2003/03/making_your_col.cfm">Making Your ColdFusion Applications More Platform Independent (Part I)</a>
-Basically about case sensitive filenames which is very important on *nix, but also included the following which I&#8217;ve never heard and to be honest would like to test:</p>
-
-<blockquote><p>Additionally, make sure you use all lowercase when naming your components. ColdFusion MX will automatically lower-case your component names, which you would never notice on Windows, however on Unix, it will become apparent very quickly when you start getting errors that your components do not exist.</p></blockquote>
-
-<p><a href="http://weblogs.macromedia.com/cantrell/archives/2003/03/making_your_col_1.cfm">Making Your ColdFusion Applications More Platform Independent (Part II)</a>
-Shows an automatic way (via Java) to get the current servers file path separator (either a &#8216;/&#8217; or &#8216;&#39;), OS dependant.</p>
-
-<p><a href="http://weblogs.macromedia.com/cantrell/archives/2005/07/making_your_col_2.cfm">Making Your ColdFusion Applications More Platform Independent (Part III)</a>
-I&#8217;ve been annoyed many times with the whole chr(10)chr(13) on Windows vs chr(10) on a Mac etc, another automated way to get the server OS &#8216;line separator&#8217; via Java.</p>
-
-<p>Here are the line and file separators as functions which I&#8217;ve also added to my <a href="http://www.chapter31.com/utilscfc/">Utils.cfc</a></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cffunction</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;getFileSeparator&quot;</span> <span class="nx">access</span><span class="o">=</span><span class="s2">&quot;public&quot;</span> <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="nx">returntype</span><span class="o">=</span><span class="s2">&quot;string&quot;</span> <span class="nx">hint</span><span class="o">=</span><span class="s2">&quot;Returns the system file path separator&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfscript</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="k">return</span> <span class="nx">createObject</span><span class="p">(</span><span class="s2">&quot;java&quot;</span><span class="p">,</span> <span class="s2">&quot;java.io.File&quot;</span><span class="p">).</span><span class="nx">separator</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cfscript&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/cffunction&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">cffunction</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;getLineSeparator&quot;</span> <span class="nx">access</span><span class="o">=</span><span class="s2">&quot;public&quot;</span> <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="nx">returntype</span><span class="o">=</span><span class="s2">&quot;string&quot;</span> <span class="nx">hint</span><span class="o">=</span><span class="s2">&quot;Returns the system line separator&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfscript</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="k">return</span> <span class="nx">createObject</span><span class="p">(</span><span class="s2">&quot;java&quot;</span><span class="p">,</span> <span class="s2">&quot;java.lang.System&quot;</span><span class="p">).</span><span class="nx">getProperty</span><span class="p">(</span><span class="s2">&quot;line.separator&quot;</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cfscript&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/cffunction&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2007-11-02T16:27:46+11:00" pubdate data-updated="true">Nov 2<span>nd</span>, 2007</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2007/11/02/making-your-web-applications-platform-independant//page/14/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 
