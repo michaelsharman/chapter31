@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="I&#8217;ve just upgraded to OSX Lion and had some trouble getting Apache to load a vhost. I kept getting a 403 permission denied error, but all my &hellip;">
+	<meta name="description" content="I had some strange behaviour with the jQuery verion of tinyMCE (3.4.6). Basically I was integrating the chosen library (which is build as a jQuery &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,56 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2012/07/04/jquery-tinymce-issue-with-attr/">
+		
+			jQuery tinyMCE Issue With $.attr();</a>
+	</h2>
+	<div class="entry-content">
+		<p>I had some strange behaviour with the jQuery verion of tinyMCE (3.4.6). Basically I was <a href="http://harvesthq.github.com/chosen/">integrating the chosen library</a> (which is build as a jQuery plugin), but it seems the $.attr(&#8216;id&#8217;) from within chosen.js was returning a JavaScript element reference instead of the value of the &#8220;id&#8221; field.</p>
+
+<p><a href="/images/uploads/2012/07/tiny_error.png"><img src="/images/uploads/2012/07/tiny_error.png" alt="" /></a></p>
+
+<p>Some basic tracing showed the strange error:</p>
+
+<p><a href="/images/uploads/2012/07/tiny_trace.png"><img src="/images/uploads/2012/07/tiny_trace.png" alt="" /></a></p>
+
+<p>The solution for me was moving to tinyMCE 3.5.4.1 (and jQuery 1.7.2, previously I was on 1.6.4). All good now, just thought I&#8217;d throw up a quick post if anyone was being caught by this.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-07-04T23:05:00+10:00" pubdate data-updated="true">Jul 4<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/javascript/'>Javascript</a>, <a class='category' href='/categories/misc/'>Misc</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2012/07/04/jquery-tinymce-issue-with-attr//page/3/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -813,81 +863,6 @@ MySQL 5+</p>
 </div>
 	
 		<div class="comments"><a href="/2011/08/01/label-vs-title-in-farcry//page/3/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2011/07/01/farcry-tip-enable-cfcs-in-your-railo-proxypassmatch/">
-		
-			FarCry Tip - Enable Cfc&#8217;s in Your Railo ProxyPassMatch</a>
-	</h2>
-	<div class="entry-content">
-		<p>I ran into an issue today while working on a FarCry project, basically when I opened up the &#8220;Related Content&#8221; popup from the WYSIWYG editor it was blank. Nothing. Not the usual tabs for Images, File, Flash etc.</p>
-
-<p><img src="/images/uploads/2011/07/relatedcontent.png" alt="" /></p>
-
-<p>The Railo logs were empty but Apache was throwing a strange error which I hadn&#8217;t seen before: <em>&#8220;Couldn&#8217;t initialize from remote server, JRun server(s) probably down.&#8221;</em>. Funny as I&#8217;m not even using JRun!</p>
-
-<p>Looking at the Chrome console I could see that opening the popup made a request directly to a cfc (/webtop/facade/tinyMCE.cfc?method=ajaxGetTemplateDropdowns) and returned the following error: &#8221;<em>Failed to load resource: the server responded with a status of 500 (Internal Server Error)</em>&#8221;</p>
-
-<p>Eventually <a href="http://www.learnosity.com/techblog/">Mark</a> pointed me in the right direction which was kind of obvious if I&#8217;d actually read the error properly! Our config for Apache -> Railo is for cfm&#8217;s only&#8230;not cfc&#8217;s. I don&#8217;t really like the approach of calling cfc&#8217;s directly at all, which is why it&#8217;s not in our Apache -> Railo proxy. But it wasn&#8217;t a big deal to add it for FarCry projects.</p>
-
-<p>Here is the config we now use, note we now pass requests for cfm and cfc to Railo:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'>    <span class="o">&lt;</span><span class="nx">IfModule</span> <span class="nx">mod_proxy_ajp</span><span class="p">.</span><span class="nx">c</span><span class="o">&gt;</span>
-</span><span class='line'>            <span class="o">&lt;</span><span class="nx">Proxy</span> <span class="o">*&gt;</span>
-</span><span class='line'>                    <span class="nx">Order</span> <span class="nx">deny</span><span class="p">,</span><span class="nx">allow</span>
-</span><span class='line'>                    <span class="nx">Allow</span> <span class="nx">from</span> <span class="nx">all</span>
-</span><span class='line'>            <span class="o">&lt;</span><span class="err">/Proxy&gt;</span>
-</span><span class='line'>            <span class="nx">ProxyPassMatch</span> <span class="o">^</span><span class="sr">/(.*\.cf[cm])$ ajp:/</span><span class="o">/</span><span class="mf">127.0</span><span class="p">.</span><span class="mf">0.1</span><span class="o">:</span><span class="mi">8009</span><span class="o">/</span><span class="nx">$1</span>
-</span><span class='line'>            <span class="nx">ProxyPassReverse</span>  <span class="o">/</span>  <span class="nx">ajp</span><span class="o">:</span><span class="c1">//127.0.0.1:8009/</span>
-</span><span class='line'>    <span class="o">&lt;</span><span class="err">/IfModule&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>And of course now the related content popup works :)</p>
-
-<p><img src="/images/uploads/2011/07/relatedcontent2.png" alt="" /></p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-07-01T14:04:20+10:00" pubdate data-updated="true">Jul 1<span>st</span>, 2011</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/farcry/'>Farcry</a>, <a class='category' href='/categories/railo/'>Railo</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2011/07/01/farcry-tip-enable-cfcs-in-your-railo-proxypassmatch//page/3/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

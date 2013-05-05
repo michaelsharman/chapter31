@@ -4,7 +4,7 @@
   <title><![CDATA[chapter31 &raquo;]]></title>
   <link href="http://chapter31.com/atom.xml" rel="self"/>
   <link href="http://chapter31.com/"/>
-  <updated>2013-05-06T09:15:04+10:00</updated>
+  <updated>2013-05-06T09:51:56+10:00</updated>
   <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
@@ -12,6 +12,213 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Installing PHP 5.4+ from source on Mac OSX Mountain Lion]]></title>
+    <link href="http://chapter31.com/2013/05/06/installing-php-5-dot-4-plus-from-source-on-mac-mountain-lion/"/>
+    <updated>2013-05-06T09:32:00+10:00</updated>
+    <id>http://chapter31.com/2013/05/06/installing-php-5-dot-4-plus-from-source-on-mac-mountain-lion</id>
+    <content type="html"><![CDATA[<p>Download and extract the PHP source from <a href="http://php.net/downloads.php">php.net</a>, for me that was  5.4.14. Put it somewhere friendly, the desktop will do.</p>
+
+<p>Open a terminal and install some dependancies via brew:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>brew install libjpeg
+</span><span class='line'>brew install pcre
+</span><span class='line'>brew install libxml2
+</span><span class='line'>brew install mcrypt
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Download and install ICU from <a href="http://site.icu-project.org/download/48#ICU4C-Download">http://site.icu-project.org/download/48#ICU4C-Download</a></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>tar xzvf icu4c-4_8_1-src.tgz
+</span><span class='line'><span class="nb">cd </span>icu/source
+</span><span class='line'>./runConfigureICU MacOSX
+</span><span class='line'>make
+</span><span class='line'>sudo make install
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Rebuild IMAP, download source from <a href="ftp://ftp.cac.washington.edu/imap/">ftp://ftp.cac.washington.edu/imap/</a></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>make osx <span class="nv">EXTRACFLAGS</span><span class="o">=</span><span class="s2">&quot;-arch i386 -arch x86_64 -g -Os -pipe -no-cpp-precomp&quot;</span>
+</span><span class='line'>sudo cp c-client/*.h /usr/local/include/
+</span><span class='line'>sudo cp c-client/*.c /usr/local/lib/
+</span><span class='line'>sudo cp c-client/c-client.a /usr/local/lib/libc-client.a
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then in the PHP source folder you downloaded:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd</span> ~/Desktop/php/ext/imap
+</span><span class='line'>phpize
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now run configure:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>./configure  <span class="se">\</span>
+</span><span class='line'>--prefix<span class="o">=</span>/usr  <span class="se">\</span>
+</span><span class='line'>--mandir<span class="o">=</span>/usr/share/man  <span class="se">\</span>
+</span><span class='line'>--infodir<span class="o">=</span>/usr/share/info  <span class="se">\</span>
+</span><span class='line'>--sysconfdir<span class="o">=</span>/private/etc  <span class="se">\</span>
+</span><span class='line'>--with-apxs2<span class="o">=</span>/usr/sbin/apxs  <span class="se">\</span>
+</span><span class='line'>--enable-cli  <span class="se">\</span>
+</span><span class='line'>--with-config-file-path<span class="o">=</span>/etc  <span class="se">\</span>
+</span><span class='line'>--with-libxml-dir<span class="o">=</span>/usr  <span class="se">\</span>
+</span><span class='line'>--with-openssl<span class="o">=</span>/usr  <span class="se">\</span>
+</span><span class='line'>--with-kerberos<span class="o">=</span>/usr  <span class="se">\</span>
+</span><span class='line'>--with-zlib<span class="o">=</span>/usr  <span class="se">\</span>
+</span><span class='line'>--enable-bcmath  <span class="se">\</span>
+</span><span class='line'>--with-bz2<span class="o">=</span>/usr  <span class="se">\</span>
+</span><span class='line'>--enable-calendar  <span class="se">\</span>
+</span><span class='line'>--with-curl<span class="o">=</span>/usr  <span class="se">\</span>
+</span><span class='line'>--enable-dba  <span class="se">\</span>
+</span><span class='line'>--enable-exif  <span class="se">\</span>
+</span><span class='line'>--enable-ftp  <span class="se">\</span>
+</span><span class='line'>--with-gd  <span class="se">\</span>
+</span><span class='line'>--enable-gd-native-ttf  <span class="se">\</span>
+</span><span class='line'>--with-icu-dir<span class="o">=</span>/usr/local  <span class="se">\</span>
+</span><span class='line'>--with-iodbc<span class="o">=</span>/usr  <span class="se">\</span>
+</span><span class='line'>--with-ldap<span class="o">=</span>/usr  <span class="se">\</span>
+</span><span class='line'>--with-ldap-sasl<span class="o">=</span>/usr  <span class="se">\</span>
+</span><span class='line'>--with-libedit<span class="o">=</span>/usr  <span class="se">\</span>
+</span><span class='line'>--enable-mbstring  <span class="se">\</span>
+</span><span class='line'>--enable-mbregex  <span class="se">\</span>
+</span><span class='line'>--with-mysql<span class="o">=</span>mysqlnd  <span class="se">\</span>
+</span><span class='line'>--with-mysqli<span class="o">=</span>mysqlnd  <span class="se">\</span>
+</span><span class='line'>--without-pear  <span class="se">\</span>
+</span><span class='line'>--with-pdo-mysql<span class="o">=</span>mysqlnd  <span class="se">\</span>
+</span><span class='line'>--with-mysql-sock<span class="o">=</span>/var/mysql/mysql.sock  <span class="se">\</span>
+</span><span class='line'>--with-readline<span class="o">=</span>/usr  <span class="se">\</span>
+</span><span class='line'>--enable-shmop  <span class="se">\</span>
+</span><span class='line'>--with-snmp<span class="o">=</span>/usr  <span class="se">\</span>
+</span><span class='line'>--enable-soap  <span class="se">\</span>
+</span><span class='line'>--enable-sockets  <span class="se">\</span>
+</span><span class='line'>--enable-sysvmsg  <span class="se">\</span>
+</span><span class='line'>--enable-sysvsem  <span class="se">\</span>
+</span><span class='line'>--enable-sysvshm  <span class="se">\</span>
+</span><span class='line'>--with-tidy  <span class="se">\</span>
+</span><span class='line'>--enable-wddx  <span class="se">\</span>
+</span><span class='line'>--with-xmlrpc  <span class="se">\</span>
+</span><span class='line'>--with-iconv-dir<span class="o">=</span>/usr  <span class="se">\</span>
+</span><span class='line'>--with-xsl<span class="o">=</span>/usr  <span class="se">\</span>
+</span><span class='line'>--enable-zip  <span class="se">\</span>
+</span><span class='line'>--with-imap<span class="o">=</span>/usr/local/imap-2007 <span class="se">\</span>
+</span><span class='line'>--with-kerberos <span class="se">\</span>
+</span><span class='line'>--with-imap-ssl <span class="se">\</span>
+</span><span class='line'>--enable-intl <span class="se">\</span>
+</span><span class='line'>--with-pcre-regex  <span class="se">\</span>
+</span><span class='line'>--with-pgsql<span class="o">=</span>/usr  <span class="se">\</span>
+</span><span class='line'>--with-pdo-pgsql<span class="o">=</span>/usr <span class="se">\</span>
+</span><span class='line'>--with-freetype-dir<span class="o">=</span>/usr/X11 <span class="se">\</span>
+</span><span class='line'>--with-jpeg-dir<span class="o">=</span>/usr  <span class="se">\</span>
+</span><span class='line'>--with-png-dir<span class="o">=</span>/usr/X11
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you want to check for errors in the build step you can run:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>make <span class="nb">test</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This might take a while, like 30 mins.</p>
+
+<p>If you&#8217;re feeling bold, or once the test has completed, run:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo make install
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Done!</p>
+
+<p>PS If you&#8217;re getting strange errors during <em>configure</em> make sure you have these libraries:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>brew install libpng
+</span><span class='line'>brew install freetype
+</span><span class='line'>brew install openssl
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Date timezone error when upgrading to PHP 5.3+]]></title>
@@ -1309,23 +1516,6 @@ htdocs/WEB-INF
 <p><img src="http://chapter31.com/images/uploads/2012/07/Screen-shot-2012-07-06-at-7.12.02-AM.png" alt="" /></p>
 
 <p><a href="http://dev.mysql.com/doc/refman/5.0/en/group-by-functions.html#function_group-concat">See the group_concat page</a> for more details.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[jQuery tinyMCE issue with $.attr();]]></title>
-    <link href="http://chapter31.com/2012/07/04/jquery-tinymce-issue-with-attr/"/>
-    <updated>2012-07-04T23:05:00+10:00</updated>
-    <id>http://chapter31.com/2012/07/04/jquery-tinymce-issue-with-attr</id>
-    <content type="html"><![CDATA[<p>I had some strange behaviour with the jQuery verion of tinyMCE (3.4.6). Basically I was <a href="http://harvesthq.github.com/chosen/">integrating the chosen library</a> (which is build as a jQuery plugin), but it seems the $.attr(&#8216;id&#8217;) from within chosen.js was returning a JavaScript element reference instead of the value of the &#8220;id&#8221; field.</p>
-
-<p><a href="http://chapter31.com/images/uploads/2012/07/tiny_error.png"><img src="http://chapter31.com/images/uploads/2012/07/tiny_error.png" alt="" /></a></p>
-
-<p>Some basic tracing showed the strange error:</p>
-
-<p><a href="http://chapter31.com/images/uploads/2012/07/tiny_trace.png"><img src="http://chapter31.com/images/uploads/2012/07/tiny_trace.png" alt="" /></a></p>
-
-<p>The solution for me was moving to tinyMCE 3.5.4.1 (and jQuery 1.7.2, previously I was on 1.6.4). All good now, just thought I&#8217;d throw up a quick post if anyone was being caught by this.</p>
 ]]></content>
   </entry>
   

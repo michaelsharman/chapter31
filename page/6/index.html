@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="I&#8217;m probably a bit behind the times with this one, but Adobe have added &#8220;BrowserLab&#8221; functionality to &#8221;preview and test your &hellip;">
+	<meta name="description" content="Ran into an interesting problem today doing something quite simple. Basically all I was doing was posting xml data to a URL, but I kept getting a &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,64 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2010/01/20/cfhttp-issues-using-local-on-max-osx/">
+		
+			Cfhttp Issues Using &#8220;.local&#8221; on Max OSX</a>
+	</h2>
+	<div class="entry-content">
+		<p>Ran into an interesting problem today doing something quite simple. Basically all I was doing was posting xml data to a URL, but I kept getting a 408 request timeout and I didn&#8217;t know why.</p>
+
+<p>We happen to use the &#8220;.local&#8221; domain name structure for local development. I was posting data from one local site to another e.g.</p>
+
+<p>http://mysite1.local   ->   http://mysite2.local</p>
+
+<p>When I dumped cfhttp on the posting page I got the following error:</p>
+
+<p><a href="/images/uploads/2010/01/cfhttp.png"><img src="/images/uploads/2010/01/cfhttp.png" alt="cfhttp" /></a></p>
+
+<p>Now I hadn&#8217;t come across this error before with cfhttp and nothing I did fixed the issue, I even got that message using a &#8220;GET&#8221; method. It wasn&#8217;t till I tried &#8220;GET&#8221; from a public domain (http://www.google.com, which worked) that I thought to try a local domain which didn&#8217;t use &#8220;.local&#8221;.</p>
+
+<p>Success!</p>
+
+<p><a href="http://www.lynchconsulting.com.au/go/blog">Mark</a> mentioned that it could be a problem with Bonjour (as I&#8217;m on a Mac) which uses .local.</p>
+
+<p>This is kinda timely as we&#8217;re moving away from the &#8220;.local&#8221; convention in favour of &#8220;.cf7&#8221;, &#8220;.cf9&#8221;, &#8220;.railo&#8221; etc as we&#8217;re using multiple cfmx engines for different projects and that provides a way to easily test codebases against different engines easily.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-01-20T10:28:00+11:00" pubdate data-updated="true">Jan 20<span>th</span>, 2010</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2010/01/20/cfhttp-issues-using-local-on-max-osx//page/6/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -733,60 +791,6 @@ It enables us to both override the default farcry request scope variables and al
 </div>
 	
 		<div class="comments"><a href="/2009/05/29/changing-the-sort-order-of-farcry-categorieskeywords//page/6/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2009/05/28/setting-a-label-property-tip-for-farcry-5/">
-		
-			Setting a &#8220;Label&#8221; Property Tip for FarCry 5</a>
-	</h2>
-	<div class="entry-content">
-		<p>Quick tip which might fix some problems for people as it did for me today.</p>
-
-<p>I had a custom object for a calendar where the main title was &#8220;EventTitle&#8221;. Now as you may know <a href="http://farcrycms.org/">FarCry</a> uses the &#8220;label&#8221; and &#8220;title&#8221; property from types.cfc by default.</p>
-
-<p>As I wasn&#8217;t using this default property my <em>label</em> value was &#8220;incomplete&#8221; in the database. This didn&#8217;t really bother me as it would never be seen, however it was preventing my content object from being approved. I wasn&#8217;t getting an error message when attempting to publish, it&#8217;s just that the row would remain in draft.</p>
-
-<p>I figured if I could add a value to the <em>label</em> property I would be able to approve the object. A quick search on the <a href="http://docs.farcrycms.org/">docs</a> site gave me a nice little attribute to add to your type cfproperty of <em><a href="http://docs.farcrycms.org/display/FCDEV40/Form+Tool+Property+Metadata">bLabel</a>=&#8221;true/false&#8221;</em>. What this does is maps the property to the types.label property.</p>
-
-<p>This is a nice little solution, now the &#8220;label&#8221; property can be populated by any property I choose (i.e. EventTitle) and I&#8217;m not restricted to name my propery &#8220;label&#8221; or &#8220;title&#8221; etc.</p>
-
-<p>Btw this also fixed my publishing issue.</p>
-
-<p>This works as of FarCry 5.1.4</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-05-28T12:26:58+10:00" pubdate data-updated="true">May 28<span>th</span>, 2009</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/farcry/'>Farcry</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2009/05/28/setting-a-label-property-tip-for-farcry-5//page/6/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

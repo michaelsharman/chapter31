@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Tonight (well last night considering the time at the moment!) I went to see Dashboard Confessional at the Hordern Pavillion. Not a bad show, I am a &hellip;">
+	<meta name="description" content="Here are a couple of ways which you can determine the name of the JRun instance you are running as well as the server name of the Application server &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,75 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2006/09/07/server-settings-with-java/">
+		
+			Server Settings With Java</a>
+	</h2>
+	<div class="entry-content">
+		<p>Here are a couple of ways which you can determine the name of the JRun instance you are running as well as the server name of the Application server. Here at <a href="http://www.daemon.com.au/">Daemon</a> we use these quite a bit in our more complex project environments.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c">&lt;!--</span><span class="o">-</span> <span class="nx">get</span> <span class="nx">the</span> <span class="nx">machine</span> <span class="p">(</span><span class="nx">server</span><span class="p">)</span> <span class="nx">name</span> <span class="o">---&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">variables</span><span class="p">.</span><span class="nx">serverName</span> <span class="o">=</span> <span class="nx">createObject</span><span class="p">(</span><span class="s2">&quot;java&quot;</span><span class="p">,</span> <span class="s2">&quot;java.net.InetAddress&quot;</span><span class="p">).</span><span class="nx">localhost</span><span class="p">.</span><span class="nx">getHostName</span><span class="p">()</span> <span class="o">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">&lt;!--</span><span class="o">-</span> <span class="nx">get</span> <span class="nx">the</span> <span class="nx">JRun</span> <span class="nx">instance</span> <span class="nx">name</span> <span class="o">---&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">variables</span><span class="p">.</span><span class="nx">instanceName</span> <span class="o">=</span> <span class="nx">createObject</span><span class="p">(</span><span class="s2">&quot;java&quot;</span><span class="p">,</span> <span class="s2">&quot;jrunx.kernel.JRun&quot;</span><span class="p">).</span><span class="nx">getServerName</span><span class="p">()</span> <span class="o">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfoutput</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="nx">Server</span><span class="o">:</span> <span class="err">#</span><span class="nx">variables</span><span class="p">.</span><span class="nx">serverName</span><span class="err">#</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="nx">br</span> <span class="o">/&gt;</span>
+</span><span class='line'>    <span class="nx">JRun</span> <span class="nx">Instance</span><span class="o">:</span> <span class="err">#</span><span class="nx">variables</span><span class="p">.</span><span class="nx">instanceName</span><span class="err">#</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfoutput&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Nice :)</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-09-07T10:39:11+10:00" pubdate data-updated="true">Sep 7<span>th</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2006/09/07/server-settings-with-java//page/23/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -747,54 +816,6 @@ Log file: [myDatabase_Log]</p>
 </div>
 	
 		<div class="comments"><a href="/2006/07/17/33//page/23/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2006/07/16/apache-are-you-secure/">
-		
-			Apache, Are You Secure?</a>
-	</h2>
-	<div class="entry-content">
-		<p><a href="http://www.petefreitag.com/">Peter Freitag</a> has a great post on <a href="http://www.petefreitag.com/item/505.cfm">&#8216;20 ways to secure your Apache Configuration&#8217;</a></p>
-
-<p>Seeing as Apache is a rather popular web server, this is invaluable information for any developer particularly those who are involved with configuring production boxes.</p>
-
-<p>Just how popular is Apache? Have a look at Netcrafts <a href="http://news.netcraft.com/archives/web_server_survey.html">Web Server Survey</a> to September 2006.</p>
-
-<p><img src="/images/uploads/2006/09/overallc.thumbnail.gif" alt="Netcraft web server survey September 2006" /></p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2006-07-16T15:15:47+10:00" pubdate data-updated="true">Jul 16<span>th</span>, 2006</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/apache-slash-iis/'>Apache/IIS</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2006/07/16/apache-are-you-secure//page/23/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="The FarCry security model is really very cool. You can of course setup users within the &#8216;admin&#8217; area and assign those users to groups ( &hellip;">
+	<meta name="description" content="I experienced some strange behaviour today when building a site which was using jQuery and SWFObject. Our Flash files were loading ok and 99% of the &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,86 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2007/09/28/jquery-and-swfobject-conflict/">
+		
+			jQuery and SWFObject Conflict</a>
+	</h2>
+	<div class="entry-content">
+		<p>I experienced some strange behaviour today when building a site which was using jQuery and SWFObject. Our Flash files were loading ok and 99% of the javascript (using jQuery) was working fine.</p>
+
+<p>The problem was found only in IE (sound familiar?) with the following code:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#submitButton&#39;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>When the &#8216;submitButton&#8217; was clicked, this function was not firing in IE. After some googling I found that there is a slight conflict with jQuery and SWFObject. I tested this and found the problem in jQuery 1.1.x and 1.2.1.</p>
+
+<p><a href="http://blog.deconcept.com/swfobject/forum/discussion/540/jquery-and-swfobject-tips/">I found the fix</a> on the SWFObject forums which is basically using jQuery to load the .swf:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>      <span class="kd">var</span> <span class="nx">so</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SWFObject</span><span class="p">(</span><span class="s2">&quot;movie.swf&quot;</span><span class="p">,</span> <span class="s2">&quot;mymovie&quot;</span><span class="p">,</span> <span class="s2">&quot;400&quot;</span><span class="p">,</span> <span class="s2">&quot;100%&quot;</span><span class="p">,</span> <span class="s2">&quot;8&quot;</span><span class="p">,</span> <span class="s2">&quot;#336699&quot;</span><span class="p">);</span>
+</span><span class='line'>      <span class="nx">so</span><span class="p">.</span><span class="nx">addParam</span><span class="p">(</span><span class="s2">&quot;quality&quot;</span><span class="p">,</span> <span class="s2">&quot;low&quot;</span><span class="p">);</span>
+</span><span class='line'>      <span class="nx">so</span><span class="p">.</span><span class="nx">addParam</span><span class="p">(</span><span class="s2">&quot;wmode&quot;</span><span class="p">,</span> <span class="s2">&quot;transparent&quot;</span><span class="p">);</span>
+</span><span class='line'>      <span class="nx">so</span><span class="p">.</span><span class="nx">addParam</span><span class="p">(</span><span class="s2">&quot;salign&quot;</span><span class="p">,</span> <span class="s2">&quot;t&quot;</span><span class="p">);</span>
+</span><span class='line'>      <span class="nx">so</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="s2">&quot;flashcontent&quot;</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">});</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/script&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>All good in all browsers :)</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-09-28T11:27:24+10:00" pubdate data-updated="true">Sep 28<span>th</span>, 2007</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/javascript/'>Javascript</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2007/09/28/jquery-and-swfobject-conflict//page/16/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -688,97 +768,6 @@ Trace</p></blockquote>
 </div>
 	
 		<div class="comments"><a href="/2007/08/03/cfmail-failto-only-accepts-a-single-address//page/16/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2007/07/21/detecting-and-redirecting-http-to-https/">
-		
-			Detecting and Redirecting Http to Https</a>
-	</h2>
-	<div class="entry-content">
-		<p>There was a <a href="http://groups.google.com/group/mach-ii-for-coldfusion/browse_thread/thread/c742be0d8ab0395c?hl=en">recent thread</a> on the <a href="http://groups.google.com/group/mach-ii-for-coldfusion/">mach-ii mailing list</a> where a user wanted to detect whether a request was being made via http or https.</p>
-
-<p>This is quite a common step developers take when working on a site with secure (SSL) and non-secure areas. As the list is mach-ii there are a couple of obvious framework specific options to take, those being Filters and Plugins. Although Peter Farrel does have an sslPlugin available, I liked the approach put forward by <a href="http://www.pteradactylcry.com/blog/">Matt Osbun</a>:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">Compare</span><span class="p">(</span><span class="nx">cgi</span><span class="p">.</span><span class="nx">SERVER_PORT</span><span class="p">,</span><span class="mi">443</span><span class="p">)</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cflocation</span> <span class="nx">url</span><span class="o">=</span><span class="s2">&quot;https://#cgi.server_name##cgi.path_info#?#cgi.query_string#&quot;</span> <span class="nx">addtoken</span><span class="o">=</span><span class="s2">&quot;false&quot;</span><span class="o">/&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/cfif&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Now I know a lot of people don&#8217;t like using CGI scoped variables, even the more common ones, so I thought I&#8217;d try it out with getPageContext().</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c">&lt;!--</span><span class="o">-</span> <span class="nx">set</span> <span class="nx">up</span> <span class="nx">the</span> <span class="nx">getRequest</span> <span class="nx">method</span> <span class="k">for</span> <span class="nx">easy</span> <span class="nx">access</span> <span class="o">---&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">oRequest</span> <span class="o">=</span> <span class="nx">getPageContext</span><span class="p">().</span><span class="nx">getRequest</span><span class="p">()</span> <span class="o">/&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">compare</span><span class="p">(</span><span class="nx">oRequest</span><span class="p">.</span><span class="nx">getServerPort</span><span class="p">(),</span> <span class="mi">443</span><span class="p">)</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cflocation</span> <span class="nx">url</span><span class="o">=</span><span class="s2">&quot;https://#oRequest.getServerName()##oRequest.getRequestURI()#?#oRequest.getQueryString()#&quot;</span> <span class="nx">addtoken</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/cfif&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>As you can see it&#8217;s a little bit longer, but I believe is a safer option than relying on CGI variables.</p>
-
-<p>A slight modification (using getRequest()) is testing the isSecure() which &#8221;<em>Returns true if this protocol is secure</em>&#8221;:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c">&lt;!--</span><span class="o">-</span> <span class="nx">set</span> <span class="nx">up</span> <span class="nx">the</span> <span class="nx">getRequest</span> <span class="nx">method</span> <span class="k">for</span> <span class="nx">easy</span> <span class="nx">access</span> <span class="o">---&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">oRequest</span> <span class="o">=</span> <span class="nx">getPageContext</span><span class="p">().</span><span class="nx">getRequest</span><span class="p">()</span> <span class="o">/&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">NOT</span> <span class="nx">oRequest</span><span class="p">.</span><span class="nx">isSecure</span><span class="p">()</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cflocation</span> <span class="nx">url</span><span class="o">=</span><span class="s2">&quot;https://#oRequest.getServerName()##oRequest.getRequestURI()#?#oRequest.getQueryString()#&quot;</span> <span class="nx">addtoken</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/cfif&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>I&#8217;m still (slowly) making my way through getPageContext(), it can provide an absolute wealth of knowledge for the ColdFusion programmer. You can view the 1.4 <a href="http://java.sun.com/j2ee/1.4/docs/api/javax/servlet/jsp/PageContext.html">pagecontext docs here</a> and the <a href="http://java.sun.com/j2ee/1.4/docs/api/javax/servlet/ServletRequest.html">servletrequest docs here</a>.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2007-07-21T15:43:41+10:00" pubdate data-updated="true">Jul 21<span>st</span>, 2007</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2007/07/21/detecting-and-redirecting-http-to-https//page/16/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

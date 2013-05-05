@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="As a server-side developer you are often sending emails from your web application, whether those emails be for debugging/exception handling or &hellip;">
+	<meta name="description" content="Gnash is a free Flash movie player for Ubuntu which works as a standalone player or as a plugin for Firefox and Konqueror. This is the default (I &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,70 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2007/11/14/flex-not-working-on-ubuntu-using-the-gnash-player/">
+		
+			Flex Not Working on Ubuntu Using the Gnash Player</a>
+	</h2>
+	<div class="entry-content">
+		<p><a href="http://packages.ubuntu.com/feisty/utils/gnash">Gnash</a> is a free Flash movie player for Ubuntu which works as a standalone player or as a plugin for Firefox and Konqueror.</p>
+
+<p>This is the default (I believe) player installed on Ubuntu 7.10 (the Adobe player isn&#8217;t there by default).</p>
+
+<p>I recently tried to load a Flex app in this player and failed, the reason is that Gnash is in alpha state and supports Flash version 7 (and some AS classes for 8.5) only.</p>
+
+<p>Of course you need Flash player 9 to run Flex 2+, so you&#8217;ll have to use Adobe&#8217;s Flash player for now which thankfully works fine :)</p>
+
+<p>To install the Flash player from the terminal:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">sudo</span> <span class="nx">apt</span><span class="o">-</span><span class="nx">get</span> <span class="nx">install</span> <span class="nx">flashplugin</span><span class="o">-</span><span class="nx">nonfree</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Or to try Gnash:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">sudo</span> <span class="nx">apt</span><span class="o">-</span><span class="nx">get</span> <span class="nx">install</span> <span class="nx">mozilla</span><span class="o">-</span><span class="nx">plugin</span><span class="o">-</span><span class="nx">gnash</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will be another interesting project to keep an eye on.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-11-14T11:38:27+11:00" pubdate data-updated="true">Nov 14<span>th</span>, 2007</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/flex/'>Flex</a>, <a class='category' href='/categories/ubuntu/'>Ubuntu</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2007/11/14/flex-not-working-on-ubuntu-using-the-gnash-player//page/15/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -743,86 +807,6 @@ I&#8217;ve been annoyed many times with the whole chr(10)chr(13) on Windows vs c
 </div>
 	
 		<div class="comments"><a href="/2007/09/28/caveat-when-calling-components-from-onsessionend//page/15/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2007/09/28/jquery-and-swfobject-conflict/">
-		
-			jQuery and SWFObject Conflict</a>
-	</h2>
-	<div class="entry-content">
-		<p>I experienced some strange behaviour today when building a site which was using jQuery and SWFObject. Our Flash files were loading ok and 99% of the javascript (using jQuery) was working fine.</p>
-
-<p>The problem was found only in IE (sound familiar?) with the following code:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#submitButton&#39;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>When the &#8216;submitButton&#8217; was clicked, this function was not firing in IE. After some googling I found that there is a slight conflict with jQuery and SWFObject. I tested this and found the problem in jQuery 1.1.x and 1.2.1.</p>
-
-<p><a href="http://blog.deconcept.com/swfobject/forum/discussion/540/jquery-and-swfobject-tips/">I found the fix</a> on the SWFObject forums which is basically using jQuery to load the .swf:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
-</span><span class='line'>      <span class="kd">var</span> <span class="nx">so</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SWFObject</span><span class="p">(</span><span class="s2">&quot;movie.swf&quot;</span><span class="p">,</span> <span class="s2">&quot;mymovie&quot;</span><span class="p">,</span> <span class="s2">&quot;400&quot;</span><span class="p">,</span> <span class="s2">&quot;100%&quot;</span><span class="p">,</span> <span class="s2">&quot;8&quot;</span><span class="p">,</span> <span class="s2">&quot;#336699&quot;</span><span class="p">);</span>
-</span><span class='line'>      <span class="nx">so</span><span class="p">.</span><span class="nx">addParam</span><span class="p">(</span><span class="s2">&quot;quality&quot;</span><span class="p">,</span> <span class="s2">&quot;low&quot;</span><span class="p">);</span>
-</span><span class='line'>      <span class="nx">so</span><span class="p">.</span><span class="nx">addParam</span><span class="p">(</span><span class="s2">&quot;wmode&quot;</span><span class="p">,</span> <span class="s2">&quot;transparent&quot;</span><span class="p">);</span>
-</span><span class='line'>      <span class="nx">so</span><span class="p">.</span><span class="nx">addParam</span><span class="p">(</span><span class="s2">&quot;salign&quot;</span><span class="p">,</span> <span class="s2">&quot;t&quot;</span><span class="p">);</span>
-</span><span class='line'>      <span class="nx">so</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="s2">&quot;flashcontent&quot;</span><span class="p">);</span>
-</span><span class='line'>  <span class="p">});</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/script&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>All good in all browsers :)</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2007-09-28T11:27:24+10:00" pubdate data-updated="true">Sep 28<span>th</span>, 2007</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/javascript/'>Javascript</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2007/09/28/jquery-and-swfobject-conflict//page/15/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

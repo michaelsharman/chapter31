@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Apparently the CAPTCHA for Windows Live Mail can be cracked in as little as 60 seconds and Gmail&#8217;s CAPTCHA has also been cracked. Does this &hellip;">
+	<meta name="description" content="A little while ago I mentioned combining multiple INSERT statements with MySQL, here is another helpful approach to a common problem. In many &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,105 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/04/23/insert-or-update-in-one-statement-with-mysql/">
+		
+			INSERT or UPDATE in One Statement With MySQL</a>
+	</h2>
+	<div class="entry-content">
+		<p>A little while ago I mentioned <a href="http://www.chapter31.com/2008/04/03/combining-multiple-insert-statements-with-mysql/">combining multiple INSERT statements with MySQL</a>, here is another helpful approach to a common problem.</p>
+
+<p>In many systems you will give the user a chance to ADD and EDIT a record, a News post for example. As usual there are many ways to handle writing any changes to the database, one common approach would be to have 2 methods in a News.cfc</p>
+
+<p>E.g. create() and update()</p>
+
+<p>create() would have an INSERT statement and update() would have an UPDATE statement.</p>
+
+<p>That works well but means you have to have 2 methods for each <em>type</em> of content you want to save to the database.</p>
+
+<p>How about this instead:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfquery</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;qSave&quot;</span> <span class="nx">datasource</span><span class="o">=</span><span class="s2">&quot;#getDSN()#&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="nx">INSERT</span> <span class="nx">INTO</span> <span class="nx">News</span>
+</span><span class='line'>      <span class="p">(</span>
+</span><span class='line'>          <span class="nx">NewsId</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">DateTimeCreated</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">Title</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">Body</span>
+</span><span class='line'>      <span class="p">)</span>
+</span><span class='line'>  <span class="nx">VALUES</span>
+</span><span class='line'>      <span class="p">(</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#newsId#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>          <span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_timestamp&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#createODBCDateTime(now())#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>          <span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#title#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>          <span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#body#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>      <span class="p">)</span><span class="nx">ON</span> <span class="nx">DUPLICATE</span> <span class="nx">KEY</span> <span class="nx">UPDATE</span> <span class="nx">DateTimeLastUpdated</span> <span class="o">=</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_timestamp&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#createODBCDateTime(now())#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>          <span class="p">,</span> <span class="nx">Title</span> <span class="o">=</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#title#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>          <span class="p">,</span> <span class="nx">Body</span> <span class="o">=</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#body#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfquery&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>From the <a href="http://dev.mysql.com/doc/refman/5.0/en/insert-on-duplicate.html">docs</a>:</p>
+
+<blockquote><p>If you specify ON DUPLICATE KEY UPDATE, and a row is inserted that would cause a duplicate value in a UNIQUE index or PRIMARY KEY, an UPDATE of the old row is performed.</p></blockquote>
+
+<p>Now you can just have this query in one method (e.g. save()) which will handle both use cases.</p>
+
+<p>This feature has been available since MySQL 4.1.0</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-04-23T12:09:18+10:00" pubdate data-updated="true">Apr 23<span>rd</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/databases/'>Databases</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/04/23/insert-or-update-in-one-statement-with-mysql//page/12/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -929,68 +1028,6 @@
 </div>
 	
 		<div class="comments"><a href="/2008/03/21/returning-random-results-with-mysql//page/12/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2008/03/17/options-for-accessing-the-coldfusion-8-documentation/">
-		
-			Options for Accessing the ColdFusion 8 Documentation</a>
-	</h2>
-	<div class="entry-content">
-		<p>ColdFusion developers have quite a few options when wanting to access full help documentation for ColdFusion 8 including:</p>
-
-<ul>
-<li><a href="http://livedocs.adobe.com/coldfusion/8/">Livedocs</a></li>
-<li><a href="http://www.cfquickdocs.com/">CFQuickdocs</a></li>
-<li><a href="http://coldfusiondocs.com/app/#/abs/">ColdFusionDocs.com</a></li>
-<li><a href="http://blog.brianflove.com/articles/2008/02/19/cfdocs-on-air">CFDocs on AIR</a></li>
-<li><a href="http://blogs.adobe.com/flexdoc/2007/08/cfml_reference_docs_for_the_ip_1.html">CFML Reference Docs for the iPod</a></li>
-<li><a href="http://www.adobe.com/support/coldfusion/downloads.html#cfdevtools">ColdFusion 8 Help Files for Eclipse</a></li>
-</ul>
-
-
-<p>The &#8216;source&#8217; of all these is the same (Livedocs) so which do you go with? Funnily enough the offical Adobe Livedocs is probably the last one I&#8217;d choose simply because it&#8217;s a little slow :)</p>
-
-<p>CFQuickdocs was one of the first non-adobe help sites that I became aware of (and was for CF7 I believe). It&#8217;s still great and uses Ajax to speed things up but the newer ColdFusionDocs.com is even quicker with a cool Flex interface!</p>
-
-<p>Of course CFDocs on AIR is fantastic (can&#8217;t beat running locally!) unless you&#8217;re working on Linux then you need to wait for Adobe to release AIR for Linux :(</p>
-
-<p>Today I added the <a href="http://livedocs.adobe.com/coldfusion/8/com.adobe.coldfusion_help_8_1.0.1.jar">help docs</a> for Eclipse from the <a href="http://www.adobe.com/support/coldfusion/downloads.html#cfdevtools">cfdevtools page</a>. All you need to do is copy the .jar file into your Flex Builder or Eclipse installation&#8217;s plugins folder then restart Eclipse and you&#8217;re good to go.</p>
-
-<p>This is great to have the ColdFusion docs locally right at your fingertips open in a separate Eclipse window (click &#8220;Help -> Dynamic Help&#8221;). Another reason why Eclipse is the premier IDE for ColdFusion developers.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-03-17T09:46:00+11:00" pubdate data-updated="true">Mar 17<span>th</span>, 2008</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2008/03/17/options-for-accessing-the-coldfusion-8-documentation//page/12/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

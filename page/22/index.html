@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Scott Stroz (aka boyzoid) has a nice little post on the Firefox Web Developer Toolbar by Chris Pederick. The toolbar (which has been around for ages &hellip;">
+	<meta name="description" content="Javascript is pretty cool and I&#8217;ll admit that I don&#8217;t get to do as much as I&#8217;d like with it. Today I&#8217;m going to briefly &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,139 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2006/10/01/javascript-function-properties/">
+		
+			Javascript Function Properties</a>
+	</h2>
+	<div class="entry-content">
+		<p>Javascript is pretty cool and I&#8217;ll admit that I don&#8217;t get to do as much as I&#8217;d like with it. Today I&#8217;m going to briefly cover a few properties of any Javascript function which you can take advantage of:</p>
+
+<ul>
+<li>arguments</li>
+<li>callee</li>
+<li>arity</li>
+</ul>
+
+
+<h3>arguments</h3>
+
+<p>The arguments property contains an array of input parameters which may be passed to the function. It can be used to determine how many variables are being passed in and what they are, without each argument being explicitly declared in the function.</p>
+
+<p>Using the &#8220;length&#8221; property of the arguments, you can iterate through the array for each parameter passed.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="c1">//&lt;![CDATA[</span>
+</span><span class='line'>    <span class="kd">function</span> <span class="nx">myFunction</span><span class="p">()</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>       <span class="kd">var</span> <span class="nx">aArgs</span> <span class="o">=</span> <span class="nx">myFunction</span><span class="p">.</span><span class="nx">arguments</span><span class="p">;</span>
+</span><span class='line'>       <span class="kd">var</span> <span class="nx">iArgLength</span> <span class="o">=</span> <span class="nx">aArgs</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
+</span><span class='line'>       <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">iArgLength</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span>
+</span><span class='line'>       <span class="p">{</span>
+</span><span class='line'>         <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Argument &quot;</span> <span class="o">+</span> <span class="nx">i</span> <span class="o">+</span> <span class="s2">&quot; = &quot;</span> <span class="o">+</span> <span class="nx">aArgs</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+</span><span class='line'>       <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="c1">//]]&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/script&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note that the arguments property can be preceeded by the function name i.e. myFunction.arguments[1].</p>
+
+<p>The arguments array is especially useful with functions that can be called with a variable number of arguments, or with more arguments than they were formally declared to accept.</p>
+
+<h3>callee</h3>
+
+<p>The callee property can only be called from within a function, when run it will return a string value of the entire function (as if you were viewing the source of the page). Note that you can also use the function.toSource() method to obtain the function source.</p>
+
+<h3>arity</h3>
+
+<p>The arity property specifies the number of arguments the current function expected to receive. This is different to arguments.length which indicates how many actual arguments were passed in.</p>
+
+<h3>Examples</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="c1">//&lt;![CDATA[</span>
+</span><span class='line'>    <span class="kd">function</span> <span class="nx">myFunction</span><span class="p">()</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>       <span class="k">return</span> <span class="nx">myFunction2</span><span class="p">(</span><span class="s1">&#39;arg1&#39;</span><span class="p">,</span><span class="s1">&#39;arg2&#39;</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">function</span> <span class="nx">myFunction2</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="nx">b</span><span class="p">,</span><span class="nx">c</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>       <span class="nx">alert</span><span class="p">(</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>  <span class="c1">//only passed in 2 arguments</span>
+</span><span class='line'>       <span class="nx">alert</span><span class="p">(</span><span class="nx">myFunction2</span><span class="p">.</span><span class="nx">arity</span><span class="p">)</span>  <span class="c1">//expects 3 arguments</span>
+</span><span class='line'>       <span class="nx">alert</span><span class="p">(</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">callee</span><span class="p">);</span>  <span class="c1">//generates function source (with line feeds)</span>
+</span><span class='line'>       <span class="nx">alert</span><span class="p">(</span><span class="nx">myFunction2</span><span class="p">.</span><span class="nx">toSource</span><span class="p">());</span>   <span class="c1">//generates function source (with no line feeds)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="c1">//]]&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/script&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-10-01T10:43:45+10:00" pubdate data-updated="true">Oct 1<span>st</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/javascript/'>Javascript</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2006/10/01/javascript-function-properties//page/22/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -887,75 +1020,6 @@
 </div>
 	
 		<div class="comments"><a href="/2006/09/07/cfc-bean-generators//page/22/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2006/09/07/server-settings-with-java/">
-		
-			Server Settings With Java</a>
-	</h2>
-	<div class="entry-content">
-		<p>Here are a couple of ways which you can determine the name of the JRun instance you are running as well as the server name of the Application server. Here at <a href="http://www.daemon.com.au/">Daemon</a> we use these quite a bit in our more complex project environments.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c">&lt;!--</span><span class="o">-</span> <span class="nx">get</span> <span class="nx">the</span> <span class="nx">machine</span> <span class="p">(</span><span class="nx">server</span><span class="p">)</span> <span class="nx">name</span> <span class="o">---&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">variables</span><span class="p">.</span><span class="nx">serverName</span> <span class="o">=</span> <span class="nx">createObject</span><span class="p">(</span><span class="s2">&quot;java&quot;</span><span class="p">,</span> <span class="s2">&quot;java.net.InetAddress&quot;</span><span class="p">).</span><span class="nx">localhost</span><span class="p">.</span><span class="nx">getHostName</span><span class="p">()</span> <span class="o">/&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="c">&lt;!--</span><span class="o">-</span> <span class="nx">get</span> <span class="nx">the</span> <span class="nx">JRun</span> <span class="nx">instance</span> <span class="nx">name</span> <span class="o">---&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">variables</span><span class="p">.</span><span class="nx">instanceName</span> <span class="o">=</span> <span class="nx">createObject</span><span class="p">(</span><span class="s2">&quot;java&quot;</span><span class="p">,</span> <span class="s2">&quot;jrunx.kernel.JRun&quot;</span><span class="p">).</span><span class="nx">getServerName</span><span class="p">()</span> <span class="o">/&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">cfoutput</span><span class="o">&gt;</span>
-</span><span class='line'>    <span class="nx">Server</span><span class="o">:</span> <span class="err">#</span><span class="nx">variables</span><span class="p">.</span><span class="nx">serverName</span><span class="err">#</span>
-</span><span class='line'>    <span class="o">&lt;</span><span class="nx">br</span> <span class="o">/&gt;</span>
-</span><span class='line'>    <span class="nx">JRun</span> <span class="nx">Instance</span><span class="o">:</span> <span class="err">#</span><span class="nx">variables</span><span class="p">.</span><span class="nx">instanceName</span><span class="err">#</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/cfoutput&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Nice :)</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2006-09-07T10:39:11+10:00" pubdate data-updated="true">Sep 7<span>th</span>, 2006</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2006/09/07/server-settings-with-java//page/22/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 
