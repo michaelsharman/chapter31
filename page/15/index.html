@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="I was looking for some information the other day about line separators across Windows/MAC/Linux etc when I stumbled upon 3 great articles from &hellip;">
+	<meta name="description" content="As a server-side developer you are often sending emails from your web application, whether those emails be for debugging/exception handling or &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,75 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2007/11/13/using-google-mail-as-your-local-smtp-server/">
+		
+			Using Google Mail as Your Local SMTP Server</a>
+	</h2>
+	<div class="entry-content">
+		<p>As a server-side developer you are often sending emails from your web application, whether those emails be for debugging/exception handling or actual application functionality (such as a contact form etc).</p>
+
+<p>Although some developers decide to turn off mail debugging locally (and instead view the errors inline), you pretty much always have the need to send emails from your development environment.</p>
+
+<p>In the past I have either connected to a staging mail server or used a free SMTP server (installed locally on my workstation) like <a href="http://www.mailenable.com/">MailEnable</a>. Well today <a href="http://www.lynchconsulting.com.au/blog/">Marko Tomic</a> let me in on something which is probably already well known! You can setup <a href="http://www.gmail.com/">GMail</a> as an SMTP server in ColdFusion Administrator :)</p>
+
+<p>What this means is you now don&#8217;t have to bother installing your own SMTP server or getting mail details from your systems administrator&#8230;you can just use your very own gmail account! Nice.</p>
+
+<p>Note that I did also google this a bit and found a couple of posts including <a href="http://groups.google.com/group/mach-ii-for-coldfusion/browse_thread/thread/608cdead2943930d">this one</a> suggesting you use TLS (via the Administrator or cfmail attributes), but I needed to use SSL instead. I had no success with TLS.</p>
+
+<p>Also reading <a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=Tags_m-o_01.html">the docs</a> I&#8217;m not sure if this will work pre-CF8, as SSL and TLS were added as attributes in CF8.</p>
+
+<p>Below are some examples of setting this up either in Administrator or in code, note the port number is <strong>not 25</strong> as is the default, instead you must use port 465:</p>
+
+<p><img src="/images/uploads/2007/11/mail.png" alt="ColdFusion Administrator - mail" /></p>
+
+<p>And in CFML:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfmail</span> <span class="nx">to</span><span class="o">=</span><span class="s2">&quot;me@wherever.com&quot;</span> <span class="nx">subject</span><span class="o">=</span><span class="s2">&quot;Read me&quot;</span> <span class="nx">from</span><span class="o">=</span><span class="s2">&quot;you@wherever.com&quot;</span> <span class="nx">server</span><span class="o">=</span><span class="s2">&quot;smtp.gmail.com&quot;</span> <span class="nx">useSSL</span><span class="o">=</span><span class="s2">&quot;true&quot;</span> <span class="nx">username</span><span class="o">=</span><span class="s2">&quot;gmailUsername&quot;</span> <span class="nx">password</span><span class="o">=</span><span class="s2">&quot;gmailPassword&quot;</span> <span class="nx">port</span><span class="o">=</span><span class="s2">&quot;465&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="nx">This</span> <span class="nx">is</span> <span class="nx">a</span> <span class="nx">test</span> <span class="nx">email</span><span class="o">!</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfmail&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The nice thing about doing this in ColdFusion administrator (apart from not having to specify a cfmail server and username/password etc in your code) is that you can verify your connection to the SMTP server.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-11-13T15:27:59+11:00" pubdate data-updated="true">Nov 13<span>th</span>, 2007</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2007/11/13/using-google-mail-as-your-local-smtp-server//page/15/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -754,97 +823,6 @@ I&#8217;ve been annoyed many times with the whole chr(10)chr(13) on Windows vs c
 </div>
 	
 		<div class="comments"><a href="/2007/09/28/jquery-and-swfobject-conflict//page/15/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2007/09/27/creating-a-custom-farcry-login-page/">
-		
-			Creating a Custom FarCry Login Page</a>
-	</h2>
-	<div class="entry-content">
-		<p>The FarCry security model is really very cool. You can of course setup users within the &#8216;admin&#8217; area and assign those users to groups (and those groups can have different permissions), but you can also authenticate via Active Directory or LDAP etc.</p>
-
-<p>One thing you can also do with ease is secure particular navigation &#8216;nodes&#8217; of the website, thus quickly and easily creating password protected &#8216;member&#8217; areas.</p>
-
-<p>Whenever you secure a navigation branch the user is presented with the default FarCry login screen as seen below:</p>
-
-<p><img src="/images/uploads/2007/09/farcrylogin.jpg" alt="FarCry login" /></p>
-
-<p>Because this is a &#8216;front end&#8217; page (seen by site visitors) you will often want to change the look and feel to mimick your client&#8217;s design for branding purposes. As with a lot of things with FarCry this is a piece of cake!</p>
-
-<p>All you need to do is add your own login screen in /yourproject/customadmin/login/login.cfm</p>
-
-<p>It&#8217;s probably best to copy the original login.cfm from /farcry/core/tags/navajo/login.cfm so all the FarCry &#8216;logic&#8217; is retained, just make all the HTML/CSS changes you need.</p>
-
-<p>Here is an example of just that, a custom &#8216;front end&#8217; login screen:</p>
-
-<p><img src="/images/uploads/2007/09/customlogin.jpg" alt="Custom login" /></p>
-
-<p>The only thing with this is that when a client administrator needs to login to FarCry administration area (or &#8216;Webtop&#8217;) they will also see this &#8216;custom&#8217; template.</p>
-
-<p>If this meets client expectations then you have nothing to worry about, if however you want to have the default FarCry login screen visible when an administrator is logging in to the back-end (while retaining the custom login screen on the front-end) then you need to make this simple change at the top of your custom login.cfm:</p>
-
-<p>/yourproject/customadmin/login/login.cfm</p>
-
-<p>Note that this needs to be at the top of the page (above your custom login code).</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c">&lt;!--</span><span class="o">-</span>
-</span><span class='line'>  <span class="nx">If</span> <span class="nx">a</span> <span class="nx">user</span> <span class="nx">is</span> <span class="nx">attempting</span> <span class="nx">to</span> <span class="nx">login</span> <span class="nx">to</span> <span class="nx">the</span> <span class="nx">FarCry</span> <span class="nx">webtop</span><span class="p">,</span> <span class="nx">load</span> <span class="nx">the</span> <span class="k">default</span> <span class="nx">login</span> <span class="nx">screen</span><span class="p">.</span>
-</span><span class='line'>  <span class="nx">Otherwise</span> <span class="nx">load</span> <span class="nx">the</span> <span class="nx">custom</span> <span class="s1">&#39;members&#39;</span> <span class="nx">login</span> <span class="nx">screen</span> <span class="k">for</span> <span class="nx">password</span> <span class="kr">protected</span> <span class="nx">site</span> <span class="nx">areas</span><span class="p">.</span>
-</span><span class='line'> <span class="o">---&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">structKeyExists</span><span class="p">(</span><span class="nx">URL</span><span class="p">,</span> <span class="s2">&quot;returnURL&quot;</span><span class="p">)</span> <span class="nx">AND</span> <span class="nx">URL</span><span class="p">.</span><span class="nx">returnURL</span> <span class="nx">CONTAINS</span> <span class="s2">&quot;farcry&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfimport</span> <span class="nx">taglib</span><span class="o">=</span><span class="s2">&quot;/farcry/core/tags/navajo&quot;</span> <span class="nx">prefix</span><span class="o">=</span><span class="s2">&quot;nj&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">nj</span><span class="o">:</span><span class="nx">Login</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfabort</span> <span class="o">/&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/cfif&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>You can read a little more about <a href="http://docs.farcrycms.org:8080/confluence/display/FCDEV40/Customise+Login">customising logins here</a>.</p>
-
-<p>This will work in FarCry versions 3 and 4.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2007-09-27T11:08:55+10:00" pubdate data-updated="true">Sep 27<span>th</span>, 2007</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/farcry/'>Farcry</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2007/09/27/creating-a-custom-farcry-login-page//page/15/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

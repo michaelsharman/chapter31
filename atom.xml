@@ -4,7 +4,7 @@
   <title><![CDATA[chapter31 &raquo;]]></title>
   <link href="http://chapter31.com/atom.xml" rel="self"/>
   <link href="http://chapter31.com/"/>
-  <updated>2013-05-05T13:12:24+10:00</updated>
+  <updated>2013-05-06T09:15:04+10:00</updated>
   <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
@@ -12,6 +12,46 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Date timezone error when upgrading to PHP 5.3+]]></title>
+    <link href="http://chapter31.com/2013/05/06/date-timezone-error-when-upgrading-to-php-5-dot-3-plus/"/>
+    <updated>2013-05-06T09:03:00+10:00</updated>
+    <id>http://chapter31.com/2013/05/06/date-timezone-error-when-upgrading-to-php-5-dot-3-plus</id>
+    <content type="html"><![CDATA[<p>I upgraded to 5.4.14 last night on Mac OSX 10.8.3. Things went smoothly except I got an error running my apps:</p>
+
+<pre><code>date(): It is not safe to rely on the system's timezone settings. You are *required* to use the date.timezone setting or the date_default_timezone_set() function. In case you used any of those methods and you are still getting this warning, you most likely misspelled the timezone identifier. We selected the timezone 'UTC' for now, but please set date.timezone to select your timezone.
+</code></pre>
+
+<p>Basically since PHP 5.3.0 you have to explicitly set your date.timezone setting, this is a good thing. Prior to PHP 5.3.0, the line existed in the php.ini but was generally commented out. There are 2 places you could make this change.</p>
+
+<ol>
+<li>php.ini</li>
+<li>in your application codebase</li>
+</ol>
+
+
+<p>Ideally you&#8217;d do both. Have a default in your php.ini that all applications on the server can use, and you can override if needed in your application.</p>
+
+<h2>php.ini</h2>
+
+<p>Look in your <em>php.ini</em> for the date.timezone setting and uncomment if necessary. For me I set it to &#8220;Australia/NSW&#8221;. You can get a full list of <a href="http://us3.php.net/manual/en/timezones.php">supported timezones here</a></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="x">date.timezone = &quot;Australia/NSW&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Application codebase</h2>
+
+<p>The method above, of course is a server default, so if you want something specific to your application, try:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="x">date_default_timezone_set(&quot;Australia/NSW&quot;);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Stopping a remote process after killing an ssh session]]></title>
@@ -1286,31 +1326,6 @@ htdocs/WEB-INF
 <p><a href="http://chapter31.com/images/uploads/2012/07/tiny_trace.png"><img src="http://chapter31.com/images/uploads/2012/07/tiny_trace.png" alt="" /></a></p>
 
 <p>The solution for me was moving to tinyMCE 3.5.4.1 (and jQuery 1.7.2, previously I was on 1.6.4). All good now, just thought I&#8217;d throw up a quick post if anyone was being caught by this.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Apache permission denied on Mac OSX Lion]]></title>
-    <link href="http://chapter31.com/2012/06/05/apache-permission-denied-on-mac-osx-lion/"/>
-    <updated>2012-06-05T14:52:00+10:00</updated>
-    <id>http://chapter31.com/2012/06/05/apache-permission-denied-on-mac-osx-lion</id>
-    <content type="html"><![CDATA[<p>I&#8217;ve just upgraded to OSX Lion and had some trouble getting Apache to load a vhost. I kept getting a 403 permission denied error, but all my vhosts had the correct permission directives set.</p>
-
-<p>Now by default your webserver document root is located in <em>/Library/WebServer/Documents</em>. I don&#8217;t really like that for my local machine, I&#8217;d rather store web files under my user account. Just tends to make things easier.</p>
-
-<p>However&#8230;if you&#8217;re getting a 403 error, and something like this in your apache error log (/var/log/apache2/error_log):</p>
-
-<pre><code>[Wed Jun 06 00:36:02 2012] [crit] [client 127.0.0.1] (13)Permission denied: /Users/[username]/Documents/.htaccess pcfg_openfile: unable to check htaccess file, ensure it is readable
-</code></pre>
-
-<p>Then check your directory permissions. The interesting thing is that I don&#8217;t have an .htaccess file in my Documents directory. Even adding one did nothing, so I&#8217;m not quite sure why Apache was complaining about this.</p>
-
-<p>The answer was simple, I didn&#8217;t have &#8220;group&#8221; read or execute permissions on the <em>Documents</em> directory, once I ran a chmod&#8230;everything started working ok :)</p>
-
-<pre><code>chmod 755 Documents
-</code></pre>
-
-<p>The actual path to my site was <em>/Users/[username]/Documents/workspaces/sitename/htdocs</em>, but still&#8230;without the requisite permissions on the <em>Documents</em> folder Apache couldn&#8217;t access the vhost.</p>
 ]]></content>
   </entry>
   

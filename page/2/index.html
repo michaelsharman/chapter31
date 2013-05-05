@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="I had some new fonts to install on our test server that runs Ubuntu server. Pretty simple really, just noting it down here for next time: Upload/ssh &hellip;">
+	<meta name="description" content="We turn off all GUI based administration consoles in our production environments, this includes Railo&#8217;s admin area. If you need to configure &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,88 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2012/09/26/adding-a-mail-server-to-a-railo-instance/">
+		
+			Adding a Mail Server to a Railo Instance</a>
+	</h2>
+	<div class="entry-content">
+		<p>We turn off all GUI based administration consoles in our production environments, this includes Railo&#8217;s admin area.</p>
+
+<p>If you need to configure your Railo instance to include an SMTP server, you can add a line in WEB-INF/railo/railo-web.xml.cfm</p>
+
+<p>Open up that file (probably as sudo), look for the <mail> tag (which is empty by default) and insert the following:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;server port="25" smtp="127.0.0.1" /&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The &#8220;smtp&#8221; attribute should be the IP address of your SMTP server. Also, if your SMTP server requires a username and password, you can add them like so:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;server port="25" smtp="127.0.0.1" username="myusername" password="mypassword" /&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>At the end of the day your config entry should look something like:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;mail log="{railo-web}/logs/mail.log"&gt;
+</span><span class='line'>  &lt;server port="25" smtp="127.0.0.1"/&gt;
+</span><span class='line'>&lt;/mail&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Update - January 2013</h2>
+
+<p>I was googling something else when I came across a post on the Railo groups indicating that by default only <em>error</em> logging is enabled for mail. This means that in the event of an error (where Railo is unable to send the mail) you can check the WEB-INF/railo/logs/mail.log for information.</p>
+
+<p>However, you can turn on <em>info</em> logging as well to presumably track whenever mail is actually sent. This can be done in either railo-server.xml or railo-web.xml. Eg:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;mail log-level="info" log="{railo-web}/logs/mail.log"&gt;
+</span><span class='line'>  &lt;server port="25" smtp="127.0.0.1"/&gt;
+</span><span class='line'>&lt;/mail&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is really handy for us as we disallow access to the Railo admin GUI.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-26T22:04:00+10:00" pubdate data-updated="true">Sep 26<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/railo/'>Railo</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2012/09/26/adding-a-mail-server-to-a-railo-instance//page/2/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -896,64 +978,6 @@ htdocs/WEB-INF
 </div>
 	
 		<div class="comments"><a href="/2012/07/04/jquery-tinymce-issue-with-attr//page/2/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2012/06/05/apache-permission-denied-on-mac-osx-lion/">
-		
-			Apache Permission Denied on Mac OSX Lion</a>
-	</h2>
-	<div class="entry-content">
-		<p>I&#8217;ve just upgraded to OSX Lion and had some trouble getting Apache to load a vhost. I kept getting a 403 permission denied error, but all my vhosts had the correct permission directives set.</p>
-
-<p>Now by default your webserver document root is located in <em>/Library/WebServer/Documents</em>. I don&#8217;t really like that for my local machine, I&#8217;d rather store web files under my user account. Just tends to make things easier.</p>
-
-<p>However&#8230;if you&#8217;re getting a 403 error, and something like this in your apache error log (/var/log/apache2/error_log):</p>
-
-<pre><code>[Wed Jun 06 00:36:02 2012] [crit] [client 127.0.0.1] (13)Permission denied: /Users/[username]/Documents/.htaccess pcfg_openfile: unable to check htaccess file, ensure it is readable
-</code></pre>
-
-<p>Then check your directory permissions. The interesting thing is that I don&#8217;t have an .htaccess file in my Documents directory. Even adding one did nothing, so I&#8217;m not quite sure why Apache was complaining about this.</p>
-
-<p>The answer was simple, I didn&#8217;t have &#8220;group&#8221; read or execute permissions on the <em>Documents</em> directory, once I ran a chmod&#8230;everything started working ok :)</p>
-
-<pre><code>chmod 755 Documents
-</code></pre>
-
-<p>The actual path to my site was <em>/Users/[username]/Documents/workspaces/sitename/htdocs</em>, but still&#8230;without the requisite permissions on the <em>Documents</em> folder Apache couldn&#8217;t access the vhost.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-06-05T14:52:00+10:00" pubdate data-updated="true">Jun 5<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/apache-slash-iis/'>Apache/IIS</a>, <a class='category' href='/categories/mac/'>Mac</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2012/06/05/apache-permission-denied-on-mac-osx-lion//page/2/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

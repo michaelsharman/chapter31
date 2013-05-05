@@ -4,7 +4,7 @@
   <title><![CDATA[Category: PHP | chapter31 &raquo;]]></title>
   <link href="http://chapter31.com/categories/php/atom.xml" rel="self"/>
   <link href="http://chapter31.com/"/>
-  <updated>2013-05-05T13:12:24+10:00</updated>
+  <updated>2013-05-06T09:15:04+10:00</updated>
   <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
@@ -12,6 +12,44 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Date timezone error when upgrading to PHP 5.3+]]></title>
+    <link href="http://chapter31.com/2013/05/06/date-timezone-error-when-upgrading-to-php-5-dot-3-plus/"/>
+    <updated>2013-05-06T09:03:00+10:00</updated>
+    <id>http://chapter31.com/2013/05/06/date-timezone-error-when-upgrading-to-php-5-dot-3-plus</id>
+    <content type="html"><![CDATA[<p>I upgraded to 5.4.14 last night on Mac OSX 10.8.3. Things went smoothly except I got an error running my apps:</p>
+
+<pre><code>date(): It is not safe to rely on the system's timezone settings. You are *required* to use the date.timezone setting or the date_default_timezone_set() function. In case you used any of those methods and you are still getting this warning, you most likely misspelled the timezone identifier. We selected the timezone 'UTC' for now, but please set date.timezone to select your timezone.
+</code></pre>
+
+<p>Basically since PHP 5.3.0 you have to explicitly set your date.timezone setting, this is a good thing. Prior to PHP 5.3.0, the line existed in the php.ini but was generally commented out. There are 2 places you could make this change.</p>
+
+<ol>
+<li>php.ini</li>
+<li>in your application codebase</li>
+</ol>
+
+
+<p>Ideally you'd do both. Have a default in your php.ini that all applications on the server can use, and you can override if needed in your application.</p>
+
+<h2>php.ini</h2>
+
+<p>Look in your <em>php.ini</em> for the date.timezone setting and uncomment if necessary. For me I set it to "Australia/NSW". You can get a full list of <a href="http://us3.php.net/manual/en/timezones.php">supported timezones here</a></p>
+
+<p><code>php
+date.timezone = "Australia/NSW"
+</code></p>
+
+<h2>Application codebase</h2>
+
+<p>The method above, of course is a server default, so if you want something specific to your application, try:</p>
+
+<p><code>php
+date_default_timezone_set("Australia/NSW");
+</code></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Wordpress - detecting the categories of a post]]></title>
@@ -166,37 +204,6 @@ sudo apt-get install subversion
 </code></p>
 
 <p><a href="http://txfx.net/code/wordpress/subscribe-to-comments/">Read more</a> and download the plugin here.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Wordpress for mobile devices]]></title>
-    <link href="http://chapter31.com/2008/07/25/wordpress-for-mobile-devices/"/>
-    <updated>2008-07-25T10:55:59+10:00</updated>
-    <id>http://chapter31.com/2008/07/25/wordpress-for-mobile-devices</id>
-    <content type="html"><![CDATA[<p><a href="http://wordpress.org/">Wordpress</a> is one of the most used blogging platforms around. One of the great things about it is the community support including the countless plugins you can use to enhance your blog/site.</p>
-
-<p>Particularly with the iPhone and other smart devices, mobile web seems to be experiencing a surge in traffic and importance to businesses. Although a lot of these "smart" devices now have full-featured browsers which can certainly handle your site without resorting to an entirely different version for mobile, there are still millions of handsets which access the web without a sophisticated browser so you often need to have a separate version of your site or at least a different stylesheet to handle these devices.</p>
-
-<p>After all you might not be able to offer your standard site (with pages exceeding 200K each etc) to a 2G mobile device.</p>
-
-<p><a href="http://wordpressmobile.mobi/">wordpressmobile</a> is a nice little plugin for Wordpress to enable your blog to be viewed by mobile devices. You can also post entries from your phone :)</p>
-
-<blockquote><p>WordPress Mobile Plugin was developed to make your blog mobile friendly, bring you more mobile traffic and make you money on the mobile web!</p></blockquote>
-
-<p>Installation couldn't be simpler;</p>
-
-<ol>
-<li>Upload wordpress-mobile.php to your wp-content/plugins folder</li>
-<li>Navigate to your plugin manager and activate the plugin</li>
-</ol>
-
-
-<p>That's it!</p>
-
-<p>The plugin automatically detects whether a visitor is on a mobile device, if they are then it serves them up a mobile version. This can be nice as you don't need to worry about different sub-domains or sub-directories to hold a separate version of your site specifically for mobiles.</p>
-
-<p>The good thing is that it won't get in the way for devices which have actual "browsers" like the iPhone, meaning on those phones visitors will see the full version of your site.</p>
 ]]></content>
   </entry>
   

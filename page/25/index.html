@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="With CFMX there are a few new features you can take advantage of in relation to session and client variable handling, namely: URLSessionFormat() &hellip;">
+	<meta name="description" content="Mark Kruger has a nice article (with mention from Sean Corfield) on APPLICATION variable locking. Sean basically added that in the initial example ( &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,113 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2006/03/15/double-checked-locking/">
+		
+			Double-checked Locking</a>
+	</h2>
+	<div class="entry-content">
+		<p>Mark Kruger has a nice article (with mention from <a href="http://corfield.org">Sean Corfield</a>) on APPLICATION variable locking.</p>
+
+<p>Sean basically added that in the initial example (BAD code) if 2 users hit the <cfif> condition at the same time, only one will have a lock on the code while the other will wait.
+The problem lies in the fact that the 2nd user is waiting for the lock to expire, then they will perform a write operation NOT checking the <cfif> condition again!</p>
+
+<p>The article is <a href="http://mkruger.cfwebtools.com/index.cfm?mode=entry&amp;entry=DEAF10EF-C648-7C00-3F815AEB5E49E4E5">here</a>.</p>
+
+<p>BAD code snippet:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">NOT</span> <span class="nx">isDefined</span><span class="p">(</span><span class="s1">&#39;Application.curIps&#39;</span><span class="p">)</span><span class="nx">OR</span> <span class="nx">IsDefined</span><span class="p">(</span><span class="s1">&#39;url.forceAp&#39;</span><span class="p">)</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cflock</span> <span class="nx">scope</span><span class="o">=</span><span class="s2">&quot;APPLICATION&quot;</span> <span class="nx">timeout</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="nx">cfscript</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="nx">curIps</span> <span class="o">=</span> <span class="nx">queryNew</span><span class="p">(</span><span class="s2">&quot;IP&quot;</span><span class="p">);</span>
+</span><span class='line'>      <span class="nx">queryAddRow</span><span class="p">(</span><span class="nx">curIps</span><span class="p">);</span>
+</span><span class='line'>      <span class="nx">querySetCell</span><span class="p">(</span><span class="nx">curIps</span><span class="p">,</span><span class="s2">&quot;IP&quot;</span><span class="p">,</span><span class="nx">cgi</span><span class="p">.</span><span class="nx">remote_addr</span><span class="p">);</span>
+</span><span class='line'>      <span class="nx">Application</span><span class="p">.</span><span class="nx">curIps</span> <span class="o">=</span> <span class="nx">curIps</span><span class="p">;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="err">/cfscript&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cflock&gt;  </span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>GOOD code snippet:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c">&lt;!--</span><span class="o">-</span> <span class="nx">check</span> <span class="nx">condition</span> <span class="o">---&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">NOT</span> <span class="nx">isDefined</span><span class="p">(</span><span class="s1">&#39;Application.curIps&#39;</span><span class="p">)</span> <span class="nx">OR</span> <span class="nx">IsDefined</span><span class="p">(</span><span class="s1">&#39;url.forceAp&#39;</span><span class="p">)</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&gt;!---</span> <span class="nx">Use</span> <span class="nx">a</span> <span class="nx">named</span> <span class="nx">lock</span> <span class="o">---&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cflock</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;ipInitialize&quot;</span> <span class="nx">timeout</span><span class="o">=</span><span class="s2">&quot;1&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;exclusive&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="c">&lt;!--</span><span class="o">-</span> <span class="nx">check</span> <span class="nx">to</span> <span class="nx">make</span> <span class="nx">sure</span> <span class="nx">condition</span> <span class="nx">is</span> <span class="nx">still</span> <span class="kc">true</span> <span class="o">---&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">NOT</span> <span class="nx">IsDefined</span><span class="p">(</span><span class="s1">&#39;Application.curIps&#39;</span><span class="p">)</span> <span class="nx">OR</span> <span class="nx">IsDefined</span><span class="p">(</span><span class="s1">&#39;url.forceAp&#39;</span><span class="p">)</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="nx">cfscript</span><span class="o">&gt;</span>
+</span><span class='line'>         <span class="nx">curIps</span> <span class="o">=</span> <span class="nx">queryNew</span><span class="p">(</span><span class="s2">&quot;IP&quot;</span><span class="p">);</span>
+</span><span class='line'>        <span class="nx">queryAddRow</span><span class="p">(</span><span class="nx">curIps</span><span class="p">);</span>
+</span><span class='line'>        <span class="nx">querySetCell</span><span class="p">(</span><span class="nx">curIps</span><span class="p">,</span><span class="s2">&quot;IP&quot;</span><span class="p">,</span><span class="nx">cgi</span><span class="p">.</span><span class="nx">remote_addr</span><span class="p">);</span>
+</span><span class='line'>        <span class="nx">Application</span><span class="p">.</span><span class="nx">curIps</span> <span class="o">=</span> <span class="nx">curIps</span><span class="p">;</span>
+</span><span class='line'>   <span class="o">&lt;</span><span class="err">/cfscript&gt;  </span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfif&gt;  </span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cflock&gt;  </span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfif&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Another useful mention is that this seems redundant when using CFMX7 due to applicationOnStart in application.cfc unless you want to restart the application manually</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-03-15T10:19:47+11:00" pubdate data-updated="true">Mar 15<span>th</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2006/03/15/double-checked-locking//page/25/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">

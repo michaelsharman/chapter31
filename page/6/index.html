@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Server side languages are cool in that they give you a nice associative array to access URL variables. ColdFusion has the URL scope, PHP has $_GET &hellip;">
+	<meta name="description" content="I&#8217;m probably a bit behind the times with this one, but Adobe have added &#8220;BrowserLab&#8221; functionality to &#8221;preview and test your &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,63 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2009/10/30/browserlab-live-on-adobe-com/">
+		
+			BrowserLab Live on adobe.com</a>
+	</h2>
+	<div class="entry-content">
+		<p>I&#8217;m probably a bit behind the times with this one, but Adobe have added &#8220;BrowserLab&#8221; functionality to &#8221;<em>preview and test your web pages on leading browsers and operating systems - on demand</em>&#8221;.</p>
+
+<p>Seems to work like other paid services, but is free :)</p>
+
+<p><a href="https://browserlab.adobe.com/">https://browserlab.adobe.com/</a></p>
+
+<p>Available browser options (across mac and windows) include:</p>
+
+<ul>
+<li>IE 6/7/8</li>
+<li>Firefox 2/3</li>
+<li>Safari 3/4</li>
+</ul>
+
+
+<p><a href="/images/uploads/2009/10/Screen-shot-2009-10-30-at-11.58.48-AM.png"><img src="/images/uploads/2009/10/Screen-shot-2009-10-30-at-11.58.48-AM-300x166.png" alt="michaelsharman.com" /></a></p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-10-30T12:02:27+11:00" pubdate data-updated="true">Oct 30<span>th</span>, 2009</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/misc/'>Misc</a>, <a class='category' href='/categories/tools/'>Tools</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2009/10/30/browserlab-live-on-adobe-com//page/6/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -730,98 +787,6 @@ It enables us to both override the default farcry request scope variables and al
 </div>
 	
 		<div class="comments"><a href="/2009/05/28/setting-a-label-property-tip-for-farcry-5//page/6/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2008/12/13/development-configuration-tips-for-ubuntu/">
-		
-			Development Configuration Tips for Ubuntu</a>
-	</h2>
-	<div class="entry-content">
-		<p>I just setup my machine at home with Ubuntu 8.10 (desktop) which was so easy think I saved hours off the time it would normally take with Windows. So much is already installed and ready to go and with apt (or the Synaptic package manager) it&#8217;s super quick to download and install extra things things like MySQL, PHP, Apache, Java etc</p>
-
-<p>Here are some notes which helped me out when configuring some of these development tools.</p>
-
-<p>This assumes you&#8217;ve already installed Apache and MySQL, for notes on installing these I <a href="http://ubuntuexperiment.wordpress.com/2008/11/10/installing-apache-php-mysql/">found this article</a> to be a great resource.</p>
-
-<p>If you get this message when you restart Apache, &#8221;<em>Could not reliably determine the server’s fully qualified domain name, using 127.0.1.1 for ServerName</em>&#8221;, edit /etc/apache2/conf.d/fqdn and add &#8220;ServerName localhost&#8221;:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>sudo nano /etc/apache2/conf.d/fqdn</span></code></pre></td></tr></table></div></figure>
-
-
-<p><strong>Load the mod_rewrite module for Apache</strong></p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>sudo a2enmod rewrite</span></code></pre></td></tr></table></div></figure>
-
-
-<p><strong>Enable your Apache vhosts</strong></p>
-
-<p>I already had all my vhosts defined in separate <em>.conf</em> files on my windows box, so I copied them all into /etc/apache2/sites-available and setup symbolic links from my /etc/apache2/sites-enabled:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>sudo ln -s /etc/apache2/sites-available/mysite.conf /etc/apache2/sites-enabled/mysite.conf</span></code></pre></td></tr></table></div></figure>
-
-
-<p><strong>Download and install PHP</strong></p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>sudo apt-get install php5 libapache2-mod-php5</span></code></pre></td></tr></table></div></figure>
-
-
-<p><strong>PHP connector to MySQL</strong></p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>sudo apt-get install libapache2-mod-auth-mysql php5-mysql</span></code></pre></td></tr></table></div></figure>
-
-
-<p><strong>Install MySQL Administrator</strong></p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>sudo apt-get install mysql-admin</span></code></pre></td></tr></table></div></figure>
-
-
-<p><strong>Install subversion</strong></p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>sudo apt-get install subversion</span></code></pre></td></tr></table></div></figure>
-
-
-<p>I am also using <a href="http://www.poweredbypulse.com/">Pulse</a> to manage my <a href="http://www.eclipse.org/">eclipse</a> development environment so I needed Java which I got from the Synaptic Package Manager (<em>sun-java6-bin</em>). Pulse is super cool, I used the standard cfeclipse profile with the addition of the PHP PDT (for developing in PHP).</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-12-13T13:28:20+11:00" pubdate data-updated="true">Dec 13<span>th</span>, 2008</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/apache-slash-iis/'>Apache/IIS</a>, <a class='category' href='/categories/databases/'>Databases</a>, <a class='category' href='/categories/php/'>PHP</a>, <a class='category' href='/categories/svn/'>SVN</a>, <a class='category' href='/categories/ubuntu/'>Ubuntu</a>, <a class='category' href='/categories/cfeclipse/'>cfeclipse</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2008/12/13/development-configuration-tips-for-ubuntu//page/6/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

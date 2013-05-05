@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="UPDATE 16th Nov 2010: I had some issues with the import which I noted in the first code example below Today I had to import csv into a single mysql &hellip;">
+	<meta name="description" content="We recently upgraded a project which was using the Prototype JavaScript framework to use jQuery and ran into a few methods which didn&#8217;t exist &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,79 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2010/12/07/adding-prototype-methods-to-jquery/">
+		
+			Adding Prototype Methods to jQuery</a>
+	</h2>
+	<div class="entry-content">
+		<p>We recently upgraded a project which was using the Prototype JavaScript framework to use jQuery and ran into a few methods which didn&#8217;t exist in jQuery at all.</p>
+
+<p>A quick search gave us an easy solution; by adding a prototype property (not related to the Prototype framework) to String.prototype we can give every <code>string</code> in our codebase access to these methods as if they were part of the JavaScript spec (or the jQuery library).</p>
+
+<p>E.g. we wanted to add the endsWith() and startsWith() functions on any String object which basically checks a string for a suffix or prefix:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c1">// Allows jQuery to use &#39;.startsWith&#39; and &#39;.endsWith&#39; which are in the Prototype framework</span>
+</span><span class='line'><span class="kd">function</span> <span class="nx">utilityInit</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="nb">String</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">endsWith</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">suffix</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">substr</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="nx">suffix</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="o">===</span> <span class="nx">suffix</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nb">String</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">startsWith</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">prefix</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">substr</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nx">prefix</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="o">===</span> <span class="nx">prefix</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note that I wrapped these additions in a function called utilityInit() which I run on document ready&#8230;so I can access them anytime I need.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-12-07T22:41:00+11:00" pubdate data-updated="true">Dec 7<span>th</span>, 2010</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/javascript/'>Javascript</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2010/12/07/adding-prototype-methods-to-jquery//page/5/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -755,63 +828,6 @@ $ sudo ln -sf /Volumes/Learnosity/Workspaces /users/michaelsharman/Workspaces</p
 </div>
 	
 		<div class="comments"><a href="/2010/01/20/cfhttp-issues-using-local-on-max-osx//page/5/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2009/10/30/browserlab-live-on-adobe-com/">
-		
-			BrowserLab Live on adobe.com</a>
-	</h2>
-	<div class="entry-content">
-		<p>I&#8217;m probably a bit behind the times with this one, but Adobe have added &#8220;BrowserLab&#8221; functionality to &#8221;<em>preview and test your web pages on leading browsers and operating systems - on demand</em>&#8221;.</p>
-
-<p>Seems to work like other paid services, but is free :)</p>
-
-<p><a href="https://browserlab.adobe.com/">https://browserlab.adobe.com/</a></p>
-
-<p>Available browser options (across mac and windows) include:</p>
-
-<ul>
-<li>IE 6/7/8</li>
-<li>Firefox 2/3</li>
-<li>Safari 3/4</li>
-</ul>
-
-
-<p><a href="/images/uploads/2009/10/Screen-shot-2009-10-30-at-11.58.48-AM.png"><img src="/images/uploads/2009/10/Screen-shot-2009-10-30-at-11.58.48-AM-300x166.png" alt="michaelsharman.com" /></a></p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-10-30T12:02:27+11:00" pubdate data-updated="true">Oct 30<span>th</span>, 2009</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/misc/'>Misc</a>, <a class='category' href='/categories/tools/'>Tools</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2009/10/30/browserlab-live-on-adobe-com//page/5/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

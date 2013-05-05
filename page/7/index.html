@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Cross platform development and/or hosting makes for interesting times. Making sure that your entire codebase and configuration are compatible and &hellip;">
+	<meta name="description" content="I just setup my machine at home with Ubuntu 8.10 (desktop) which was so easy think I saved hours off the time it would normally take with Windows. &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,98 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/12/13/development-configuration-tips-for-ubuntu/">
+		
+			Development Configuration Tips for Ubuntu</a>
+	</h2>
+	<div class="entry-content">
+		<p>I just setup my machine at home with Ubuntu 8.10 (desktop) which was so easy think I saved hours off the time it would normally take with Windows. So much is already installed and ready to go and with apt (or the Synaptic package manager) it&#8217;s super quick to download and install extra things things like MySQL, PHP, Apache, Java etc</p>
+
+<p>Here are some notes which helped me out when configuring some of these development tools.</p>
+
+<p>This assumes you&#8217;ve already installed Apache and MySQL, for notes on installing these I <a href="http://ubuntuexperiment.wordpress.com/2008/11/10/installing-apache-php-mysql/">found this article</a> to be a great resource.</p>
+
+<p>If you get this message when you restart Apache, &#8221;<em>Could not reliably determine the server’s fully qualified domain name, using 127.0.1.1 for ServerName</em>&#8221;, edit /etc/apache2/conf.d/fqdn and add &#8220;ServerName localhost&#8221;:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sudo nano /etc/apache2/conf.d/fqdn</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>Load the mod_rewrite module for Apache</strong></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sudo a2enmod rewrite</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>Enable your Apache vhosts</strong></p>
+
+<p>I already had all my vhosts defined in separate <em>.conf</em> files on my windows box, so I copied them all into /etc/apache2/sites-available and setup symbolic links from my /etc/apache2/sites-enabled:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sudo ln -s /etc/apache2/sites-available/mysite.conf /etc/apache2/sites-enabled/mysite.conf</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>Download and install PHP</strong></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sudo apt-get install php5 libapache2-mod-php5</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>PHP connector to MySQL</strong></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sudo apt-get install libapache2-mod-auth-mysql php5-mysql</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>Install MySQL Administrator</strong></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sudo apt-get install mysql-admin</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>Install subversion</strong></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sudo apt-get install subversion</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I am also using <a href="http://www.poweredbypulse.com/">Pulse</a> to manage my <a href="http://www.eclipse.org/">eclipse</a> development environment so I needed Java which I got from the Synaptic Package Manager (<em>sun-java6-bin</em>). Pulse is super cool, I used the standard cfeclipse profile with the addition of the PHP PDT (for developing in PHP).</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-12-13T13:28:20+11:00" pubdate data-updated="true">Dec 13<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/apache-slash-iis/'>Apache/IIS</a>, <a class='category' href='/categories/databases/'>Databases</a>, <a class='category' href='/categories/php/'>PHP</a>, <a class='category' href='/categories/svn/'>SVN</a>, <a class='category' href='/categories/ubuntu/'>Ubuntu</a>, <a class='category' href='/categories/cfeclipse/'>cfeclipse</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/12/13/development-configuration-tips-for-ubuntu//page/7/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -971,108 +1063,6 @@
 </div>
 	
 		<div class="comments"><a href="/2008/11/12/google-releases-video-chat//page/7/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2008/11/12/var-scoping-how-and-where-do-you-set-your-function-variables/">
-		
-			Var Scoping - How and Where Do You Set Your Function Variables?</a>
-	</h2>
-	<div class="entry-content">
-		<p>As everybody knows you should var scope ALL local function variables inside ColdFusion components, and these variables must be declared at the top of your function before any other code. If you place other code above a &#8220;var&#8221; scoped variable in your method signature an exception will be thrown.</p>
-
-<p>Depending on how you define you methods this will probably be fine, but I got to thinking recently on how this works with exception handling within your function, specifically for try/catch blocks.</p>
-
-<p>As you can&#8217;t add code above your var scoped variables there is no way to wrap your var scope block in a try/catch block. With this being the case you <em>may</em> have problems if an exception is thrown when you var scope a local variable.</p>
-
-<p>An example of what I&#8217;m talking about:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cffunction</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;getWorkSchedule&quot;</span> <span class="nx">access</span><span class="o">=</span><span class="s2">&quot;public&quot;</span> <span class="nx">returntype</span><span class="o">=</span><span class="s2">&quot;query&quot;</span><span class="o">&gt;</span>  
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfset</span> <span class="kd">var</span> <span class="nx">oUser</span> <span class="o">=</span> <span class="nx">getUserService</span><span class="p">().</span><span class="nx">getUser</span><span class="p">()</span> <span class="o">/&gt;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cftry</span><span class="o">&gt;</span>
-</span><span class='line'>      <span class="p">...</span>
-</span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfcatch</span><span class="o">&gt;</span>
-</span><span class='line'>      <span class="o">&lt;</span><span class="err">/cfcatch&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cftry&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/cffunction&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>In the fictional example shown above we have a method which returns a users work schedule, the first thing done is retrieving an instance of <em>User</em> from the <em>UserService</em>. As this has been set at the same time we var scope our variable (oUser), what happens if the call to <em>getUserService().getUser()</em> throws an exception? The exception would bubble up to the calling template (the template that called getWorkSchedule()) which might be fine but might also be unexpected.</p>
-
-<p>This is just food for thought, it may be that instead you want to define your method like:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cffunction</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;getWorkSchedule&quot;</span> <span class="nx">access</span><span class="o">=</span><span class="s2">&quot;public&quot;</span> <span class="nx">returntype</span><span class="o">=</span><span class="s2">&quot;query&quot;</span><span class="o">&gt;</span>  
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfset</span> <span class="kd">var</span> <span class="nx">oUser</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cftry</span><span class="o">&gt;</span>
-</span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">oUser</span> <span class="o">=</span> <span class="nx">getUserService</span><span class="p">().</span><span class="nx">getUser</span><span class="p">()</span> <span class="o">/&gt;</span>
-</span><span class='line'>      <span class="p">...</span>
-</span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfcatch</span><span class="o">&gt;</span>
-</span><span class='line'>      <span class="o">&lt;</span><span class="err">/cfcatch&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cftry&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/cffunction&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Here we take the approach of always declaring our local variables as empty strings or integers etc (simple values) <strong>before</strong> setting explicit values into them. This means all your variables are cleanly defined and you can catch any possible exceptions if you need to inside the try/catch.</p>
-
-<p>The only is that is feels like a bit of double handling because I need to <cfset> my variables twice&#8230;</p>
-
-<p>How do other people handle this? Lend me your thoughts :)</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-11-12T11:40:34+11:00" pubdate data-updated="true">Nov 12<span>th</span>, 2008</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2008/11/12/var-scoping-how-and-where-do-you-set-your-function-variables//page/7/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 
