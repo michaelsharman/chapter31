@@ -4,7 +4,7 @@
   <title><![CDATA[chapter31 &raquo;]]></title>
   <link href="http://chapter31.com/atom.xml" rel="self"/>
   <link href="http://chapter31.com/"/>
-  <updated>2013-05-06T09:51:56+10:00</updated>
+  <updated>2013-05-06T22:55:56+10:00</updated>
   <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
@@ -473,6 +473,42 @@ is unable to kill the command, which is left hanging in a zombie state to be eve
 <p>There&#8217;s a tonne of information there. You&#8217;ll find generic things like number of lines of code, percentage of comments in the codebase etc. But you&#8217;ll also potentially get a lot of violations. Think of linting etc, style of coding conventions and the like. The JavaScript quality control plugin in particular is pretty opinionated so your mileage may vary as to the usefulness of sonar.</p>
 
 <p>It&#8217;s a fantastic tool, so keep exploring :)</p>
+
+<h2>Update 6th May 2013</h2>
+
+<h3>Excluding files</h3>
+
+<p>If you want to exclude certain files that are included in your <em>sonar.sources</em> property you can use wildcard matches. Note that although you <em>can</em> do this in the web console, that would be persisted in the local datastore but not in any project version control. I recommend putting this exclusion property in your sonar-project.properties file.</p>
+
+<p>So, if you wanted to include everything in the <em>scripts</em> directory except the <em>vendor</em> folder:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sonar.sources<span class="o">=</span>www/scripts
+</span><span class='line'>sonar.exclusions<span class="o">=</span>www/scripts/vendor/**/*.js
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Out of memory errors</h3>
+
+<p>If <em>sonar-runner</em> is parsing a large codebase you might get an error like the following:</p>
+
+<pre><code>Caused by: java.util.concurrent.ExecutionException: java.lang.OutOfMemoryError: Java heap space
+</code></pre>
+
+<p>Note: you can get more verbose output from the runner by adding the <em>e</em> flag:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sonar-runner -e
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can increase the Java heap size by running the following:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">export </span><span class="nv">SONAR_RUNNER_OPTS</span><span class="o">=</span><span class="s2">&quot;-Xmx512m -XX:MaxPermSize=512m&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
 ]]></content>
   </entry>
   
