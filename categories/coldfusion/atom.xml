@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ColdFusion | chapter31 &raquo;]]></title>
   <link href="http://chapter31.com/categories/coldfusion/atom.xml" rel="self"/>
   <link href="http://chapter31.com/"/>
-  <updated>2013-05-06T22:59:39+10:00</updated>
+  <updated>2013-05-08T10:55:07+10:00</updated>
   <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
@@ -12,97 +12,6 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
-  
-  <entry>
-    <title type="html"><![CDATA[Showing hidden files in Finder on mac osx]]></title>
-    <link href="http://chapter31.com/2013/01/21/showing-hidden-files-in-finder-on-mac-osx/"/>
-    <updated>2013-01-21T22:37:37+11:00</updated>
-    <id>http://chapter31.com/2013/01/21/showing-hidden-files-in-finder-on-mac-osx</id>
-    <content type="html"><![CDATA[<p>Short and sweet, MAC OSX has this annoying trait where hidden files (dotfiles) are not visible by default in Finder. No probs, I'll just go to the "View" menu and turn them on. Nope...nada, zip.</p>
-
-<p>Turns out you have to enter a command in the terminal, nice. Here it is for future reference:</p>
-
-<p><code>
-defaults write com.apple.finder AppleShowAllFiles TRUE
-</code></p>
-
-<p>Then kill Finder to have the changes take effect.</p>
-
-<p><code>
-killall Finder
-</code></p>
-
-<p>If you ever want to turn hidden files off?</p>
-
-<p><code>
-defaults write com.apple.finder AppleShowAllFiles FALSE
-</code></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Downloading youtube videos]]></title>
-    <link href="http://chapter31.com/2013/01/01/downloading-youtube-videos/"/>
-    <updated>2013-01-01T13:48:27+11:00</updated>
-    <id>http://chapter31.com/2013/01/01/downloading-youtube-videos</id>
-    <content type="html"><![CDATA[<p>I wanted to grab some youtube videos for the kids and found this cool <a href="http://rg3.github.com/youtube-dl/">CLI utility called youtube-dl</a> to handle it. I downloaded it from the website (you may need to chmod 755):
-<code>
-wget https://github.com/downloads/rg3/youtube-dl/youtube-dl -O /usr/local/bin/youtube-dl
-</code></p>
-
-<p>However you can get it via brew if you want:
-<code>
-brew install youtube-dl
-</code></p>
-
-<p>The basic process is the following:
-<code>
-youtube-dl [video URL]
-</code></p>
-
-<p>By default that should download the highest quality format available (in case you didn't know, youtube usually has multiple versions of a file for different qualities etc). If you want to see what formats are available, try:
-<code>
-youtube-dl -F [URL]
-</code></p>
-
-<p>For example:
-<code>bash
-youtube-dl -F http://www.youtube.com/watch?v=iThX9rbOqXY
-[youtube] Setting language
-[youtube] iThX9rbOqXY: Downloading video webpage
-[youtube] iThX9rbOqXY: Downloading video info webpage
-[youtube] iThX9rbOqXY: Extracting video information
-Available formats:
-34 : flv [360x640]
-18 : mp4 [360x640]
-43 : webm [360x640]
-5 : flv [240x400]
-17 : mp4 [144x176]
-</code></p>
-
-<p>Then you can select whichever you want to download by choosing the number next to the format you want:
-<code>
-youtube-dl -f [format number] [URL]
-</code></p>
-
-<p>So if I wanted the highest quality mp4 available in the example above I'd  type (note the number corresponds to the video I want) the following, note the lowercase f:
-<code>
-youtube-dl -f 18 http://www.youtube.com/watch?v=iThX9rbOqXY
-</code></p>
-
-<p>You can also pass in a file containing a list of URLs (one on ea to handle batch downloading:
-<code>
-youtube-dl -a urls.txt
-</code></p>
-
-<p>If you want to rename the file as you download it (by default it's the filename on youtube which isn't really that useful):
-<code>
-youtube-dl -f 18 -o "myfilename.mp4" [URL]
-</code></p>
-
-<p>You can do other cool things like extracting the audio only (and choosing which audio format you want). There are also <a href="http://rg3.github.com/youtube-dl/documentation.html#d4">LOTS of sites</a> that are supported...not just youtube.</p>
-]]></content>
-  </entry>
   
   <entry>
     <title type="html"><![CDATA[Generating a powerset in ColdFusion]]></title>
@@ -275,6 +184,106 @@ return ( !variables.framework.disableReloadApplication &amp;&amp;
 <p>Although we could have extended framework.cfc with our own file (and just defined these 2 methods), we just altered the original framework.cfc as we store a local copy in source control that all our projects can draw from.</p>
 
 <p><a href="https://github.com/michaelsharman/fw1">Here is the fork of FW/1</a> (really just a change to framework.cfc), version 2.0.1.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Adding a mail server to a Railo instance]]></title>
+    <link href="http://chapter31.com/2012/09/26/adding-a-mail-server-to-a-railo-instance/"/>
+    <updated>2012-09-26T22:04:00+10:00</updated>
+    <id>http://chapter31.com/2012/09/26/adding-a-mail-server-to-a-railo-instance</id>
+    <content type="html"><![CDATA[<p>We turn off all GUI based administration consoles in our production environments, this includes Railo's admin area.</p>
+
+<p>If you need to configure your Railo instance to include an SMTP server, you can add a line in WEB-INF/railo/railo-web.xml.cfm</p>
+
+<p>Open up that file (probably as sudo), look for the <mail> tag (which is empty by default) and insert the following:</p>
+
+<p><code>
+&lt;server port="25" smtp="127.0.0.1" /&gt;
+</code></p>
+
+<p>The "smtp" attribute should be the IP address of your SMTP server. Also, if your SMTP server requires a username and password, you can add them like so:</p>
+
+<p><code>
+&lt;server port="25" smtp="127.0.0.1" username="myusername" password="mypassword" /&gt;
+</code></p>
+
+<p>At the end of the day your config entry should look something like:</p>
+
+<p><code>
+&lt;mail log="{railo-web}/logs/mail.log"&gt;
+  &lt;server port="25" smtp="127.0.0.1"/&gt;
+&lt;/mail&gt;
+</code></p>
+
+<h2>Update - January 2013</h2>
+
+<p>I was googling something else when I came across a post on the Railo groups indicating that by default only <em>error</em> logging is enabled for mail. This means that in the event of an error (where Railo is unable to send the mail) you can check the WEB-INF/railo/logs/mail.log for information.</p>
+
+<p>However, you can turn on <em>info</em> logging as well to presumably track whenever mail is actually sent. This can be done in either railo-server.xml or railo-web.xml. Eg:</p>
+
+<p><code>
+&lt;mail log-level="info" log="{railo-web}/logs/mail.log"&gt;
+  &lt;server port="25" smtp="127.0.0.1"/&gt;
+&lt;/mail&gt;
+</code></p>
+
+<p>This is really handy for us as we disallow access to the Railo admin GUI.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Whitespace issues in cfscript based functions]]></title>
+    <link href="http://chapter31.com/2012/09/20/whitespace-issues-in-cfscript-based-functions/"/>
+    <updated>2012-09-20T17:28:08+10:00</updated>
+    <id>http://chapter31.com/2012/09/20/whitespace-issues-in-cfscript-based-functions</id>
+    <content type="html"><![CDATA[<p>Ok now we all know that ColdFusion is kind of lame when it comes to whitespace management, unless you specifically have "whitespace management" turned on for your server.</p>
+
+<p>I have a function that is used to build the <em>href</em> value of a hyperlink. Nothing special there. However when I viewed the source of the page I was a little surprised to see a mountain of whitespace coming back from the function.</p>
+
+<p>All I do is return a string from the function, I don't output any text from within the function.</p>
+
+<p>Here it is:</p>
+
+<p><code>javascript
+public string function getFullPageURI(required string pagename)
+{
+  var pages = new lib.services.pages();
+  var page = pages.getPageByNavURL(arguments.pagename, getId());
+  return page.getPageURI();
+}
+</code></p>
+
+<p>And the link source:</p>
+
+<p><img src="/images/uploads/2012/09/Screen-shot-2012-09-20-at-5.24.32-PM.png" alt="" /></p>
+
+<p>Hmm, could that suck any more? Now what happens if I add output="false" (not particularly intuitive) to the end of the function, like this:</p>
+
+<p><code>javascript
+public string function getFullPageURI(required string pagename) output="false"
+{
+  var pages = new lib.services.pages();
+  var page = pages.getPageByNavURL(arguments.pagename, getId());
+  return page.getPageURI();
+}
+</code></p>
+
+<p>Now I get:</p>
+
+<p><img src="/images/uploads/2012/09/Screen-shot-2012-09-20-at-5.25.54-PM.png" alt="" /></p>
+
+<p>Sorry but that's just insane. cfscript should behave like cfsilent all the time unless you specify a writeOutput();</p>
+
+<p>Hope this helps any other people out there. The lesson learned is that you can specify output="false" in a cfscript based function, but ONLY AFTER THE METHOD SIGNATAURE!</p>
+
+<p>So if you did this:</p>
+
+<p><code>javascript
+public string output="false" function getFullPageURI(required string pagename)
+</code></p>
+
+<p>If would fail. It needs to occur after the parens.</p>
 ]]></content>
   </entry>
   

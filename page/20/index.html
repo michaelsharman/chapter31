@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="ColdFusion hosting (shared) certainly isn&#8217;t as ubiquitous as say PHP, but there are some well known hosting providers that you can use &hellip;">
+	<meta name="description" content="Currently I&#8217;m building an app which will accept metadata from different sources, translate that into an API to dynamically build an HTML form &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,62 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2006/11/09/reserved-characters-in-html-id-attribute/">
+		
+			Reserved Characters in HTML &#8216;Id&#8217; Attribute</a>
+	</h2>
+	<div class="entry-content">
+		<p>Currently I&#8217;m building an app which will accept metadata from different sources, translate that into an API to dynamically build an HTML form from. Everything is going just dandy until my page stopped validating (I use tidy to validate my markup) when I got the following warning:</p>
+
+<p><img src="/images/uploads/2006/11/id_warning.gif" alt="id_warning.gif" /></p>
+
+<p>After some digging I discovered that the value of the &#8216;id&#8217; attribute in not simply a string which you can put anything into. I found this on w3c:</p>
+
+<blockquote><p>ID and NAME tokens must begin with a letter ([A-Za-z]) and may be followed by any number of letters, digits ([0-9]), hyphens (&#8220;-&#8220;), underscores (&#8220;_&#8221;), colons (&#8220;:&#8221;), and periods (&#8220;.&#8221;).</p></blockquote>
+
+<p>A simple replace got me around the solution:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sMyString.replaceAll("/", "_");</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Luckily this was a quick fix and a lesson learned! <a href="http://www.w3.org/TR/html4/types.html">Click here to view the w3c resource</a>.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-11-09T17:22:59+11:00" pubdate data-updated="true">Nov 9<span>th</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/x-html/'>(X)HTML</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2006/11/09/reserved-characters-in-html-id-attribute//page/20/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -653,86 +709,6 @@ html comment (used with xml files)</p>
 </div>
 	
 		<div class="comments"><a href="/2006/10/19/varscoper-10-has-been-released//page/20/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2006/10/17/making-coldfusion-sleep/">
-		
-			Making ColdFusion Sleep</a>
-	</h2>
-	<div class="entry-content">
-		<p>Often times you want the server to pause execution of a page, or go to sleep for a short while. You may be waiting for a file to be written to the file system etc.</p>
-
-<p>You can do achieve this in the following fashion:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">createObject</span><span class="p">(</span><span class="s1">&#39;java&#39;</span><span class="p">,</span> <span class="s1">&#39;java.lang.Thread&#39;</span><span class="p">).</span><span class="nx">sleep</span><span class="p">(</span><span class="mi">5000</span><span class="p">)</span> <span class="o">/&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The example above makes the server call &#8220;sleep&#8221; for 5 seconds.</p>
-
-<p>Ryan Duckworth states:</p>
-
-<blockquote><p>&#8220;A java thread (which ColdFusion code is converted to) is doing a NOP (no operation) procedure during a java Sleep command which causes no inefficiency. The multi-processing nature of the CPU handles this functionality for you and will use those CPU cycles with other requests during the sleep.&#8221;</p></blockquote>
-
-<p>Note that I usually have this in a Utility component with lots of functions I can call when needed. For example:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cffunction</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;sleep&quot;</span> <span class="nx">access</span><span class="o">=</span><span class="s2">&quot;public&quot;</span> <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="nx">returntype</span><span class="o">=</span><span class="s2">&quot;void&quot;</span> <span class="nx">hint</span><span class="o">=</span><span class="s2">&quot;Leverages Java&#39;s sleep() function&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>   <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;timeToSleep&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;numeric&quot;</span> <span class="nx">required</span><span class="o">=</span><span class="s2">&quot;true&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'>
-</span><span class='line'>   <span class="o">&lt;</span><span class="nx">cfscript</span><span class="o">&gt;</span>
-</span><span class='line'>      <span class="nx">createObject</span><span class="p">(</span><span class="s2">&quot;java&quot;</span><span class="p">,</span> <span class="s2">&quot;java.lang.Thread&quot;</span><span class="p">).</span><span class="nx">sleep</span><span class="p">(</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">timeToSleep</span><span class="p">);</span>    <span class="c1">//sleep time in milliseconds</span>
-</span><span class='line'>      <span class="k">return</span><span class="p">;</span>
-</span><span class='line'>   <span class="o">&lt;</span><span class="err">/cfscript&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/cffunction&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>So then I can call application.utility.sleep(1000);</p>
-
-<p>:)</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2006-10-17T23:29:00+10:00" pubdate data-updated="true">Oct 17<span>th</span>, 2006</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2006/10/17/making-coldfusion-sleep//page/20/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: git | chapter31 &raquo;]]></title>
   <link href="http://chapter31.com/categories/git/atom.xml" rel="self"/>
   <link href="http://chapter31.com/"/>
-  <updated>2013-05-06T22:59:39+10:00</updated>
+  <updated>2013-05-08T10:55:07+10:00</updated>
   <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
@@ -12,6 +12,85 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Migrating from bitbucket to github]]></title>
+    <link href="http://chapter31.com/2013/05/08/migrating-from-bitbucket-to-github/"/>
+    <updated>2013-05-08T10:31:00+10:00</updated>
+    <id>http://chapter31.com/2013/05/08/migrating-from-bitbucket-to-github</id>
+    <content type="html"><![CDATA[<p>Migrating repositories between <a href="https://bitbucket.org/">bitbucket</a> and <a href="http://github.com">github</a> couldn't be simpler thanks to the design nature of <acronym title="Distrubuted Version Control System">DVCS</acronym> like git because the entire history is already located on your machine within your projects <em>.git</em> folder. All you're really doing is changing a <em>remote</em>.</p>
+
+<p>Open a terminal and navigate to your project directory.</p>
+
+<h2>TLDR;</h2>
+
+<p>For those who just want the commands with no explanation</p>
+
+<p><code>bash
+git remote rename origin bitbucket
+git remote add origin git@github.com:[username]/[repo_name].git
+git push -u origin master
+git remote rm bitbucket
+</code></p>
+
+<h2>Explanation of steps</h2>
+
+<p>Check which remote(s) you have now:</p>
+
+<p><code>bash
+$ git remote -v show
+origin  git@bitbucket.org:[username]/[repo_name].git (fetch)
+origin  git@bitbucket.org:[username]/[repo_name].git (push)
+</code></p>
+
+<p>Now rename your existing <em>origin</em> to <em>bitbucket</em> (or whatever you want to call it):</p>
+
+<p><code>bash
+git remote rename origin bitbucket
+</code></p>
+
+<p> Double check your change:</p>
+
+<p><code>bash
+$ git remote -v show
+bitbucket   git@bitbucket.org:[username]/[repo_name].git (fetch)
+bitbucket   git@bitbucket.org:[username]/[repo_name].git (push)
+</code></p>
+
+<p>Now add github as your <em>origin</em> and push the repository:</p>
+
+<p><code>bash
+git remote add origin git@github.com:[username]/[repo_name].git
+git push -u origin master
+</code></p>
+
+<p>Check what remotes you have:</p>
+
+<p><code>bash
+$ git remote -v show
+bitbucket   git@bitbucket.org:[username]/[repo_name].git (fetch)
+bitbucket   git@bitbucket.org:[username]/[repo_name].git (push)
+origin  git@github.com:[username]/[repo_name].git (fetch)
+origin  git@github.com:[username]/[repo_name].git (push)
+</code></p>
+
+<p>Removed the old remote (<em>bitbucket</em>):</p>
+
+<p><code>bash
+git remote rm bitbucket
+</code></p>
+
+<p>Finally, check your remotes:</p>
+
+<p><code>bash
+$ git remote -v show
+origin  git@github.com:[username]/[repo_name].git (fetch)
+origin  git@github.com:[username]/[repo_name].git (push)
+</code></p>
+
+<p>Note that at the end of this, you still have your code on bitbucket, you've just pushed your repository to github and pointed your <em>origin</em> remote to there. To fully <em>clean up</em> you need to delete your repo from bitbucket.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Adding a global ignore file for git]]></title>

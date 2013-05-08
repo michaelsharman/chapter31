@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Download and extract the PHP source from php.net, for me that was 5.4.14. Put it somewhere friendly, the desktop will do. Open a terminal and &hellip;">
+	<meta name="description" content="Migrating repositories between bitbucket and github couldn&#8217;t be simpler thanks to the design nature of DVCS like git because the entire &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,140 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2013/05/08/migrating-from-bitbucket-to-github/">
+		
+			Migrating From Bitbucket to Github</a>
+	</h2>
+	<div class="entry-content">
+		<p>Migrating repositories between <a href="https://bitbucket.org/">bitbucket</a> and <a href="http://github.com">github</a> couldn&#8217;t be simpler thanks to the design nature of <acronym title="Distrubuted Version Control System">DVCS</acronym> like git because the entire history is already located on your machine within your projects <em>.git</em> folder. All you&#8217;re really doing is changing a <em>remote</em>.</p>
+
+<p>Open a terminal and navigate to your project directory.</p>
+
+<h2>TLDR;</h2>
+
+<p>For those who just want the commands with no explanation</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>git remote rename origin bitbucket
+</span><span class='line'>git remote add origin git@github.com:<span class="o">[</span>username<span class="o">]</span>/<span class="o">[</span>repo_name<span class="o">]</span>.git
+</span><span class='line'>git push -u origin master
+</span><span class='line'>git remote rm bitbucket
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Explanation of steps</h2>
+
+<p>Check which remote(s) you have now:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git remote -v show
+</span><span class='line'>origin    git@bitbucket.org:<span class="o">[</span>username<span class="o">]</span>/<span class="o">[</span>repo_name<span class="o">]</span>.git <span class="o">(</span>fetch<span class="o">)</span>
+</span><span class='line'>origin    git@bitbucket.org:<span class="o">[</span>username<span class="o">]</span>/<span class="o">[</span>repo_name<span class="o">]</span>.git <span class="o">(</span>push<span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now rename your existing <em>origin</em> to <em>bitbucket</em> (or whatever you want to call it):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>git remote rename origin bitbucket
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p> Double check your change:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git remote -v show
+</span><span class='line'>bitbucket git@bitbucket.org:<span class="o">[</span>username<span class="o">]</span>/<span class="o">[</span>repo_name<span class="o">]</span>.git <span class="o">(</span>fetch<span class="o">)</span>
+</span><span class='line'>bitbucket git@bitbucket.org:<span class="o">[</span>username<span class="o">]</span>/<span class="o">[</span>repo_name<span class="o">]</span>.git <span class="o">(</span>push<span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now add github as your <em>origin</em> and push the repository:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>git remote add origin git@github.com:<span class="o">[</span>username<span class="o">]</span>/<span class="o">[</span>repo_name<span class="o">]</span>.git
+</span><span class='line'>git push -u origin master
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Check what remotes you have:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git remote -v show
+</span><span class='line'>bitbucket git@bitbucket.org:<span class="o">[</span>username<span class="o">]</span>/<span class="o">[</span>repo_name<span class="o">]</span>.git <span class="o">(</span>fetch<span class="o">)</span>
+</span><span class='line'>bitbucket git@bitbucket.org:<span class="o">[</span>username<span class="o">]</span>/<span class="o">[</span>repo_name<span class="o">]</span>.git <span class="o">(</span>push<span class="o">)</span>
+</span><span class='line'>origin    git@github.com:<span class="o">[</span>username<span class="o">]</span>/<span class="o">[</span>repo_name<span class="o">]</span>.git <span class="o">(</span>fetch<span class="o">)</span>
+</span><span class='line'>origin    git@github.com:<span class="o">[</span>username<span class="o">]</span>/<span class="o">[</span>repo_name<span class="o">]</span>.git <span class="o">(</span>push<span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Removed the old remote (<em>bitbucket</em>):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>git remote rm bitbucket
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Finally, check your remotes:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git remote -v show
+</span><span class='line'>origin    git@github.com:<span class="o">[</span>username<span class="o">]</span>/<span class="o">[</span>repo_name<span class="o">]</span>.git <span class="o">(</span>fetch<span class="o">)</span>
+</span><span class='line'>origin    git@github.com:<span class="o">[</span>username<span class="o">]</span>/<span class="o">[</span>repo_name<span class="o">]</span>.git <span class="o">(</span>push<span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note that at the end of this, you still have your code on bitbucket, you&#8217;ve just pushed your repository to github and pointed your <em>origin</em> remote to there. To fully <em>clean up</em> you need to delete your repo from bitbucket.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-08T10:31:00+10:00" pubdate data-updated="true">May 8<span>th</span>, 2013</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/git/'>git</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2013/05/08/migrating-from-bitbucket-to-github//index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -888,10 +1022,6 @@ is unable to kill the command, which is left hanging in a zombie state to be eve
 <time datetime="2013-01-21T22:37:37+11:00" pubdate data-updated="true">Jan 21<span>st</span>, 2013</time></div>
 	<div class="tags">
 
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
 </div>
 	
 		<div class="comments"><a href="/2013/01/21/showing-hidden-files-in-finder-on-mac-osx//index.html#disqus_thread">Comments</a></div>
@@ -1008,10 +1138,6 @@ is unable to kill the command, which is left hanging in a zombie state to be eve
 
 <time datetime="2013-01-01T13:48:27+11:00" pubdate data-updated="true">Jan 1<span>st</span>, 2013</time></div>
 	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
 
 </div>
 	
@@ -1224,104 +1350,6 @@ Select #3 had 8192* possible combinations</p>
 </div>
 	
 		<div class="comments"><a href="/2012/10/04/generating-a-powerset-in-coldfusion//index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2012/09/30/modifying-fw1-variables-framework-properties/">
-		
-			Modifying FW/1 variables.framework Properties</a>
-	</h2>
-	<div class="entry-content">
-		<p><a href="https://github.com/seancorfield/fw1/">FW/1</a> gives you a nice, clean way to manage framework configuration properties. They&#8217;re all wrapped up inside Application.cfc in a structure called <em>variables.framework</em>, <a href="https://github.com/seancorfield/fw1/wiki/Developing-Applications-Manual">you can read more about them here</a> under <em>Configuring FW/1 Applications</em>.</p>
-
-<p><a href="http://www.learnosity.com">Our applications</a> often have a need to use different values for these properties, depending on which environment the application is running in (development, testing, staging, production etc). An example of this might be <em>reloadApplicationOnEveryRequest</em>, which we want as <em>true</em> in development, but <em>false</em> elsewhere else.</p>
-
-<p>So our defaults (at the top of Application.cfc) might be to set the reload property as false:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">variables</span><span class="p">.</span><span class="nx">framework</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class='line'>  <span class="nx">reloadApplicationOnEveryRequest</span> <span class="o">=</span> <span class="kc">false</span><span class="p">,</span>
-</span><span class='line'>  <span class="nx">disableReloadApplication</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">...</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>These are good values for production, but we want to override them if we&#8217;re in development. Here&#8217;s how:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="cm">/**</span>
-</span><span class='line'><span class="cm">* @hint We need to override variables.framework values, only way to do this is pre-fw/1 onRequestStart() as setupRequest() is called later in the call stack</span>
-</span><span class='line'><span class="cm">**/</span>
-</span><span class='line'><span class="kr">public</span> <span class="nx">any</span> <span class="kd">function</span> <span class="nx">onRequestStart</span><span class="p">(</span><span class="nx">string</span> <span class="nx">targetPath</span><span class="p">)</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="nx">isDefined</span><span class="p">(</span><span class="s2">&quot;application.config.mode&quot;</span><span class="p">))</span>
-</span><span class='line'>  <span class="p">{</span>
-</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="nx">application</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">mode</span> <span class="o">==</span> <span class="s2">&quot;dev&quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">{</span>
-</span><span class='line'>      <span class="nx">variables</span><span class="p">.</span><span class="nx">framework</span><span class="p">.</span><span class="nx">reloadApplicationOnEveryRequest</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
-</span><span class='line'>      <span class="nx">variables</span><span class="p">.</span><span class="nx">framework</span><span class="p">.</span><span class="nx">disableReloadApplication</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="kr">super</span><span class="p">.</span><span class="nx">onRequestStart</span><span class="p">(</span><span class="nx">targetPath</span><span class="p">);</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>You can see in the example above that we override the default values we set initially, so that if we&#8217;re in <em>development</em> mode we not only <a href="http://www.chapter31.com/2012/09/27/preventing-fw1-from-reinitialising-an-app-via-the-url/">have the ability to reload the application (using a custom property called <em>disableReloadApplication</em>)</a>, but we also reload the application on every request.</p>
-
-<p>2 things to note here, are that we can&#8217;t use setupRequest() for this, as it&#8217;s called too late by framework.cfc and won&#8217;t enable us to override any <em>variables.framework</em> properties. So instead we use onRequestStart(), which gives us the 2nd thing to watch out for, and that is that you must be careful to call super.onRequestStart(targetPath); at the conclusion of this method. Or you might get strange results.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-09-30T16:54:59+10:00" pubdate data-updated="true">Sep 30<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2012/09/30/modifying-fw1-variables-framework-properties//index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

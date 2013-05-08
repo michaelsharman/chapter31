@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="For those that use gtalk/gmail, google have finally caught up and released voice and video chat. They even help you buy a webcam! Nov 12th, 2008 &hellip;">
+	<meta name="description" content="I&#8217;ve been bitten by the &#8220;forgetting to add &#8221; when importing ColdFusion custom tags before. If you also have then you know what I &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,72 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/11/15/forgot-to-import-your-coldfusion-tag-libraries/">
+		
+			Forgot to Import Your ColdFusion Tag Libraries?</a>
+	</h2>
+	<div class="entry-content">
+		<p>I&#8217;ve been bitten by the &#8220;forgetting to add <cfimport>&#8221; when importing ColdFusion custom tags before. If you also have then you know what I mean and have shared the frustration&#8230;basically your custom tag does nothing but you get no error from ColdFusion, nada, zip! Depending on the scenario this can lead to some wasted hair pulling time!</p>
+
+<p>The reason is of course that the syntax to import custom tags is perfectly valid XML which is ignored by ColdFusion server because you forgot to add <cfimport> tag. As such the output goes straight to the browser which treats it as markup&#8230;markup which it knows nothing about therefore it ignores it and you have no idea why your server side script isn&#8217;t doing anything :(</p>
+
+<p>Well today I saw a brilliantly simple solution by the newest <a href="http://www.daemon.com.au/">Daemonite</a> <a href="http://robrohan.com/">Rob Rohan</a>.</p>
+
+<p>From <a href="http://groups.google.com/group/farcry-dev/browse_thread/thread/e6ada060cd04c91b?hl=en">Rob&#8217;s post</a> on the farcry-dev mailing list:</p>
+
+<blockquote><p>however, since the &lt;skin:build> type tags will make it all the way to the browser, we can style the tag in the browser to alert the problem.</p>
+
+<p>I threw together a quick CSS file that you can include into your  project style sheet that will draw attention to the error. Just add this to your site style sheet:</p>
+
+<p>@import url(&#8216;http://robrohan.com/farcrystuff/missingTag.css&#8217;);</p>
+
+<p>Or download the css file and put it where you want. That will style any FarCry taglib with block, red so you can spot the mistake right off.</p></blockquote>
+
+<p>While this tip is fantastic and easily flexible for use in any ColdFusion project, keep in mind that in its current state it will only be of use for FarCry developers.</p>
+
+<p><strong>Also note</strong> that the custom tag syntax (e.g. &lt;skin:buildlink>) will only make its way to the browser (as part of the html source to be parsed by the css) if it&#8217;s inside <cfoutput> tags. If not then you&#8217;ll have the same problem as before where you&#8217;re tags are doing nothing, you&#8217;re not getting an error from ColdFusion AND the css won&#8217;t style anything because the xml tags aren&#8217;t in the source code :(</p>
+
+<p>Here is a screen shot of the css in action, as you can see it&#8217;s hard to miss your mistake!</p>
+
+<p><a href="/images/uploads/2008/11/cfimport_css.jpg"><img src="/images/uploads/2008/11/cfimport_css-300x92.jpg" alt="" /></a></p>
+
+<p>Many thanks to Rob for the tip, here is the <a href="http://robrohan.com/farcrystuff/missingTag.css">link to his css</a>.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-11-15T20:55:58+11:00" pubdate data-updated="true">Nov 15<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/farcry/'>Farcry</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/11/15/forgot-to-import-your-coldfusion-tag-libraries//page/8/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -826,58 +892,6 @@ Import FLVs from your computer - including h.264 encoded videos, browse categori
 </div>
 	
 		<div class="comments"><a href="/2008/09/04/mooflair-on-adobes-top-10-list//page/8/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2008/09/02/google-chrome-google-entering-the-browser-market/">
-		
-			Google Chrome - Google Entering the Browser Market</a>
-	</h2>
-	<div class="entry-content">
-		<p>Yep, <a href="http://googleblog.blogspot.com/2008/09/fresh-take-on-browser.html">Google have entered the browser market</a> with Google Chrome.</p>
-
-<p>Although the press release was sent a little early, you can read an interesting comic book (PDF) <a href="http://books.google.com/books?id=8UsqHohwwVYC&amp;printsec=frontcover">here</a> with some quite technical details on the ins and outs of Google&#8217;s newest <strike>plan for world domination</strike> philanthropic effort.</p>
-
-<p>Webkit is the rendering engine, and the V8 team have created an entirely new JavaScript Virtual Machine to help make this browser super quick and stable. Google have also gone to great efforts to make Chrome a secure browser to use.</p>
-
-<p>Have a read of the <a href="http://books.google.com/books?id=8UsqHohwwVYC&amp;printsec=frontcover">comic</a>, lots of picture book info there (which makes it easy to digest) :)</p>
-
-<p>Currently &#8216;Chrome&#8217; is availabe as a Windows Beta, but importantly the entire code is open source :)</p>
-
-<p>Will be interesting to see how this pans out with the current &#8220;browser wars&#8221; between IE and Firefox. Hopefully it will help push web standards and raise the bar for all browsers.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-09-02T12:36:09+10:00" pubdate data-updated="true">Sep 2<span>nd</span>, 2008</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/misc/'>Misc</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2008/09/02/google-chrome-google-entering-the-browser-market//page/8/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

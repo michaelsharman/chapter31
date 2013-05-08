@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Javascript is pretty cool and I&#8217;ll admit that I don&#8217;t get to do as much as I&#8217;d like with it. Today I&#8217;m going to briefly &hellip;">
+	<meta name="description" content="Roger Johansson wrote a nice article on why web standards still matter. He notes that recently there has been an increased level of interest and &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,88 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2006/10/03/web-standards-rooting-for-the-underdog/">
+		
+			Web Standards - Rooting for the Underdog</a>
+	</h2>
+	<div class="entry-content">
+		<p>Roger Johansson wrote a nice article on <a href="http://www.thinkvitamin.com/features/design/why-standards-still-matter">why web standards still matter</a>. He notes that recently there has been an increased level of interest and activity around web standards, but those that do strive for excellence in their code (i.e. web standards) are in the extreme minority.</p>
+
+<p>I would tend to agree with this, take his example:</p>
+
+<blockquote><p>I encourage anyone who thinks we do not need yet another article or book on Web standards, CSS, accessibility, graceful degradation, progressive enhancement, or anything else related to best practices, to take a quick look around you.</p>
+
+<p>Go on, examine some of the work produced by Web agencies and IT consultancies in your town, city, or country. Look at the work of your colleagues and competitors. Would you say that the people working there have nothing left to learn? That they would not benefit from reading an article that explains how to replace their old school Web design techniques with modern, accessible, and search engine friendly methods? Did the sites you just examined really use valid, semantic markup and have no accessibility problems? Really? Wow. You must live in a very small place, with your place of employment being the only company in the Web business.&#8221;</p></blockquote>
+
+<p>Exactly!</p>
+
+<p>Back in the day it was a given that programmers knew HTML&#8230;you didn&#8217;t really even have to ask. &#8220;Oh of course I know HTML!&#8221;. Well that day is over I&#8217;d say. In this era being an HTML programmer is a serious skillset which needs constant updating, much like any &#8216;server side&#8217; language. With different browsers, operating systems, screen resolutions, user agents among the obstacles any self respecting web developer should be keeping at the forefront of their (front end) development; it&#8217;s no wonder that being an HTML programmer is hard enough.</p>
+
+<p>Which leads me to think about server side developers (whether that be ASP.NET, J2EE, ColdFusion, PHP, Ruby etc) and the skill level (or lack thereof) they posses when dealing with (X)HTML/CSS. Roger&#8217;s point of a peer code review is interesting, I don&#8217;t know many &#8216;back end&#8217; developers who can (or even care about) write clean, semantic front end code which conforms to at least some web standards.</p>
+
+<p>With the landmark case <a href="http://news.com.com/Blind+patrons+sue+Target+for+site+inaccessibility/2100-1030_3-6038123.html?tag=nefd.top">going against Target in the US</a>, hopefully some more mid to large scale projects (and their relevant IT managers) will take note and seriously look at standards. Although the case in point (Target) was about accessibility, to me it all comes under the banner of web standards.</p>
+
+<p>So what are YOU doing about web standards? Are you:</p>
+
+<ul>
+<li>Using the web developer toolbar?
+
+<ul>
+<li><a href="https://addons.mozilla.org/firefox/60/">Firefox</a></li>
+<li><a href="http://www.microsoft.com/downloads/details.aspx?familyid=e59c3964-672d-4511-bb3e-2d5e1db91038&amp;displaylang=en">Internet Explorer</a></li>
+<li><a href="http://operawiki.info/WebDevToolbar">Opera</a></li>
+</ul>
+</li>
+<li>Validating your pages?
+
+<ul>
+<li><a href="http://validator.w3.org/">HTML</a></li>
+<li><a href="http://jigsaw.w3.org/css-validator/">CSS</a></li>
+<li><a href="http://www.contentquality.com/">Accessibility</a></li>
+</ul>
+</li>
+</ul>
+
+
+<p><a href="http://www.browsercam.com/">BrowserCam</a> is another great tool for checking your site in different combinations of browser/operating system.</p>
+
+<p>Another nice little article by Tantek Çelik on <a href="http://tantek.com/log/2006/07.html#d27t1218">8 steps to serving better (X)HTML</a></p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-10-03T09:20:23+10:00" pubdate data-updated="true">Oct 3<span>rd</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/x-html/'>(X)HTML</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2006/10/03/web-standards-rooting-for-the-underdog//page/22/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -921,105 +1003,6 @@
 </div>
 	
 		<div class="comments"><a href="/2006/09/09/html-strip//page/22/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2006/09/07/cfc-bean-generators/">
-		
-			CFC Bean Generators</a>
-	</h2>
-	<div class="entry-content">
-		<p>There are a few Bean generators around for ColdFusion which can save you a lot if time and effort when you need to create your CFC Beans, here are a few making the rounds.</p>
-
-<p><a href="http://www.jonathanblock.com/Members/admin/ColdFusionBeanCreator">Jonathan Block</a></p>
-
-<p>A more advanced generator which creates init() and validate() functions for you. For the picky developers out there you might want to tidy things up a bit. Example the ‘set’ in the init() misses a space at the end of the <cfset></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">setFirstName</span><span class="p">(</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">FirstName</span><span class="p">)</span><span class="o">/&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>also when declaring your instance (inside the init()) the reference to a new struct is in capitals</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">variables</span><span class="p">.</span><span class="nx">instance</span> <span class="o">=</span> <span class="nx">STRUCTNEW</span><span class="p">()</span> <span class="o">/&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><a href="http://www.doughughes.net/includes/beans/">Doug Hughes</a></p>
-
-<p>I like this one a lot for simple beans. It’s extremely easy to use and generates fast, clean code in (X)HTML style syntax.</p>
-
-<p><a href="http://www.feed-squirrel.com/index.cfm?evt=viewItem&amp;ID=4358">Francis Scott</a></p>
-
-<p>This one is pretty cool and is one of my favourites. It can generate Beans, DAO’s and Gateways FROM your database table! Nice  Simply choose your datasource, this will populate a select box with a list of tables to choose from. Choose your table, submit and voila! You have your bean complete with init() and validate() methods. Your gateway and DAO. Lovely!</p>
-
-<p>Oh and you can also <a href="http://www.franciswscott.com/downloads/cfccreator.zip">download it here</a></p>
-
-<p><a href="http://www.sparkit.biz/codegen/uml2cfc/">David Sirr</a></p>
-
-<p>Not a bad generator taking advantage of UML style syntax when entering ‘generate’ commands. This one does create an init() for you but generates with unwanted functions:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cffunction</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;doSomethingPublic&quot;</span> <span class="nx">access</span><span class="o">=</span><span class="s2">&quot;public&quot;</span> <span class="nx">returntype</span><span class="o">=</span><span class="s2">&quot;string&quot;</span> <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="nx">hint</span><span class="o">=</span><span class="s2">&quot;description&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>    <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;foo&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;numeric&quot;</span> <span class="nx">required</span><span class="o">=</span><span class="s2">&quot;true&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'>    <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;poo&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;string&quot;</span> <span class="nx">required</span><span class="o">=</span><span class="s2">&quot;true&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'>    <span class="o">&lt;</span><span class="nx">cfreturn</span> <span class="o">/&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/cffunction&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">cffunction</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;doSomethingPrivate&quot;</span> <span class="nx">access</span><span class="o">=</span><span class="s2">&quot;private&quot;</span> <span class="nx">returntype</span><span class="o">=</span><span class="s2">&quot;void&quot;</span> <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="nx">hint</span><span class="o">=</span><span class="s2">&quot;description&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/cffunction&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Also the init() validates bean creation by calling a changeBean() method, but if this fails for whatever reason you need to add your own exception handling.</p>
-
-<p><a href="http://rooibos.maestropublishing.com/">Rooibos Generator</a></p>
-
-<p>Create boilerplate beans and transfer objects for ColdFusion! Based on Jon Block’s original bean creator. This one is fantastic, probably all you’ll ever need! Peter has done a great job making life simple for us all.</p>
-
-<p>Easy to use it even can create Transfer Objects (TO) for you! Of course there are init() and validate() methods as well as dump() and tools to create, get and set your TO’s all in super clean code. Niiiiice</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2006-09-07T10:55:28+10:00" pubdate data-updated="true">Sep 7<span>th</span>, 2006</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2006/09/07/cfc-bean-generators//page/22/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 
