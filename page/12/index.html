@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Yesterday I posted on a handy MySQL feature where you can combine an INSERT and UPDATE on a record in the one statement. Someone asked about the &hellip;">
+	<meta name="description" content="Setting up &#8220;externals&#8221; with subversion can assist you when you want to load external libraries into an existing project. You may have a &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,77 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/05/22/setting-up-svnexternals-with-subclipse/">
+		
+			Setting Up Svn:externals With Subclipse</a>
+	</h2>
+	<div class="entry-content">
+		<p>Setting up &#8220;externals&#8221; with subversion can assist you when you want to load external libraries into an existing project.</p>
+
+<p>You may have a JavaScript validation framework which you re-use amongst many projects. Of course you don&#8217;t want to copy and paste the code into every project, what would happen then if you wanted to upgrade the codebase?</p>
+
+<p>Using subclipse (in the Eclipse IDE) you can link a separate svn repository in the middle of your project by adding an <em>svn:externals</em> property. Right click the parent directory you want to import the external repository into and choose &#8220;Team -> Set Property&#8221;</p>
+
+<p><a href="/images/uploads/2008/05/cfeclipse-svnproperties.png"><img src="/images/uploads/2008/05/cfeclipse-svnproperties-281x300.png" alt="" /></a></p>
+
+<p>Once you load the properties dialog window you need to add the following into the property field:</p>
+
+<p>svn:externals</p>
+
+<p>Then in the property content box add the following:</p>
+
+<p>[yourLibraryName] -r98 [url to repo]</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">e</span><span class="p">.</span><span class="nx">g</span><span class="p">.</span> <span class="nx">jquery</span><span class="o">-</span><span class="nx">validation</span> <span class="o">-</span><span class="nx">r98</span> <span class="nx">https</span><span class="o">:</span><span class="c1">//myhome.com/svn/repos/jquery-validation/trunk</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="/images/uploads/2008/05/screenshot-set-a-svn-property.png"><img src="/images/uploads/2008/05/screenshot-set-a-svn-property-300x233.png" alt="" /></a></p>
+
+<p>In the above example a directory called &#8220;jquery-validation&#8221; will be created with the contents of the repository located at &#8220;https://myhome.com/svn/repos/jquery-validation/trunk&#8221;.</p>
+
+<p>The &#8220;-r98&#8221; is the revision number of the external library you want to add. This is important because it means you can link to a snapshot of the library and not simply the trunk (which would mean you couldn&#8217;t control the updates to the library).</p>
+
+<p>Once that is done simply update your project and it will import your external codebase into your project.</p>
+
+<p>Thanks to <a href="http://www.lynchconsulting.com.au/">Mark</a> for showing me syntax for this one :)</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-05-22T17:30:43+10:00" pubdate data-updated="true">May 22<span>nd</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/svn/'>SVN</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/05/22/setting-up-svnexternals-with-subclipse//page/12/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -886,113 +957,6 @@ Avg: 529</p>
 </div>
 	
 		<div class="comments"><a href="/2008/03/22/update-for-java-6//page/12/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2008/03/21/random-database-results-with-coldfusion/">
-		
-			Random Database Results With ColdFusion</a>
-	</h2>
-	<div class="entry-content">
-		<p>Today I was looking at <a href="http://www.chapter31.com/2008/03/21/returning-random-results-with-mysql/">returning random records purely from MySQL</a> but was limited with large tables in getting all random results (not just a random starting seed).</p>
-
-<p>I tried a ColdFusion solution instead.</p>
-
-<p>First get all the primary keys from the table in question and create an array of the values (this works for numeric and non-numeric keys):</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfquery</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;qGetPKs&quot;</span> <span class="nx">datasource</span><span class="o">=</span><span class="s2">&quot;dsn&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="nx">SELECT</span>      <span class="nx">Id</span>
-</span><span class='line'>  <span class="nx">FROM</span>        <span class="nx">myTable</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/cfquery&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">aIds</span> <span class="o">=</span> <span class="nx">listToArray</span><span class="p">(</span><span class="nx">valueList</span><span class="p">(</span><span class="nx">qGetPKs</span><span class="p">.</span><span class="nx">Id</span><span class="p">))</span> <span class="o">/&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Next create a list of random primary keys from our array:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">numberOfRows</span> <span class="o">=</span> <span class="mi">20</span> <span class="o">/&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">ids</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">cfloop</span> <span class="nx">from</span><span class="o">=</span><span class="s2">&quot;1&quot;</span> <span class="nx">to</span><span class="o">=</span><span class="s2">&quot;#numberOfRows#&quot;</span> <span class="nx">index</span><span class="o">=</span><span class="s2">&quot;i&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">ids</span> <span class="o">=</span> <span class="nx">listAppend</span><span class="p">(</span><span class="nx">ids</span><span class="p">,</span> <span class="nx">aIds</span><span class="p">[</span><span class="nx">randRange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nx">arrayLen</span><span class="p">(</span><span class="nx">aIds</span><span class="p">))])</span> <span class="o">/&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/cfloop&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>With smaller tables you may need to do this step a little differently in case the randRange() returns duplicate Ids.</p>
-
-<p>Finally we pass the list of random primary keys to the WHERE clause via cfqueryparam:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfquery</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;q&quot;</span> <span class="nx">datasource</span><span class="o">=</span><span class="s2">&quot;dsn&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="nx">SELECT</span>      <span class="o">*</span>
-</span><span class='line'>  <span class="nx">FROM</span>        <span class="nx">myTable</span>
-</span><span class='line'>  <span class="nx">WHERE</span>       <span class="nx">Id</span> <span class="nx">IN</span><span class="p">(</span><span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">list</span><span class="o">=</span><span class="s2">&quot;true&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#ids#&quot;</span><span class="o">&gt;</span><span class="p">)</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/cfquery&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Depending on your situation you can cache the array of primary keys (in session or application scope) and refresh the list whenever your database changes. Then generate your random list of Id&#8217;s to pass to a query.</p>
-
-<p>Without caching the list array (and using a table with 56,000 rows) I got the following times from the entire block of code (including getting the Id list):</p>
-
-<p><img src="/images/uploads/2008/03/cftimer.jpg" alt="cftimer" /></p>
-
-<p>When I cached the array in application scope, cftimer was giving me 0ms :)</p>
-
-<p><img src="/images/uploads/2008/03/cftimer_2.jpg" alt="cftimer2" /></p>
-
-<p>This was of course on my local machine. Although these results could be more accurate in a proper environment, they do show another solution in retrieving random query results.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-03-21T14:58:45+11:00" pubdate data-updated="true">Mar 21<span>st</span>, 2008</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/databases/'>Databases</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2008/03/21/random-database-results-with-coldfusion//page/12/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

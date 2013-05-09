@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Selecting random query results is something we often need to do, whether it be a single row or a small record set. You may want to display a random &hellip;">
+	<meta name="description" content="Today I was looking at returning random records purely from MySQL but was limited with large tables in getting all random results (not just a random &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,113 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/03/21/random-database-results-with-coldfusion/">
+		
+			Random Database Results With ColdFusion</a>
+	</h2>
+	<div class="entry-content">
+		<p>Today I was looking at <a href="http://www.chapter31.com/2008/03/21/returning-random-results-with-mysql/">returning random records purely from MySQL</a> but was limited with large tables in getting all random results (not just a random starting seed).</p>
+
+<p>I tried a ColdFusion solution instead.</p>
+
+<p>First get all the primary keys from the table in question and create an array of the values (this works for numeric and non-numeric keys):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfquery</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;qGetPKs&quot;</span> <span class="nx">datasource</span><span class="o">=</span><span class="s2">&quot;dsn&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="nx">SELECT</span>      <span class="nx">Id</span>
+</span><span class='line'>  <span class="nx">FROM</span>        <span class="nx">myTable</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfquery&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">aIds</span> <span class="o">=</span> <span class="nx">listToArray</span><span class="p">(</span><span class="nx">valueList</span><span class="p">(</span><span class="nx">qGetPKs</span><span class="p">.</span><span class="nx">Id</span><span class="p">))</span> <span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Next create a list of random primary keys from our array:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">numberOfRows</span> <span class="o">=</span> <span class="mi">20</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">ids</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfloop</span> <span class="nx">from</span><span class="o">=</span><span class="s2">&quot;1&quot;</span> <span class="nx">to</span><span class="o">=</span><span class="s2">&quot;#numberOfRows#&quot;</span> <span class="nx">index</span><span class="o">=</span><span class="s2">&quot;i&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">ids</span> <span class="o">=</span> <span class="nx">listAppend</span><span class="p">(</span><span class="nx">ids</span><span class="p">,</span> <span class="nx">aIds</span><span class="p">[</span><span class="nx">randRange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nx">arrayLen</span><span class="p">(</span><span class="nx">aIds</span><span class="p">))])</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfloop&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>With smaller tables you may need to do this step a little differently in case the randRange() returns duplicate Ids.</p>
+
+<p>Finally we pass the list of random primary keys to the WHERE clause via cfqueryparam:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfquery</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;q&quot;</span> <span class="nx">datasource</span><span class="o">=</span><span class="s2">&quot;dsn&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="nx">SELECT</span>      <span class="o">*</span>
+</span><span class='line'>  <span class="nx">FROM</span>        <span class="nx">myTable</span>
+</span><span class='line'>  <span class="nx">WHERE</span>       <span class="nx">Id</span> <span class="nx">IN</span><span class="p">(</span><span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">list</span><span class="o">=</span><span class="s2">&quot;true&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#ids#&quot;</span><span class="o">&gt;</span><span class="p">)</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfquery&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Depending on your situation you can cache the array of primary keys (in session or application scope) and refresh the list whenever your database changes. Then generate your random list of Id&#8217;s to pass to a query.</p>
+
+<p>Without caching the list array (and using a table with 56,000 rows) I got the following times from the entire block of code (including getting the Id list):</p>
+
+<p><img src="/images/uploads/2008/03/cftimer.jpg" alt="cftimer" /></p>
+
+<p>When I cached the array in application scope, cftimer was giving me 0ms :)</p>
+
+<p><img src="/images/uploads/2008/03/cftimer_2.jpg" alt="cftimer2" /></p>
+
+<p>This was of course on my local machine. Although these results could be more accurate in a proper environment, they do show another solution in retrieving random query results.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-03-21T14:58:45+11:00" pubdate data-updated="true">Mar 21<span>st</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/databases/'>Databases</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/03/21/random-database-results-with-coldfusion//page/13/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -787,66 +894,6 @@
 </div>
 	
 		<div class="comments"><a href="/2008/02/28/cant-access-shared-music-with-rhythmbox-ubuntu//page/13/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2008/02/28/changing-the-cfeclipse-tag-insight-delay-time/">
-		
-			Changing the Cfeclipse &#8216;Tag Insight&#8217; Delay Time</a>
-	</h2>
-	<div class="entry-content">
-		<p>Having &#8216;tag insight&#8217; is a great part of any IDE, one which almost every developer takes advantage of irrespective of which editor they use. Tag insight of course being when your IDE provides information (attribute or return information etc) about the tag or function you are currently typing.</p>
-
-<p>Normally when writing a function or tag like <cfhttp>, when you hit the space bar and wait a second a little popup appears detailing exactly what you can do with this tag.</p>
-
-<p><a href="/images/uploads/2008/02/cfhttp_insight.jpg"><img src="/images/uploads/2008/02/cfhttp_insight.thumbnail.jpg" alt="cfhttp tag insight" /></a></p>
-
-<p>Now this is all lovely except I find that the <em>default time</em> it takes for this to appear (which is 500ms in cfeclipse) is just a little too short for me so that it is more annoying than helpful as it constantly appears when I don&#8217;t want it to (like after pasting some code it pops up to display all local variables etc).</p>
-
-<p><a href="/images/uploads/2008/02/taginsight.jpg"><img src="/images/uploads/2008/02/taginsight.thumbnail.jpg" alt="tag insight" /></a></p>
-
-<p>Luckily it&#8217;s a snap to change these little things :)</p>
-
-<p>Window -> Preferences -> CFEclipse -> Editor</p>
-
-<p><a href="/images/uploads/2008/02/preferences.jpg"><img src="/images/uploads/2008/02/preferences.thumbnail.jpg" alt="cfeclipse preferences" /></a></p>
-
-<p>Then change the <em>Insight Delay</em> value. I now have 1500 which is working nicely.</p>
-
-<p>Don&#8217;t forget if this is too slow for you (when you actually DO want the tag insight and you find yourself waiting for it) then you can simply hit ctrl + space to launch the tag insight immediately.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-02-28T11:56:02+11:00" pubdate data-updated="true">Feb 28<span>th</span>, 2008</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/cfeclipse/'>cfeclipse</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2008/02/28/changing-the-cfeclipse-tag-insight-delay-time//page/13/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

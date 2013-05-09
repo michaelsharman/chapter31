@@ -93,10 +93,7 @@
 
 <p>From <a href="http://superuser.com/a/20708">superuser.com</a>:</p>
 
-<pre><code>This behaviour stems from the lack of a controlling terminal for the running process.
-When the remote process does not have a controlling terminal, the remote ssh process handling your session
-is unable to kill the command, which is left hanging in a zombie state to be eventually cleaned up by init.
-</code></pre>
+<blockquote><p>This behaviour stems from the lack of a controlling terminal for the running process. When the remote process does not have a controlling terminal, the remote ssh process handling your session is unable to kill the command, which is left hanging in a zombie state to be eventually cleaned up by init.</p></blockquote>
 
 <p>So although the process on the remote server(s) will eventually be cleaned up, it&#8217;s not great to leave a lot of zombie processes lying around. And you certainly don&#8217;t want to logon to every server and <em>ps ax</em> to kill them. Crazy.</p>
 

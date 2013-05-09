@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="I&#8217;ve been bitten by the &#8220;forgetting to add &#8221; when importing ColdFusion custom tags before. If you also have then you know what I &hellip;">
+	<meta name="description" content="We&#8217;ve been doing some debugging of a 3rd party application recently where we had some possible performance concerns under a certain load and/ &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,99 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/11/19/logging-all-mysql-queries-on-mac-osx/">
+		
+			Logging All MySQL Queries on Mac OSX</a>
+	</h2>
+	<div class="entry-content">
+		<p><a href="http://www.lynchconsulting.com.au/go/blog">We&#8217;ve</a> been doing some debugging of a 3rd party application recently where we had some possible performance concerns under a certain load and/or size of data in the database. What we wanted to know was exactly which queries (and how many) where hitting the database on a specific page request.</p>
+
+<p>The simplest method was to turn on logging of all queries on the local MySQL database, this is turned off by default as like most debugging techniques it adds overhead. To do this I needed to make a small change in the config file and restart MySQL. However it seems that a Mac installation of MySQL doesn&#8217;t create this config file by default which is a little confusing.</p>
+
+<p>Here are the steps taken to turn on logging of all queries:</p>
+
+<p><strong>Create a &#8220;my.cnf&#8221; file (if it doesn&#8217;t already exist)</strong></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sudo touch /etc/my.cnf</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>Add an entry to my.cnf telling MySQL where to write the log entries</strong></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[mysqld]
+</span><span class='line'>log=/var/log/mysqld.log</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>Create the log file</strong></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sudo touch /var/log/mysqld.log</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>Restart MySQL</strong></p>
+
+<p>To view the logs simply open mysqld.log in your favourite editor, or you can tail it in the terminal:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>tail -f /var/log/mysqld.log</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is a really handy way to see all the database traffic from your application. We also use MySQL Adminstrator to <a href="http://www.chapter31.com/2008/02/21/using-mysql-administrator-to-view-real-time-stats/">view some real-time stats</a> in terms of the total number of queries being executed.</p>
+
+<p>Remember once you&#8217;ve finished your debugging to turn logging off in my.cnf, I just comment it out (with a #) and restart MySQL:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="err">#</span><span class="p">[</span><span class="nx">mysqld</span><span class="p">]</span>
+</span><span class='line'><span class="err">#</span><span class="nx">log</span><span class="o">=</span><span class="err">/var/log/mysqld.log</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>Note:</strong> An easy way to check if you do have a my.cnf file is to open up <a href="http://dev.mysql.com/downloads/gui-tools/5.0.html">MySQL Administrator</a> and click the &#8220;Options&#8221; tab. If you get an alert saying &#8220;Configuration File not Found&#8221; then you know you need to go and create one!</p>
+
+<p><a href="/images/uploads/2008/11/picture-11.png"><img src="/images/uploads/2008/11/picture-11-300x132.png" alt="" /></a></p>
+
+<p>Once you have a my.cnf file you have access to the wide array of config options all from MySQL Administrator:</p>
+
+<p><a href="/images/uploads/2008/11/picture-3.png"><img src="/images/uploads/2008/11/picture-3-300x204.png" alt="" /></a></p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-11-19T23:19:00+11:00" pubdate data-updated="true">Nov 19<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/databases/'>Databases</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/11/19/logging-all-mysql-queries-on-mac-osx//page/8/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -827,71 +920,6 @@
 </div>
 	
 		<div class="comments"><a href="/2008/10/14/generaterandomkey-udf-with-several-handy-options//page/8/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2008/09/04/mooflair-on-adobes-top-10-list/">
-		
-			mooFlair on Adobe&#8217;s Top 10 List</a>
-	</h2>
-	<div class="entry-content">
-		<p>Areez Gangji has just posted on <a href="http://www.adobe.com/devnet/">Adobe devnet</a> an article listing the &#8221;<a href="http://www.adobe.com/devnet/flex/articles/apps_students.html">Top 10 Adobe Flex and AIR applications for students</a>&#8221;.</p>
-
-<p>I&#8217;m very proud to say that a good friend (and fellow <a href="http://www.daemon.com.au/">Daemon</a> alumni) <a href="http://mxbase.blogspot.com/">Patrick Tai</a> has an app on their called <a href="http://mooflair.com/">mooFlair</a> which he originally built for the AIR derby.</p>
-
-<p>What is mooFlair?</p>
-
-<blockquote><p>A desktop application that helps you to manage and watch both online and offline FLVs videos. More than a simple flv player, build your own FLV library and save your compilations in playlists.
-Import FLVs from your computer - including h.264 encoded videos, browse categorised RSS Feeds or search directly from the most popular video content providers and add new video clips to your searchable library. If you need to watch all your videos off line, simply use the download option.</p></blockquote>
-
-<p>Rss feeds and search are available for the following content providers:</p>
-
-<ul>
-<li>YouTube</li>
-<li>BlipTv</li>
-<li>Dailymotion</li>
-<li>Metacafe</li>
-<li>5min Life Videopedia</li>
-<li>SpikedHumour</li>
-</ul>
-
-
-<p>I&#8217;ve been using mooFlair for a while now and it&#8217;s fantastic. Check it out, there&#8217;s even an <a href="http://mooflair.com/demo/index.html">online demo</a> to try :)</p>
-
-<p><a href="http://mooflair.com/"><img src="/images/uploads/2008/09/screenshotnew.jpg" alt="" /></a></p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-09-04T08:33:59+10:00" pubdate data-updated="true">Sep 4<span>th</span>, 2008</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/air/'>AIR</a>, <a class='category' href='/categories/flex/'>Flex</a>, <a class='category' href='/categories/tools/'>Tools</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2008/09/04/mooflair-on-adobes-top-10-list//page/8/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

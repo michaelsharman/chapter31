@@ -3,11 +3,11 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Date timezone error when upgrading to PHP 5.3+ - chapter31 &raquo;</title>
+	<title>iOS 6 caching POST requests - chapter31 &raquo;</title>
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="I upgraded to 5.4.14 last night on Mac OSX 10.8.3. Things went smoothly except I got an error running my apps: date(): It is not safe to rely on the &hellip;">
+	<meta name="description" content="Apparently I&#8217;ve been living under a rock, never having been bitten (that I know of) by the pretty massive bug Apple rolled out in iOS 6 (with &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,38 +81,59 @@
 
 	
 	<div id="content" class="inner"><article class="post">
-	<h2 class="title">Date Timezone Error When Upgrading to PHP 5.3+</h2>
-	<div class="entry-content"><p>I upgraded to 5.4.14 last night on Mac OSX 10.8.3. Things went smoothly except I got an error running my apps:</p>
+	<h2 class="title">iOS 6 Caching POST Requests</h2>
+	<div class="entry-content"><p>Apparently I&#8217;ve been living under a rock, never having been bitten (that I know of) by the pretty massive bug Apple rolled out in iOS 6 (with Safari). The bug has been well documented around the interwebs, basically Safari caches HTTP POST requests. If you haven&#8217;t heard about this&#8230;stop and read that last bit again.</p>
 
-<blockquote><p>date(): It is not safe to rely on the system&#8217;s timezone settings. You are <em>required</em> to use the date.timezone setting or the date_default_timezone_set() function. In case you used any of those methods and you are still getting this warning, you most likely misspelled the timezone identifier. We selected the timezone &#8216;UTC&#8217; for now, but please set date.timezone to select your timezone.</p></blockquote>
+<p>Now, replicating this bug is dependent on the payload of the POST not changing between requests, so in many circumstances you may be fine. However let&#8217;s talk about something like a simple login form.</p>
 
-<p>Basically since PHP 5.3.0 you have to explicitly set your date.timezone setting, this is a good thing. Prior to PHP 5.3.0, the line existed in the php.ini but was generally commented out. There are 2 places you could make this change.</p>
+<ul>
+<li>User enters credentials in web form and clicks &#8220;Login&#8221;</li>
+<li>App/site POSTs data to the server for authentication</li>
+<li>Server authenticates request</li>
+<li>200 OK is returned, and a session is spawned on the server</li>
+</ul>
 
-<ol>
-<li>php.ini</li>
-<li>in your application codebase</li>
-</ol>
+
+<p>Pretty standard workflow. Now what happens if the session expires and the user is presented with the login form again?</p>
+
+<ul>
+<li>User enters credentials in web form and clicks &#8220;Login&#8221;</li>
+<li>App/site POSTs data to the server for authentication</li>
+<li>The request is cached because the users data (credentials) are the same as before</li>
+</ul>
 
 
-<p>Ideally you&#8217;d do both. Have a default in your php.ini that all applications on the server can use, and you can override if needed in your application.</p>
+<p>So in this scenario the request never actually gets sent to the server.  Your app/site is now broken, the user cannot login. This sort of issue can of course have huge consequences for any number of websites/applications.</p>
 
-<h2>php.ini</h2>
+<p>It&#8217;s worth noting that the <a href="http://www.faqs.org/rfcs/rfc2616.html">HTTP/1.1 RFC</a> states (thanks <a href="http://stackoverflow.com/a/626083/1448058">Diomidis Spinellis</a>):</p>
 
-<p>Look in your <em>php.ini</em> for the date.timezone setting and uncomment if necessary. For me I set it to &#8220;Australia/NSW&#8221;. You can get a full list of <a href="http://us3.php.net/manual/en/timezones.php">supported timezones here</a></p>
+<blockquote><p>Responses to this method are not cacheable, unless the response includes appropriate Cache-Control or Expires header fields.</p></blockquote>
+
+<p>and:</p>
+
+<blockquote><p>Some HTTP methods MUST cause a cache to invalidate an entity. This is either the entity referred to by the Request-URI, or by the Location or Content-Location headers (if present). These methods are:</p>
+
+<ul>
+<li>PUT</li>
+<li>DELETE</li>
+<li>POST</li>
+</ul>
+</blockquote>
+
+<h2>Solution</h2>
+
+<p>People have listed fixes like jQuery&#8217;s <em>{cache: false}</em> in the ajax params, to adding a random token to your payload. These methods seem a intrusive to me though as you need to change every form on every page in every app. So we went for a different approach, a simple Apache rule in your conf:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="x">date.timezone = &quot;Australia/NSW&quot;</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>&lt;Limit POST&gt;
+</span><span class='line'>  Header <span class="nb">set </span>Cache-Control no-cache
+</span><span class='line'>&lt;/Limit&gt;
 </span></code></pre></td></tr></table></div></figure>
 
 
-<h2>Application codebase</h2>
-
-<p>The method above, of course is a server default, so if you want something specific to your application, try:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="x">date_default_timezone_set(&quot;Australia/NSW&quot;);</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<p>All that&#8217;s saying is, if the incoming request is using the HTTP POST method, set a <em>no-cache</em> header. Nice and simple. Note that <em>mod_headers</em> needs to be enabled in Apache for this to work.</p>
 </div>
 
 
@@ -129,16 +150,16 @@
   
 
 
-<time datetime="2013-05-06T09:03:00+10:00" pubdate data-updated="true">May 6<span>th</span>, 2013</time></div>
+<time datetime="2013-05-09T14:28:00+10:00" pubdate data-updated="true">May 9<span>th</span>, 2013</time></div>
 	<div class="tags">
 
 
-	<a class='category' href='/categories/php/'>PHP</a>
+	<a class='category' href='/categories/apache/'>apache</a>, <a class='category' href='/categories/apple/'>apple</a>
 
 
 </div>
 	
-		<div class="comments"><a href="/2013/05/06/date-timezone-error-when-upgrading-to-php-5-dot-3-plus/#disqus_thread">Comments</a></div>
+		<div class="comments"><a href="/2013/05/09/ios-6-caching-post-requests/#disqus_thread">Comments</a></div>
 	
 </div></article>
 
@@ -179,8 +200,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://chapter31.com/2013/05/06/date-timezone-error-when-upgrading-to-php-5-dot-3-plus/';
-        var disqus_url = 'http://chapter31.com/2013/05/06/date-timezone-error-when-upgrading-to-php-5-dot-3-plus/';
+        var disqus_identifier = 'http://chapter31.com/2013/05/09/ios-6-caching-post-requests/';
+        var disqus_url = 'http://chapter31.com/2013/05/09/ios-6-caching-post-requests/';
         var disqus_script = 'embed.js';
       
     (function () {
