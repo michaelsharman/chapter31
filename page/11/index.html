@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="The guys at Daemon have been busy of late. With the conference just barely over I just noticed they&#8217;ve found the time to launch a new site at &hellip;">
+	<meta name="description" content="Have you ever pasted code you are working on to a colleague over IM or even email for some help or an opinion? Then you would benefit from using &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,72 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/06/28/pastebin-perfect-for-code-collaboration/">
+		
+			Pastebin - Perfect for Code Collaboration</a>
+	</h2>
+	<div class="entry-content">
+		<p>Have you ever pasted code you are working on to a colleague over IM or even email for some help or an opinion? Then you would benefit from using <a href="http://pastebin.com/">pastebin</a> (free service) particularly if you experienced <a href="http://www.chapter31.com/2008/06/20/careful-when-copying-code-sent-from-an-im-client/">problems with code over IM</a> in the past :(</p>
+
+<p><em>&#8220;Pastebin is a tool for collaborative debugging or editing&#8221;</em></p>
+
+<p>What that means is you can paste any code into a nice big textarea on the pastebin homepage, choose your syntax highlighting (ColdFusion is available!), enter your name and hit send.</p>
+
+<p>Then you are redirected to a URL which you can copy and send to anyone else so that they may view your code.</p>
+
+<p><img src="/images/uploads/2008/06/pastebin-300x221.png" alt="" /></p>
+
+<p>The cool thing is that the other person can see your original code, but can also add their own modifications in a separate box for you to see and collaborate on.</p>
+
+<p>You can &#8220;save&#8221; your code on pastebin for a day, a month or forever which means you can always come back to it later for further review.</p>
+
+<p>One thing to note is that everyone can automatically see your posts from the pastebin homepage, if that&#8217;s not your cup of tea you can create a &#8220;private&#8221; pastebin. This will allow you to have a sub-domain (as long as it&#8217;s unique). Example, I could have <a href="http://barry.pastebin.com/">barry.pastebin.com/</a> to store all my entries.</p>
+
+<p><strong>* Note</strong>: This is NOT password protected, anyone guessing your sub-domain will have full access to your posts. It just means you can view and review posts without the rest of the &#8220;noise&#8221; of the regular network and have them all stored under a sub-domain container.</p>
+
+<p>More questions can be answered from the <a href="http://pastebin.com/pastebin.php?help=1">help page</a></p>
+
+<h3>Update</h3>
+
+<p>It goes without saying that code owners would and should never post sensitive code to a forum such as this as there is no security on the transmission to the server or on access to the site.</p>
+
+<p>There is no mention (that I can see) of copyright on pastebin, treat everything you see and post as public domain.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-06-28T12:43:29+10:00" pubdate data-updated="true">Jun 28<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/tools/'>Tools</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/06/28/pastebin-perfect-for-code-collaboration//page/11/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -692,101 +758,6 @@
 </div>
 	
 		<div class="comments"><a href="/2008/05/30/password-strength-checker//page/11/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2008/05/22/insert-delayed-with-mysql/">
-		
-			INSERT DELAYED With MySQL</a>
-	</h2>
-	<div class="entry-content">
-		<p>Yet another tip for MySQL users, <a href="http://dev.mysql.com/doc/refman/5.0/en/insert-delayed.html">INSERT DELAYED</a>.</p>
-
-<p>What does it do? Well when you execute your query MySQL will return an ok immediately to your application, and the request then gets queued to be INSERTED when the table in question is not being used by any other thread. This obviously means your application doesn&#8217;t have to sit around waiting for the INSERT to be completed which can have a positive impact on performance under load.</p>
-
-<p>Another major benefit of using INSERT DELAYED is that inserts from many clients are bundled together and written in one block. This is much faster than performing many separate inserts.</p>
-
-<p>This sounds pretty cool but there are certainly some points to consider, more from the <a href="http://dev.mysql.com/doc/refman/5.0/en/insert-delayed.html">docs</a>:</p>
-
-<ul>
-<li><p>Note that INSERT DELAYED is slower than a normal INSERT if the table is not otherwise in use. There is also the additional overhead for the server to handle a separate thread for each table for which there are delayed rows. This means that you should use INSERT DELAYED only when you are really sure that you need it.</p></li>
-<li><p>INSERT DELAYED works only with MyISAM, MEMORY, and ARCHIVE tables.</p></li>
-<li><p>Because the INSERT DELAYED statement returns immediately, before the rows are inserted, you cannot use LAST_INSERT_ID() to get the AUTO_INCREMENT value that the statement might generate.</p></li>
-<li><p>DELAYED rows are not visible to SELECT statements until they actually have been inserted.</p></li>
-</ul>
-
-
-<p>There are a few other things you should read up on from the docs, but for tables which handle things like logging these restrictions really don&#8217;t come into effect therefore this can be a great solution on mid to high traffic operations.</p>
-
-<p>We&#8217;re currently using this on one of our logging tables which gets hit a lot, I&#8217;m yet to do any significant load testing for exact numbers. But so far so good.</p>
-
-<p>Syntax is simple:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfquery</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;qLogDetails&quot;</span> <span class="nx">datasource</span><span class="o">=</span><span class="s2">&quot;#getDSN()#&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="nx">INSERT</span> <span class="nx">DELAYED</span> <span class="nx">INTO</span> <span class="nx">audit</span>
-</span><span class='line'>      <span class="p">(</span>
-</span><span class='line'>          <span class="nx">Status</span>
-</span><span class='line'>          <span class="p">,</span> <span class="nx">DateTimeCreated</span>
-</span><span class='line'>          <span class="p">,</span> <span class="nx">IPAddress</span>
-</span><span class='line'>      <span class="p">)</span>
-</span><span class='line'>  <span class="nx">VALUES</span>
-</span><span class='line'>      <span class="p">(</span>
-</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.status#&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'>          <span class="p">,</span> <span class="nx">now</span><span class="p">()</span>
-</span><span class='line'>          <span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#getUserIP()#&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'>      <span class="p">)</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/cfquery&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Thanks to Cameron Simpson, browsing his code is where I found this!</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-05-22T23:27:00+10:00" pubdate data-updated="true">May 22<span>nd</span>, 2008</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/databases/'>Databases</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2008/05/22/insert-delayed-with-mysql//page/11/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

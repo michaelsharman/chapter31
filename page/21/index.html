@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Today Mike Schierberl released his varScoper 1.0 tool for identifying variables that haven&#8217;t been locally scoped within cffunctions (whether &hellip;">
+	<meta name="description" content="These days all the rage is building web pages without tables, but has this gone too far for a lot of developers? I&#8217;m of the opinion that HTML &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,67 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2006/10/20/building-accessible-tables/">
+		
+			Building Accessible Tables</a>
+	</h2>
+	<div class="entry-content">
+		<p>These days all the rage is building web pages without tables, but has this gone too far for a lot of developers?</p>
+
+<p>I&#8217;m of the opinion that HTML tables shouldn&#8217;t be used for layout purposes and I think most would agree, if you don&#8217;t please let me know because I&#8217;d love to hear the reasoning :)</p>
+
+<p>There is however a quite valid and obvious for using tables, that being where the content contains tabular data. In this instance tables just make sense, not to mention all the tags and attributes (of which there are quite a few) that tables provide to help users using assistive technologies like screen readers. Sure I can use nested unordered lists and I can even throw in &#8216;title&#8217; attributes to describe my content. But I can&#8217;t do things that tables can do like:</p>
+
+<ul>
+<li>caption</li>
+<li>th</li>
+<li>thead, tbody and tfooter</li>
+<li>summary</li>
+<li>colspan and rowspan</li>
+<li>scope</li>
+<li>abbr</li>
+</ul>
+
+
+<p>For further information see the <a href="http://www.456bereastreet.com/archive/200410/bring_on_the_tables/">fantastic article</a> on <a href="http://www.456bereastreet.com/">456bereastreet</a> which is quite old now but still stands up.</p>
+
+<p>Also check out this <a href="http://accessify.com/tools-and-wizards/accessibility-tools/table-builder/">accessible table builder</a> to quickly and easily generate accessible table code!</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-10-20T14:37:51+10:00" pubdate data-updated="true">Oct 20<span>th</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/x-html/'>(X)HTML</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2006/10/20/building-accessible-tables//page/21/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -601,94 +662,6 @@
 </div>
 	
 		<div class="comments"><a href="/2006/10/05/broken-image-on-google-search-results-page//page/21/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2006/10/04/finding-cpu-andor-memory-leak-issues-with-coldfusion/">
-		
-			High CPU and Memory Usage in ColdFusion</a>
-	</h2>
-	<div class="entry-content">
-		<p><a href="http://carehart.org/blog/client">Charlie Arehart</a> had an extremely <a href="http://carehart.org/blog/client/index.cfm/2006/10/4/bots_and_spiders_and_poor_CF_performance">interesting article today</a> on JRun performance issues, particularly relating to high CPU cycles and memory usage.</p>
-
-<p>The perpetrators in this example were thought to be search engine spiders (or &#8216;bots&#8217;) and/or RSS feeds.</p>
-
-<p>Now bots may visit your website many times throughout the course of a single day, this could be the same bot of different bots (for different search engines). Also you may be in a situation where you have many people syndicating content from your site in the form of a feed (RSS/Atom etc).</p>
-
-<p>The problem starts to appear if you use session and/or client management (sessionmanagement=&#8221;yes&#8221; or clientmanagement=&#8221;yes&#8221;) because these mechanisms don’t store cookies. So everytime one of these processes calls one of your pages a new session/client variable etc is created. Not so much of a problem, but what happens if you have increased traffic (more feeds, more bots) and suddenly you’re creating a LOT of unwanted variables in memory. Remember though that a new ‘session’ will be create on each page request!</p>
-
-<p>But take that further, what happens if you have an onSessionStart() event which loads an object (or large amount of data) into memory? Or if you are doing database transactions? These are all needless in this example and taking up far too many resources.</p>
-
-<p>So what do you do?</p>
-
-<p><a href="http://www.blogoffusion.com/">Michael Dinowitz</a> has some good ideas which he <a href="http://www.blogoffusion.com/index.cfm/2005/11/28/pseudomemory-leak">posted last year</a>. To quote Michael:</p>
-
-<ol>
-<li>Increase your ram. If you can do this, then ramp up your memory as high as you can. This is not a perfect solution but it saves throwing time at the problem and gives you a ‘buffer’ against problems of this sort.</li>
-<li>Set a robots.txt with a Crawl-delay setting. Mine is set to 1 second but you can set yours to something higher</li>
-<li>set a different cfapplication for the most common bots. I use a simple regular expression to find key words that only exist in bots:</li>
-</ol>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&lt;</span><span class="no">CFIF</span> <span class="no">REFindNoCase</span><span class="p">(</span><span class="s1">&#39;Slurp|Googlebot|BecomeBot|msnbot|Mediapartners-Google|ZyBorg|RufusBot|EMonitor&#39;</span><span class="p">,</span> <span class="n">cgi</span><span class="o">.</span><span class="n">http_user_agent</span><span class="p">)</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="no">CFAPPLICATION</span> <span class="nb">name</span><span class="o">=</span><span class="s2">&quot;FusionA&quot;</span> <span class="n">clientmanagement</span><span class="o">=</span><span class="s2">&quot;no&quot;</span> <span class="n">sessionmanagement</span><span class="o">=</span><span class="s2">&quot;no&quot;</span> <span class="n">setclientcookies</span><span class="o">=</span><span class="s2">&quot;no&quot;</span> <span class="n">setdomaincookies</span><span class="o">=</span><span class="s2">&quot;no&quot;</span> <span class="n">clientstorage</span><span class="o">=</span><span class="s2">&quot;Cookie&quot;</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="no">CFELSE</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="no">CFAPPLICATION</span> <span class="nb">name</span><span class="o">=</span><span class="s2">&quot;FusionA&quot;</span> <span class="n">clientmanagement</span><span class="o">=</span><span class="s2">&quot;yes&quot;</span> <span class="n">sessionmanagement</span><span class="o">=</span><span class="s2">&quot;no&quot;</span> <span class="n">setclientcookies</span><span class="o">=</span><span class="s2">&quot;yes&quot;</span> <span class="n">setdomaincookies</span><span class="o">=</span><span class="s2">&quot;no&quot;</span> <span class="n">clientstorage</span><span class="o">=</span><span class="s2">&quot;Cookie&quot;</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="sr">/CFIF&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This will make sure that a client structure is NOT created for one of these bots.</p>
-
-<ol>
-<li>Use the same regex to clean out the client structure after the bot finishes the page. Use structclear(client) to remove the data in the onRequestEnd.cfm, the onRequestEnd method of the application.cfc or in the template itself.
-Bottom line is that while bots are great for indexing your content, they can cause havoc on your system when a lot of memory is assigned to what is essentially a ‘dead session’.</li>
-</ol>
-
-
-<p>All in all a fantastic read and a reminder to developers that a web sites development isn’t finished once it goes live. Post launch performance tuning and monitoring are essential to running an efficient and fast performing site.</p>
-
-<p>It does seem a little ironic that the tools meant to assist us (in search rankings and content syndication) are a possible cause of poor site performance to the point that users might leave!</p>
-
-<p>Note that Charlies article was inspired by <a href="http://www.coldfusionmuse.com/index.cfm/2005/11/28/session.bots">Mark Kruger</a> which I also suggest reading.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2006-10-04T23:29:00+10:00" pubdate data-updated="true">Oct 4<span>th</span>, 2006</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2006/10/04/finding-cpu-andor-memory-leak-issues-with-coldfusion//page/21/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

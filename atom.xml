@@ -4,7 +4,7 @@
   <title><![CDATA[chapter31 &raquo;]]></title>
   <link href="http://chapter31.com/atom.xml" rel="self"/>
   <link href="http://chapter31.com/"/>
-  <updated>2013-05-19T18:07:37+10:00</updated>
+  <updated>2013-05-22T22:26:49+10:00</updated>
   <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
@@ -12,6 +12,63 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[MySQL thread_stack overrun error]]></title>
+    <link href="http://chapter31.com/2013/05/22/mysql-thread-stack-overrun-error/"/>
+    <updated>2013-05-22T16:28:00+10:00</updated>
+    <id>http://chapter31.com/2013/05/22/mysql-thread-stack-overrun-error</id>
+    <content type="html"><![CDATA[<p>We added a trigger to MySQL (v5.5.28) recently that was a simple UPDATE on table column, when a target table was UPDATEd. It ran fine (as expected) on our development environment but not when we pushed the changes to staging.</p>
+
+<p>The error being thrown by MySQL was:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>Thread stack overrun:  8304 bytes used of a 131072 byte stack, and 128000 bytes needed.  Use <span class="s1">&#39;mysqld --thread_stack=#&#39;</span> to specify a bigger stack.
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Querying the database told me that the current <em>thread_stack</em> setting is 128K:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>mysql&gt; show variables where <span class="sb">`</span>Variable_name<span class="sb">`</span> <span class="o">=</span> <span class="s1">&#39;thread_stack&#39;</span>;
+</span><span class='line'>+---------------+--------+
+</span><span class='line'>| Variable_name | Value  |
+</span><span class='line'>+---------------+--------+
+</span><span class='line'>| thread_stack  | 131072 |
+</span><span class='line'>+---------------+--------+
+</span><span class='line'>1 row in <span class="nb">set</span> <span class="o">(</span>0.00 sec<span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This was confirmed by looking at the <em>thread_stack</em> variable in /etc/mysql/my.cnf</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">thread_stack</span> <span class="o">=</span> 128K
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The <a href="http://dev.mysql.com/doc/refman/5.5/en/server-system-variables.html#sysvar_thread_stack">docs for MySQL 5.5</a> suggest that it should be 192K for 32-bit systems and 256K for 64-bit systems. We&#8217;re running a 64-bit platform, you can tell by running:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>me@mydbserver ~<span class="o">]</span><span class="nv">$ </span>uname -m
+</span><span class='line'>x86_64
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If the response is <em>i686</em>, you have a 32-bit version of Linux and if the response is <em>x86_64</em> then you have a 64-bit version of Linux.</p>
+
+<p>The fix is a simple case of increasing the value to 256K (if you&#8217;re on 64-bit) or 192K if you&#8217;re on 32-bit, as per the documentation. Don&#8217;t forget that the thread_stack is an allocation of memory per connection, so don&#8217;t set it too high or you might run into memory issues on your database server.</p>
+
+<p>In case it wasn&#8217;t clear, you can make this change in your <em>my.cnf</em> file.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[iOS 6 caching POST requests]]></title>
@@ -1466,94 +1523,6 @@ Select #3 had 8192* possible combinations</p>
 
 
 <p><a href="http://www.jbarker.com/blog/2011/resource-interpreted-font-transferred-mime-type">See here for more information.</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Turning off sessions for non-https traffic]]></title>
-    <link href="http://chapter31.com/2012/08/06/turning-off-sessions-for-non-https-traffic/"/>
-    <updated>2012-08-06T17:05:22+10:00</updated>
-    <id>http://chapter31.com/2012/08/06/turning-off-sessions-for-non-https-traffic</id>
-    <content type="html"><![CDATA[<p>Today I wanted to configure an application to only set <em>secure</em> cookies. Those are cookies that are only sent back to the server if over a secure (https) connection.</p>
-
-<p>The main reason for this is to prevent session hijacking, where a bad guy might sniff the cookie values which links a user to the session &#8220;state&#8221; on the server. If they managed to do that, (which they could if the session was started on an <em>http://</em> connection, then if/when the user logged on and was transferred to <em>https://</em>) the bad guy would still have their cookie values and thus would be able to visit the website as the logged in user. No good. You can read more on <a href="http://www.12robots.com/index.cfm/2009/1/5/mmmmMMmmmmmmm-Cookies--Security-Series-12">Jason Dean&#8217;s great series on security</a></p>
-
-<p>Another thing to consider when it comes to securing your sessions/cookies is using <em>httpOnly</em> cookies. These are ones that reside in the browser memory, so that when you close down your browser (not just a tab, the whole browser) the cookie expires. So if somebody comes along after you and opens up a browser…they won&#8217;t access any previous logged in sessions you may have left open. Another cool thing about <em>httpOnly</em> cookies is that they can&#8217;t be read from JavaScript which helps to mitigate CSRF attacks :)</p>
-
-<p>As ColdFusion sets a new session by default upon every first visit (if you have <em>sessionManagement</em> turned on), you have a couple of options to mitigate session hijacking. One of these is <em>secure</em> cookies, ColdFusion has a few options for this (as well as <em>httpOnly</em>). <a href="http://www.12robots.com/index.cfm/2009/5/6/Making-the-JSESSIONID-Session-Token-Cookie-SECURE-and-HTTPOnly-and-settings-its-PATH">12Robots has a great page</a> with code sample on how to set these up, however I wanted to take things one step further and that was to simply turn off <em>sessionManagement</em> if NOT over SSL. This also has the benefit of not allowing bots to clog up your server RAM with sessions that your site/application just doesn&#8217;t need.</p>
-
-<p>Here is the code I used to only have session management turned on over SSL and not for traffic over port 80. Also included is the code from 12Robots to set <em>secure</em> and <em>httpOnly</em> cookies.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">component</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>  <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s2">&quot;myappname&quot;</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">this</span><span class="p">.</span><span class="nx">applicationTimeout</span> <span class="o">=</span> <span class="nx">createTimeSpan</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c1">//Get the page context to test HTTPS, if on http then DON&#39;T set sessions/cookies (for bots and security), otherwise set sessions</span>
-</span><span class='line'>  <span class="nx">currRequest</span> <span class="o">=</span> <span class="nx">getPageContext</span><span class="p">().</span><span class="nx">getRequest</span><span class="p">();</span>
-</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="nx">currRequest</span><span class="p">.</span><span class="nx">isSecure</span><span class="p">())</span>
-</span><span class='line'>  <span class="p">{</span>
-</span><span class='line'>      <span class="k">this</span><span class="p">.</span><span class="nx">sessionManagement</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
-</span><span class='line'>      <span class="k">this</span><span class="p">.</span><span class="nx">sessionTimeout</span> <span class="o">=</span> <span class="nx">createTimeSpan</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="k">else</span>
-</span><span class='line'>  <span class="p">{</span>
-</span><span class='line'>      <span class="k">this</span><span class="p">.</span><span class="nx">sessionManagement</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">this</span><span class="p">.</span><span class="nx">setClientCookies</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">this</span><span class="p">.</span><span class="nx">clientManagement</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c1">// This method only fires if this.sessionManagement = true</span>
-</span><span class='line'>  <span class="kr">public</span> <span class="k">void</span> <span class="kd">function</span> <span class="nx">onSessionStart</span><span class="p">()</span>
-</span><span class='line'>  <span class="p">{</span>
-</span><span class='line'>      <span class="kd">var</span> <span class="nx">response</span> <span class="o">=</span> <span class="nx">getPageContext</span><span class="p">().</span><span class="nx">getResponse</span><span class="p">();</span>
-</span><span class='line'>      <span class="kd">var</span> <span class="nx">path</span> <span class="o">=</span> <span class="s2">&quot;/&quot;</span><span class="p">;</span>
-</span><span class='line'>      <span class="kd">var</span> <span class="nx">domain</span> <span class="o">=</span> <span class="nx">application</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">httpsURL</span><span class="p">;</span>
-</span><span class='line'>      <span class="kd">var</span> <span class="nx">secure</span> <span class="o">=</span> <span class="s2">&quot;Secure&quot;</span><span class="p">;</span>
-</span><span class='line'>      <span class="kd">var</span> <span class="nx">HTTPOnly</span> <span class="o">=</span> <span class="s2">&quot;HTTPOnly&quot;</span><span class="p">;</span>
-</span><span class='line'>      <span class="kd">var</span> <span class="nx">header</span> <span class="o">=</span> <span class="s2">&quot;jsessionid=#session.sessionid#;domain=#domain#;path=#path#;#secure#;#HTTPOnly#&quot;</span><span class="p">;</span>
-</span><span class='line'>      <span class="nx">response</span><span class="p">.</span><span class="nx">addHeader</span><span class="p">(</span><span class="s2">&quot;Set-Cookie&quot;</span><span class="p">,</span> <span class="nx">header</span><span class="p">);</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c1">// the rest of your Application.cfc</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
 ]]></content>
   </entry>
   

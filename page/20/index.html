@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Usually when developing you have all your relevant development files contained within a central project directory, so you can of course access any &hellip;">
+	<meta name="description" content="I&#8217;ve been using Wordpress for a while now and I&#8217;m really happy with it. Only recently have I tried to validate my RSS feed using &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,64 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2006/11/15/wordpress-rss-feed-validation/">
+		
+			Wordpress RSS Feed Validation</a>
+	</h2>
+	<div class="entry-content">
+		<p>I&#8217;ve been using <a href="http://wordpress.org/">Wordpress</a> for a while now and I&#8217;m really happy with it. Only recently have I tried to validate my RSS feed using <a href="http://www.feedvalidator.org/">feedvalidator</a>.</p>
+
+<p>Unfortunately even though the feed validated I received the following warning:</p>
+
+<blockquote><p>wfw:commentRSS should be wfw:commentRss</p></blockquote>
+
+<p>The explanation given on the site was:</p>
+
+<blockquote><p>Due to a clerical error, the element Chris Sells originally spec&#8217;ed as wfw:commentRss appeared as wfw:commentRSS (note the difference in case) on Joe Gregorio&#8217;s site. At least one product (WordPress) has implemented and deployed feeds using the spelling originally present on Joe&#8217;s site.</p></blockquote>
+
+<p>And the solution:</p>
+
+<blockquote><p>Change wfw:commentRSS to wfw:commentRss</p>
+
+<p>Wordpress users can find this in the wp-rss2.php file.</p></blockquote>
+
+<p>Gotta love nice and easy fixes :)</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-11-15T09:15:29+11:00" pubdate data-updated="true">Nov 15<span>th</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/php/'>PHP</a>, <a class='category' href='/categories/uncategorised/'>Uncategorised</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2006/11/15/wordpress-rss-feed-validation//page/20/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -659,67 +717,6 @@ html comment (used with xml files)</p>
 </div>
 	
 		<div class="comments"><a href="/2006/10/22/cfeclipse-snippets//page/20/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2006/10/20/building-accessible-tables/">
-		
-			Building Accessible Tables</a>
-	</h2>
-	<div class="entry-content">
-		<p>These days all the rage is building web pages without tables, but has this gone too far for a lot of developers?</p>
-
-<p>I&#8217;m of the opinion that HTML tables shouldn&#8217;t be used for layout purposes and I think most would agree, if you don&#8217;t please let me know because I&#8217;d love to hear the reasoning :)</p>
-
-<p>There is however a quite valid and obvious for using tables, that being where the content contains tabular data. In this instance tables just make sense, not to mention all the tags and attributes (of which there are quite a few) that tables provide to help users using assistive technologies like screen readers. Sure I can use nested unordered lists and I can even throw in &#8216;title&#8217; attributes to describe my content. But I can&#8217;t do things that tables can do like:</p>
-
-<ul>
-<li>caption</li>
-<li>th</li>
-<li>thead, tbody and tfooter</li>
-<li>summary</li>
-<li>colspan and rowspan</li>
-<li>scope</li>
-<li>abbr</li>
-</ul>
-
-
-<p>For further information see the <a href="http://www.456bereastreet.com/archive/200410/bring_on_the_tables/">fantastic article</a> on <a href="http://www.456bereastreet.com/">456bereastreet</a> which is quite old now but still stands up.</p>
-
-<p>Also check out this <a href="http://accessify.com/tools-and-wizards/accessibility-tools/table-builder/">accessible table builder</a> to quickly and easily generate accessible table code!</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2006-10-20T14:37:51+10:00" pubdate data-updated="true">Oct 20<span>th</span>, 2006</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/x-html/'>(X)HTML</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2006/10/20/building-accessible-tables//page/20/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

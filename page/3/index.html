@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="svn:ignore is a great way to exclude certain files or folders from being added to your subversion repository. Typically I&#8217;ll manage this via &hellip;">
+	<meta name="description" content="Today I wanted to configure an application to only set secure cookies. Those are cookies that are only sent back to the server if over a secure ( &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,127 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2012/08/06/turning-off-sessions-for-non-https-traffic/">
+		
+			Turning Off Sessions for Non-https Traffic</a>
+	</h2>
+	<div class="entry-content">
+		<p>Today I wanted to configure an application to only set <em>secure</em> cookies. Those are cookies that are only sent back to the server if over a secure (https) connection.</p>
+
+<p>The main reason for this is to prevent session hijacking, where a bad guy might sniff the cookie values which links a user to the session &#8220;state&#8221; on the server. If they managed to do that, (which they could if the session was started on an <em>http://</em> connection, then if/when the user logged on and was transferred to <em>https://</em>) the bad guy would still have their cookie values and thus would be able to visit the website as the logged in user. No good. You can read more on <a href="http://www.12robots.com/index.cfm/2009/1/5/mmmmMMmmmmmmm-Cookies--Security-Series-12">Jason Dean&#8217;s great series on security</a></p>
+
+<p>Another thing to consider when it comes to securing your sessions/cookies is using <em>httpOnly</em> cookies. These are ones that reside in the browser memory, so that when you close down your browser (not just a tab, the whole browser) the cookie expires. So if somebody comes along after you and opens up a browser…they won&#8217;t access any previous logged in sessions you may have left open. Another cool thing about <em>httpOnly</em> cookies is that they can&#8217;t be read from JavaScript which helps to mitigate CSRF attacks :)</p>
+
+<p>As ColdFusion sets a new session by default upon every first visit (if you have <em>sessionManagement</em> turned on), you have a couple of options to mitigate session hijacking. One of these is <em>secure</em> cookies, ColdFusion has a few options for this (as well as <em>httpOnly</em>). <a href="http://www.12robots.com/index.cfm/2009/5/6/Making-the-JSESSIONID-Session-Token-Cookie-SECURE-and-HTTPOnly-and-settings-its-PATH">12Robots has a great page</a> with code sample on how to set these up, however I wanted to take things one step further and that was to simply turn off <em>sessionManagement</em> if NOT over SSL. This also has the benefit of not allowing bots to clog up your server RAM with sessions that your site/application just doesn&#8217;t need.</p>
+
+<p>Here is the code I used to only have session management turned on over SSL and not for traffic over port 80. Also included is the code from 12Robots to set <em>secure</em> and <em>httpOnly</em> cookies.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">component</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s2">&quot;myappname&quot;</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">this</span><span class="p">.</span><span class="nx">applicationTimeout</span> <span class="o">=</span> <span class="nx">createTimeSpan</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">//Get the page context to test HTTPS, if on http then DON&#39;T set sessions/cookies (for bots and security), otherwise set sessions</span>
+</span><span class='line'>  <span class="nx">currRequest</span> <span class="o">=</span> <span class="nx">getPageContext</span><span class="p">().</span><span class="nx">getRequest</span><span class="p">();</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="nx">currRequest</span><span class="p">.</span><span class="nx">isSecure</span><span class="p">())</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="k">this</span><span class="p">.</span><span class="nx">sessionManagement</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+</span><span class='line'>      <span class="k">this</span><span class="p">.</span><span class="nx">sessionTimeout</span> <span class="o">=</span> <span class="nx">createTimeSpan</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">else</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="k">this</span><span class="p">.</span><span class="nx">sessionManagement</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">this</span><span class="p">.</span><span class="nx">setClientCookies</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">this</span><span class="p">.</span><span class="nx">clientManagement</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// This method only fires if this.sessionManagement = true</span>
+</span><span class='line'>  <span class="kr">public</span> <span class="k">void</span> <span class="kd">function</span> <span class="nx">onSessionStart</span><span class="p">()</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="kd">var</span> <span class="nx">response</span> <span class="o">=</span> <span class="nx">getPageContext</span><span class="p">().</span><span class="nx">getResponse</span><span class="p">();</span>
+</span><span class='line'>      <span class="kd">var</span> <span class="nx">path</span> <span class="o">=</span> <span class="s2">&quot;/&quot;</span><span class="p">;</span>
+</span><span class='line'>      <span class="kd">var</span> <span class="nx">domain</span> <span class="o">=</span> <span class="nx">application</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">httpsURL</span><span class="p">;</span>
+</span><span class='line'>      <span class="kd">var</span> <span class="nx">secure</span> <span class="o">=</span> <span class="s2">&quot;Secure&quot;</span><span class="p">;</span>
+</span><span class='line'>      <span class="kd">var</span> <span class="nx">HTTPOnly</span> <span class="o">=</span> <span class="s2">&quot;HTTPOnly&quot;</span><span class="p">;</span>
+</span><span class='line'>      <span class="kd">var</span> <span class="nx">header</span> <span class="o">=</span> <span class="s2">&quot;jsessionid=#session.sessionid#;domain=#domain#;path=#path#;#secure#;#HTTPOnly#&quot;</span><span class="p">;</span>
+</span><span class='line'>      <span class="nx">response</span><span class="p">.</span><span class="nx">addHeader</span><span class="p">(</span><span class="s2">&quot;Set-Cookie&quot;</span><span class="p">,</span> <span class="nx">header</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// the rest of your Application.cfc</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-06T17:05:22+10:00" pubdate data-updated="true">Aug 6<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2012/08/06/turning-off-sessions-for-non-https-traffic//page/3/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -774,152 +895,6 @@ htdocs/WEB-INF
 </div>
 	
 		<div class="comments"><a href="/2011/10/27/twitter-bootstrap-modal-not-working-in-firefox//page/3/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2011/08/17/customising-search-results-from-google-cse/">
-		
-			Customising Search Results From Google Cse</a>
-	</h2>
-	<div class="entry-content">
-		<p>Google custom search engine (cse) is pretty cool, in fact it&#8217;s very cool. Within minutes you can have the ability to search your entire site all with a snippet of code! And for a nominal fee you can deliver these results without ads :)</p>
-
-<p>We use google cse for most of our sites but the other day we ran into a slight problem. The site in question has both public and private access, the public site is delivered over <em>http</em> and has plenty of indexable content. This is what we use google cse for. The issue came about once a user was logged in, their session is maintained via <em>secure cookies over https</em>. But the problem was that if they performed a search, all the results that cse returned directed users to <em>http</em> which effectively logged them out of the site (i.e. the user was no longer on https, as we don&#8217;t send cookies over http no session existed).</p>
-
-<p>Even changing the site to index as <em>https</em> inside the cse control panel didn&#8217;t fix the issue, so we started to look for solutions to customise the results. Here are a few immediate options:</p>
-
-<ul>
-<li>Use the JSON API</li>
-<li>Return the results as XML</li>
-<li>Use custom templates</li>
-</ul>
-
-
-<p>The JSON API is super cool but from what I can see there&#8217;s a crazy limit of 150 queries per day unless you pay $5 per 1000 queries. Wow, no thanks.</p>
-
-<p>XML is of course a tried and true approach but kinda clunky and verbose.</p>
-
-<p>That leaves <a href="http://code.google.com/apis/customsearch/docs/js/rendering.html">custom templates</a>, from google:</p>
-
-<blockquote><p>The specification that allows you to customize results is a minimal form of the template languages used by <a href="http://code.google.com/apis/opensocial/">OpenSocial</a> and <a href="http://code.google.com/apis/jstemplate/docs/howto.html">jstemplates</a>.</p></blockquote>
-
-<p>This is a super cool and super easy way to modify the rendering of your custom google search results. Of course if you need to make big changes to the results then one of the other options is probably your best bet, but for what we wanted to achieve (delivering cse results as https) this was fine.</p>
-
-<p>How does it work? Add your JavaScript snippet as usual:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="nx">google</span><span class="p">.</span><span class="nx">load</span><span class="p">(</span><span class="s1">&#39;search&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="p">{</span><span class="nx">language</span> <span class="o">:</span> <span class="s1">&#39;en&#39;</span><span class="p">,</span> <span class="s2">&quot;nocss&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">});</span>
-</span><span class='line'>  <span class="nx">google</span><span class="p">.</span><span class="nx">setOnLoadCallback</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>      <span class="kd">var</span> <span class="nx">customSearchControl</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">search</span><span class="p">.</span><span class="nx">CustomSearchControl</span><span class="p">(</span><span class="s1">&#39;003499422247080460488:qvs6fhb5k8o&#39;</span><span class="p">);</span>
-</span><span class='line'>      <span class="nx">customSearchControl</span><span class="p">.</span><span class="nx">setResultSetSize</span><span class="p">(</span><span class="nx">google</span><span class="p">.</span><span class="nx">search</span><span class="p">.</span><span class="nx">Search</span><span class="p">.</span><span class="nx">FILTERED_CSE_RESULTSET</span><span class="p">);</span>
-</span><span class='line'>      <span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">search</span><span class="p">.</span><span class="nx">DrawOptions</span><span class="p">();</span>
-</span><span class='line'>      <span class="nx">options</span><span class="p">.</span><span class="nx">setAutoComplete</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
-</span><span class='line'>      <span class="nx">google</span><span class="p">.</span><span class="nx">search</span><span class="p">.</span><span class="nx">Csedr</span><span class="p">.</span><span class="nx">addOverride</span><span class="p">(</span><span class="s2">&quot;bos_&quot;</span><span class="p">);</span>
-</span><span class='line'>      <span class="nx">customSearchControl</span><span class="p">.</span><span class="nx">draw</span><span class="p">(</span><span class="s1">&#39;cse&#39;</span><span class="p">,</span> <span class="nx">options</span><span class="p">);</span>
-</span><span class='line'>  <span class="p">},</span> <span class="kc">true</span><span class="p">);</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/script&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>We override the css from google and turn on autocomplete, apart from that the most important thing to note is the <em>addOverride()</em> option. Essentially here you add a prefix specific to your site, in this case ours is &#8220;bos_&#8221;. Google will look for this prefix, along with several specific values to render the content.</p>
-
-<p>For example the main results appear in a section called <em>webResult</em>, so create a div with an id of your prefix + &#8220;webResult&#8221;</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">div</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;bos_webResult&quot;</span><span class="o">&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This is where google will look render the search results. A full example:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">div</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;bos_webResult&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;gs-webResult gs-result&quot;</span>
-</span><span class='line'>  <span class="nx">data</span><span class="o">-</span><span class="nx">vars</span><span class="o">=</span><span class="s2">&quot;{longUrl:function() {</span>
-</span><span class='line'><span class="s2">   var i = unescapedUrl.indexOf(visibleUrl);</span>
-</span><span class='line'><span class="s2">   return i &lt; 1 ? visibleUrl : unescapedUrl.substring(i);}}&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>      <span class="o">&lt;</span><span class="nx">table</span><span class="o">&gt;</span>
-</span><span class='line'>          <span class="o">&lt;</span><span class="nx">tr</span><span class="o">&gt;</span>
-</span><span class='line'>              <span class="o">&lt;</span><span class="nx">td</span> <span class="nx">valign</span><span class="o">=</span><span class="s2">&quot;top&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>                  <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;gs-title&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>                      <span class="o">&lt;</span><span class="nx">a</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;gs-title&quot;</span> <span class="nx">data</span><span class="o">-</span><span class="nx">attr</span><span class="o">=</span><span class="s2">&quot;{href:unescapedUrl.replace(&#39;http://&#39;, &#39;https://&#39;),target:target}&quot;</span> <span class="nx">data</span><span class="o">-</span><span class="nx">body</span><span class="o">=</span><span class="s2">&quot;html(title.replace(&#39;Our site tite :: &#39;, &#39;&#39;))&quot;</span><span class="o">&gt;&lt;</span><span class="err">/a&gt;</span>
-</span><span class='line'>                  <span class="o">&lt;</span><span class="err">/div&gt;</span>
-</span><span class='line'>                  <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;gs-snippet&quot;</span> <span class="nx">data</span><span class="o">-</span><span class="nx">body</span><span class="o">=</span><span class="s2">&quot;html(content)&quot;</span><span class="o">&gt;&lt;</span><span class="err">/div&gt;</span>
-</span><span class='line'>                  <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;gs-visibleUrl gs-visibleUrl-long&quot;</span> <span class="nx">data</span><span class="o">-</span><span class="nx">body</span><span class="o">=</span><span class="s2">&quot;longUrl()&quot;</span><span class="o">&gt;&lt;</span><span class="err">/div&gt;</span>
-</span><span class='line'>              <span class="o">&lt;</span><span class="err">/td&gt;</span>
-</span><span class='line'>          <span class="o">&lt;</span><span class="err">/tr&gt;</span>
-</span><span class='line'>      <span class="o">&lt;</span><span class="err">/table&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="err">/div&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/div&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>You can see that we&#8217;re using the template language &#8220;data-xxx&#8221; attributes on the &#8220;a&#8221; tag to modify the results returned from cse. In the example above we use the data-attr to replace &#8220;http://&#8221; with &#8220;https://&#8221; and also the data-body to replace the site title. This is possible because the templating approache evaluates JavaScript, nice!</p>
-
-<p>There are many more options available with this approach, great to see google provide so many ways to render their search results.</p>
-
-<p>This templating approach is another fantastic way to simplify the modifying the results from google cse. <a href="http://code.google.com/apis/customsearch/docs/js/rendering.html">Read more on their docs</a>.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-08-17T23:07:00+10:00" pubdate data-updated="true">Aug 17<span>th</span>, 2011</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2011/08/17/customising-search-results-from-google-cse//page/3/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 
