@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="I just thought I&#8217;d write up some quick thoughts on setting application scoped variables in FarCry as it occured to me that it could be a &hellip;">
+	<meta name="description" content="I&#8217;ve been doing some custom sorting within FarCry using the prototype/scriptaculous libraries as they already exist in the FarCry framework by &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,97 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2009/06/15/prototypescriptaculous-issue-with-sortablecreate/">
+		
+			Prototype/scriptaculous Issue With Sortable.create()</a>
+	</h2>
+	<div class="entry-content">
+		<p>I&#8217;ve been doing some custom sorting within FarCry using the prototype/scriptaculous libraries as they already exist in the FarCry framework by default.</p>
+
+<p>I was having trouble getting the <a href="http://wiki.github.com/madrobby/scriptaculous/sortable-create">Sortable.create()</a> to work properly and the main docs site for scriptaculous seems severely lacking in examples. Basically the &#8220;sorting&#8221; action was happening fine but no event was being fired &#8220;onUpdate&#8221;. No exception was being thrown, just that nothing was happening after the drag/drop.</p>
+
+<p>The solution came from google (where else?) on the rubyonrails groups thanks to a fellow named Chris.</p>
+
+<p><a href="http://groups.google.com/group/rubyonrails-spinoffs/browse_thread/thread/eb54b586942af4f2/d27bf870447b0584">Straight from the board</a>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">I</span> <span class="nx">had</span> <span class="nx">the</span> <span class="nx">same</span> <span class="nx">problem</span><span class="p">,</span> <span class="nx">and</span> <span class="nx">the</span> <span class="nx">issue</span> <span class="nx">is</span> <span class="nx">probably</span> <span class="k">in</span> <span class="nx">your</span> <span class="nx">markup</span><span class="p">.</span> <span class="nx">Each</span>
+</span><span class='line'><span class="nx">item</span> <span class="nx">of</span> <span class="nx">the</span> <span class="s1">&#39;sortable&#39;</span> <span class="nx">has</span> <span class="nx">to</span> <span class="nx">be</span> <span class="nx">named</span> <span class="k">in</span> <span class="nx">the</span> <span class="nx">format</span> <span class="s1">&#39;string_integer&#39;</span><span class="p">.</span>
+</span><span class='line'><span class="nx">So</span> <span class="k">this</span> <span class="nx">will</span> <span class="nx">work</span><span class="o">:</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">ul</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;makeMeSortable&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>   <span class="o">&lt;</span><span class="nx">li</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;item_1&quot;</span><span class="o">&gt;&lt;</span><span class="err">/li&gt;</span>
+</span><span class='line'>   <span class="o">&lt;</span><span class="nx">li</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;item_2&quot;</span><span class="o">&gt;&lt;</span><span class="err">/li&gt;</span>
+</span><span class='line'>   <span class="o">&lt;</span><span class="nx">li</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;item_3&quot;</span><span class="o">&gt;&lt;</span><span class="err">/li&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/ul&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">and</span> <span class="k">this</span> <span class="nx">will</span> <span class="nx">NOT</span> <span class="nx">work</span><span class="o">:</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">ul</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;makeMeSortable&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>   <span class="o">&lt;</span><span class="nx">li</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;firstitem&quot;</span><span class="o">&gt;&lt;</span><span class="err">/li&gt;</span>
+</span><span class='line'>   <span class="o">&lt;</span><span class="nx">li</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;seconditem&quot;</span><span class="o">&gt;&lt;</span><span class="err">/li&gt;</span>
+</span><span class='line'>   <span class="o">&lt;</span><span class="nx">li</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;thirditem&quot;</span><span class="o">&gt;&lt;</span><span class="err">/li&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/ul&gt; </span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Wait, read that again. Are you serious?</p>
+
+<p>Yep&#8230;you have to split your &#8220;id&#8221; value with a string, then an underscore followed by an integer. This is truly the dumbest thing I&#8217;ve found in a while. Hall of famer for sure.</p>
+
+<p>Just posting here to help anyone else who spends more time than necessary getting this (simple) task working.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-06-15T15:33:29+10:00" pubdate data-updated="true">Jun 15<span>th</span>, 2009</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/javascript/'>Javascript</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2009/06/15/prototypescriptaculous-issue-with-sortablecreate//page/7/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -889,114 +980,6 @@ It enables us to both override the default farcry request scope variables and al
 </div>
 	
 		<div class="comments"><a href="/2008/11/25/security-reminder-are-you-using-scriptprotect//page/7/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2008/11/24/use-applicationapplicationname-careful-when-re-initing-your-app/">
-		
-			Use application.applicationName? Careful When Re-initing Your App</a>
-	</h2>
-	<div class="entry-content">
-		<p>I&#8217;m sure most ColdFusion developers know that the application scope has a built-in variable called <em>application.applicationName</em> which stores the name of the application that you specify in the cfapplication tag or the <em>this.name</em> value if your using <a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=AppEvents_01.html">Application.cfc</a>. This doesn&#8217;t appear when you dump the application scope&#8230;but it&#8217;s there.</p>
-
-<p>Today I wanted to use this variable, everything was working fine until I ran into an error when I re-initialised my application via a URL variable. The error I received was:</p>
-
-<blockquote><p>Element APPLICATIONNAME is undefined in APPLICATION.</p></blockquote>
-
-<p><a href="http://www.lynchconsulting.com.au/blog/">Marko</a> helped me out with the obvious&#8230;as I had cleared my application scope the &#8220;applicationName&#8221; variable didn&#8217;t exist for the page request. Let me show you how I was re-initialising the application scope; the following 2 methods are declared in my Application.cfc, checkReInit() is called from onRequestStart():</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cffunction</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;checkReInit&quot;</span> <span class="nx">access</span><span class="o">=</span><span class="s2">&quot;private&quot;</span> <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="nx">returntype</span><span class="o">=</span><span class="s2">&quot;void&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfscript</span><span class="o">&gt;</span>      
-</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="nx">structKeyExists</span><span class="p">(</span><span class="nx">URL</span><span class="p">,</span> <span class="s2">&quot;reinit&quot;</span><span class="p">)</span> <span class="nx">AND</span> <span class="nx">URL</span><span class="p">.</span><span class="nx">reinit</span> <span class="nx">EQ</span> <span class="mi">101</span><span class="p">)</span>
-</span><span class='line'>      <span class="p">{</span>
-</span><span class='line'>          <span class="nx">clearAppScope</span><span class="p">();</span>
-</span><span class='line'>      <span class="p">}</span>        
-</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cfscript&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/cffunction&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">cffunction</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;clearAppScope&quot;</span> <span class="nx">access</span><span class="o">=</span><span class="s2">&quot;private&quot;</span> <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="nx">returnType</span><span class="o">=</span><span class="s2">&quot;void&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfscript</span><span class="o">&gt;</span>      
-</span><span class='line'>      <span class="nx">structClear</span><span class="p">(</span><span class="nx">application</span><span class="p">);</span>
-</span><span class='line'>      <span class="nx">onApplicationStart</span><span class="p">();</span>        
-</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cfscript&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/cffunction&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>As you can see in the sample code above, if a URL parameter called <em>reinit</em> exists with the value of 101 the application scope is cleared then re-inited via onApplicationStart().</p>
-
-<p><em><strong>**Note:</strong></em> I <em>really</em> don&#8217;t recommend this type of code for a production environment, in fact this is a cut down version of what the actual code is&#8230;we don&#8217;t run applications with the ability to re-initialise the application scope via the public URL from a production site.</p>
-
-<p>Anyway&#8230;clearAppScope() essentially clears whatever is in the application scope then calls onApplicationStart() to re-initialise the application. This is all good and well except <em>this.name</em> is not defined inside onApplicationStart(), it&#8217;s defined in the constructor area at the top of the file so any code in your .cfm template referencing <em>application.applicationName</em> will fail because this value won&#8217;t exist.</p>
-
-<p>I would have thought a simple page refresh would rectify any issues (as this.name would be called the next time a template was executed) but I was still getting errors.</p>
-
-<p>A simple fix is to explicitly set the application name value if and when you clear the app scope. That way it will be available to your application as expected.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&lt;</span><span class="n">cffunction</span> <span class="nb">name</span><span class="o">=</span><span class="s2">&quot;clearAppScope&quot;</span> <span class="n">access</span><span class="o">=</span><span class="s2">&quot;private&quot;</span> <span class="n">output</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="n">returnType</span><span class="o">=</span><span class="s2">&quot;void&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="n">cfscript</span><span class="o">&gt;</span>       
-</span><span class='line'>      <span class="n">structClear</span><span class="p">(</span><span class="n">application</span><span class="p">);</span>
-</span><span class='line'>      <span class="n">application</span><span class="o">.</span><span class="n">applicationName</span> <span class="o">=</span> <span class="n">this</span><span class="o">.</span><span class="n">name</span><span class="p">;</span>
-</span><span class='line'>      <span class="n">onApplicationStart</span><span class="p">();</span>     
-</span><span class='line'>  <span class="o">&lt;</span><span class="sr">/cfscript&gt;</span>
-</span><span class='line'><span class="sr">&lt;/</span><span class="n">cffunction</span><span class="o">&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-11-24T21:54:14+11:00" pubdate data-updated="true">Nov 24<span>th</span>, 2008</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2008/11/24/use-applicationapplicationname-careful-when-re-initing-your-app//page/7/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

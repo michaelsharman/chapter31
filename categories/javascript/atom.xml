@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Javascript | chapter31 &raquo;]]></title>
   <link href="http://chapter31.com/categories/javascript/atom.xml" rel="self"/>
   <link href="http://chapter31.com/"/>
-  <updated>2013-05-23T14:17:35+10:00</updated>
+  <updated>2013-05-29T06:33:34+10:00</updated>
   <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
@@ -41,7 +41,7 @@ BrowserMatch MSIE ie
 Header set X-UA-Compatible "IE=edge,chrome=1" env=ie
 </code></p>
 
-<p>To be safe, if you can't use the Apache header above (which we found to always work as opposed to the meta tag) you might want to load <a href="https://github.com/douglascrockford/JSON-js/blob/master/json2.js">json2.js</a> for IE8 and 9 because you can't control if a user is in compatibility view. If they are, then JSON will be undefined. The cool thing about json2 is that if it detects that JSON is defined alread, it won't do anything at all. But it's there if the older browsers need it (IE7) or you somehow have visitors in compatibility view.</p>
+<p>To be safe, if you can't use the Apache header above (which we found to always work as opposed to the meta tag) you might want to load <a href="https://github.com/douglascrockford/JSON-js/blob/master/json2.js">json2.js</a> for IE8 and 9 because you can't control if a user is in compatibility view. If they are, then JSON will be undefined. The cool thing about json2 is that if it detects that JSON is already defined, it won't do anything at all. But it's there if the older browsers need it (IE7) or you somehow have visitors in compatibility view.</p>
 
 <p>You can also load json2.js from a CDN:</p>
 

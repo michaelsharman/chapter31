@@ -7,20 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Here is an article from coldfusion cookbook. 1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-&lt;cfdirectory directory=&quot;c:\cfusionmx&quot; action=&quot;list&quot &hellip;">
+	<meta name="description" content="From ColdFusion Cookbook: Trimming is an essential part of dealing with an data coming from form textfields or textareas etc. You can of couse trim &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -94,6 +81,63 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2006/04/01/how-do-i-trim-the-contents-of-a-form/">
+		
+			How Do I Trim the Contents of a Form?</a>
+	</h2>
+	<div class="entry-content">
+		<p>From <a href="http://www.coldfusioncookbook.com/">ColdFusion Cookbook</a>:</p>
+
+<p>Trimming is an essential part of dealing with an data coming from form textfields or textareas etc. You can of couse trim as and when you need (before validation or database inserts etc) but if you can trim all fields quickly and easily!</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfloop</span> <span class="nx">collection</span><span class="o">=</span><span class="s2">&quot;#form#&quot;</span> <span class="nx">item</span><span class="o">=</span><span class="s2">&quot;formfield&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">form</span><span class="p">[</span><span class="nx">formfield</span><span class="p">]</span> <span class="o">=</span> <span class="nx">trim</span><span class="p">(</span><span class="nx">form</span><span class="p">[</span><span class="nx">formfield</span><span class="p">])</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfloop&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This basically loops over a form structure and trims each element. You can use this loop in a function before handing it to your validation or database methods.</p>
+
+<p><a href="http://www.coldfusioncookbook.com/entry/28/How-do-I-trim-the-contents-of-a-form?">Read the full article</a></p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-04-01T16:27:37+11:00" pubdate data-updated="true">Apr 1<span>st</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2006/04/01/how-do-i-trim-the-contents-of-a-form//page/25/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">

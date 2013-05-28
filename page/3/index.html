@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Today I wanted to configure an application to only set secure cookies. Those are cookies that are only sent back to the server if over a secure ( &hellip;">
+	<meta name="description" content="If your website is using custom fonts, you may see this line in your Chrome console: Resource interpreted as Font but transferred with MIME type &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,65 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2012/08/09/setting-font-mime-types-in-apache/">
+		
+			Setting Font MIME Types in Apache</a>
+	</h2>
+	<div class="entry-content">
+		<p>If your website is using custom fonts, you may see this line in your Chrome console:</p>
+
+<blockquote><p>Resource interpreted as Font but transferred with MIME type application/octet-stream</p></blockquote>
+
+<p>This is really kinda annoying, if you want to get rid of that warning then add the following directives to your apache conf/.htaccess:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">AddType</span> <span class="nx">application</span><span class="o">/</span><span class="nx">vnd</span><span class="p">.</span><span class="nx">ms</span><span class="o">-</span><span class="nx">fontobject</span> <span class="nx">eot</span>
+</span><span class='line'><span class="nx">AddType</span> <span class="nx">font</span><span class="o">/</span><span class="nx">opentype</span> <span class="nx">otf</span>
+</span><span class='line'><span class="nx">AddType</span> <span class="nx">font</span><span class="o">/</span><span class="nx">truetype</span> <span class="nx">ttf</span>
+</span><span class='line'><span class="nx">AddType</span> <span class="nx">application</span><span class="o">/</span><span class="nx">x</span><span class="o">-</span><span class="nx">font</span><span class="o">-</span><span class="nx">woff</span> <span class="p">.</span><span class="nx">woff</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="http://www.jbarker.com/blog/2011/resource-interpreted-font-transferred-mime-type">See here for more information.</a></p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-09T23:40:00+10:00" pubdate data-updated="true">Aug 9<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/apache-slash-iis/'>Apache/IIS</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2012/08/09/setting-font-mime-types-in-apache//page/3/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -822,79 +881,6 @@ htdocs/WEB-INF
 </div>
 	
 		<div class="comments"><a href="/2012/03/14/turning-voice-over-off-permanently-on-max-osx//page/3/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2011/10/27/twitter-bootstrap-modal-not-working-in-firefox/">
-		
-			Twitter Bootstrap - Modal Not Working in Firefox</a>
-	</h2>
-	<div class="entry-content">
-		<p>Quick heads up for those having issues getting the modal window in the twitter bootstrap to work in firefox, I had a problem where the overlay would show but not the actual modal window content. Seems there is a problem if you&#8217;re using animation (fade etc).</p>
-
-<p><a href="https://github.com/twitter/bootstrap/issues/240">See here for more information.</a></p>
-
-<p>For now we use no animation, so a typical modal source example might be (note: no animation as is the default in the docs):</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">div</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;preview-modal&quot;</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;modal hide&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;modal-header&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>      <span class="o">&lt;</span><span class="nx">a</span> <span class="nx">href</span><span class="o">=</span><span class="s2">&quot;#&quot;</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;close&quot;</span><span class="o">&gt;&amp;</span><span class="nx">times</span><span class="p">;</span><span class="o">&lt;</span><span class="err">/a&gt;</span>
-</span><span class='line'>      <span class="o">&lt;</span><span class="nx">h3</span><span class="o">&gt;</span><span class="nx">Modal</span> <span class="nx">Heading</span><span class="o">&lt;</span><span class="err">/h3&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="err">/div&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;modal-body&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>      <span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">One</span> <span class="nx">fine</span> <span class="nx">body</span><span class="err">…</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="err">/div&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;modal-footer&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>      <span class="o">&lt;</span><span class="nx">a</span> <span class="nx">href</span><span class="o">=</span><span class="s2">&quot;#&quot;</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;btn primary&quot;</span><span class="o">&gt;</span><span class="nx">Primary</span><span class="o">&lt;</span><span class="err">/a&gt;</span>
-</span><span class='line'>      <span class="o">&lt;</span><span class="nx">a</span> <span class="nx">href</span><span class="o">=</span><span class="s2">&quot;#&quot;</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;btn secondary&quot;</span><span class="o">&gt;</span><span class="nx">Secondary</span><span class="o">&lt;</span><span class="err">/a&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="err">/div&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/div&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Typically there is &#8220;fade&#8221; in the class of the parent div which we&#8217;ve removed.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-10-27T18:00:45+11:00" pubdate data-updated="true">Oct 27<span>th</span>, 2011</time></div>
-	<div class="tags">
-
-</div>
-	
-		<div class="comments"><a href="/2011/10/27/twitter-bootstrap-modal-not-working-in-firefox//page/3/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

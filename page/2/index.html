@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="I had some issues today while testing in IE, where &#8220;JSON&#8221; was undefined. This was happening in IE8 and IE9, which is strange because the &hellip;">
+	<meta name="description" content="I wanted to grab some youtube videos for the kids and found this cool CLI utility called youtube-dl to handle it. I downloaded it from the website ( &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -86,6 +86,123 @@
     <article class="post">
 	<h2 class="title">
 		
+		<a href="/2013/01/01/downloading-youtube-videos/">
+		
+			Downloading Youtube Videos</a>
+	</h2>
+	<div class="entry-content">
+		<p>I wanted to grab some youtube videos for the kids and found this cool <a href="http://rg3.github.com/youtube-dl/">CLI utility called youtube-dl</a> to handle it. I downloaded it from the website (you may need to chmod 755):</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>wget https://github.com/downloads/rg3/youtube-dl/youtube-dl -O /usr/local/bin/youtube-dl</span></code></pre></td></tr></table></div></figure>
+
+
+<p>However you can get it via brew if you want:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>brew install youtube-dl</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The basic process is the following:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>youtube-dl [video URL]</span></code></pre></td></tr></table></div></figure>
+
+
+<p>By default that should download the highest quality format available (in case you didn&#8217;t know, youtube usually has multiple versions of a file for different qualities etc). If you want to see what formats are available, try:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>youtube-dl -F [URL]</span></code></pre></td></tr></table></div></figure>
+
+
+<p>For example:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>youtube-dl -F http://www.youtube.com/watch?v<span class="o">=</span>iThX9rbOqXY
+</span><span class='line'><span class="o">[</span>youtube<span class="o">]</span> Setting language
+</span><span class='line'><span class="o">[</span>youtube<span class="o">]</span> iThX9rbOqXY: Downloading video webpage
+</span><span class='line'><span class="o">[</span>youtube<span class="o">]</span> iThX9rbOqXY: Downloading video info webpage
+</span><span class='line'><span class="o">[</span>youtube<span class="o">]</span> iThX9rbOqXY: Extracting video information
+</span><span class='line'>Available formats:
+</span><span class='line'>34 : flv <span class="o">[</span>360x640<span class="o">]</span>
+</span><span class='line'>18 : mp4 <span class="o">[</span>360x640<span class="o">]</span>
+</span><span class='line'>43 : webm <span class="o">[</span>360x640<span class="o">]</span>
+</span><span class='line'>5 : flv <span class="o">[</span>240x400<span class="o">]</span>
+</span><span class='line'>17 : mp4 <span class="o">[</span>144x176<span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then you can select whichever you want to download by choosing the number next to the format you want:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>youtube-dl -f <span class="o">[</span>format number<span class="o">]</span> <span class="o">[</span>URL<span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So if I wanted the highest quality mp4 available in the example above I&#8217;d  type (note the number corresponds to the video I want) the following, note the lowercase f:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>youtube-dl -f 18 http://www.youtube.com/watch?v<span class="o">=</span>iThX9rbOqXY
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can also pass in a file containing a list of URLs (one on ea to handle batch downloading:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>youtube-dl -a urls.txt
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you want to rename the file as you download it (by default it&#8217;s the filename on youtube which isn&#8217;t really that useful):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>youtube-dl -f 18 -o <span class="s2">&quot;myfilename.mp4&quot;</span> <span class="o">[</span>URL<span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can do other cool things like extracting the audio only (and choosing which audio format you want). There are also <a href="http://rg3.github.com/youtube-dl/documentation.html#d4">LOTS of sites</a> that are supported&#8230;not just youtube.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-01T13:48:27+11:00" pubdate data-updated="true">Jan 1<span>st</span>, 2013</time></div>
+	<div class="tags">
+
+</div>
+	
+		<div class="comments"><a href="/2013/01/01/downloading-youtube-videos//page/2/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
 		<a href="/2012/11/21/json-undefined-issues-on-ie8-and-ie9/">
 		
 			JSON Undefined Issues on IE8 and IE9</a>
@@ -118,7 +235,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>To be safe, if you can&#8217;t use the Apache header above (which we found to always work as opposed to the meta tag) you might want to load <a href="https://github.com/douglascrockford/JSON-js/blob/master/json2.js">json2.js</a> for IE8 and 9 because you can&#8217;t control if a user is in compatibility view. If they are, then JSON will be undefined. The cool thing about json2 is that if it detects that JSON is defined alread, it won&#8217;t do anything at all. But it&#8217;s there if the older browsers need it (IE7) or you somehow have visitors in compatibility view.</p>
+<p>To be safe, if you can&#8217;t use the Apache header above (which we found to always work as opposed to the meta tag) you might want to load <a href="https://github.com/douglascrockford/JSON-js/blob/master/json2.js">json2.js</a> for IE8 and 9 because you can&#8217;t control if a user is in compatibility view. If they are, then JSON will be undefined. The cool thing about json2 is that if it detects that JSON is already defined, it won&#8217;t do anything at all. But it&#8217;s there if the older browsers need it (IE7) or you somehow have visitors in compatibility view.</p>
 
 <p>You can also load json2.js from a CDN:</p>
 
@@ -940,65 +1057,6 @@ Select #3 had 8192* possible combinations</p>
 </div>
 	
 		<div class="comments"><a href="/2012/08/13/timing-synchronous-javascript-operations//page/2/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2012/08/09/setting-font-mime-types-in-apache/">
-		
-			Setting Font MIME Types in Apache</a>
-	</h2>
-	<div class="entry-content">
-		<p>If your website is using custom fonts, you may see this line in your Chrome console:</p>
-
-<blockquote><p>Resource interpreted as Font but transferred with MIME type application/octet-stream</p></blockquote>
-
-<p>This is really kinda annoying, if you want to get rid of that warning then add the following directives to your apache conf/.htaccess:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">AddType</span> <span class="nx">application</span><span class="o">/</span><span class="nx">vnd</span><span class="p">.</span><span class="nx">ms</span><span class="o">-</span><span class="nx">fontobject</span> <span class="nx">eot</span>
-</span><span class='line'><span class="nx">AddType</span> <span class="nx">font</span><span class="o">/</span><span class="nx">opentype</span> <span class="nx">otf</span>
-</span><span class='line'><span class="nx">AddType</span> <span class="nx">font</span><span class="o">/</span><span class="nx">truetype</span> <span class="nx">ttf</span>
-</span><span class='line'><span class="nx">AddType</span> <span class="nx">application</span><span class="o">/</span><span class="nx">x</span><span class="o">-</span><span class="nx">font</span><span class="o">-</span><span class="nx">woff</span> <span class="p">.</span><span class="nx">woff</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><a href="http://www.jbarker.com/blog/2011/resource-interpreted-font-transferred-mime-type">See here for more information.</a></p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-08-09T23:40:00+10:00" pubdate data-updated="true">Aug 9<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/apache-slash-iis/'>Apache/IIS</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2012/08/09/setting-font-mime-types-in-apache//page/2/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

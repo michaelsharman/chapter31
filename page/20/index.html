@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="I&#8217;ve been using Wordpress for a while now and I&#8217;m really happy with it. Only recently have I tried to validate my RSS feed using &hellip;">
+	<meta name="description" content="For some developers there is an age old argument between the use of ColdFusion tags and &lt;cfscript&gt;, I&#8217;m not going to delve too much into &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,121 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2006/11/15/getting-tag-functionality-in-cfscript/">
+		
+			Getting Tag Functionality in Cfscript</a>
+	</h2>
+	<div class="entry-content">
+		<p>For some developers there is an age old argument between the use of ColdFusion tags and &lt;cfscript&gt;, I&#8217;m not going to delve too much into this argument as I believe you can use both for different scenarios.</p>
+
+<p>What I will say is that I do like many things about &lt;cfscript&gt;. It is easy to read and arguably more elegant and concise. Of course the annoying thing is that it doesn&#8217;t have the full feature set of tags&#8230;.VERY annoying. So bad in fact that I often ask myself why I bother with it and whether or not Adobe will ever update it?</p>
+
+<p>How many times have you been in the middle of coding something (in &lt;cfscript&gt;) and needed to do cfdump, cflocation, cfabort, cfsavecontent&#8230;.the list goes on. Because I do like cfscript I did what a lot of other cfscripters do, came up with some methods to add to my Utility.cfc (which I store in application scope) to simulate the functions I cannot natively use when writing cfscript.</p>
+
+<p>Here is an example method for simulating &lt;cfdump&gt;</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cffunction</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;dump&quot;</span> <span class="nx">access</span><span class="o">=</span><span class="s2">&quot;public&quot;</span> <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;true&quot;</span> <span class="nx">returntype</span><span class="o">=</span><span class="s2">&quot;void&quot;</span> <span class="nx">hint</span><span class="o">=</span><span class="s2">&quot;Simulates cfdump from a cfscript block&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;var&quot;</span> <span class="nx">required</span><span class="o">=</span><span class="s2">&quot;true&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;any&quot;</span> <span class="nx">hint</span><span class="o">=</span><span class="s2">&quot;Variable to dump&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;expand&quot;</span> <span class="nx">required</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;boolean&quot;</span> <span class="nx">hint</span><span class="o">=</span><span class="s2">&quot;Boolean to expand the dump&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;top&quot;</span> <span class="nx">required</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;numeric&quot;</span> <span class="nx">hint</span><span class="o">=</span><span class="s2">&quot;Only show the top n layers&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="o">&amp;</span><span class="nx">lt</span><span class="p">;</span><span class="nx">cfscript</span><span class="o">&amp;</span><span class="nx">gt</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="kd">var</span> <span class="nx">sOptions</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="nx">structKeyExists</span><span class="p">(</span><span class="nx">arguments</span><span class="p">,</span> <span class="s2">&quot;expand&quot;</span><span class="p">))</span>
+</span><span class='line'>          <span class="nx">sOptions</span> <span class="o">=</span> <span class="s2">&quot; expand=&quot;</span> <span class="o">&amp;</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">expand</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="nx">structKeyExists</span><span class="p">(</span><span class="nx">arguments</span><span class="p">,</span> <span class="s2">&quot;top&quot;</span><span class="p">))</span>
+</span><span class='line'>          <span class="nx">sOptions</span> <span class="o">=</span> <span class="nx">sOptions</span> <span class="o">&amp;</span> <span class="s2">&quot; top=&quot;</span> <span class="o">&amp;</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">top</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cfscript&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfdump</span> <span class="kd">var</span><span class="o">=</span><span class="s2">&quot;#arguments.var#&quot;</span><span class="nx">sOptions</span> <span class="o">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfreturn</span> <span class="o">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cffunction&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I set this up as a snippet in eclipse and use a snippet variable to enter the dump value. My trigger text in ud (for Utility Dump) and the snippet is as follows:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">application</span><span class="p">.</span><span class="nx">oUtility</span><span class="p">.</span><span class="nx">dump</span><span class="p">(</span><span class="nx">$$</span><span class="p">{</span><span class="kd">var</span><span class="o">:</span><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I&#8217;ve attached my full Utility.cfc which contains the following methods:</p>
+
+<ul>
+<li>abort</li>
+<li>dump</li>
+<li>location</li>
+<li>param</li>
+<li>sleep</li>
+</ul>
+
+
+<p><a href="/images/uploads/2006/11/utility.zip">Click here to download Utility.cfc</a></p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-11-15T19:56:49+11:00" pubdate data-updated="true">Nov 15<span>th</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2006/11/15/getting-tag-functionality-in-cfscript//page/20/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -619,104 +734,6 @@
 </div>
 	
 		<div class="comments"><a href="/2006/11/03/blogging-problems-my-php-host//page/20/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2006/10/22/cfeclipse-snippets/">
-		
-			Cfeclipse Snippets</a>
-	</h2>
-	<div class="entry-content">
-		<p>The eclipse/cfeclipse combinations makes for a pretty powerfull developing tool for ColdFusion programmers, even those who miss the good old days of using Homesite!</p>
-
-<p>One of the cool things cfeclipse brought over from Homesite is <a href="http://www.cfeclipse.org/go/documentation/user-docs/snippets">snippets</a>, but cfeclipse has a few extra goodies to make them better than ever :)</p>
-
-<p>Whereas in Homesite you would assign a keyboard shortcut directly to a snippet, cfeclipse has an invoke/trigger key combination which stays the same while allowing you to use ANY key(s) as the actual trigger text for the snippet.</p>
-
-<p>For example I have a cfabort snippet with a trigger text of &#8216;a&#8217;. Now in eclipse 3.2 the invoke/trigger combination is ctrl + j, so if I type the letter &#8216;a&#8217;, then press ctrl + j I get a lovely cfabort tag! Doing things this way allows me to have the same invoke key (ctrl + j) then simply remember my trigger text for each snippet. Nice :)</p>
-
-<p>In common with Homesite is the idea of snippet variables, most handy if your snippet text requires or relies upon a user defined parameter value. An example here is cfinclude where you must specify the &#8216;template&#8217; attribute.</p>
-
-<p>To setup snippet variables you use the $${variable:default} format. My trigger text is &#8216;i&#8217; for cfinclude, so when I invoke the snippet I get asked to enter a parameter value as follows:</p>
-
-<p><img src="/images/uploads/2006/10/snippet.jpg" alt="cfeclipse snippet variable" /></p>
-
-<p>My entire snippet looks like this: <cfinclude template="$${template:.cfm}" />></p>
-
-<p>There are a number of built in snippet variables:</p>
-
-<p>$${DATE}
-$${MONTH}
-$${TIME}
-$${DATETIME}
-$${DAYOFWEEK}
-$${CURRENTFILE} - Current file name (just the file)
-$${CURRENTFOLDER} - Current folder (The path to the containing folder)
-$${CURRENTPATH} - Current path (full file name)
-$${CURRENTPRJPATH} - Just the folder
-$${USERNAME} - Current user
-$${MONTHNUMBER} - Month as a number
-$${DAYOFMONTH} - Day of month as a number
-$${DAYOFWEEKNUMBER} - Day of week (the week starts on Sunday)
-$${DATETIME24} - DateTime24 - a 24 hour clock version of datetime.
-$${YEAR} - Current year.
-$${YEAR2DIGIT} - Current two digit year.</p>
-
-<p>Other than those, you&#8217;re free to name your variables as you wish.</p>
-
-<p>Another SUPER cool feature is the ability to choose a default value from a range. So for my cflocation snippet I have:</p>
-
-<pre><code>&lt;cflocation url="$${url:.cfm}" addToken="$${addToken:false|true}" /&gt;
-</code></pre>
-
-<p>Note the use of the pipe (|). There is even more than this on the cfeclipse.org site so take a peek. Some of the snippets I use are:</p>
-
-<p>cfabort
-cfcomment
-cfdump
-cfinclude
-cflocation
-cfoutput
-cfquery
-cfscript
-html comment (used with xml files)</p>
-
-<p>I also use tonnes of snippets for HTML, (strong, em etc). Using snippets is easy to learn and saves you a LOT of time when you&#8217;re used to invoking them with ease!</p>
-
-<p><a href="http://www.chapter31.com/cfeclipse-snippets/">Have a look here</a> for a complete list of my snippets, you can also download them for easy use</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2006-10-22T11:13:47+10:00" pubdate data-updated="true">Oct 22<span>nd</span>, 2006</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2006/10/22/cfeclipse-snippets//page/20/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

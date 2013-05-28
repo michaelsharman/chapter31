@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="I just read about a nice feature of the ColdFusion server monitor tool (available in ColdFusion 8) over on sandeepp&#8217;s blog. Essentially within &hellip;">
+	<meta name="description" content="Inscape is a fantastic open source vector graphics tool which can be a nice alternative to Adobe&#8217;s Illustrator. Getting it to run on the Mac &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,67 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/08/06/getting-inkscape-046-to-run-on-mac-leopard/">
+		
+			Getting Inkscape (0.46) to Run on Mac Leopard</a>
+	</h2>
+	<div class="entry-content">
+		<p><a href="http://inkscape.org/">Inscape</a> is a fantastic open source vector graphics tool which can be a nice alternative to Adobe&#8217;s Illustrator.</p>
+
+<p><img src="/images/uploads/2008/08/header-logo.png" alt="" /></p>
+
+<p>Getting it to run on the Mac took a couple of extra steps though.</p>
+
+<p>Firstly the <a href="http://inkscape.org/download/?lang=en">download page</a> advises that you upgrade X11.app to at least <a href="http://xquartz.macosforge.org/">XQuartz v2.1.4</a>. This is a large-ish download which forces you to quit all applications as it needs to restart your system after installing.</p>
+
+<p>The next problem was that after a restart, Inkscape displays a message saying that the first time it runs it may take a while to load as it needs to caches fonts. The issue is however that it never loads :(</p>
+
+<p>A quick google later found the solution from <a href="http://bloggy.kuneri.net/2008/05/14/how-to-run-inkscape-on-mac-leopard/">Kuneri Bloggy</a>.</p>
+
+<p>Simply open up a terminal window and create a <em>.fontconfig</em> file in your home directory:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">mkdir</span> <span class="o">~</span><span class="err">/.fontconfig</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>All good now :)</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-08-06T11:09:03+10:00" pubdate data-updated="true">Aug 6<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/mac/'>Mac</a>, <a class='category' href='/categories/tools/'>Tools</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/08/06/getting-inkscape-046-to-run-on-mac-leopard//page/10/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -645,52 +706,6 @@
 </div>
 	
 		<div class="comments"><a href="/2008/07/08/dont-forget-the-coldfusion-site-wide-error-handler//page/10/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2008/07/02/12-breeds-of-client-and-how-to-work-with-them/">
-		
-			12 Breeds of Client and How to Work With Them</a>
-	</h2>
-	<div class="entry-content">
-		<p>We&#8217;ve all experienced dealing with clients before, even if they are &#8220;internal&#8221; clients within our organisation. Today I saw this article on <a href="http://freelanceswitch.com/clients/12-breeds-of-client-and-how-to-work-with-them/">12 Breeds of Client and How to Work with Them</a>.</p>
-
-<p>The article mentions 12 different types of client (like a low-tech or hands-on client), how to spot one, the highs and lows of dealing with them and how to work effectively together.</p>
-
-<p>A good read :)</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-07-02T08:49:17+10:00" pubdate data-updated="true">Jul 2<span>nd</span>, 2008</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/misc/'>Misc</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2008/07/02/12-breeds-of-client-and-how-to-work-with-them//page/10/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

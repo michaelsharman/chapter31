@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Yet another tip for MySQL users, INSERT DELAYED. What does it do? Well when you execute your query MySQL will return an ok immediately to your &hellip;">
+	<meta name="description" content="We all know passwords are the bane of any internet users online experience. So many sites, each with their own authentication requirements. I came &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,70 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/05/30/password-strength-checker/">
+		
+			Password Strength Checker</a>
+	</h2>
+	<div class="entry-content">
+		<p>We all know passwords are the bane of any internet users online experience. So many sites, each with their own authentication requirements.</p>
+
+<p>I came across this handy site called <a href="http://www.passwordmeter.com/">passwordmeter</a> to help test the strength of your passwords.</p>
+
+<p>It&#8217;s cool because it gives you an instant visual response for your passwords based upon things like;</p>
+
+<ul>
+<li>Number of characters</li>
+<li>Upper and lower case</li>
+<li>Letters or numbers only</li>
+<li>etc</li>
+</ul>
+
+
+<p>I typically use several passwords and found that I might need to strengthen them up, but I did have a couple which scored over 70% which is good :)</p>
+
+<h3>Update</h3>
+
+<p>People have commented that this is a security risk, i.e. submitting your passwords to an unknown web site. My response is that I think the point is more to test the strength of the &#8216;types&#8217; of passwords you&#8217;re currently using.</p>
+
+<p>So if you test for &#8220;password1&#8221; you&#8217;re not going to get very far. Then you can learn what makes a good password, i.e. mixed case, symbols and alphanumeric etc</p>
+
+<p>Of course&#8230;a password doesn&#8217;t mean much without something to authenticate against. But you&#8217;ve been warned :)</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-05-30T22:41:35+10:00" pubdate data-updated="true">May 30<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/misc/'>Misc</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/05/30/password-strength-checker//page/12/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -930,86 +994,6 @@ Avg: 529</p>
 </div>
 	
 		<div class="comments"><a href="/2008/03/28/evaluating-coldfusion-unscoped-query-variables//page/12/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2008/03/24/installing-php5-with-mysql-extensions/">
-		
-			Installing PHP5 With MySQL Extensions</a>
-	</h2>
-	<div class="entry-content">
-		<p>I&#8217;m generally a ColdFusion programmer but occasionally I need to install PHP for one reason or another, the last couple of times has been to use <a href="http://wordpress.org/">Wordpress</a>.</p>
-
-<p>I remember the last time I did this (maybe 6 months ago) I had problems with connecting to MySQL because <a href="http://www.php.net/manual/en/faq.databases.php#faq.databases.mysql.php5">PHP 5 no longer bundles MySQL client libraries</a> for the following reasons:</p>
-
-<ul>
-<li>Most systems these days already have the client library installed.</li>
-<li>Given the above, having multiple versions of the library can get messy. For example, if you link mod_auth_mysql against one version and PHP against another, and then enable both in Apache, you get a nice fat crash. Also, the bundled library didn&#8217;t always play well with the installed server version. The most obvious symptom of this being disagreement over where to find the mysql.socket Unix domain socket file.</li>
-<li>Maintenance was somewhat lax and it was falling further and further behind the released version.</li>
-<li>Future versions of the library are under the GPL and thus we don&#8217;t have an upgrade path since we cannot bundle a GPL&#8217;ed library in a BSD/Apache-style licensed project. A clean break in PHP 5 seemed like the best option.</li>
-</ul>
-
-
-<p>Ok fine, no problems. There are even some fairly easy to find instructions for Windows users (which I am at home):</p>
-
-<ul>
-<li>Windows users may enable the extension php_mysql.dll inside php.ini</li>
-<li>Also, be sure libmysql.dll is available to the systems PATH.</li>
-</ul>
-
-
-<p>No prob, you can even put libmysql.dll in the C:/windows/ directory which isn&#8217;t a best practice, but is easy!</p>
-
-<p>So I fire up my Wordpress site and get the following error:</p>
-
-<p><em>&#8220;Your PHP installation appears to be missing the MySQL which is required for WordPress.&#8221;</em></p>
-
-<p>A few rounds in Google told me I needed to uncomment some files in php.ini:</p>
-
-<ul>
-<li>extension=php_mysql.dll</li>
-<li>extension=php_mysqli.dll</li>
-</ul>
-
-
-<p>Hmmm&#8230;.I don&#8217;t have those files nor do I have those lines in my php.ini file, that&#8217;s strange.</p>
-
-<p>Ok&#8230;so what was my problem? When installing I didn&#8217;t select any extra &#8216;extensions&#8217; for MySQL. The installer actually makes it nice and simple, so this is just a note for next time I need to do this to be careful and choose the extensions I need when installing.</p>
-
-<p>Luckily you can just run the installer again to change the configuration of your installation, including adding necessary extensions :)</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-03-24T15:59:51+11:00" pubdate data-updated="true">Mar 24<span>th</span>, 2008</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/php/'>PHP</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2008/03/24/installing-php5-with-mysql-extensions//page/12/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

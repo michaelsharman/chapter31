@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="I&#8217;ve just created some functionality which will be executed by a ColdFusion (8 standard on Win 2003) scheduled task daily, but only for 1 &hellip;">
+	<meta name="description" content="Today I needed a function which would return me a whole number, rounding either up or down depending on whether the value passed to the function was &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,75 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2007/10/12/coldfusion-round-docs-inaccurate/">
+		
+			ColdFusion &#8216;Round()&#8217; Docs Inaccurate?</a>
+	</h2>
+	<div class="entry-content">
+		<p>Today I needed a function which would return me a whole number, rounding either up or down depending on whether the value passed to the function was less than or greater than .5</p>
+
+<p>Looking at <a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=functions_m-r_40.html">round() ColdFusion 8 docs</a> they say:</p>
+
+<blockquote><p>Rounds a number to the closest integer that is larger than the input parameter.</p></blockquote>
+
+<p>Hmm, that doesn&#8217;t sound right.</p>
+
+<p>In actual fact the round() function does exactly what it should, rounds numbers down OR up.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">Round</span><span class="p">(</span><span class="mf">7.49</span><span class="p">)</span> <span class="o">=</span> <span class="mi">7</span>
+</span><span class='line'><span class="nx">Round</span><span class="p">(</span><span class="mf">7.5</span><span class="p">)</span> <span class="o">=</span> <span class="mi">8</span>
+</span><span class='line'><span class="nx">Round</span><span class="p">(</span><span class="mf">7.65</span><span class="p">)</span> <span class="o">=</span> <span class="mi">8</span>
+</span><span class='line'><span class="nx">Round</span><span class="p">(</span><span class="o">-</span><span class="mf">7.49</span><span class="p">)</span> <span class="o">=</span> <span class="o">-</span><span class="mi">7</span>
+</span><span class='line'><span class="nx">Round</span><span class="p">(</span><span class="o">-</span><span class="mf">7.5</span><span class="p">)</span> <span class="o">=</span> <span class="o">-</span><span class="mi">7</span>
+</span><span class='line'><span class="nx">Round</span><span class="p">(</span><span class="o">-</span><span class="mf">7.65</span><span class="p">)</span> <span class="o">=</span> <span class="o">-</span><span class="mi">8</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Also funny to note that although the docs site is much better for ColdFusion 8, many of the examples using ColdFusion variables are not parsed. So you get examples like #Round(7.49)#.</p>
+
+<p>Hopefully Adobe will rectify this soon.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-10-12T15:26:01+10:00" pubdate data-updated="true">Oct 12<span>th</span>, 2007</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2007/10/12/coldfusion-round-docs-inaccurate//page/16/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -725,68 +794,6 @@ Trace</p></blockquote>
 </div>
 	
 		<div class="comments"><a href="/2007/08/16/localurl-attribute-added-to-cfdocument-in-coldfusion-8//page/16/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2007/08/14/my-aptana-ide-is-busted/">
-		
-			My Aptana IDE Is Busted</a>
-	</h2>
-	<div class="entry-content">
-		<p>Hmm, running with my past history of having that &#8216;special&#8217; touch with computers&#8230;my version of Aptana (Aptana IDE (build 0.2.8.15637)) has busted.</p>
-
-<p>Kaput.</p>
-
-<p>Not happy Jan.</p>
-
-<p>I was running an Aptana update yesterday when the network went down. Everything seemed fine until I went to restart Apatana and got the following:</p>
-
-<p><img src="/images/uploads/2007/08/aptana.jpg" alt="Aptana error" /></p>
-
-<p>Damn</p>
-
-<p>Damn</p>
-
-<p>Damn</p>
-
-<p>No fix as yet and roughly 500 lines in the .log file everytime I try to start up telling me I have a hell of a lot of missing bundles :(</p>
-
-<p>Looks like an uninstall/re-install.</p>
-
-<p>I heart computers</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2007-08-14T15:45:39+10:00" pubdate data-updated="true">Aug 14<span>th</span>, 2007</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/cfeclipse/'>cfeclipse</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2007/08/14/my-aptana-ide-is-busted//page/16/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

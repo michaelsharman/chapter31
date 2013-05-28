@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Google custom search engine (cse) is pretty cool, in fact it&#8217;s very cool. Within minutes you can have the ability to search your entire site &hellip;">
+	<meta name="description" content="Quick heads up for those having issues getting the modal window in the twitter bootstrap to work in firefox, I had a problem where the overlay would &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,79 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2011/10/27/twitter-bootstrap-modal-not-working-in-firefox/">
+		
+			Twitter Bootstrap - Modal Not Working in Firefox</a>
+	</h2>
+	<div class="entry-content">
+		<p>Quick heads up for those having issues getting the modal window in the twitter bootstrap to work in firefox, I had a problem where the overlay would show but not the actual modal window content. Seems there is a problem if you&#8217;re using animation (fade etc).</p>
+
+<p><a href="https://github.com/twitter/bootstrap/issues/240">See here for more information.</a></p>
+
+<p>For now we use no animation, so a typical modal source example might be (note: no animation as is the default in the docs):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">div</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;preview-modal&quot;</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;modal hide&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;modal-header&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">a</span> <span class="nx">href</span><span class="o">=</span><span class="s2">&quot;#&quot;</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;close&quot;</span><span class="o">&gt;&amp;</span><span class="nx">times</span><span class="p">;</span><span class="o">&lt;</span><span class="err">/a&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">h3</span><span class="o">&gt;</span><span class="nx">Modal</span> <span class="nx">Heading</span><span class="o">&lt;</span><span class="err">/h3&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/div&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;modal-body&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">One</span> <span class="nx">fine</span> <span class="nx">body</span><span class="err">…</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/div&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;modal-footer&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">a</span> <span class="nx">href</span><span class="o">=</span><span class="s2">&quot;#&quot;</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;btn primary&quot;</span><span class="o">&gt;</span><span class="nx">Primary</span><span class="o">&lt;</span><span class="err">/a&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">a</span> <span class="nx">href</span><span class="o">=</span><span class="s2">&quot;#&quot;</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;btn secondary&quot;</span><span class="o">&gt;</span><span class="nx">Secondary</span><span class="o">&lt;</span><span class="err">/a&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/div&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/div&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Typically there is &#8220;fade&#8221; in the class of the parent div which we&#8217;ve removed.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-10-27T18:00:45+11:00" pubdate data-updated="true">Oct 27<span>th</span>, 2011</time></div>
+	<div class="tags">
+
+</div>
+	
+		<div class="comments"><a href="/2011/10/27/twitter-bootstrap-modal-not-working-in-firefox//page/4/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -1296,56 +1369,6 @@ MySQL 5+</p>
 </div>
 	
 		<div class="comments"><a href="/2011/05/11/wordpress-detecting-the-categories-of-a-post//page/4/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2011/05/11/fancybox-for-wordpress-plugin-not-working/">
-		
-			FancyBox for Wordpress Plugin Not Working</a>
-	</h2>
-	<div class="entry-content">
-		<p>I just spent some time figuring out why fancybox wasn&#8217;t working tonight (image thumbnails were just linking to the large image&#8230;not loading the overlay as they should). It now seems obvious after the fact but as far as I can see it&#8217;s NOT in the fancybox docs.</p>
-
-<p>When you insert your gallery from the media section of a page in wp-admin, you HAVE to choose &#8220;Image File&#8221;, not &#8220;Attachment Page&#8221;. That&#8217;s it!</p>
-
-<p>Annoyingly if you set the option to &#8220;Image File&#8221;, save and exit&#8230;the next time you edit the page Wordpress doesn&#8217;t remember your decision and instead checks the &#8220;Attachment Page&#8221; radio option.</p>
-
-<p>Hope this helps some people :)</p>
-
-<p><img src="/images/uploads/2011/05/gallery_settings.jpg" alt="wordpress gallery settings" /></p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-05-11T23:42:10+10:00" pubdate data-updated="true">May 11<span>th</span>, 2011</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/php/'>PHP</a>, <a class='category' href='/categories/wordpress/'>Wordpress</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2011/05/11/fancybox-for-wordpress-plugin-not-working//page/4/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

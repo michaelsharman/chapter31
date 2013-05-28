@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Here at Daemon we are looking at standardising the FarCry core codebase in an effort to reduce any case-sensitivity issues that may be found when &hellip;">
+	<meta name="description" content="I came across something strange today when developing a web form. Basically I had a form field with a name/id of &#8220;restoration_required&#8221; &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,93 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2007/04/24/unwanted-coldfusion-form-validation/">
+		
+			Unwanted ColdFusion Form Validation</a>
+	</h2>
+	<div class="entry-content">
+		<p>I came across something strange today when developing a web form.</p>
+
+<p>Basically I had a form field with a name/id of &#8220;restoration_required&#8221; but when I submitted the form I got the following error:</p>
+
+<p><img src="/images/uploads/2007/04/formerror.gif" alt="Form Error" /></p>
+
+<p>Now <a href="http://www.daemon.com.au/">Geoff Bowers</a> happened to be standing nearby and was kind enough to point out that this looked like a <cfform> validation error, only I wasn&#8217;t using cfform!</p>
+
+<p>A quick test (on WinXP, CFMX 7.0.2) showed everything working as expected when I renamed the field as &#8220;restoration_isRequired&#8221;.</p>
+
+<p>Of course what was really strange was the fact that this was happening when using a normal <form> tag&#8230;not <cfform>.</p>
+
+<h3>Update 25th April 2007</h3>
+
+<p>In response to Todd&#8217;s last comment I did a little bit of testing, and when I create a <cfform> ColdFusion will (as expected) generate an HTML form for me.</p>
+
+<p>If I then add the validation attributes (for validateat=&#8221;onserver&#8221;) ColdFusion will validate any fields where I specify &#8220;required=&#8217;true&#8217;&#8221;. In that situation I will get the same error message as before&#8230;not that I know where you&#8217;d use this because you don&#8217;t really seem to get any control over the message!</p>
+
+<p>But&#8230;</p>
+
+<p>Even with a <cfform> if I name a field something which ends with &#8220;_required&#8221; I get that server side validation message whether I&#8217;ve entered a value or not!</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfform</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;myForm&quot;</span> <span class="nx">action</span><span class="o">=</span><span class="s2">&quot;&quot;</span> <span class="nx">format</span><span class="o">=</span><span class="s2">&quot;html&quot;</span> <span class="nx">method</span><span class="o">=</span><span class="s2">&quot;post&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfinput</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;firstName_required&quot;</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;firstName_required&quot;</span> <span class="nx">required</span><span class="o">=</span><span class="s2">&quot;true&quot;</span> <span class="nx">validateat</span><span class="o">=</span><span class="s2">&quot;onServer&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfinput</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;submit&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;Submit&quot;</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;Submit&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;Send&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfform&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><img src="/images/uploads/2007/04/form1.gif" alt="Sample form" /></p>
+
+<p>Submitting this gives me the following error:</p>
+
+<p><img src="/images/uploads/2007/04/formerror2.gif" alt="Form Error 2" /></p>
+
+<p>In my opinion that is a bug which basically means whether you&#8217;re using &lt;cfform&gt; or &lt;form&gt; you can&#8217;t name any fields ending with &#8220;_required&#8221;.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-04-24T18:06:58+10:00" pubdate data-updated="true">Apr 24<span>th</span>, 2007</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2007/04/24/unwanted-coldfusion-form-validation//page/18/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -991,83 +1078,6 @@ myCustom.cfc
 </div>
 	
 		<div class="comments"><a href="/2006/12/21/scriptprotect-in-cfmx7//page/18/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2006/12/20/eclipsecfeclipse-gives-me-a-headache/">
-		
-			Eclipse/cfeclipse Gives Me a Headache</a>
-	</h2>
-	<div class="entry-content">
-		<p>So I know I&#8217;m going to get a hard time from the die hard <a href="http://www.eclipse.org/">eclipse</a> lovers out there. Don&#8217;t get me wrong, eclipse (or more precisely for me <a href="http://www.cfeclipse.org/">cfeclipse</a>) is free to use and at that cost you can&#8217;t get any cheaper which is fantastic for all ColdFusion developers :)</p>
-
-<p>Also I REALLY admire Rob Rohan, Mark Drew and all the other contributors this and every other open source product. It&#8217;s people like these who truly give something of value to the community at large. Well done.</p>
-
-<p>Some of the things I love about eclipse/cfeclipse are:</p>
-
-<ul>
-<li>Snippets and snippet variables</li>
-<li>Free and open source</li>
-<li>Plugins for CSS, Javascript, SVN etc</li>
-<li>Code completion</li>
-<li>Syntax highlighting</li>
-</ul>
-
-
-<p>So with all these lovely features (and more) why does it sometimes make my life difficult? Well it&#8217;s the little things!</p>
-
-<p>When I installed eclipse 3.2 (which I&#8217;ve done three times now on three different machines) I experienced memory leaks causing my code to magically duplicate itself in the editor pane. The only solution was to shut down that file and re-open it.</p>
-
-<p>Why can&#8217;t I open a file which doesn&#8217;t exist in a &#8216;project&#8217;? Oh I understand the merits of keeping everything in a project, but tell me that this doesn&#8217;t annoy you when you want to look at a random file. Please don&#8217;t say &#8220;use notepad&#8221;.</p>
-
-<p>In 3.2 after I add a comment (using the keyboard shortcut ctrl + shft + M)  my cursor appears to the left of the comment block&#8230;not in the middle where I can start to write my comment.</p>
-
-<p>The global replace (for me) is clunky. First you&#8217;ve got to know how to do it. Hit ctrl + h (or use the search menu option), then enter your text that you want to replace, hit search&#8230;oh but don&#8217;t forget to make sure that the &#8216;working set&#8217; you are in is selected as by default it&#8217;s the last working set you searched in. After searching you&#8217;ll get another window to enter your replacement text, but you can&#8217;t choose to replace in &#8220;All open documents&#8221;.</p>
-
-<p>Don&#8217;t get me started on auto-completing single and double quotes. It works well some of the time, but can trip you up if you&#8217;re not careful.</p>
-
-<p>Why can&#8217;t I see the file path of the file I&#8217;m working on in the header? I know I know&#8230;you can hover over the tab and get a tooltip, but it&#8217;s just not the same.</p>
-
-<p>Does your eclipse/cfeclipse suddenly &#8216;hang&#8217; every now and then? Don&#8217;t worry, give it about 10 seconds and it&#8217;ll wake up again.</p>
-
-<p>I&#8217;ve had discussions with some other developers who don&#8217;t seem to be having the same issues as me. But I&#8217;ve used 3 different versions of eclipse/cfeclipse on 3 different machines. Same problems.</p>
-
-<p>The general concensus is that it&#8217;s probably plugins which are causing me pain. But the plugins are one of the main reasons I use cfeclipse!. Plugins for SVN and <a href="http://www.aptana.com/">Aptana</a> etc are very handy. Where am I if I suddenly can&#8217;t use plugins? Well back using <a href="http://www.adobe.com/products/homesite/">Homesite</a> I think. I used Homesite before eclipse, and apart from the plugins (and of course the AUD$139 cost) why would I want to use eclipse?</p>
-
-<p>I&#8217;m sure this is close to heart for many of you out there as most developers I know are proud to use eclipse/cfeclipse as am I. But I&#8217;m willing to pay for a smooth ride. Please please please feel free to enlighten me if you think I&#8217;m way off track here. At the end of the day I just want an editor which gives me no problems and has the main features a developer (not designer, note I didn&#8217;t mention the design view of Dreamweaver) needs.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2006-12-20T15:39:46+11:00" pubdate data-updated="true">Dec 20<span>th</span>, 2006</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2006/12/20/eclipsecfeclipse-gives-me-a-headache//page/18/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 
