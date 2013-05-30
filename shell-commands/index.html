@@ -413,446 +413,446 @@
         </tr>
         <tr>
             <td>ssh</td>
-            <td colspan="2"><p>create a new key, specifying the name (good if you already have default keys):</p>
-                <p>ssh-keygen -f ~/.ssh/mykey_rsa</p>
-                <p>See if the ssh-agent is running:</p>
-                <p>ps aux | grep [s]sh-agent</p>
-                <p>See which keys are loaded:</p>
-                <p>ssh-add -l</p>
-                <p>Remove a key from the ssh agent</p>
-                <p>ssh-add -d ~/.ssh/mykey_rsa</p>
-                <p>If your key isn&#8217;t there, load it:</p>
-                <p>ssh-add ~/.ssh/mykey_rsa</p>
-                <p>Set the correct identity file (if you use more than 1) in your .ssh/config:</p>
-                <p>Host myhostname<br/>
-        HostName domain.com<br/>
-        PreferredAuthentications publickey<br/>
-        IdentityFile ~/.ssh/mykey_rsa</div>
+            <td colspan="2">
+                <p>create a new key, specifying the name (good if you already have default keys):
+                <br>ssh-keygen -f ~/.ssh/mykey_rsa</p>
+                <p>See if the ssh-agent is running:
+                <br>ps aux | grep [s]sh-agent</p>
+                <p>See which keys are loaded:
+                <br>ssh-add -l</p>
+                <p>Remove a key from the ssh agent
+                <br>ssh-add -d ~/.ssh/mykey_rsa</p>
+                <p>If your key isn&#8217;t there, load it:
+                <br>ssh-add ~/.ssh/mykey_rsa</p>
+                <p>Set the correct identity file (if you use more than 1) in your .ssh/config:
+                <br>Host myhostname
+                <br>HostName domain.com
+                <br>PreferredAuthentications publickey
+                <br>IdentityFile ~/.ssh/mykey_rsa
+                </p>
+                <p>Also note above to set <em>PreferredAuthentications</em> to only accept publickey.</p>
+                <p>Permissions:
+                <br>755 on ~/.ssh
+                <br>600 on your public and private keys
+                <br>644 on known_hosts and config</p>
+            </td>
+        </tr>
+        <tr>
+            <td rowspan="11">svn</td>
+            <td>svn delete &#8211;keep-local .project</td>
+            <td>Removes file from repo but keeps local copy</td>
+        </tr>
+        <tr>
+            <td>svn diff -r HEAD</td>
+            <td>Compare local working copy to HEAD</td>
+        </tr>
+        <tr>
+            <td>svn add &#8211;force ./path</td>
+            <td>Forces svn to add new files in a &#8220;path&#8221; that is already under version control</td>
+        </tr>
+        <tr>
+            <td>svn propedit svn:ignore .</td>
+            <td>Opens a system editor to edit</td>
+        </tr>
+        <tr>
+            <td>svn log</td>
+            <td>Provides basic audit of activity in the repository (best to pipe into less etc as it will get quite long)</td>
+        </tr>
+        <tr>
+            <td>svn log -v</td>
+            <td>As above except this time you get a full list of files committed by the user</td>
+        </tr>
+        <tr>
+            <td>svn log -v -r HEAD:1000</td>
+            <td>As above except this time you get a full verbose output, from the most recent change (HEAD) to revision number 1000. Again, best to pipe into <em>less</em> etc</td>
+        </tr>
+        <tr>
+            <td>svn log -v &#8211;limit 5</td>
+            <td>Limit the log to the last 5 commits</td>
+        </tr>
+        <tr>
+            <td>svn log -r {2012-02-02}:{2012-02-03}</td>
+            <td>Show a log between certain dates</td>
+        </tr>
+        <tr>
+            <td>svn log &#8211;xml -v -r 25311:25230 | xsltproc svn2cl.xsl &#8211; &gt; ChangeLog</td>
+            <td>Retrieves the svn log (in xml) between revisions, passes to <a href="http://arthurdejong.org/svn2cl/" target="_blank">svn2cl</a> for formatting</td>
+        </tr>
+        <tr>
+            <td>svn st -u</td>
+            <td>Shows you what&#8217;s changed in the repo, handy before updating your local copy</td>
+        </tr>
+        <tr>
+            <td>svn diff -r head myfile.html</td>
+            <td>Shows you a diff between your local copy and HEAD</td>
+        </tr>
+        <tr>
+            <td>sudo -l</td>
+            <td>sudo -l</td>
+            <td>What commands can the current user run on this host?</td>
+        </tr>
+        <tr>
+            <td>sudo !!</td>
+            <td>sudo !!</td>
+            <td>Executes the last command with &#8220;sudo&#8221; added</td>
+        </tr>
+        <tr>
+            <td rowspan="4">tail</td>
+            <td></td>
+            <td>like cat, but only reads the end of the file</td>
+        </tr>
+        <tr>
+            <td>tail /var/log/messages</td>
+            <td>see the last 20 (by default) lines of /var/log/messages</td>
+        </tr>
+        <tr>
+            <td>tail -f /var/log/messages</td>
+            <td>watch the file continuously, while it&#8217;s being updated</td>
+        </tr>
+        <tr>
+            <td>tail -200 /var/log/messages</td>
+            <td>print the last 200 lines of the file to the screen</td>
+        </tr>
+        <tr>
+            <td rowspan="4">tar</td>
+            <td></td>
+            <td>Creating and Extracting .tar.gz and .tar files</td>
+        </tr>
+        <tr>
+            <td>tar -zxvf file.tar.gz</td>
+            <td>Extracts the file</td>
+        </tr>
+        <tr>
+            <td>tar -cf archive.tar contents/</td>
+            <td>Takes everything from contents/ and puts it into archive.tar</td>
+        </tr>
+        <tr>
+            <td>gzip -d filename.gz</td>
+            <td>Decompress the file, extract it</td>
+        </tr>
+        <tr>
+            <td>zip</td>
+            <td>zip -r archivename.zip filestozip</td>
+            <td>Compresses file(s) to a zip</td>
+        </tr>
+        <tr>
+            <td>top</td>
+            <td></td>
+            <td>shows live system processes in a nice table, memory information, uptime and other useful info. This is excellent for managing your system processes, resources and ensure everything is working fine and your server isn&#8217;t bogged down.<br/>
+        top then type Shift + M to sort by memory usage or Shift + P to sort by CPU usage</td>
+        </tr>
+        <tr>
+            <td rowspan="2">touch</td>
+            <td></td>
+            <td>creates an empty file</td>
+        </tr>
+        <tr>
+            <td>touch index.html</td>
+            <td>create an empty file called index.html in the current directory</td>
+        </tr>
+        <tr>
+            <td>unzip</td>
+            <td>unzip file.zip</td>
+            <td>Extracting .zip files shell command</td>
+        </tr>
+        <tr>
+            <td>wc</td>
+            <td>wc -l filename.txt</td>
+            <td>tells how many lines are in filename.txt</td>
+        </tr>
+        <tr>
+            <td rowspan="4">wget</td>
+            <td>wget &#8211;recursive &#8211;no-clobber &#8211;page-requisites &#8211;html-extension &#8211;convert-links &#8211;restrict-file-names=windows &#8211;domains intranet.bosw2k.com http://intranet.bosw2k.com/</td>
+            <td>scrapes an entire site, doesn&#8217;t follow external links</td>
+        </tr>
+        <tr>
+            <td>wget -O &#8211; www.mysite.com</td>
+            <td>Retrieves a single page via GET</td>
+        </tr>
+        <tr>
+            <td>wget &#8211;post-data &#8216;param1=value&#8217; -O &#8211; www.mysite.com</td>
+            <td>Retrieves a single page via POST and sends parameters</td>
+        </tr>
+        <tr>
+            <td>wget &#8211;server-response &#8211;spider http://www.mysite.com/</td>
+            <td>Retrieves the HTTP headers only</td>
+        </tr>
+        <tr>
+            <td class="noborder" colspan="3"> <a name="apache"></a></td>
+        </tr>
+        <tr>
+        <th class="heading" colspan="3">
+        <h3>Apache commands</h3>
+        </th>
+        </tr>
+        <tr>
+            <td rowspan="3">httpd</td>
+            <td>httpd -v</td>
+            <td>Outputs the build date and version of the Apache server.</td>
+        </tr>
+        <tr>
+            <td>httpd -l</td>
+            <td>Lists compiled in Apache modules</td>
+        </tr>
+        <tr>
+            <td>httpd status</td>
+            <td>Only works if mod_status is enabled and shows a page of active connections</td>
+        </tr>
+        <tr>
+            <td rowspan="4">httpd</td>
+            <td>sudo apachectl graceful</td>
+            <td>If Apache is not already running it will be started. If it is already running then it will reload with the new changes but will not abort active connections, meaning that anyone who is in the middle of downloading something will continue to be able to download it.</td>
+        </tr>
+        <tr>
+            <td>sudo apachectl configtest</td>
+            <td>Check your config syntax</td>
+        </tr>
+        <tr>
+            <td>apachectl -M</td>
+            <td>what static and shared modules are loaded</td>
+        </tr>
+        <tr>
+            <td>apachectl -l</td>
+            <td>what compiled in modules are installed</td>
+        </tr>
+        <tr>
+            <td class="noborder" colspan="3"></td>
+        </tr>
+        <tr>
+        <th class="heading" colspan="3"><a name="mysql"></a></p>
+        <h3>MySQL commands</h3>
+        </th>
+        </tr>
+        <tr>
+            <td rowspan="4">mysqladmin</td>
+            <td>mysqladmin processlist</td>
+            <td>Shows active mysql connections and queries</td>
+        </tr>
+        <tr>
+            <td>mysqladmin -uroot -p shutdown</td>
+            <td>Shut down the mysql service</td>
+        </tr>
+        <tr>
+            <td>mysqladmin -uroot -p variables</td>
+            <td>Shows global vars</td>
+        </tr>
+        <tr>
+            <td>mysqladmin create databasenamehere</td>
+            <td>Creates a mysql database</td>
+        </tr>
+        <tr>
+            <td rowspan="10">mysql</td>
+            <td>mysql -uroot -p</td>
+            <td>Connects to mysql in the terminal</td>
+        </tr>
+        <tr>
+            <td>mysql &#8211;print-defaults</td>
+            <td>mysql would have been started with the following arguments:</p>
+        <div class="codecolorer-container text railscasts" style="overflow:auto;white-space:nowrap;"><div class="text codecolorer">&#8211;port=3306 &#8211;socket=/tmp/mysql.sock &#8211;default-character-set=utf8<br/>
+        &#8211;no-auto-rehash &#8211;default-character-set=utf8</div></div>
+        </td>
+        </tr>
+        <tr>
+            <td>mysql&gt; show databases;</td>
+            <td>Shows all databases on the server (once connected)</td>
+        </tr>
+        <tr>
+            <td>mysql&gt; use [database];</td>
+            <td>Connects you to a particular database</td>
+        </tr>
+        <tr>
+            <td>mysql&gt; show tables;</td>
+            <td>Displays all tables once you have connected to a database</td>
+        </tr>
+        <tr>
+            <td>mysql&gt; show table status;</td>
+            <td>Displays table metadata including sizes</td>
+        </tr>
+        <tr>
+            <td>mysql&gt; show variables like &#8220;%character%&#8221;;<br/>
+        show variables like &#8220;%collation%&#8221;;</td>
+            <td>Shows the server collation and characterset, e.g.<br/>
+        +&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8211;+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-+<br/>
+        | Variable_name | Value |<br/>
+        +&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8211;+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-+<br/>
+        | character_set_client | utf8 |<br/>
+        | character_set_connection | utf8 |<br/>
+        | character_set_database | utf8 |<br/>
+        | character_set_filesystem | binary |<br/>
+        | character_set_results | utf8 |<br/>
+        | character_set_server | utf8 |<br/>
+        | character_set_system | utf8 |<br/>
+        | character_sets_dir | /usr/share/mysql/charsets/ |<br/>
+        +&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8211;+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-++&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-+&#8212;&#8212;&#8212;&#8212;&#8212;&#8211;+<br/>
+        | Variable_name | Value |<br/>
+        +&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-+&#8212;&#8212;&#8212;&#8212;&#8212;&#8211;+<br/>
+        | collation_connection | utf8_general_ci |<br/>
+        | collation_database | utf8_general_ci |<br/>
+        | collation_server | utf8_general_ci |<br/>
+        +&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-+&#8212;&#8212;&#8212;&#8212;&#8212;&#8211;+</td>
+        </tr>
+        <tr>
+            <td>mysql&gt; show create table tablename;Shows create statement with keys and indexes</td>
+        </tr>
+        <tr>
+            <td>mysql&gt; show variables like &#8220;character_set_database&#8221;;</td>
+            <td>Shows characterset of a specific database+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;-+<br/>
+        | Variable_name | Value |<br/>
+        +&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;-+<br/>
+        | character_set_database | utf8 |<br/>
+        +&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;-+</td>
+        </tr>
+        <tr>
+            <td>mysql&gt; show full columns from vocab_scot;</td>
+            <td>+&#8212;&#8212;-+&#8212;&#8212;&#8212;&#8212;&#8211;+&#8212;&#8212;&#8212;&#8212;&#8212;&#8211;+&#8212;&#8212;+&#8212;&#8211;+&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;-+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;+<br/>
+        | Field | Type | Collation | Null | Key | Default | Extra | Privileges | Comment |<br/>
+        +&#8212;&#8212;-+&#8212;&#8212;&#8212;&#8212;&#8211;+&#8212;&#8212;&#8212;&#8212;&#8212;&#8211;+&#8212;&#8212;+&#8212;&#8211;+&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;-+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;+<br/>
+        | id | int(11) | NULL | NO | PRI | NULL | auto_increment | select,insert,update,references | |<br/>
+        | term | varchar(200) | utf8_general_ci | NO | UNI | NULL | | select,insert,update,references | |<br/>
+        | uri | varchar(200) | utf8_general_ci | NO | | NULL | | select,insert,update,references | |<br/>
+        +&#8212;&#8212;-+&#8212;&#8212;&#8212;&#8212;&#8211;+&#8212;&#8212;&#8212;&#8212;&#8212;&#8211;+&#8212;&#8212;+&#8212;&#8211;+&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;&#8212;&#8212;-+&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;+&#8212;&#8212;&#8212;+</td>
+        </tr>
+        <tr>
+            <td rowspan="6">mysqldump</td>
+            <td>mysqldump -hdb.example.com -uusername -p mydbname | gzip &gt; mydbname.sql.gz</td>
+            <td>Back&#8217;s up a database and compresses to a .gz file</td>
+        </tr>
+        <tr>
+            <td>mysqldump &#8211;no-data -h db.example.com -u username -p mydbname &gt; myschema.sql</td>
+            <td>Generates schema, no data</td>
+        </tr>
+        <tr>
+            <td>mysqldump -h 127.0.0.1 -u myusername -p &#8211;single-transaction mydatabase | gzip &gt; mydatabase.sql.gz</td>
+            <td>Back&#8217;s up a database without locking tables (innoDB only)</td>
+        </tr>
+        <tr>
+            <td>mysqldump -h 127.0.0.1 -u myusername -p &#8211;lock-tables=false mydatabase | gzip &gt; mydatabase.sql.gz</td>
+            <td>Back&#8217;s up a database without locking tables (MyISAM only)</td>
+        </tr>
+        <tr>
+            <td>mysqldump &#8211;compatible=ansi -h127.0.0.1 -umyuser -p mydatabase | gzip &gt; mydatabase.sql.gz</td>
+            <td>Back&#8217;s up a database with ansi compatibility, meaning syntax will hopefully be more consistent and less likely to barf</td>
+        </tr>
+        <tr>
+            <td>mysqldump -umsharman -p &#8211;ignore-table=mydatabase.tablename mydatabase | gzip &gt; mydatabase.sql.gz</td>
+            <td>Dumps a database ignoring a specific table</td>
+        </tr>
+        <tr>
+            <td rowspan="3">gunzip</td>
+            <td>gunzip &lt; [mydbname.sql.gz] | mysql -u[uname] -p[pass] mydbname</td>
+            <td>Restores a database</td>
+        </tr>
+        <tr>
+            <td>mysql -uroot dbname &lt; &lt;(cat *sql)</td>
+            <td>Restores a database if you have an sql file per table</td>
+        </tr>
+        <tr>
+            <td>cat &lt; mydb.sql | mysql -uroot dbname</td>
+            <td>Runs sql file against a database</td>
+        </tr>
+        <tr>
+            <td class="noborder" colspan="3">To set the default to UTF-8, you want to add the following to my.cnf</p>
+        <div class="codecolorer-container text railscasts" style="overflow:auto;white-space:nowrap;"><div class="text codecolorer">[client]<br/>
+        default-character-set=utf8</div></div>
+        <p>[mysql]<br/>
+        default-character-set=utf8[mysqld]<br/>
+        default-character-set = utf8<br/>
+        collation-server = utf8_unicode_ci<br/>
+        init-connect=&#8217;SET NAMES utf8&#8242;<br/>
+        character-set-server = utf8</td>
+        </tr>
+        <tr>
+            <td class="noborder" colspan="3"></td>
+        </tr>
+        <tr>
+        <th class="heading" colspan="3"><a name="nano"></a></p>
+        <h3>Nano commands</h3>
+        </th>
+        </tr>
+        <tr>
+            <td>ctrl + space</td>
+            <td>or ctrl + shift + alt</td>
+            <td>Moves forward 1 word</td>
+        </tr>
+        <tr>
+            <td>ctrl + j</td>
+            <td></td>
+            <td>justifies the current paragraph</td>
+        </tr>
+        <tr>
+            <td>ctrl + a</td>
+            <td></td>
+            <td>moves to start of line</td>
+        </tr>
+        <tr>
+            <td>ctrl + o</td>
+            <td></td>
+            <td>saves file to disk</td>
+        </tr>
+        <tr>
+            <td>ctrl + e</td>
+            <td></td>
+            <td>moves to end of line</td>
+        </tr>
+        <tr>
+            <td>ctrl + v</td>
+            <td></td>
+            <td>moves down a screen</td>
+        </tr>
+        <tr>
+            <td>ctrl + y</td>
+            <td></td>
+            <td>moves up a screen</td>
+        </tr>
+        <tr>
+            <td>ctrl + c</td>
+            <td></td>
+            <td>shows where cursor is (handy if you&#8217;ve moved down pages etc)</td>
+        </tr>
+        <tr>
+            <td>ctrl + k</td>
+            <td></td>
+            <td>deletes current line</td>
+        </tr>
+        <tr>
+            <td>ctrl + shift + _ (or ctrl + _)</td>
+            <td></td>
+            <td>go to line</td>
+        </tr>
+        <tr>
+            <td>ctrl + \</td>
+            <td></td>
+            <td>find and replace</td>
+        </tr>
+        <tr>
+            <td>ctrl + g</td>
+            <td></td>
+            <td>help</td>
+        </tr>
+        <tr>
+            <td>ctrl + w (or F6)</td>
+            <td></td>
+            <td>search</td>
+        </tr>
+        <tr>
+            <td>ctrl + ^</td>
+            <td></td>
+            <td>&#8220;marks&#8221; a spot for selecting text (to copy etc) up to where you move your cursor. If you mess up, hit ctrl + ^ again to &#8220;unmark&#8221; your selection</td>
+        </tr>
+        <tr>
+            <td>ctrl + k</td>
+            <td></td>
+            <td>Cutting text (selected with ctrl + ^)</td>
+        </tr>
+        <tr>
+            <td>ctrl + u</td>
+            <td></td>
+            <td>Pastes text cut with ctrl + k</td>
+        </tr>
+    </tbody>
+</table>
+</figure>
 
-
-<pre><code>    &lt;p&gt;Also note above to set &lt;em&gt;PreferredAuthentications&lt;/em&gt; to only accept publickey.&lt;/p&gt;
-    &lt;p&gt;Permissions:&lt;/p&gt;
-    &lt;p&gt;755 on ~/.ssh&lt;br/&gt;
-    600 on your public and private keys&lt;br/&gt;
-    644 on known_hosts and config&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td rowspan="11"&gt;svn&lt;/td&gt;
-        &lt;td&gt;svn delete &amp;#8211;keep-local .project&lt;/td&gt;
-        &lt;td&gt;Removes file from repo but keeps local copy&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;svn diff -r HEAD&lt;/td&gt;
-        &lt;td&gt;Compare local working copy to HEAD&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;svn add &amp;#8211;force ./path&lt;/td&gt;
-        &lt;td&gt;Forces svn to add new files in a &amp;#8220;path&amp;#8221; that is already under version control&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;svn propedit svn:ignore .&lt;/td&gt;
-        &lt;td&gt;Opens a system editor to edit&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;svn log&lt;/td&gt;
-        &lt;td&gt;Provides basic audit of activity in the repository (best to pipe into less etc as it will get quite long)&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;svn log -v&lt;/td&gt;
-        &lt;td&gt;As above except this time you get a full list of files committed by the user&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;svn log -v -r HEAD:1000&lt;/td&gt;
-        &lt;td&gt;As above except this time you get a full verbose output, from the most recent change (HEAD) to revision number 1000. Again, best to pipe into &lt;em&gt;less&lt;/em&gt; etc&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;svn log -v &amp;#8211;limit 5&lt;/td&gt;
-        &lt;td&gt;Limit the log to the last 5 commits&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;svn log -r {2012-02-02}:{2012-02-03}&lt;/td&gt;
-        &lt;td&gt;Show a log between certain dates&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;svn log &amp;#8211;xml -v -r 25311:25230 | xsltproc svn2cl.xsl &amp;#8211; &amp;gt; ChangeLog&lt;/td&gt;
-        &lt;td&gt;Retrieves the svn log (in xml) between revisions, passes to &lt;a href="http://arthurdejong.org/svn2cl/" target="_blank"&gt;svn2cl&lt;/a&gt; for formatting&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;svn st -u&lt;/td&gt;
-        &lt;td&gt;Shows you what&amp;#8217;s changed in the repo, handy before updating your local copy&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;svn diff -r head myfile.html&lt;/td&gt;
-        &lt;td&gt;Shows you a diff between your local copy and HEAD&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;sudo -l&lt;/td&gt;
-        &lt;td&gt;sudo -l&lt;/td&gt;
-        &lt;td&gt;What commands can the current user run on this host?&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;sudo !!&lt;/td&gt;
-        &lt;td&gt;sudo !!&lt;/td&gt;
-        &lt;td&gt;Executes the last command with &amp;#8220;sudo&amp;#8221; added&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td rowspan="4"&gt;tail&lt;/td&gt;
-        &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;like cat, but only reads the end of the file&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;tail /var/log/messages&lt;/td&gt;
-        &lt;td&gt;see the last 20 (by default) lines of /var/log/messages&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;tail -f /var/log/messages&lt;/td&gt;
-        &lt;td&gt;watch the file continuously, while it&amp;#8217;s being updated&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;tail -200 /var/log/messages&lt;/td&gt;
-        &lt;td&gt;print the last 200 lines of the file to the screen&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td rowspan="4"&gt;tar&lt;/td&gt;
-        &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;Creating and Extracting .tar.gz and .tar files&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;tar -zxvf file.tar.gz&lt;/td&gt;
-        &lt;td&gt;Extracts the file&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;tar -cf archive.tar contents/&lt;/td&gt;
-        &lt;td&gt;Takes everything from contents/ and puts it into archive.tar&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;gzip -d filename.gz&lt;/td&gt;
-        &lt;td&gt;Decompress the file, extract it&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;zip&lt;/td&gt;
-        &lt;td&gt;zip -r archivename.zip filestozip&lt;/td&gt;
-        &lt;td&gt;Compresses file(s) to a zip&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;top&lt;/td&gt;
-        &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;shows live system processes in a nice table, memory information, uptime and other useful info. This is excellent for managing your system processes, resources and ensure everything is working fine and your server isn&amp;#8217;t bogged down.&lt;br/&gt;
-    top then type Shift + M to sort by memory usage or Shift + P to sort by CPU usage&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td rowspan="2"&gt;touch&lt;/td&gt;
-        &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;creates an empty file&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;touch index.html&lt;/td&gt;
-        &lt;td&gt;create an empty file called index.html in the current directory&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;unzip&lt;/td&gt;
-        &lt;td&gt;unzip file.zip&lt;/td&gt;
-        &lt;td&gt;Extracting .zip files shell command&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;wc&lt;/td&gt;
-        &lt;td&gt;wc -l filename.txt&lt;/td&gt;
-        &lt;td&gt;tells how many lines are in filename.txt&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td rowspan="4"&gt;wget&lt;/td&gt;
-        &lt;td&gt;wget &amp;#8211;recursive &amp;#8211;no-clobber &amp;#8211;page-requisites &amp;#8211;html-extension &amp;#8211;convert-links &amp;#8211;restrict-file-names=windows &amp;#8211;domains intranet.bosw2k.com http://intranet.bosw2k.com/&lt;/td&gt;
-        &lt;td&gt;scrapes an entire site, doesn&amp;#8217;t follow external links&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;wget -O &amp;#8211; www.mysite.com&lt;/td&gt;
-        &lt;td&gt;Retrieves a single page via GET&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;wget &amp;#8211;post-data &amp;#8216;param1=value&amp;#8217; -O &amp;#8211; www.mysite.com&lt;/td&gt;
-        &lt;td&gt;Retrieves a single page via POST and sends parameters&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;wget &amp;#8211;server-response &amp;#8211;spider http://www.mysite.com/&lt;/td&gt;
-        &lt;td&gt;Retrieves the HTTP headers only&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td class="noborder" colspan="3"&gt; &lt;a name="apache"&gt;&lt;/a&gt;&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-    &lt;th class="heading" colspan="3"&gt;
-    &lt;h3&gt;Apache commands&lt;/h3&gt;
-    &lt;/th&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td rowspan="3"&gt;httpd&lt;/td&gt;
-        &lt;td&gt;httpd -v&lt;/td&gt;
-        &lt;td&gt;Outputs the build date and version of the Apache server.&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;httpd -l&lt;/td&gt;
-        &lt;td&gt;Lists compiled in Apache modules&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;httpd status&lt;/td&gt;
-        &lt;td&gt;Only works if mod_status is enabled and shows a page of active connections&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td rowspan="4"&gt;httpd&lt;/td&gt;
-        &lt;td&gt;sudo apachectl graceful&lt;/td&gt;
-        &lt;td&gt;If Apache is not already running it will be started. If it is already running then it will reload with the new changes but will not abort active connections, meaning that anyone who is in the middle of downloading something will continue to be able to download it.&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;sudo apachectl configtest&lt;/td&gt;
-        &lt;td&gt;Check your config syntax&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;apachectl -M&lt;/td&gt;
-        &lt;td&gt;what static and shared modules are loaded&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;apachectl -l&lt;/td&gt;
-        &lt;td&gt;what compiled in modules are installed&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td class="noborder" colspan="3"&gt;&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-    &lt;th class="heading" colspan="3"&gt;&lt;a name="mysql"&gt;&lt;/a&gt;&lt;/p&gt;
-    &lt;h3&gt;MySQL commands&lt;/h3&gt;
-    &lt;/th&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td rowspan="4"&gt;mysqladmin&lt;/td&gt;
-        &lt;td&gt;mysqladmin processlist&lt;/td&gt;
-        &lt;td&gt;Shows active mysql connections and queries&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;mysqladmin -uroot -p shutdown&lt;/td&gt;
-        &lt;td&gt;Shut down the mysql service&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;mysqladmin -uroot -p variables&lt;/td&gt;
-        &lt;td&gt;Shows global vars&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;mysqladmin create databasenamehere&lt;/td&gt;
-        &lt;td&gt;Creates a mysql database&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td rowspan="10"&gt;mysql&lt;/td&gt;
-        &lt;td&gt;mysql -uroot -p&lt;/td&gt;
-        &lt;td&gt;Connects to mysql in the terminal&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;mysql &amp;#8211;print-defaults&lt;/td&gt;
-        &lt;td&gt;mysql would have been started with the following arguments:&lt;/p&gt;
-    &lt;div class="codecolorer-container text railscasts" style="overflow:auto;white-space:nowrap;"&gt;&lt;div class="text codecolorer"&gt;--port=3306 --socket=/tmp/mysql.sock --default-character-set=utf8&lt;br/&gt;
-    --no-auto-rehash --default-character-set=utf8&lt;/div&gt;&lt;/div&gt;
-    &lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;mysql&amp;gt; show databases;&lt;/td&gt;
-        &lt;td&gt;Shows all databases on the server (once connected)&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;mysql&amp;gt; use [database];&lt;/td&gt;
-        &lt;td&gt;Connects you to a particular database&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;mysql&amp;gt; show tables;&lt;/td&gt;
-        &lt;td&gt;Displays all tables once you have connected to a database&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;mysql&amp;gt; show table status;&lt;/td&gt;
-        &lt;td&gt;Displays table metadata including sizes&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;mysql&amp;gt; show variables like &amp;#8220;%character%&amp;#8221;;&lt;br/&gt;
-    show variables like &amp;#8220;%collation%&amp;#8221;;&lt;/td&gt;
-        &lt;td&gt;Shows the server collation and characterset, e.g.&lt;br/&gt;
-    +&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8211;+&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;-+&lt;br/&gt;
-    | Variable_name | Value |&lt;br/&gt;
-    +&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8211;+&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;-+&lt;br/&gt;
-    | character_set_client | utf8 |&lt;br/&gt;
-    | character_set_connection | utf8 |&lt;br/&gt;
-    | character_set_database | utf8 |&lt;br/&gt;
-    | character_set_filesystem | binary |&lt;br/&gt;
-    | character_set_results | utf8 |&lt;br/&gt;
-    | character_set_server | utf8 |&lt;br/&gt;
-    | character_set_system | utf8 |&lt;br/&gt;
-    | character_sets_dir | /usr/share/mysql/charsets/ |&lt;br/&gt;
-    +&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8211;+&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;-++&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;-+&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8211;+&lt;br/&gt;
-    | Variable_name | Value |&lt;br/&gt;
-    +&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;-+&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8211;+&lt;br/&gt;
-    | collation_connection | utf8_general_ci |&lt;br/&gt;
-    | collation_database | utf8_general_ci |&lt;br/&gt;
-    | collation_server | utf8_general_ci |&lt;br/&gt;
-    +&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;-+&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8211;+&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;mysql&amp;gt; show create table tablename;Shows create statement with keys and indexes&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;mysql&amp;gt; show variables like &amp;#8220;character_set_database&amp;#8221;;&lt;/td&gt;
-        &lt;td&gt;Shows characterset of a specific database+&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;+&amp;#8212;&amp;#8212;-+&lt;br/&gt;
-    | Variable_name | Value |&lt;br/&gt;
-    +&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;+&amp;#8212;&amp;#8212;-+&lt;br/&gt;
-    | character_set_database | utf8 |&lt;br/&gt;
-    +&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;+&amp;#8212;&amp;#8212;-+&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;mysql&amp;gt; show full columns from vocab_scot;&lt;/td&gt;
-        &lt;td&gt;+&amp;#8212;&amp;#8212;-+&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8211;+&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8211;+&amp;#8212;&amp;#8212;+&amp;#8212;&amp;#8211;+&amp;#8212;&amp;#8212;&amp;#8212;+&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;-+&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;+&amp;#8212;&amp;#8212;&amp;#8212;+&lt;br/&gt;
-    | Field | Type | Collation | Null | Key | Default | Extra | Privileges | Comment |&lt;br/&gt;
-    +&amp;#8212;&amp;#8212;-+&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8211;+&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8211;+&amp;#8212;&amp;#8212;+&amp;#8212;&amp;#8211;+&amp;#8212;&amp;#8212;&amp;#8212;+&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;-+&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;+&amp;#8212;&amp;#8212;&amp;#8212;+&lt;br/&gt;
-    | id | int(11) | NULL | NO | PRI | NULL | auto_increment | select,insert,update,references | |&lt;br/&gt;
-    | term | varchar(200) | utf8_general_ci | NO | UNI | NULL | | select,insert,update,references | |&lt;br/&gt;
-    | uri | varchar(200) | utf8_general_ci | NO | | NULL | | select,insert,update,references | |&lt;br/&gt;
-    +&amp;#8212;&amp;#8212;-+&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8211;+&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8211;+&amp;#8212;&amp;#8212;+&amp;#8212;&amp;#8211;+&amp;#8212;&amp;#8212;&amp;#8212;+&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;-+&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;&amp;#8212;+&amp;#8212;&amp;#8212;&amp;#8212;+&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td rowspan="6"&gt;mysqldump&lt;/td&gt;
-        &lt;td&gt;mysqldump -hdb.example.com -uusername -p mydbname | gzip &amp;gt; mydbname.sql.gz&lt;/td&gt;
-        &lt;td&gt;Back&amp;#8217;s up a database and compresses to a .gz file&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;mysqldump &amp;#8211;no-data -h db.example.com -u username -p mydbname &amp;gt; myschema.sql&lt;/td&gt;
-        &lt;td&gt;Generates schema, no data&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;mysqldump -h 127.0.0.1 -u myusername -p &amp;#8211;single-transaction mydatabase | gzip &amp;gt; mydatabase.sql.gz&lt;/td&gt;
-        &lt;td&gt;Back&amp;#8217;s up a database without locking tables (innoDB only)&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;mysqldump -h 127.0.0.1 -u myusername -p &amp;#8211;lock-tables=false mydatabase | gzip &amp;gt; mydatabase.sql.gz&lt;/td&gt;
-        &lt;td&gt;Back&amp;#8217;s up a database without locking tables (MyISAM only)&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;mysqldump &amp;#8211;compatible=ansi -h127.0.0.1 -umyuser -p mydatabase | gzip &amp;gt; mydatabase.sql.gz&lt;/td&gt;
-        &lt;td&gt;Back&amp;#8217;s up a database with ansi compatibility, meaning syntax will hopefully be more consistent and less likely to barf&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;mysqldump -umsharman -p &amp;#8211;ignore-table=mydatabase.tablename mydatabase | gzip &amp;gt; mydatabase.sql.gz&lt;/td&gt;
-        &lt;td&gt;Dumps a database ignoring a specific table&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td rowspan="3"&gt;gunzip&lt;/td&gt;
-        &lt;td&gt;gunzip &amp;lt; [mydbname.sql.gz] | mysql -u[uname] -p[pass] mydbname&lt;/td&gt;
-        &lt;td&gt;Restores a database&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;mysql -uroot dbname &amp;lt; &amp;lt;(cat *sql)&lt;/td&gt;
-        &lt;td&gt;Restores a database if you have an sql file per table&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;cat &amp;lt; mydb.sql | mysql -uroot dbname&lt;/td&gt;
-        &lt;td&gt;Runs sql file against a database&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td class="noborder" colspan="3"&gt;To set the default to UTF-8, you want to add the following to my.cnf&lt;/p&gt;
-    &lt;div class="codecolorer-container text railscasts" style="overflow:auto;white-space:nowrap;"&gt;&lt;div class="text codecolorer"&gt;[client]&lt;br/&gt;
-    default-character-set=utf8&lt;/div&gt;&lt;/div&gt;
-    &lt;p&gt;[mysql]&lt;br/&gt;
-    default-character-set=utf8[mysqld]&lt;br/&gt;
-    default-character-set = utf8&lt;br/&gt;
-    collation-server = utf8_unicode_ci&lt;br/&gt;
-    init-connect=&amp;#8217;SET NAMES utf8&amp;#8242;&lt;br/&gt;
-    character-set-server = utf8&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td class="noborder" colspan="3"&gt;&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-    &lt;th class="heading" colspan="3"&gt;&lt;a name="nano"&gt;&lt;/a&gt;&lt;/p&gt;
-    &lt;h3&gt;Nano commands&lt;/h3&gt;
-    &lt;/th&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;ctrl + space&lt;/td&gt;
-        &lt;td&gt;or ctrl + shift + alt&lt;/td&gt;
-        &lt;td&gt;Moves forward 1 word&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;ctrl + j&lt;/td&gt;
-        &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;justifies the current paragraph&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;ctrl + a&lt;/td&gt;
-        &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;moves to start of line&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;ctrl + o&lt;/td&gt;
-        &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;saves file to disk&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;ctrl + e&lt;/td&gt;
-        &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;moves to end of line&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;ctrl + v&lt;/td&gt;
-        &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;moves down a screen&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;ctrl + y&lt;/td&gt;
-        &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;moves up a screen&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;ctrl + c&lt;/td&gt;
-        &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;shows where cursor is (handy if you&amp;#8217;ve moved down pages etc)&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;ctrl + k&lt;/td&gt;
-        &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;deletes current line&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;ctrl + shift + _ (or ctrl + _)&lt;/td&gt;
-        &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;go to line&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;ctrl + \&lt;/td&gt;
-        &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;find and replace&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;ctrl + g&lt;/td&gt;
-        &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;help&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;ctrl + w (or F6)&lt;/td&gt;
-        &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;search&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;ctrl + ^&lt;/td&gt;
-        &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;&amp;#8220;marks&amp;#8221; a spot for selecting text (to copy etc) up to where you move your cursor. If you mess up, hit ctrl + ^ again to &amp;#8220;unmark&amp;#8221; your selection&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;ctrl + k&lt;/td&gt;
-        &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;Cutting text (selected with ctrl + ^)&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;ctrl + u&lt;/td&gt;
-        &lt;td&gt;&lt;/td&gt;
-        &lt;td&gt;Pastes text cut with ctrl + k&lt;/td&gt;
-    &lt;/tr&gt;
-&lt;/tbody&gt;
-</code></pre>
-
-<p></table>
-</figure></p>
 </div>
 </article>
 

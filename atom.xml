@@ -4,7 +4,7 @@
   <title><![CDATA[chapter31 &raquo;]]></title>
   <link href="http://chapter31.com/atom.xml" rel="self"/>
   <link href="http://chapter31.com/"/>
-  <updated>2013-05-29T06:33:34+10:00</updated>
+  <updated>2013-05-30T10:36:22+10:00</updated>
   <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
@@ -48,7 +48,9 @@
 </ol>
 
 
-<p>Now if you check the output of phpinfo() you should see Xdebug</p>
+<p>Now if you check the output of phpinfo() you should see Xdebug.</p>
+
+<p>To make sure your debug output is being styled properly, make sure you have <code>html_errors = On</code> in php.ini (it defaults to <em>Off</em>).</p>
 ]]></content>
   </entry>
   
