@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Even though I&#8217;m running Mountain Lion (10.8.3) which comes with Xdebug I couldn&#8217;t get the PHP (5.4.14) local web server to register that &hellip;">
+	<meta name="description" content="I came across a great set of colour schemes called base16. From the website: Base16 provides carefully chosen syntax highlighting and a default set &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,81 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2013/06/01/base16-colour-scheme-for-hackers/">
+		
+			Base16 - Colour Scheme for Hackers</a>
+	</h2>
+	<div class="entry-content">
+		<p>I came across a great set of colour schemes called <a href="http://chriskempson.github.io/base16/">base16</a>. From the website:</p>
+
+<pre><code>Base16 provides carefully chosen syntax highlighting and a default set of 
+sixteen colors suitable for a wide range of applications.
+
+Base16 is both a color scheme and a template.
+</code></pre>
+
+<p>There are repos for the following tools:</p>
+
+<ul>
+<li>Base 16 Builder</li>
+<li>Vim</li>
+<li>Shell</li>
+<li>iTerm2</li>
+<li>TextMate</li>
+<li>OSX Color Palette</li>
+<li>Xresources</li>
+<li>Mou</li>
+<li>XFCE4 Terminal</li>
+<li>Gimp Palette</li>
+<li>Gnome Terminal</li>
+<li>Emacs</li>
+<li>Geany</li>
+</ul>
+
+
+<p> There&#8217;s even <a href="https://github.com/chriskempson/base16-builder">a builder</a> so you can roll your own theme!</p>
+
+<p> I&#8217;m currently using Monaki Dark 256 for iTerm2. The best bet is to git clone the <a href="https://github.com/chriskempson/base16-iterm2">iTerms 2 colour schemes</a> to somewhere on your machine that is persistent. Perhaps <em>~/Documents/iterm2_schemes/base16</em>.</p>
+
+<p> Then you can experiment with the colours you like by going to preferences->profiles->colors then import your schemes using the <em>load presets</em> dropdown (pointing to wherever you cloned the base16 repo).</p>
+
+<p> <img src="/images/monaki-dark.png" alt="Monaki Dark 256" /></p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-01T17:40:00+10:00" pubdate data-updated="true">Jun 1<span>st</span>, 2013</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/shell/'>shell</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2013/06/01/base16-colour-scheme-for-hackers//index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -1221,62 +1296,6 @@
 </div>
 	
 		<div class="comments"><a href="/2013/01/21/adding-a-global-ignore-file-for-git//index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2013/01/21/showing-hidden-files-in-finder-on-mac-osx/">
-		
-			Showing Hidden Files in Finder on Mac Osx</a>
-	</h2>
-	<div class="entry-content">
-		<p>Short and sweet, MAC OSX has this annoying trait where hidden files (dotfiles) are not visible by default in Finder. No probs, I&#8217;ll just go to the &#8220;View&#8221; menu and turn them on. Nope&#8230;nada, zip.</p>
-
-<p>Turns out you have to enter a command in the terminal, nice. Here it is for future reference:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>defaults write com.apple.finder AppleShowAllFiles TRUE</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Then kill Finder to have the changes take effect.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>killall Finder</span></code></pre></td></tr></table></div></figure>
-
-
-<p>If you ever want to turn hidden files off?</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>defaults write com.apple.finder AppleShowAllFiles FALSE</span></code></pre></td></tr></table></div></figure>
-
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-01-21T22:37:37+11:00" pubdate data-updated="true">Jan 21<span>st</span>, 2013</time></div>
-	<div class="tags">
-
-</div>
-	
-		<div class="comments"><a href="/2013/01/21/showing-hidden-files-in-finder-on-mac-osx//index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

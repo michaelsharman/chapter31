@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="I&#8217;m generally a ColdFusion programmer but occasionally I need to install PHP for one reason or another, the last couple of times has been to &hellip;">
+	<meta name="description" content="Most developers know that if you reference a variable without a scope prefix (such as variables, form, URL etc) ColdFusion will check each of the &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,113 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/03/28/evaluating-coldfusion-unscoped-query-variables/">
+		
+			Evaluating (ColdFusion) Unscoped Query Variables</a>
+	</h2>
+	<div class="entry-content">
+		<p>Most developers know that if you reference a variable without a scope prefix (such as variables, form, URL etc) ColdFusion will check <em>each</em> of the available scopes until it finds a variable of the name you are looking for.</p>
+
+<p>The <a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=Variables_32.html">order in which ColdFusion checks</a> is:</p>
+
+<ol>
+<li>Function local (UDFs and CFCs only)</li>
+<li>Thread local (inside threads only)</li>
+<li>Arguments</li>
+<li>Variables (local scope)</li>
+<li>Thread</li>
+<li>CGI</li>
+<li>Cffile</li>
+<li>URL</li>
+<li>Form</li>
+<li>Cookie</li>
+<li>Client</li>
+</ol>
+
+
+<p><em><strong>* Note:</strong> Although the order above came from the Adobe docs I&#8217;m not sure about &#8220;cffile&#8221;. It doesn&#8217;t seem like a scope, more like a return variable much like cfquery. But see below for that</em> :)</p>
+
+<p>Of course this means if you are trying to output #myVar#, and that variable exists in the URL as well as the form scope then #URL.myVar# is what ColdFusion will evaluate. This might not be what you want however, leading to frustrating inconsistencies.</p>
+
+<p>Another downside of not scoping your variables is performance, why make ColdFusion look behind each door (scope) for a variable? Most times you will know exactly where the variable is, so you can improve things by clearly specifying which scope you are using.</p>
+
+<p>But what about query variables either in <cfoutput query=""> or <cfloop query="">?</p>
+
+<p>&#8220;Query&#8221; isn&#8217;t a scope as such but can still be effected by the order of evaluation if you have variable naming conflicts with columns from your query.</p>
+
+<p>How often do you prefix your recordset variables with the query name? I bet most developers out there don&#8217;t prefix their query variables, instead take the easy way out with something like:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfloop</span> <span class="nx">query</span><span class="o">=</span><span class="s2">&quot;myQuery&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="err">#</span><span class="nx">firstName</span><span class="err">#</span>
+</span><span class='line'>  <span class="err">#</span><span class="nx">lastName</span><span class="err">#</span>
+</span><span class='line'>  <span class="err">#</span><span class="nx">email</span><span class="err">#</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfloop&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Most of the time this will be fine, but what if this loop was in a function which also had an argument called &#8220;firstName&#8221;? Enter a naming conflict leading to dirty data.</p>
+
+<p>I came across a similar situation today (because I didn&#8217;t prefix my query variables!) and found that my query was only outputting the value of the argument (which had the same name as one of my query columns), not the actual query value.</p>
+
+<p>Prefixing the variables with the query name of course will fix up any conflicting issues:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfloop</span> <span class="nx">query</span><span class="o">=</span><span class="s2">&quot;myQuery&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="err">#</span><span class="nx">myQuery</span><span class="p">.</span><span class="nx">firstName</span><span class="err">#</span>
+</span><span class='line'>  <span class="err">#</span><span class="nx">myQuery</span><span class="p">.</span><span class="nx">lastName</span><span class="err">#</span>
+</span><span class='line'>  <span class="err">#</span><span class="nx">myQuery</span><span class="p">.</span><span class="nx">email</span><span class="err">#</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfloop&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Although it can be convenient to take advantage of not scoping your variables, it&#8217;s really a &#8220;best practice&#8221; to scope everything unless you have a reason not to.</p>
+
+<p>Don&#8217;t forget the performance (and internal documenting for all developers) benefits which comes as well, although admittedly you would probably only notice any degradation at very high traffic levels. But that&#8217;s what we should be aiming for right? :)</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-03-28T12:29:24+11:00" pubdate data-updated="true">Mar 28<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/03/28/evaluating-coldfusion-unscoped-query-variables//page/13/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -823,65 +930,6 @@
 </div>
 	
 		<div class="comments"><a href="/2008/03/06/better-youtube-firefox-extension//page/13/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2008/03/03/always-add-the-cfimport-tag-when-using-cfimport-style-syntax/">
-		
-			Always Add the <cfimport> Tag When Using Cfimport Style Syntax</a>
-	</h2>
-	<div class="entry-content">
-		<p>Using <a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=Tags_i_04.html">cfimport</a> is a great way to add custom tag functionality to your applications.</p>
-
-<p>One thing you need to do of course is add a <cfimport> tag to <em>every template</em> where you want to use the cfimport syntax. However, a couple of times when I&#8217;ve been creating new templates I&#8217;ve forgotten this rule and <strong>not</strong> added <cfimport> and subsequently gotten confused when my results aren&#8217;t as expected.</p>
-
-<p>I think the annoying thing is that ColdFusion does not throw an error in these situations, it just does nothing. So I can go to any template and add the following (without a <cfimport> on my template):</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">tags</span><span class="o">:</span><span class="nx">myNonExistentTag</span> <span class="o">/&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>And the template runs without an error being thrown :(</p>
-
-<p>So my reminder to myself before looking everywhere else is:</p>
-
-<p><em>&#8220;Michael&#8230;for the love of <a href="http://www.benji.com/">Benji</a> please check that you&#8217;ve added <cfimport> before doing any other debugging!&#8221;</em></p>
-
-<p>Now my question (which I&#8217;m sure someone out there knows) is why does this not throw an  error (missing template/include/tag etc)?</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-03-03T11:32:45+11:00" pubdate data-updated="true">Mar 3<span>rd</span>, 2008</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2008/03/03/always-add-the-cfimport-tag-when-using-cfimport-style-syntax//page/13/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

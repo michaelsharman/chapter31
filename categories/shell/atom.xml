@@ -4,7 +4,7 @@
   <title><![CDATA[Category: shell | chapter31 &raquo;]]></title>
   <link href="http://chapter31.com/categories/shell/atom.xml" rel="self"/>
   <link href="http://chapter31.com/"/>
-  <updated>2013-05-30T10:36:22+10:00</updated>
+  <updated>2013-06-01T18:26:53+10:00</updated>
   <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
@@ -12,6 +12,48 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[base16 - colour scheme for hackers]]></title>
+    <link href="http://chapter31.com/2013/06/01/base16-colour-scheme-for-hackers/"/>
+    <updated>2013-06-01T17:40:00+10:00</updated>
+    <id>http://chapter31.com/2013/06/01/base16-colour-scheme-for-hackers</id>
+    <content type="html"><![CDATA[<p>I came across a great set of colour schemes called <a href="http://chriskempson.github.io/base16/">base16</a>. From the website:</p>
+
+<pre><code>Base16 provides carefully chosen syntax highlighting and a default set of 
+sixteen colors suitable for a wide range of applications.
+
+Base16 is both a color scheme and a template.
+</code></pre>
+
+<p>There are repos for the following tools:</p>
+
+<ul>
+<li>Base 16 Builder</li>
+<li>Vim</li>
+<li>Shell</li>
+<li>iTerm2</li>
+<li>TextMate</li>
+<li>OSX Color Palette</li>
+<li>Xresources</li>
+<li>Mou</li>
+<li>XFCE4 Terminal</li>
+<li>Gimp Palette</li>
+<li>Gnome Terminal</li>
+<li>Emacs</li>
+<li>Geany</li>
+</ul>
+
+
+<p> There's even <a href="https://github.com/chriskempson/base16-builder">a builder</a> so you can roll your own theme!</p>
+
+<p> I'm currently using Monaki Dark 256 for iTerm2. The best bet is to git clone the <a href="https://github.com/chriskempson/base16-iterm2">iTerms 2 colour schemes</a> to somewhere on your machine that is persistent. Perhaps <em>~/Documents/iterm2_schemes/base16</em>.</p>
+
+<p> Then you can experiment with the colours you like by going to preferences->profiles->colors then import your schemes using the <em>load presets</em> dropdown (pointing to wherever you cloned the base16 repo).</p>
+
+<p> <img src="/images/monaki-dark.png" alt="Monaki Dark 256" /></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Stopping a remote process after killing an ssh session]]></title>

@@ -4,7 +4,7 @@
   <title><![CDATA[chapter31 &raquo;]]></title>
   <link href="http://chapter31.com/atom.xml" rel="self"/>
   <link href="http://chapter31.com/"/>
-  <updated>2013-05-30T10:36:22+10:00</updated>
+  <updated>2013-06-01T18:26:53+10:00</updated>
   <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
@@ -12,6 +12,48 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[base16 - colour scheme for hackers]]></title>
+    <link href="http://chapter31.com/2013/06/01/base16-colour-scheme-for-hackers/"/>
+    <updated>2013-06-01T17:40:00+10:00</updated>
+    <id>http://chapter31.com/2013/06/01/base16-colour-scheme-for-hackers</id>
+    <content type="html"><![CDATA[<p>I came across a great set of colour schemes called <a href="http://chriskempson.github.io/base16/">base16</a>. From the website:</p>
+
+<pre><code>Base16 provides carefully chosen syntax highlighting and a default set of 
+sixteen colors suitable for a wide range of applications.
+
+Base16 is both a color scheme and a template.
+</code></pre>
+
+<p>There are repos for the following tools:</p>
+
+<ul>
+<li>Base 16 Builder</li>
+<li>Vim</li>
+<li>Shell</li>
+<li>iTerm2</li>
+<li>TextMate</li>
+<li>OSX Color Palette</li>
+<li>Xresources</li>
+<li>Mou</li>
+<li>XFCE4 Terminal</li>
+<li>Gimp Palette</li>
+<li>Gnome Terminal</li>
+<li>Emacs</li>
+<li>Geany</li>
+</ul>
+
+
+<p> There&#8217;s even <a href="https://github.com/chriskempson/base16-builder">a builder</a> so you can roll your own theme!</p>
+
+<p> I&#8217;m currently using Monaki Dark 256 for iTerm2. The best bet is to git clone the <a href="https://github.com/chriskempson/base16-iterm2">iTerms 2 colour schemes</a> to somewhere on your machine that is persistent. Perhaps <em>~/Documents/iterm2_schemes/base16</em>.</p>
+
+<p> Then you can experiment with the colours you like by going to preferences->profiles->colors then import your schemes using the <em>load presets</em> dropdown (pointing to wherever you cloned the base16 repo).</p>
+
+<p> <img src="http://chapter31.com/images/monaki-dark.png" alt="Monaki Dark 256" /></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Installing Xdebug on Mac Mountain Lion (10.8.3)]]></title>
@@ -1453,89 +1495,6 @@ Select #3 had 8192* possible combinations</p>
 </span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;a, select, input, textarea, button&#39;</span><span class="p">).</span><span class="nx">first</span><span class="p">().</span><span class="nx">blur</span><span class="p">();</span>
 </span><span class='line'>  <span class="p">}</span>
 </span><span class='line'><span class="p">});</span>
-</span></code></pre></td></tr></table></div></figure>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Timing synchronous JavaScript operations]]></title>
-    <link href="http://chapter31.com/2012/08/13/timing-synchronous-javascript-operations/"/>
-    <updated>2012-08-13T21:24:00+10:00</updated>
-    <id>http://chapter31.com/2012/08/13/timing-synchronous-javascript-operations</id>
-    <content type="html"><![CDATA[<p>There&#8217;s a cool little method on the <em>console</em> object that allows you to track how long an operation took to run. It&#8217;s called <a href="https://developer.mozilla.org/en-US/docs/DOM/console.time">console.time</a>.</p>
-
-<p>Basically you just start a timer at the top of the code you want to time, like so:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">time</span><span class="p">(</span><span class="s1">&#39;timer-name&#39;</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// your javascript goes here</span>
-</span><span class='line'>
-</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">timeEnd</span><span class="p">(</span><span class="s1">&#39;timer-name&#39;</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Each <em>timer</em> block should have a unique name (in the example above I called my timer &#8216;timer-name&#8217;), and you can have up to 10,000 timers running on a single page.</p>
-
-<p>By calling <em>console.timeEnd()</em>, the browser will write to the console how long (in milliseconds) the code took to run since you first called console.time();</p>
-
-<p>This works in Chrome 2+, Firefox 10+, Opera and Safari 4+. Typically IE support is a little sketchy, however I <a href="http://stackoverflow.com/questions/3516515/console-time-in-ie8-developer-tools?answertab=active#tab-top">found a cool custom function</a> on Stack Overflow that allows you to use console.time/timeEnd in IE7/8 etc.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c1">//console.time implementation for IE</span>
-</span><span class='line'><span class="k">if</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">console</span> <span class="o">&amp;&amp;</span> <span class="k">typeof</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">console</span><span class="p">.</span><span class="nx">time</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;undefined&quot;</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">time</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">reset</span><span class="p">){</span>
-</span><span class='line'>        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span><span class="p">;</span> <span class="p">}</span>
-</span><span class='line'>        <span class="kd">var</span> <span class="nx">time</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">().</span><span class="nx">getTime</span><span class="p">();</span>
-</span><span class='line'>        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">console</span><span class="p">.</span><span class="nx">timeCounters</span><span class="p">)</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">timeCounters</span> <span class="o">=</span> <span class="p">{}</span> <span class="p">};</span>
-</span><span class='line'>        <span class="kd">var</span> <span class="nx">key</span> <span class="o">=</span> <span class="s2">&quot;KEY&quot;</span> <span class="o">+</span> <span class="nx">name</span><span class="p">.</span><span class="nx">toString</span><span class="p">();</span>
-</span><span class='line'>        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">reset</span> <span class="o">&amp;&amp;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">timeCounters</span><span class="p">[</span><span class="nx">key</span><span class="p">])</span> <span class="p">{</span> <span class="k">return</span><span class="p">;</span> <span class="p">}</span>
-</span><span class='line'>            <span class="nx">console</span><span class="p">.</span><span class="nx">timeCounters</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">time</span><span class="p">;</span>
-</span><span class='line'>        <span class="p">};</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">timeEnd</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">){</span>
-</span><span class='line'>        <span class="kd">var</span> <span class="nx">time</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">().</span><span class="nx">getTime</span><span class="p">();</span>
-</span><span class='line'>        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">console</span><span class="p">.</span><span class="nx">timeCounters</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span><span class="p">;</span> <span class="p">}</span>
-</span><span class='line'>        <span class="kd">var</span> <span class="nx">key</span> <span class="o">=</span> <span class="s2">&quot;KEY&quot;</span> <span class="o">+</span> <span class="nx">name</span><span class="p">.</span><span class="nx">toString</span><span class="p">();</span>
-</span><span class='line'>        <span class="kd">var</span> <span class="nx">timeCounter</span> <span class="o">=</span> <span class="nx">console</span><span class="p">.</span><span class="nx">timeCounters</span><span class="p">[</span><span class="nx">key</span><span class="p">];</span>
-</span><span class='line'>        <span class="k">if</span><span class="p">(</span><span class="nx">timeCounter</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="kd">var</span> <span class="nx">diff</span> <span class="o">=</span> <span class="nx">time</span> <span class="o">-</span> <span class="nx">timeCounter</span><span class="p">;</span>
-</span><span class='line'>            <span class="kd">var</span> <span class="nx">label</span> <span class="o">=</span> <span class="nx">name</span> <span class="o">+</span> <span class="s2">&quot;: &quot;</span> <span class="o">+</span> <span class="nx">diff</span> <span class="o">+</span> <span class="s2">&quot;ms&quot;</span><span class="p">;</span>
-</span><span class='line'>            <span class="nx">console</span><span class="p">.</span><span class="nx">info</span><span class="p">(</span><span class="nx">label</span><span class="p">);</span>
-</span><span class='line'>            <span class="k">delete</span> <span class="nx">console</span><span class="p">.</span><span class="nx">timeCounters</span><span class="p">[</span><span class="nx">key</span><span class="p">];</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>        <span class="k">return</span> <span class="nx">diff</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">};</span>
-</span><span class='line'><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 ]]></content>

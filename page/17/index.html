@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Hmm, running with my past history of having that &#8216;special&#8217; touch with computers&#8230;my version of Aptana (Aptana IDE (build 0.2.8. &hellip;">
+	<meta name="description" content="I was debugging a legacy app today which I&#8217;d just migrated to a new server running ColdFusion 8. A part of this application generates a PDF &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,70 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2007/08/16/localurl-attribute-added-to-cfdocument-in-coldfusion-8/">
+		
+			&#8220;localURL&#8221; Attribute Added to Cfdocument in ColdFusion 8</a>
+	</h2>
+	<div class="entry-content">
+		<p>I was debugging a legacy app today which I&#8217;d just migrated to a new server running ColdFusion 8. A part of this application generates a PDF using <cfdocument>. As usual it was working fine on my development and staging environments&#8230;but not on production! Damn.</p>
+
+<p>After a bit of fiddling I found a <a href="http://coldfused.blogspot.com/2005/11/missing-images-in-cfdocument.html#8131215934099422866">related post</a> by <a href="http://coldfused.blogspot.com/">Rupesh Kumar</a> where he mentions that you may have problems if ColdFusion is behind a firewall.</p>
+
+<p><em>CF server needs to send an HTTP request for the images. If the firewall prevents any outgoing connection from the server, CF will not be able to retrieve them</em></p>
+
+<p>Now I already had outbound HTTP access, but I couldn&#8217;t call a site which was setup on the production machine from where I was browsing. Bugger, I was about to make a the necessary firewall changes when I looked at the <a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=Tags_d-e_06.html">updated docs for CF8</a> and noticed a new attribute called &#8220;localURL&#8221; which;</p>
+
+<blockquote><p>Specifies whether to retrieve image files directly from the local drive:</p>
+
+<ul>
+<li><p>yes: ColdFusion retrieves image files directly from the local drive rather than by using HTTP, HTTPS, or proxy.</p></li>
+<li><p>no: ColdFusion uses HTTP, HTTPS, or proxy to retrieve image files even if the files are stored locally.</p></li>
+</ul>
+</blockquote>
+
+<p>Nice!</p>
+
+<p>Now <cfdocument> can simply call images from a local (relative) path instead of a full HTTP request as it did before.</p>
+
+<p>I love CF8 :)</p>
+
+<p>There are a few additions to this particular tag and you can <a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=Tags_d-e_06.html">view them on the online docs</a> which have had a much needed facelift.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-08-16T19:00:12+10:00" pubdate data-updated="true">Aug 16<span>th</span>, 2007</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2007/08/16/localurl-attribute-added-to-cfdocument-in-coldfusion-8//page/17/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -739,81 +803,6 @@
 </div>
 	
 		<div class="comments"><a href="/2007/06/14/reading-blogs-on-a-mac-using-firefox//page/17/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2007/04/26/image-manipulation-with-imagecfc-v214/">
-		
-			Image Manipulation With imageCFC v2.14</a>
-	</h2>
-	<div class="entry-content">
-		<p><strong>Update:</strong> as of May 30th 2007 version 2.17 has been released! <a href="http://www.opensourcecf.com/imagecfc/">See the site</a> for more information</p>
-
-<p>Ok so I&#8217;m a little late on this one, but the new version of <a href="http://www.opensourcecf.com/imagecfc/">imageCFC</a> (v2.14) was released on March 7th 2007. The big feature add is exact size thumbnails using the &#8220;cropToExact&#8221; argument of the &#8220;resize()&#8221; method:</p>
-
-<blockquote><p>This argument, when combined with a specified width, specified height, and the preserveAspect argument being set to true will cause a image to be resized then cropped to fit exactly within the specified dimensions.</p></blockquote>
-
-<p>The nice thing about using imageCFC is that it leverages Java so is easily portable (you don&#8217;t need to install a cfx_ which can be painful in a shared hosting environment).</p>
-
-<p>A list of features:</p>
-
-<ul>
-<li>READ jpg, gif, and PNG files, and provide dimensions and other details.</li>
-<li>Images can be read from local files <em>OR</em> URLs.</li>
-<li>scale images to a specific width or height</li>
-<li>resize images to a specific width AND height</li>
-<li>rotate images at 90 degree angles</li>
-<li>flip images horizontally and vertically</li>
-<li>Add text overlays to images using TrueType fonts</li>
-<li>Watermark one image with another image</li>
-<li>Image filters: fast blur, gaussian blur, box blur, sharpen, posterize</li>
-<li>Control compression quality of JPG images.</li>
-<li>WRITE images in JPG and PNG format</li>
-</ul>
-
-
-<p><strong>Note:</strong> GIF files can be read and manipulated but they have to be saved as PNGs)</p>
-
-<p>Yes&#8230;make sure you read that line again. Java cannot <strong>write</strong> to gif files so you have to save as a .png instead after you resize/crop etc. Of course you can read information about a gif, just not manipulate and save as a gif.</p>
-
-<p>My initial tests with resizing a gif and saving as a png produced mixed results which unfortunately were often not great. I&#8217;ll have to keep testing and play with the compression settings etc, but at this stage it looks as though jpg gives the best results.</p>
-
-<p>Doug Hughes has a nice little workaround for the <a href="http://www.alagad.com/">alagad</a> image component (commercial but also based on Java) which you can <a href="http://www.doughughes.net/index.cfm?event=viewEntry&amp;entryId=88">see here</a>.</p>
-
-<p>I don&#8217;t know how good this work around would be for some uses as you need to extract a package to the Java class path. This would more than likely be an issue for those in a shared hosting environment.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2007-04-26T09:20:26+10:00" pubdate data-updated="true">Apr 26<span>th</span>, 2007</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2007/04/26/image-manipulation-with-imagecfc-v214//page/17/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

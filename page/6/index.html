@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="I needed to de-dupe a spreadsheet the other day and found a great how-to from google. Thought I&#8217;d post it here for my own future purposes: &hellip;">
+	<meta name="description" content="We&#8217;ve been using Brandon Purcell&#8217;s excellent accelerate custom cache tag for a few projects. I had an issue today while testing a new &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,66 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2010/05/27/cfml-issue-on-railo-with-the-accelerate-cache-tag/">
+		
+			CFML Issue on Railo With the Accelerate Cache Tag</a>
+	</h2>
+	<div class="entry-content">
+		<p>We&#8217;ve been using <a href="http://www.bpurcell.org">Brandon Purcell&#8217;s</a> excellent accelerate custom cache tag for a few projects. I had an issue today while testing a new app which is about to go live. It seemed that whatever I did nothing would be cached.</p>
+
+<p>Upon investigation it seemed that the caching worked fine on Adobe ColdFusion but not on Railo. A quick look at the codebase brought me to this line:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">IsDefined</span><span class="p">(</span><span class="s2">&quot;application.accelerator.#scriptName#.#primarykey#.#secondaryKey#&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Basically this was always returning false, even when I knew the key was in the application scope. I changed it to the following:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">structKeyExists</span><span class="p">(</span><span class="nx">application</span><span class="p">,</span><span class="s2">&quot;accelerator[scriptName][primarykey][secondaryKey]&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Success! (Thanks AJ for the final structKeyExists)</p>
+
+<p>Just a quick fyi to anyone else who might be using this custom tag on Railo.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-05-27T16:30:30+10:00" pubdate data-updated="true">May 27<span>th</span>, 2010</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/railo/'>Railo</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2010/05/27/cfml-issue-on-railo-with-the-accelerate-cache-tag//page/6/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -723,59 +783,6 @@ supports.</p>
 </div>
 	
 		<div class="comments"><a href="/2009/08/15/new-location-for-farcry-subversion-repositories//page/6/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2009/07/14/hiding-the-farcry-tray-on-the-front-end/">
-		
-			Hiding the FarCry Tray on the Front End</a>
-	</h2>
-	<div class="entry-content">
-		<p>Came across <a href="http://groups.google.com/group/farcry-dev/browse_thread/thread/d9f4e16659e38e18?hl=en&amp;pli=1">this nice tip</a> a little while ago from AJ Mercer on the <a href="http://groups.google.com/group/farcry-dev/">farcry-dev group</a>.</p>
-
-<p>It hides the FarCry &#8220;tray&#8221; which is visible on the front end of your website to users who are logged in to FarCry. I happen to have a use case for this at the moment so it was good timing.</p>
-
-<p>Simply put this code snippet in any template there you don&#8217;t want the tray appearing. Personally I put this in <em>/config/</em>serverSpecificRequestScope.cfm_ so it&#8217;s picked up on every page request as I never wanted it to appear.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">request</span><span class="p">.</span><span class="nx">mode</span><span class="p">.</span><span class="nx">bAdmin</span> <span class="o">=</span> <span class="kc">false</span><span class="o">&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Thanks AJ :)</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-07-14T14:42:39+10:00" pubdate data-updated="true">Jul 14<span>th</span>, 2009</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/farcry/'>Farcry</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2009/07/14/hiding-the-farcry-tray-on-the-front-end//page/6/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

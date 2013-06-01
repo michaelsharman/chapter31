@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="I&#8217;ve recently gotten myself a hostmysite account on a shared server for a project I&#8217;m involved with. Everything looked fantastic and &hellip;">
+	<meta name="description" content="The Robots META tag is a way you can tell &#8216;Robots&#8217; or &#8216;Spiders&#8217; whether a page (or pages) on your site should be indexed, or &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,99 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2006/09/13/robots-meta-tag/">
+		
+			Robots META Tag</a>
+	</h2>
+	<div class="entry-content">
+		<p>The Robots META tag is a way you can tell &#8216;Robots&#8217; or &#8216;Spiders&#8217; whether a page (or pages) on your site should be indexed, or if links on the page should be followed.</p>
+
+<p>At this stage I don&#8217;t believe all &#8216;robots&#8217; out there support the use of this META tag, but some do so in the right situation it&#8217;s worth using.</p>
+
+<p>The most common examples for the robots META tags are:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">content</span><span class="o">=</span><span class="s2">&quot;index,follow&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;robots&quot;</span><span class="o">&gt;&lt;</span><span class="err">/meta&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">content</span><span class="o">=</span><span class="s2">&quot;noindex,follow&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;robots&quot;</span><span class="o">&gt;&lt;</span><span class="err">/meta&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">content</span><span class="o">=</span><span class="s2">&quot;index,nofollow&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;robots&quot;</span><span class="o">&gt;&lt;</span><span class="err">/meta&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">content</span><span class="o">=</span><span class="s2">&quot;noindex,nofollow&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;robots&quot;</span><span class="o">&gt;&lt;</span><span class="err">/meta&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">content</span><span class="o">=</span><span class="s2">&quot;noimageindex&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;robots&quot;</span><span class="o">&gt;&lt;</span><span class="err">/meta&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">content</span><span class="o">=</span><span class="s2">&quot;noimageclick&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;robots&quot;</span><span class="o">&gt;&lt;</span><span class="err">/meta&gt;&lt;/code&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&#8220;noimageindex&#8221; prevents the images on the page from being indexed but the text on the page can still be indexed.</p>
+
+<p>&#8220;noimageclick&#8221; prevents the use of links directly to the images, instead there will only be a link to the page.</p>
+
+<p>In addition to the robots META tag above, Google supports a GOOGLEBOT command. With it, you can tell Google that you do not want the page archived, but allow other search engines to do so. If you specify this command, Google will not save the page and the page will be unavailable via its cache.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">content</span><span class="o">=</span><span class="s2">&quot;noarchive&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;googlebot&quot;</span><span class="o">&gt;&lt;</span><span class="err">/meta&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A formal syntax for the Robots META tag content is:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">content</span>    <span class="o">=</span> <span class="nx">all</span> <span class="o">|</span> <span class="nx">none</span> <span class="o">|</span> <span class="nx">directives</span>
+</span><span class='line'><span class="nx">all</span>        <span class="o">=</span> <span class="s2">&quot;ALL&quot;</span>
+</span><span class='line'><span class="nx">none</span>       <span class="o">=</span> <span class="s2">&quot;NONE&quot;</span>
+</span><span class='line'><span class="nx">directives</span> <span class="o">=</span> <span class="nx">directive</span> <span class="p">[</span><span class="s2">&quot;,&quot;</span> <span class="nx">directives</span><span class="p">]</span>
+</span><span class='line'><span class="nx">directive</span>  <span class="o">=</span> <span class="nx">index</span> <span class="o">|</span> <span class="nx">follow</span>
+</span><span class='line'><span class="nx">index</span>      <span class="o">=</span> <span class="s2">&quot;INDEX&quot;</span> <span class="o">|</span> <span class="s2">&quot;NOINDEX&quot;</span>
+</span><span class='line'><span class="nx">follow</span>     <span class="o">=</span> <span class="s2">&quot;FOLLOW&quot;</span> <span class="o">|</span> <span class="s2">&quot;NOFOLLOW&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-09-13T09:35:52+10:00" pubdate data-updated="true">Sep 13<span>th</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/x-html/'>(X)HTML</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2006/09/13/robots-meta-tag//page/23/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -748,61 +841,6 @@
 </div>
 	
 		<div class="comments"><a href="/2006/09/01/memory-lane//page/23/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2006/08/25/html-pre-launch-flight-check/">
-		
-			HTML Pre-launch Flight Check</a>
-	</h2>
-	<div class="entry-content">
-		<p><a href="http://www.anybrowser.com/">AnyBrowser</a> have a lot of tools for you to use when validating and preparing your website for deployment including:</p>
-
-<ul>
-<li><p><a href="http://www.anybrowser.com/ScreenSizeTest.html">Screen Size Test</a></p></li>
-<li><p><a href="http://www.anybrowser.com/MetaTagGenerator.html">Meta Tag Creator</a></p></li>
-<li><p><a href="http://www.anybrowser.com/validateit.html">HTML Validation</a></p></li>
-<li><p><a href="http://www.anybrowser.com/linkchecker.html">Link checking</a></p></li>
-<li><p><a href="http://www.anybrowser.com/EngineView.html">Engine View</a> (See how your site might get listed by search engine spiders.)</p></li>
-</ul>
-
-
-<p>Not a bad list, don&#8217;t forget that ALL web developers should validate their pages, perform link checking and test on different resolutions before going live.</p>
-
-<p>Another great site for viewing your website on any platform and/or operating system is <a href="http://www.browsercam.com/">Browser Cam</a>. I use this one all the time, it&#8217;s a paid service but invaluable unless you are in abundance of (X)HHTML/CSS greatness that you don&#8217;t need it!</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2006-08-25T12:49:28+10:00" pubdate data-updated="true">Aug 25<span>th</span>, 2006</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/x-html/'>(X)HTML</a>, <a class='category' href='/categories/css/'>CSS</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2006/08/25/html-pre-launch-flight-check//page/23/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="We&#8217;ve all experienced dealing with clients before, even if they are &#8220;internal&#8221; clients within our organisation. Today I saw this &hellip;">
+	<meta name="description" content="Most developers know and use exception handling techniques when building web apps. One of the important reasons to do this is so that the end user &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,70 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/07/08/dont-forget-the-coldfusion-site-wide-error-handler/">
+		
+			Don&#8217;t Forget the ColdFusion Site-wide Error Handler</a>
+	</h2>
+	<div class="entry-content">
+		<p>Most developers know and use exception handling techniques when building web apps. One of the important reasons to do this is so that the end user isn&#8217;t presented with an ugly server error message, but instead a nice &#8220;skinned&#8221; template advising them that something&#8217;s gone wrong and an administrator has been notified etc. (Of course another reason for this is not to give away sensitive server configuration information to prying eyes!)</p>
+
+<p><a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=Tags_t_12.html">try</a>/<a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=Tags_c_04.html">catch</a> blocks are great for fine grained control to catch and handle exceptions as they occur at runtime.</p>
+
+<p><a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=AppEvents_06.html">onError()</a> inside Application.cfc is the next place ColdFusion will look to handle thrown exceptions and is often used as a catch-all.</p>
+
+<p>This all works great&#8230;most of the time.</p>
+
+<p>Most of us don&#8217;t have every conceivable piece of code wrapped around a try/catch block, so what happens when the actual <em>server</em> throws an exception like a template timeout (cfoutput and cfloop can often timeout depending on server settings and what you&#8217;re doing) etc and we&#8217;re not catching the exception in our code? In this case users see a nice phat ColdFusion error message. Not happy Jan.</p>
+
+<p><img src="/images/uploads/2008/07/bos-error-300x170.gif" alt="Naughty error" /></p>
+
+<p>Enter the &#8220;site-wide error handler&#8221; which you can set in the &#8220;Settings&#8221; area of ColdFusion administrator.</p>
+
+<p><img src="/images/uploads/2008/07/error-handlers-300x79.gif" alt="" /></p>
+
+<p>This is the 3rd and final way to &#8220;catch&#8221; errors and display a custom template to the end user. Note that this template will look the same across all sites running on that JRun instance.</p>
+
+<p>The cool this is that you get the &#8220;error&#8221; struct of detailed exception information (think <a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=Tags_d-e_11.html">cferror</a>) so you can log the error as you see fit.</p>
+
+<p>Bottom line is, you should always have a template in the site-wide error handler so the end user (whether malicious or not) never sees the default ColdFusion error message in the event that you aren&#8217;t handling <em>everything</em> in your code.</p>
+
+<p>Of course you may not (read almost definitely will not) be able to define your own template if you&#8217;re running in a shared hosting environment. In which case you would assume (and hope) that the hosting provider had a generic template for such situations.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-07-08T12:55:55+10:00" pubdate data-updated="true">Jul 8<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/07/08/dont-forget-the-coldfusion-site-wide-error-handler//page/11/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -690,56 +754,6 @@
 </div>
 	
 		<div class="comments"><a href="/2008/06/11/preservesinglequotes-still-breaks-on-array-style-parameters//page/11/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2008/06/09/looking-for-the-source-code-of-open-source-software-use-koders/">
-		
-			Looking for the Source Code of Open Source Software? Use Koders</a>
-	</h2>
-	<div class="entry-content">
-		<p>I came across a cool search engine the other day called <a href="http://www.koders.com/">Koders</a> which is &#8220;a free on-line search engine for open source software and other web-downloadable code.&#8221;</p>
-
-<p>The cool thing about this is you can search for just about any and every language you can think of, and quickly browse the source code of open source projects. This can be a nice way to view the API docs or just to see if the project is what you&#8217;re looking for.</p>
-
-<p>Of course a lot of (open source) projects have SVN browsing anyway, but some don&#8217;t and centralising your search with an online tool like this can be easier sometimes.</p>
-
-<p>Good news is that ColdFusion is represented, I tried looking for a few ColdFusion projects like <a href="http://www.koders.com/default.aspx?s=transfer&amp;btn=&amp;la=ColdFusion&amp;li=*">Transfer</a>, <a href="http://www.koders.com/default.aspx?s=farcry&amp;btn=&amp;la=ColdFusion&amp;li=*">FarCry</a> and <a href="http://www.koders.com/default.aspx?s=machii&amp;btn=&amp;la=ColdFusion&amp;li=*">Mach-II</a> which all brought back results. However the results returned are not always from the same repository which may be confusing unless you&#8217;re specific with your search terms.</p>
-
-<p>Could be a useful tool to add to the bag.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-06-09T15:37:08+10:00" pubdate data-updated="true">Jun 9<span>th</span>, 2008</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/misc/'>Misc</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2008/06/09/looking-for-the-source-code-of-open-source-software-use-koders//page/11/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 
