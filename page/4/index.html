@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="One of the keyboard shortcuts I often use is command-F6, but I seem to accidentally hit command-F5 on most occasions :( Problem with this is that &hellip;">
+	<meta name="description" content="Occasionally when I&#8217;m restoring a database that was backed up from a different server than the one I&#8217;m restoring on I get an error along &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,80 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2012/03/15/error-restoring-mysql-database-when-using-btree-on-indexes/">
+		
+			Error Restoring MySQL Database When USING BTREE on Indexes</a>
+	</h2>
+	<div class="entry-content">
+		<p>Occasionally when I&#8217;m restoring a database that was backed up from a different server than the one I&#8217;m restoring on I get an error along the lines of:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&gt;</span><span class="p">[</span><span class="nb">Error</span><span class="p">]</span> <span class="nx">Script</span> <span class="nx">lines</span><span class="o">:</span> <span class="mi">5</span><span class="o">-</span><span class="mi">17</span> <span class="o">-------------------------</span>
+</span><span class='line'> <span class="nx">You</span> <span class="nx">have</span> <span class="nx">an</span> <span class="nx">error</span> <span class="k">in</span> <span class="nx">your</span> <span class="nx">SQL</span> <span class="nx">syntax</span><span class="p">;</span> <span class="nx">check</span> <span class="nx">the</span> <span class="nx">manual</span> <span class="nx">that</span> <span class="nx">corresponds</span> <span class="nx">to</span> <span class="nx">your</span> <span class="nx">MySQL</span> <span class="nx">server</span> <span class="nx">version</span> <span class="k">for</span> <span class="nx">the</span> <span class="nx">right</span> <span class="nx">syntax</span> <span class="nx">to</span> <span class="nx">use</span> <span class="nx">near</span> <span class="s1">&#39;USING BTREE</span>
+</span><span class='line'><span class="s1">) ENGINE=InnoDB DEFAULT CHARSET=utf8&#39;</span> <span class="nx">at</span> <span class="nx">line</span> <span class="mi">11</span>
+</span><span class='line'>
+</span><span class='line'> <span class="nx">Warnings</span><span class="o">:</span> <span class="o">---&gt;</span>
+</span><span class='line'>   <span class="nx">W</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">:</span> <span class="nx">You</span> <span class="nx">have</span> <span class="nx">an</span> <span class="nx">error</span> <span class="k">in</span> <span class="nx">your</span> <span class="nx">SQL</span> <span class="nx">syntax</span><span class="p">;</span> <span class="nx">check</span> <span class="nx">the</span> <span class="nx">manual</span> <span class="nx">that</span> <span class="nx">corresponds</span> <span class="nx">to</span> <span class="nx">your</span> <span class="nx">MySQL</span> <span class="nx">server</span> <span class="nx">version</span> <span class="k">for</span> <span class="nx">the</span> <span class="nx">right</span> <span class="nx">syntax</span> <span class="nx">to</span> <span class="nx">use</span> <span class="nx">near</span> <span class="s1">&#39;USING BTREE</span>
+</span><span class='line'><span class="s1">) ENGINE=InnoDB DEFAULT CHARSET=utf8&#39;</span> <span class="nx">at</span> <span class="nx">line</span> <span class="mi">11</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Hmm, the docs suggest that BTREE is a valid index type for both MyISAM and InnoDB. So why is it barfing?</p>
+
+<p>Well it turns out dumping the database from a newer version of MySQL than what you are restoring onto can be bad. In my case running status at the mysql prompt told me that my source database was running on <em>5.5.9</em> but the destination version was <em>5.0.51a</em>.</p>
+
+<p>Basically the issue seems to be that MySQL 5.0.x has issues with USING BTREE. So&#8230;just remove that from your sql and you&#8217;ll be good to go. Alternatively you can use the &#8211;compatible option when running your mysqldump on the <em>newer server version</em>, something like:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">mysqldump</span> <span class="o">--</span><span class="nx">compatible</span><span class="o">=</span><span class="nx">ansi</span> <span class="o">-</span><span class="nx">h127</span><span class="p">.</span><span class="mf">0.0</span><span class="p">.</span><span class="mi">1</span> <span class="o">-</span><span class="nx">umyuser</span> <span class="o">-</span><span class="nx">p</span> <span class="nx">mydatabase</span> <span class="o">|</span> <span class="nx">gzip</span> <span class="o">&gt;</span> <span class="nx">mydatabase</span><span class="p">.</span><span class="nx">sql</span><span class="p">.</span><span class="nx">gz</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The value of &#8220;compatible&#8221; can be ansi, mysql323, mysql40, postgresql, oracle, mssql, db2, maxdb, no_key_options, no_table_options, or no_field_options.</p>
+
+<p>Nice</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-15T15:42:39+11:00" pubdate data-updated="true">Mar 15<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/databases/'>Databases</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2012/03/15/error-restoring-mysql-database-when-using-btree-on-indexes//page/4/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -1202,139 +1276,6 @@ MySQL 5+</p>
 </div>
 	
 		<div class="comments"><a href="/2011/05/31/mura-overriding-dspcrumblistlinks//page/4/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2011/05/29/farcry-to-mura-migrating-data-from-farcry-to-mura-cms/">
-		
-			FarCry to Mura - Migrating Data From FarCry to Mura CMS</a>
-	</h2>
-	<div class="entry-content">
-		<p>For years <a href="http://www.learnosity.com/">here at Learnosity</a> we&#8217;ve been using <a href="http://www.farcrycore.org/">FarCry</a> for most of our CMS requirements (yes, I know that FarCry, or rather farcrycms, is a lot more than just a CMS).</p>
-
-<p>For one reason or another we decided it was time to look at some of the other options for content management in the ColdFusion sphere, <a href="http://www.getmura.com/">Mura CMS</a> was a likely candidate for evalutation.</p>
-
-<p>We had a small-ish site that was already running in FarCry 6+ which we wanted to port to Mura so we could really get a feel for how things worked in Mura-land. If things go well we may decide to move more sites across, so I wanted a way to migrate existing content from a FarCry database to a Mura one. A quick search for something to do this came up blank so I spent half a day coming up with a little tool to do this. Here it is in case anyone else might find it useful.</p>
-
-<p>You can <a href="https://github.com/michaelsharman/farcrytomura">find the project on github</a> (https://github.com/michaelsharman/farcrytomura), below is the &#8220;help&#8221; page I added:</p>
-
-<h2>Introduction</h2>
-
-<p>This script imports basic navigation and HTML data from an existing FarCry database into a Mura one.</p>
-
-<h2>Requirements</h2>
-
-<p>This was built on</p>
-
-<ul>
-<li>Railo 3.2+</li>
-<li>ColdFusion 7+</li>
-<li>FarCry 6+</li>
-<li>Mura 5.4+</li>
-<li>MySQL 5+</li>
-</ul>
-
-
-<p>Not sure about FarCry 5, you should be ok as I don&#8217;t think the v6 schema changes will effect this script</p>
-
-<p>To make things easier, session management must enabled</p>
-
-<h2>Installation</h2>
-
-<p>Probably easiest to put this folder (farcrytomura) in the webroot of an existing project/vhost, then call it from http://www.yourproject.com/farcrytomura/</p>
-
-<p>If you want, you can setup a project/vhost specifically for this, but it&#8217;s not necessary.</p>
-
-<p>This script has its own Application.cfc to avoid scope conflict</p>
-
-<p>Caveat - the ColdFusion/Railo server (instance/context) that you run this from needs to have BOTH dsn&#8217;s (the FarCry and Mura ones) in the cf admin</p>
-
-<h2>FarCry content types</h2>
-
-<p>Currently we examine the FarCry navigation tree and bring across the entire structure underneath &#8216;Root&#8217; (i.e. any nLevel 2+ nodes)</p>
-
-<p>If people want it, we can extend the functionality to import from a specific node, e.g. from &#8216;Home&#8217;.This would be handy if your FarCry site has secondary/utility navigation etc that you want imported separately.</p>
-
-<p>Although all navigation nodes will be created in Mura, the only actual content that is imported is dmHTML, we ignore:</p>
-
-<ul>
-<li>dmInclude</li>
-<li>dmLink</li>
-<li>Anything but the first content object under a navigation node</li>
-<li>dmNews, dmEvent or any other &#8220;dynamic&#8221; content type</li>
-<li>Custom tree content types</li>
-</ul>
-
-
-<p>Basically we import all navigation nodes under the site tab, from &#8220;Root&#8221; down, including the HTML content.</p>
-
-<h2>FarCry homepage content</h2>
-
-<p>Currently we ignore the farcry homepage content because we assume there is at least a &#8220;home&#8221; page in Mura. This is a TODO</p>
-
-<h2>SES URLs</h2>
-
-<p>Mura ses url&#8217;s are created on import based off the title of the page from FarCry. This should be the default behaviour as if you were created a page from within Mura admin.</p>
-
-<p>Currently we&#8217;re NOT importing the FarCry friendly URL into Mura.</p>
-
-<h2>Rolling back</h2>
-
-<p>If you want to rollback the import, you&#8217;ll need to:</p>
-
-<pre><code>DELETE FROM tcontent WHERE siteID = '[yoursite]' AND lastUpdateBy = 'farcrytomura'
-</code></pre>
-
-<h2>TODOs</h2>
-
-<ul>
-<li>Ability to select the page template from Mura</li>
-<li>When previewing the Mura navigation tree, indent properly</li>
-<li>Import the FarCry &#8220;home&#8221; page content</li>
-<li>Handle farcry secondary/utility nav&#8217;s (anything else at the same level as &#8220;home&#8221;)</li>
-<li>Fix sortorder on sub items, they work fine but not as neat as they could be</li>
-</ul>
-
-
-<p><img src="/images/uploads/2011/05/farcrytomura_setdns.png" alt="" />
-<img src="/images/uploads/2011/05/farcrytomura_setmurasiteid.png" alt="" />
-<img src="/images/uploads/2011/05/farcrytomura_checkfarcry.png" alt="" />
-<img src="/images/uploads/2011/05/farcrytomura_checkmura.png" alt="" />
-<img src="/images/uploads/2011/05/farcrytomura_domigration.png" alt="" />
-<img src="/images/uploads/2011/05/farcrytomura_help.png" alt="" /></p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-05-29T23:00:00+10:00" pubdate data-updated="true">May 29<span>th</span>, 2011</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/farcry/'>Farcry</a>, <a class='category' href='/categories/mura/'>Mura</a>, <a class='category' href='/categories/railo/'>Railo</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2011/05/29/farcry-to-mura-migrating-data-from-farcry-to-mura-cms//page/4/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="There&#8217;s a cool little method on the console object that allows you to track how long an operation took to run. It&#8217;s called console.time &hellip;">
+	<meta name="description" content="I&#8217;ve been using the jQuery UI dialog for a project recently, one thing that bugged me though, was that upon opening a dialog the first tabable &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,97 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2012/09/14/jquery-ui-dialog-focus-on-first-tabable-element/">
+		
+			jQuery UI Dialog Focus on First Tabable Element</a>
+	</h2>
+	<div class="entry-content">
+		<p>I&#8217;ve been using the <a href="http://jqueryui.com/demos/dialog/">jQuery UI dialog</a> for a project recently, one thing that bugged me though, was that upon opening a dialog the first tabable element always gets focussed. This can be:</p>
+
+<ul>
+<li>hyperlinks</li>
+<li>input boxes</li>
+<li>select boxes</li>
+<li>buttons</li>
+<li>textareas etc</li>
+</ul>
+
+
+<p>An example of this is:</p>
+
+<p><img src="/images/uploads/2012/09/Screen-shot-2012-09-14-at-4.06.09-PM.png" alt="" /></p>
+
+<p><img src="/images/uploads/2012/09/Screen-shot-2012-09-14-at-4.06.30-PM.png" alt="" /></p>
+
+<p>A quick way around this is to fire a <a href="http://api.jquery.com/blur/">blur()</a> method, targeting the first <em>tabable</em> element type of your dialog. So if I open up a dialog window with an id of <em>dialog</em>, I can do:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#dialog&#39;</span><span class="p">).</span><span class="nx">dialog</span><span class="p">(</span><span class="s1">&#39;open&#39;</span><span class="p">);</span>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#dialog&#39;</span><span class="p">).</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;a, select, input, textarea, button&#39;</span><span class="p">).</span><span class="nx">first</span><span class="p">().</span><span class="nx">blur</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I was hoping to put this inside the open() method of the dialog, but it doesn&#8217;t seem to parse the contents of the dialog within that method. So the following did not work for me:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#dialog&#39;</span><span class="p">).</span><span class="nx">dialog</span><span class="p">({</span>
+</span><span class='line'>  <span class="nx">autoOpen</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+</span><span class='line'>  <span class="nx">maxWidth</span><span class="o">:</span> <span class="mi">600</span><span class="p">,</span>
+</span><span class='line'>  <span class="nx">minWidth</span><span class="o">:</span> <span class="mi">500</span><span class="p">,</span>
+</span><span class='line'>  <span class="nx">modal</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+</span><span class='line'>  <span class="nx">resizable</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+</span><span class='line'>  <span class="nx">open</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;a, select, input, textarea, button&#39;</span><span class="p">).</span><span class="nx">first</span><span class="p">().</span><span class="nx">blur</span><span class="p">();</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-14T16:27:29+10:00" pubdate data-updated="true">Sep 14<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/javascript/'>Javascript</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2012/09/14/jquery-ui-dialog-focus-on-first-tabable-element//page/3/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -864,80 +955,6 @@ htdocs/WEB-INF
 </div>
 	
 		<div class="comments"><a href="/2012/03/17/find-and-replace-with-line-breaks-in-eclipse//page/3/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2012/03/15/error-restoring-mysql-database-when-using-btree-on-indexes/">
-		
-			Error Restoring MySQL Database When USING BTREE on Indexes</a>
-	</h2>
-	<div class="entry-content">
-		<p>Occasionally when I&#8217;m restoring a database that was backed up from a different server than the one I&#8217;m restoring on I get an error along the lines of:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&gt;</span><span class="p">[</span><span class="nb">Error</span><span class="p">]</span> <span class="nx">Script</span> <span class="nx">lines</span><span class="o">:</span> <span class="mi">5</span><span class="o">-</span><span class="mi">17</span> <span class="o">-------------------------</span>
-</span><span class='line'> <span class="nx">You</span> <span class="nx">have</span> <span class="nx">an</span> <span class="nx">error</span> <span class="k">in</span> <span class="nx">your</span> <span class="nx">SQL</span> <span class="nx">syntax</span><span class="p">;</span> <span class="nx">check</span> <span class="nx">the</span> <span class="nx">manual</span> <span class="nx">that</span> <span class="nx">corresponds</span> <span class="nx">to</span> <span class="nx">your</span> <span class="nx">MySQL</span> <span class="nx">server</span> <span class="nx">version</span> <span class="k">for</span> <span class="nx">the</span> <span class="nx">right</span> <span class="nx">syntax</span> <span class="nx">to</span> <span class="nx">use</span> <span class="nx">near</span> <span class="s1">&#39;USING BTREE</span>
-</span><span class='line'><span class="s1">) ENGINE=InnoDB DEFAULT CHARSET=utf8&#39;</span> <span class="nx">at</span> <span class="nx">line</span> <span class="mi">11</span>
-</span><span class='line'>
-</span><span class='line'> <span class="nx">Warnings</span><span class="o">:</span> <span class="o">---&gt;</span>
-</span><span class='line'>   <span class="nx">W</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">:</span> <span class="nx">You</span> <span class="nx">have</span> <span class="nx">an</span> <span class="nx">error</span> <span class="k">in</span> <span class="nx">your</span> <span class="nx">SQL</span> <span class="nx">syntax</span><span class="p">;</span> <span class="nx">check</span> <span class="nx">the</span> <span class="nx">manual</span> <span class="nx">that</span> <span class="nx">corresponds</span> <span class="nx">to</span> <span class="nx">your</span> <span class="nx">MySQL</span> <span class="nx">server</span> <span class="nx">version</span> <span class="k">for</span> <span class="nx">the</span> <span class="nx">right</span> <span class="nx">syntax</span> <span class="nx">to</span> <span class="nx">use</span> <span class="nx">near</span> <span class="s1">&#39;USING BTREE</span>
-</span><span class='line'><span class="s1">) ENGINE=InnoDB DEFAULT CHARSET=utf8&#39;</span> <span class="nx">at</span> <span class="nx">line</span> <span class="mi">11</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Hmm, the docs suggest that BTREE is a valid index type for both MyISAM and InnoDB. So why is it barfing?</p>
-
-<p>Well it turns out dumping the database from a newer version of MySQL than what you are restoring onto can be bad. In my case running status at the mysql prompt told me that my source database was running on <em>5.5.9</em> but the destination version was <em>5.0.51a</em>.</p>
-
-<p>Basically the issue seems to be that MySQL 5.0.x has issues with USING BTREE. So&#8230;just remove that from your sql and you&#8217;ll be good to go. Alternatively you can use the &#8211;compatible option when running your mysqldump on the <em>newer server version</em>, something like:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">mysqldump</span> <span class="o">--</span><span class="nx">compatible</span><span class="o">=</span><span class="nx">ansi</span> <span class="o">-</span><span class="nx">h127</span><span class="p">.</span><span class="mf">0.0</span><span class="p">.</span><span class="mi">1</span> <span class="o">-</span><span class="nx">umyuser</span> <span class="o">-</span><span class="nx">p</span> <span class="nx">mydatabase</span> <span class="o">|</span> <span class="nx">gzip</span> <span class="o">&gt;</span> <span class="nx">mydatabase</span><span class="p">.</span><span class="nx">sql</span><span class="p">.</span><span class="nx">gz</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The value of &#8220;compatible&#8221; can be ansi, mysql323, mysql40, postgresql, oracle, mssql, db2, maxdb, no_key_options, no_table_options, or no_field_options.</p>
-
-<p>Nice</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-15T15:42:39+11:00" pubdate data-updated="true">Mar 15<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/databases/'>Databases</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2012/03/15/error-restoring-mysql-database-when-using-btree-on-indexes//page/3/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

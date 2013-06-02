@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Those of you who miss diagramming support when using MySQL tools will be pleased to know that the latest version of Aqua Data Studio has support for &hellip;">
+	<meta name="description" content="Most tools or languages you work with have words which are &#8220;reserved&#8221;, meaning you cannot use them in a variable declaration or schema &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,83 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/10/27/fun-with-reserved-words-in-mysql-5/">
+		
+			Fun With Reserved Words in MySQL 5</a>
+	</h2>
+	<div class="entry-content">
+		<p>Most tools or languages you work with have words which are &#8220;reserved&#8221;, meaning you cannot use them in a variable declaration or schema definition etc as they have special treatment in the underlying system. If you try to do this you&#8217;ll usually get an immediate error.</p>
+
+<p>Today I needed to change an existing SQL query from a &#8220;SELECT *&#8221; to explicitly defining each column because I wanted to add some date formating at the SQL level.</p>
+
+<p>The query (after modifications) was as follows:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">SELECT</span>
+</span><span class='line'>  <span class="nx">id</span>
+</span><span class='line'>  <span class="p">,</span> <span class="nx">date_format</span><span class="p">(</span><span class="nx">dt_start</span><span class="p">,</span> <span class="s2">&quot;%d/%m/%Y&quot;</span><span class="p">)</span> <span class="nx">as</span> <span class="nx">dt_start</span>
+</span><span class='line'>  <span class="p">,</span> <span class="nx">date_format</span><span class="p">(</span><span class="nx">dt_end</span><span class="p">,</span> <span class="s2">&quot;%d/%m/%Y&quot;</span><span class="p">)</span> <span class="nx">as</span> <span class="nx">dt_end</span>
+</span><span class='line'>  <span class="p">,</span> <span class="nx">repeat</span>
+</span><span class='line'><span class="nx">FROM</span>
+</span><span class='line'>  <span class="nx">smsschedule</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now remember that the code <em>used</em> to be SELECT * and was working fine. But when I changed it as above it failed and threw an error:</p>
+
+<blockquote><p>You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near&#8230;</p></blockquote>
+
+<p>The reason is that &#8220;repeat&#8221; is a <a href="http://dev.mysql.com/doc/mysqld-version-reference/en/mysqld-version-reference-reservedwords-5-0.html">MySQL reserved word</a>. The interesting part (and real reason for this post) is that it didn&#8217;t fail when the query was sent as &#8220;*&#8221;, only when I explicitly set the invalid column in the SELECT list.</p>
+
+<p>This was sent from ColdFusion but I also checked directly against the database (MySQL query browser) and had the same result.</p>
+
+<p>Might be best to <a href="http://dev.mysql.com/doc/mysqld-version-reference/en/mysqld-version-reference-reservedwords-5-0.html">check the reserved list</a>, most are obvious but a few could catch you out if you&#8217;re not aware of them.</p>
+
+<p>Also interesting to note is that the table in question contained 2 column names which I thought would have failed. Those being &#8220;hour&#8221; and &#8220;minute&#8221;.</p>
+
+<p>Not only did they not fail, but they aren&#8217;t in the reserved words list for MySQL. It would appear that function names (at least some of them) are ok to be used as column names. Still&#8230;I wouldn&#8217;t really recommend using these column names in your tables :)</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-10-27T23:21:00+11:00" pubdate data-updated="true">Oct 27<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/databases/'>Databases</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/10/27/fun-with-reserved-words-in-mysql-5//page/9/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -794,56 +871,6 @@ Import FLVs from your computer - including h.264 encoded videos, browse categori
 </div>
 	
 		<div class="comments"><a href="/2008/08/16/farcry-5-running-on-railo-3-windows//page/9/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2008/08/14/getmooh-automated-callback-service/">
-		
-			Getmooh - Automated Callback Service</a>
-	</h2>
-	<div class="entry-content">
-		<p>Looking to escape from a date or to get out of any sticky social situation?</p>
-
-<p>Try this free online automated callback service called <a href="http://www.getmooh.com/">getmooh</a>.</p>
-
-<p><a href="http://www.getmooh.com/"><img src="/images/uploads/2008/08/getmooh.png" alt="" /></a></p>
-
-<blockquote><p>It is designed to help you escape a variety of situations by calling you automatically on your phone at a pre-specified time and playing you a recording which will either instruct you on what to say to elude your tormentor(s), or which will simply give a convincing sense of you being on an important call.</p></blockquote>
-
-<p>Could quite possibly add your number to a spam list&#8230;but too funny :)</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-08-14T09:33:23+10:00" pubdate data-updated="true">Aug 14<span>th</span>, 2008</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/misc/'>Misc</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2008/08/14/getmooh-automated-callback-service//page/9/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

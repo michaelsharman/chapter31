@@ -134,7 +134,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Now run configure:</p>
+<p>Now run configure (I installed with pear):</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -223,7 +223,7 @@
 </span><span class='line'>--enable-mbregex  <span class="se">\</span>
 </span><span class='line'>--with-mysql<span class="o">=</span>mysqlnd  <span class="se">\</span>
 </span><span class='line'>--with-mysqli<span class="o">=</span>mysqlnd  <span class="se">\</span>
-</span><span class='line'>--without-pear  <span class="se">\</span>
+</span><span class='line'>--with-pear  <span class="se">\</span>
 </span><span class='line'>--with-pdo-mysql<span class="o">=</span>mysqlnd  <span class="se">\</span>
 </span><span class='line'>--with-mysql-sock<span class="o">=</span>/var/mysql/mysql.sock  <span class="se">\</span>
 </span><span class='line'>--with-readline<span class="o">=</span>/usr  <span class="se">\</span>
@@ -279,6 +279,22 @@
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>brew install libpng
 </span><span class='line'>brew install freetype
 </span><span class='line'>brew install openssl
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Change install path</h2>
+
+<p>The notes above install in the default /usr folder. If you want to install in /opt instead (which is often cleaner), add this to the configure script:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>--prefix<span class="o">=</span>/opt/php-5.4.14
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Here&#8217;s a cutdown configure script I just used to install 5.4.15</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="s1">&#39;./configure&#39;</span>  <span class="s1">&#39;--prefix=/opt/php-5.4.15&#39;</span> <span class="s1">&#39;--with-libxml-dir=/usr&#39;</span> <span class="s1">&#39;--with-openssl=/usr&#39;</span> <span class="s1">&#39;--with-zlib=/usr&#39;</span> <span class="s1">&#39;--enable-bcmath&#39;</span> <span class="s1">&#39;--with-bz2=/usr&#39;</span> <span class="s1">&#39;--enable-calendar&#39;</span> <span class="s1">&#39;--with-curl=/usr&#39;</span> <span class="s1">&#39;--enable-dba&#39;</span> <span class="s1">&#39;--enable-exif&#39;</span> <span class="s1">&#39;--enable-ftp&#39;</span> <span class="s1">&#39;--with-gd&#39;</span> <span class="s1">&#39;--enable-gd-native-ttf&#39;</span> <span class="s1">&#39;--enable-mbstring&#39;</span> <span class="s1">&#39;--enable-mbregex&#39;</span> <span class="s1">&#39;--with-mysql=mysqlnd&#39;</span> <span class="s1">&#39;--with-mysqli=mysqlnd&#39;</span> <span class="s1">&#39;--with-pear&#39;</span> <span class="s1">&#39;--with-pdo-mysql=mysqlnd&#39;</span> <span class="s1">&#39;--with-mysql-sock=/var/mysql/mysql.sock&#39;</span> <span class="s1">&#39;--enable-sockets&#39;</span> <span class="s1">&#39;--enable-sysvmsg&#39;</span> <span class="s1">&#39;--enable-sysvsem&#39;</span> <span class="s1">&#39;--enable-sysvshm&#39;</span> <span class="s1">&#39;--with-tidy&#39;</span> <span class="s1">&#39;--with-xmlrpc&#39;</span> <span class="s1">&#39;--with-iconv-dir=/usr&#39;</span> <span class="s1">&#39;--with-xsl=/usr&#39;</span> <span class="s1">&#39;--enable-zip&#39;</span> <span class="s1">&#39;--enable-intl&#39;</span> <span class="s1">&#39;--with-pcre-regex&#39;</span> <span class="s1">&#39;--with-pgsql=/usr&#39;</span> <span class="s1">&#39;--with-pdo-pgsql=/usr&#39;</span> <span class="s1">&#39;--with-freetype-dir=/usr/X11&#39;</span> <span class="s1">&#39;--with-jpeg-dir=/usr&#39;</span> <span class="s1">&#39;--with-png-dir=/usr/X11&#39;</span> <span class="s1">&#39;--with-apxs2=/usr/sbin/apxs&#39;</span>
 </span></code></pre></td></tr></table></div></figure>
 
 </div>

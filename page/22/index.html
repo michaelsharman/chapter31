@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Mark Kruger details a concept (with a little help from Sean Corfield) known as &#8220;double-checked locking&#8221;, in the example as it pertains &hellip;">
+	<meta name="description" content="Google have come out with yet another fantastic tool, particularly for the developers out there :) google code search was released yesterday as a &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,52 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2006/10/06/google-code-search/">
+		
+			Google Code Search</a>
+	</h2>
+	<div class="entry-content">
+		<p>Google have come out with yet another fantastic tool, particularly for the developers out there :)</p>
+
+<p><a href="http://google.com/codesearch">google code search</a> was released yesterday as a beta in google labs to search for public source code.</p>
+
+<p>You can <a href="http://groups.google.com/group/Google-Code-Search">read more here</a>.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-10-06T22:29:26+10:00" pubdate data-updated="true">Oct 6<span>th</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2006/10/06/google-code-search//page/22/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -828,148 +874,6 @@ Bottom line is that while bots are great for indexing your content, they can cau
 </div>
 	
 		<div class="comments"><a href="/2006/09/25/cfhtmlhead//page/22/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2006/09/20/trimming-strings-with-javascript/">
-		
-			Trimming Strings With Javascript</a>
-	</h2>
-	<div class="entry-content">
-		<p><a href="http://bennadel.com/">Ben Nadel</a> has a nice post on <a href="http://bennadel.com/resources/uploads/string_trimming1.htm">trimming strings with javascript</a> using regular expressions.</p>
-
-<p>Note that the reg exp white space character &#8216;\s&#8217; is used to match:</p>
-
-<ul>
-<li>space</li>
-<li>tab</li>
-<li>horizontal tab</li>
-<li>vertical tab</li>
-<li>line break</li>
-</ul>
-
-
-<p>Sample code below:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c1">// Trims the beginning and trailing white space from a string.</span>
-</span><span class='line'>  <span class="kd">function</span> <span class="nx">trim</span><span class="p">(</span> <span class="nx">strText</span> <span class="p">){</span>
-</span><span class='line'>      <span class="k">return</span><span class="p">(</span> <span class="nx">strText</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="k">new</span> <span class="nb">RegExp</span><span class="p">(</span><span class="s2">&quot;^([s]+)|([s]+)$&quot;</span><span class="p">,</span> <span class="s2">&quot;gm&quot;</span><span class="p">),</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="p">);</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c1">// Trims the beinning white space from a string.</span>
-</span><span class='line'>  <span class="kd">function</span> <span class="nx">leftTrim</span><span class="p">(</span> <span class="nx">strText</span> <span class="p">){</span>
-</span><span class='line'>      <span class="k">return</span><span class="p">(</span> <span class="nx">strText</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="k">new</span> <span class="nb">RegExp</span><span class="p">(</span><span class="s2">&quot;^[s]+&quot;</span><span class="p">,</span> <span class="s2">&quot;gm&quot;</span><span class="p">),</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="p">);</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c1">// Trims the trailing white space from a string.</span>
-</span><span class='line'>  <span class="kd">function</span> <span class="nx">rightTrim</span><span class="p">(</span> <span class="nx">strText</span> <span class="p">){</span>
-</span><span class='line'>      <span class="k">return</span><span class="p">(</span> <span class="nx">strText</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="k">new</span> <span class="nb">RegExp</span><span class="p">(</span><span class="s2">&quot;[s]+$&quot;</span><span class="p">,</span> <span class="s2">&quot;gm&quot;</span><span class="p">),</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="p">);</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/script&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><a href="/images/uploads/2006/09/trimstring.js">Javascript: trimString.js</a></p>
-
-<p>Update 25th March 2007:</p>
-
-<pre><code>    myString.replace(/^\s*|\s*$/g, "");
-</code></pre>
-
-<p>A basic breakdown:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="sr">/.../</span>
-</span><span class='line'>    <span class="nx">Regular</span> <span class="nx">expressions</span> <span class="k">in</span> <span class="nx">javascript</span> <span class="nx">are</span> <span class="nx">delimited</span> <span class="kd">with</span> <span class="nx">forward</span> <span class="nx">slashes</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">^</span>
-</span><span class='line'>    <span class="nx">Outside</span> <span class="nx">the</span> <span class="nx">usual</span> <span class="nx">square</span> <span class="nx">brackets</span><span class="p">,</span> <span class="nx">the</span> <span class="o">**</span><span class="nx">caret</span><span class="o">**</span> <span class="nx">means</span> <span class="nx">look</span> <span class="nx">only</span> <span class="nx">at</span> <span class="nx">the</span> <span class="nx">beginning</span> <span class="nx">of</span> <span class="nx">the</span> <span class="nx">target</span> <span class="nx">string</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">|</span>
-</span><span class='line'>    <span class="o">**</span><span class="nx">Alternatation</span><span class="o">**</span><span class="p">,</span> <span class="nx">meaning</span> <span class="nx">finding</span> <span class="nx">the</span> <span class="nx">left</span> <span class="nx">hand</span> <span class="nx">OR</span> <span class="nx">right</span> <span class="nx">have</span> <span class="nx">values</span>
-</span><span class='line'>
-</span><span class='line'><span class="err">\</span><span class="nx">s</span><span class="o">*</span>
-</span><span class='line'>    <span class="nx">Denotes</span> <span class="mi">0</span> <span class="nx">to</span> <span class="nx">many</span> <span class="nx">white</span> <span class="nx">space</span> <span class="nx">characters</span>
-</span><span class='line'>
-</span><span class='line'><span class="nx">$</span>
-</span><span class='line'>    <span class="nx">Means</span> <span class="nx">look</span> <span class="nx">only</span> <span class="nx">at</span> <span class="nx">the</span> <span class="nx">end</span> <span class="nx">of</span> <span class="nx">the</span> <span class="nx">target</span> <span class="nx">string</span>
-</span><span class='line'>
-</span><span class='line'><span class="nx">g</span>
-</span><span class='line'>    <span class="nx">Makes</span> <span class="nx">the</span> <span class="nx">search</span> <span class="o">**</span><span class="nx">global</span><span class="o">**</span><span class="p">;</span> <span class="nx">finding</span> <span class="nx">all</span> <span class="nx">matches</span><span class="p">,</span> <span class="nx">not</span> <span class="nx">just</span> <span class="nx">the</span> <span class="nx">first</span> <span class="nx">match</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Of course all we&#8217;re doing is replacing left and right white space with an empty string (&#8220;&#8221;).</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2006-09-20T09:23:59+10:00" pubdate data-updated="true">Sep 20<span>th</span>, 2006</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/javascript/'>Javascript</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2006/09/20/trimming-strings-with-javascript//page/22/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

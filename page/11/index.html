@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Most developers know and use exception handling techniques when building web apps. One of the important reasons to do this is so that the end user &hellip;">
+	<meta name="description" content="Sometimes you want to create an HTML table by hand and don&#8217;t have the luxury (if you consider it a luxury!) of having Dreamweaver around. Of &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,56 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/07/08/kotatsu-a-simple-html-table-generator/">
+		
+			Kotatsu - a Simple Html Table Generator</a>
+	</h2>
+	<div class="entry-content">
+		<p>Sometimes you want to create an HTML table by hand and don&#8217;t have the luxury (if you consider it a luxury!) of having Dreamweaver around. Of course, creating HTML tables really isn&#8217;t all that difficult or time consuming, but considering we use snippets for just about everything else why not have a tool to generate these tables for us?</p>
+
+<p><a href="http://www.askthecssguy.com/kotatsu/index.html">Kotatsu</a> is an online tool to do just that, sure it is very simple (doesn&#8217;t support col/rowspans or accessibility attributes etc) but when you want to churn out a basic custom table it just might save you some time.</p>
+
+<p>About the only other thing you can do (apart from rows and columns) is add a css class per column which can come in handy.</p>
+
+<p>A basic tool which you might find useful, but would be better with some additions for customising like adding table id&#8217;s or th&#8217;s etc</p>
+
+<p><img src="/images/uploads/2008/07/kotsatsu.png" alt="" /></p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-07-08T19:53:23+10:00" pubdate data-updated="true">Jul 8<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/x-html/'>(X)HTML</a>, <a class='category' href='/categories/tools/'>Tools</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/07/08/kotatsu-a-simple-html-table-generator//page/11/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -694,66 +744,6 @@
 </div>
 	
 		<div class="comments"><a href="/2008/06/11/webdu-starts-tomorrow//page/11/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2008/06/11/preservesinglequotes-still-breaks-on-array-style-parameters/">
-		
-			PreserveSingleQuotes Still Breaks on Array Style Parameters</a>
-	</h2>
-	<div class="entry-content">
-		<p>As far back as <a href="http://livedocs.adobe.com/coldfusion/6.1/htmldocs/functa53.htm">ColdFusion 6 PreserveSingleQuotes</a> hasn&#8217;t worked with array style parameters.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="err">#</span><span class="nx">preserveSingleQuotes</span><span class="p">(</span><span class="nx">aWhere</span><span class="p">[</span><span class="nx">i</span><span class="p">])</span><span class="err">#</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This was even submitted as ColdFusion Bug number 53977 on the CF6 docs, a few years later and we still have no joy for ColdFusion 8 :(</p>
-
-<p>Structures will work but only when you access the value by dot notation, not using array style:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="err">#</span><span class="nx">preserveSingleQuotes</span><span class="p">(</span><span class="nx">stWhere</span><span class="p">.</span><span class="nx">i</span><span class="p">)</span><span class="err">#</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This was annoying today when I wanted to loop over an array of &#8220;WHERE&#8221; clause arguments passed into a function. I needed to either change the calling code to pass a structure instead, or set the arguments array element to a local variable inside each loop iteration to use inside the preserveSingleQuotes</p>
-
-<p>Hopefully Adobe will fix this small bug in the next (Centaur) release!</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-06-11T14:49:00+10:00" pubdate data-updated="true">Jun 11<span>th</span>, 2008</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2008/06/11/preservesinglequotes-still-breaks-on-array-style-parameters//page/11/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

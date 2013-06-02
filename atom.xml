@@ -4,7 +4,7 @@
   <title><![CDATA[chapter31 &raquo;]]></title>
   <link href="http://chapter31.com/atom.xml" rel="self"/>
   <link href="http://chapter31.com/"/>
-  <updated>2013-06-01T18:26:53+10:00</updated>
+  <updated>2013-06-02T19:06:59+10:00</updated>
   <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
@@ -12,6 +12,163 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Installing APC in PHP 5.4.x on Mac OSX]]></title>
+    <link href="http://chapter31.com/2013/06/02/installing-apc-in-php-5-dot-4-x-on-mac-osx/"/>
+    <updated>2013-06-02T16:33:00+10:00</updated>
+    <id>http://chapter31.com/2013/06/02/installing-apc-in-php-5-dot-4-x-on-mac-osx</id>
+    <content type="html"><![CDATA[<p>I recently <a href="http://chapter31.com/2013/05/06/installing-php-5-dot-4-plus-from-source-on-mac-mountain-lion/">installed PHP 5.4 from source</a> but needed to add <abbr title="Alternative PHP Cache">APC</abbr>.</p>
+
+<p>Most people can install this using <abbr title="PHP Extension Community Library">PECL</abbr>, but I got an error doing this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>pecl install apc
+</span><span class='line'>
+</span><span class='line'>Warning: lstat<span class="o">()</span>: Lstat failed <span class="k">for</span> /private/tmp/pear/cache/497e483d585c1e3f341260e73a8c6e85rest.cacheid in PEAR/REST.php on line 276
+</span><span class='line'>
+</span><span class='line'>Warning: lstat<span class="o">()</span>: Lstat failed <span class="k">for</span> /private/tmp/pear/cache/497e483d585c1e3f341260e73a8c6e85rest.cacheid in /opt/php-5.4.15/lib/php/PEAR/REST.php on line 276
+</span><span class='line'>No releases available <span class="k">for </span>package <span class="s2">&quot;pecl.php.net/apc&quot;</span>
+</span><span class='line'>install failed
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So instead I downloaded the APC source <a href="http://pecl.php.net/package/APC">from the PECL website</a> and ran the following:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd </span>APC-3.1.13/
+</span><span class='line'>phpize
+</span><span class='line'>./configure --with-php-config<span class="o">=</span>/opt/php/bin/php-config --enable-apc
+</span><span class='line'>make
+</span><span class='line'><span class="nb">export </span><span class="nv">TEST_PHP_ARGS</span><span class="o">=</span><span class="s1">&#39;-n&#39;</span>
+</span><span class='line'>sudo make install
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note that my <em>php-config</em> setting is a little different because I installed my PHP into <em>/opt</em> instead of the default <em>/usr/bin</em></p>
+
+<p>The output of <em>make install</em> is:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo make install
+</span><span class='line'>Installing shared extensions:     /opt/php-5.4.15/lib/php/extensions/no-debug-non-zts-20100525/
+</span><span class='line'>Installing header files:          /opt/php-5.4.15/include/php/
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Copy the <em>Installing shared extensions</em> path into your php.ini file.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>apc<span class="o">]</span>
+</span><span class='line'><span class="nv">extension</span><span class="o">=</span>/opt/php-5.4.15/lib/php/extensions/no-debug-non-zts-20100525/apc.so
+</span><span class='line'>apc.enabled<span class="o">=</span>1
+</span><span class='line'>apc.shm_size<span class="o">=</span>128M
+</span><span class='line'>apc.ttl<span class="o">=</span>7200
+</span><span class='line'>apc.user_ttl<span class="o">=</span>7200
+</span><span class='line'>apc.enable_cli<span class="o">=</span>1
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can double check the installation process by either reviewing phpinfo(); in a browser or using CLI:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>php -i | grep apc
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you see something like the following (from php -i)&#8230;all good:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>apc.cache_by_default <span class="o">=</span>&gt; <span class="nv">On</span> <span class="o">=</span>&gt; On
+</span><span class='line'>apc.canonicalize <span class="o">=</span>&gt; <span class="nv">On</span> <span class="o">=</span>&gt; On
+</span><span class='line'>apc.coredump_unmap <span class="o">=</span>&gt; <span class="nv">Off</span> <span class="o">=</span>&gt; Off
+</span><span class='line'>apc.enable_cli <span class="o">=</span>&gt; <span class="nv">On</span> <span class="o">=</span>&gt; On
+</span><span class='line'>apc.enabled <span class="o">=</span>&gt; <span class="nv">On</span> <span class="o">=</span>&gt; On
+</span><span class='line'>apc.file_md5 <span class="o">=</span>&gt; <span class="nv">Off</span> <span class="o">=</span>&gt; Off
+</span><span class='line'>apc.file_update_protection <span class="o">=</span>&gt; <span class="nv">2</span> <span class="o">=</span>&gt; 2
+</span><span class='line'>apc.filters <span class="o">=</span>&gt; no <span class="nv">value</span> <span class="o">=</span>&gt; no value
+</span><span class='line'>apc.gc_ttl <span class="o">=</span>&gt; <span class="nv">3600</span> <span class="o">=</span>&gt; 3600
+</span><span class='line'>apc.include_once_override <span class="o">=</span>&gt; <span class="nv">Off</span> <span class="o">=</span>&gt; Off
+</span><span class='line'>apc.lazy_classes <span class="o">=</span>&gt; <span class="nv">Off</span> <span class="o">=</span>&gt; Off
+</span><span class='line'>apc.lazy_functions <span class="o">=</span>&gt; <span class="nv">Off</span> <span class="o">=</span>&gt; Off
+</span><span class='line'>apc.max_file_size <span class="o">=</span>&gt; <span class="nv">1M</span> <span class="o">=</span>&gt; 1M
+</span><span class='line'>apc.mmap_file_mask <span class="o">=</span>&gt; no <span class="nv">value</span> <span class="o">=</span>&gt; no value
+</span><span class='line'>apc.num_files_hint <span class="o">=</span>&gt; <span class="nv">1000</span> <span class="o">=</span>&gt; 1000
+</span><span class='line'>apc.preload_path <span class="o">=</span>&gt; no <span class="nv">value</span> <span class="o">=</span>&gt; no value
+</span><span class='line'>apc.report_autofilter <span class="o">=</span>&gt; <span class="nv">Off</span> <span class="o">=</span>&gt; Off
+</span><span class='line'>apc.rfc1867 <span class="o">=</span>&gt; <span class="nv">Off</span> <span class="o">=</span>&gt; Off
+</span><span class='line'>apc.rfc1867_freq <span class="o">=</span>&gt; <span class="nv">0</span> <span class="o">=</span>&gt; 0
+</span><span class='line'>apc.rfc1867_name <span class="o">=</span>&gt; <span class="nv">APC_UPLOAD_PROGRESS</span> <span class="o">=</span>&gt; APC_UPLOAD_PROGRESS
+</span><span class='line'>apc.rfc1867_prefix <span class="o">=</span>&gt; <span class="nv">upload_</span> <span class="o">=</span>&gt; upload_
+</span><span class='line'>apc.rfc1867_ttl <span class="o">=</span>&gt; <span class="nv">3600</span> <span class="o">=</span>&gt; 3600
+</span><span class='line'>apc.serializer <span class="o">=</span>&gt; <span class="nv">default</span> <span class="o">=</span>&gt; default
+</span><span class='line'>apc.shm_segments <span class="o">=</span>&gt; <span class="nv">1</span> <span class="o">=</span>&gt; 1
+</span><span class='line'>apc.shm_size <span class="o">=</span>&gt; <span class="nv">128M</span> <span class="o">=</span>&gt; 128M
+</span><span class='line'>apc.shm_strings_buffer <span class="o">=</span>&gt; <span class="nv">4M</span> <span class="o">=</span>&gt; 4M
+</span><span class='line'>apc.slam_defense <span class="o">=</span>&gt; <span class="nv">On</span> <span class="o">=</span>&gt; On
+</span><span class='line'>apc.stat <span class="o">=</span>&gt; <span class="nv">On</span> <span class="o">=</span>&gt; On
+</span><span class='line'>apc.stat_ctime <span class="o">=</span>&gt; <span class="nv">Off</span> <span class="o">=</span>&gt; Off
+</span><span class='line'>apc.ttl <span class="o">=</span>&gt; <span class="nv">7200</span> <span class="o">=</span>&gt; 7200
+</span><span class='line'>apc.use_request_time <span class="o">=</span>&gt; <span class="nv">On</span> <span class="o">=</span>&gt; On
+</span><span class='line'>apc.user_entries_hint <span class="o">=</span>&gt; <span class="nv">4096</span> <span class="o">=</span>&gt; 4096
+</span><span class='line'>apc.user_ttl <span class="o">=</span>&gt; <span class="nv">7200</span> <span class="o">=</span>&gt; 7200
+</span><span class='line'>apc.write_lock <span class="o">=</span>&gt; <span class="nv">On</span> <span class="o">=</span>&gt; On
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[base16 - colour scheme for hackers]]></title>
@@ -371,7 +528,7 @@ Base16 is both a color scheme and a template.
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Now run configure:</p>
+<p>Now run configure (I installed with pear):</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -460,7 +617,7 @@ Base16 is both a color scheme and a template.
 </span><span class='line'>--enable-mbregex  <span class="se">\</span>
 </span><span class='line'>--with-mysql<span class="o">=</span>mysqlnd  <span class="se">\</span>
 </span><span class='line'>--with-mysqli<span class="o">=</span>mysqlnd  <span class="se">\</span>
-</span><span class='line'>--without-pear  <span class="se">\</span>
+</span><span class='line'>--with-pear  <span class="se">\</span>
 </span><span class='line'>--with-pdo-mysql<span class="o">=</span>mysqlnd  <span class="se">\</span>
 </span><span class='line'>--with-mysql-sock<span class="o">=</span>/var/mysql/mysql.sock  <span class="se">\</span>
 </span><span class='line'>--with-readline<span class="o">=</span>/usr  <span class="se">\</span>
@@ -516,6 +673,22 @@ Base16 is both a color scheme and a template.
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>brew install libpng
 </span><span class='line'>brew install freetype
 </span><span class='line'>brew install openssl
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Change install path</h2>
+
+<p>The notes above install in the default /usr folder. If you want to install in /opt instead (which is often cleaner), add this to the configure script:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>--prefix<span class="o">=</span>/opt/php-5.4.14
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Here&#8217;s a cutdown configure script I just used to install 5.4.15</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="s1">&#39;./configure&#39;</span>  <span class="s1">&#39;--prefix=/opt/php-5.4.15&#39;</span> <span class="s1">&#39;--with-libxml-dir=/usr&#39;</span> <span class="s1">&#39;--with-openssl=/usr&#39;</span> <span class="s1">&#39;--with-zlib=/usr&#39;</span> <span class="s1">&#39;--enable-bcmath&#39;</span> <span class="s1">&#39;--with-bz2=/usr&#39;</span> <span class="s1">&#39;--enable-calendar&#39;</span> <span class="s1">&#39;--with-curl=/usr&#39;</span> <span class="s1">&#39;--enable-dba&#39;</span> <span class="s1">&#39;--enable-exif&#39;</span> <span class="s1">&#39;--enable-ftp&#39;</span> <span class="s1">&#39;--with-gd&#39;</span> <span class="s1">&#39;--enable-gd-native-ttf&#39;</span> <span class="s1">&#39;--enable-mbstring&#39;</span> <span class="s1">&#39;--enable-mbregex&#39;</span> <span class="s1">&#39;--with-mysql=mysqlnd&#39;</span> <span class="s1">&#39;--with-mysqli=mysqlnd&#39;</span> <span class="s1">&#39;--with-pear&#39;</span> <span class="s1">&#39;--with-pdo-mysql=mysqlnd&#39;</span> <span class="s1">&#39;--with-mysql-sock=/var/mysql/mysql.sock&#39;</span> <span class="s1">&#39;--enable-sockets&#39;</span> <span class="s1">&#39;--enable-sysvmsg&#39;</span> <span class="s1">&#39;--enable-sysvsem&#39;</span> <span class="s1">&#39;--enable-sysvshm&#39;</span> <span class="s1">&#39;--with-tidy&#39;</span> <span class="s1">&#39;--with-xmlrpc&#39;</span> <span class="s1">&#39;--with-iconv-dir=/usr&#39;</span> <span class="s1">&#39;--with-xsl=/usr&#39;</span> <span class="s1">&#39;--enable-zip&#39;</span> <span class="s1">&#39;--enable-intl&#39;</span> <span class="s1">&#39;--with-pcre-regex&#39;</span> <span class="s1">&#39;--with-pgsql=/usr&#39;</span> <span class="s1">&#39;--with-pdo-pgsql=/usr&#39;</span> <span class="s1">&#39;--with-freetype-dir=/usr/X11&#39;</span> <span class="s1">&#39;--with-jpeg-dir=/usr&#39;</span> <span class="s1">&#39;--with-png-dir=/usr/X11&#39;</span> <span class="s1">&#39;--with-apxs2=/usr/sbin/apxs&#39;</span>
 </span></code></pre></td></tr></table></div></figure>
 
 ]]></content>
@@ -1439,64 +1612,6 @@ Select #3 had 8192* possible combinations</p>
 
 
 <p>If would fail. It needs to occur after the parens.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[jQuery UI dialog focus on first tabable element]]></title>
-    <link href="http://chapter31.com/2012/09/14/jquery-ui-dialog-focus-on-first-tabable-element/"/>
-    <updated>2012-09-14T16:27:29+10:00</updated>
-    <id>http://chapter31.com/2012/09/14/jquery-ui-dialog-focus-on-first-tabable-element</id>
-    <content type="html"><![CDATA[<p>I&#8217;ve been using the <a href="http://jqueryui.com/demos/dialog/">jQuery UI dialog</a> for a project recently, one thing that bugged me though, was that upon opening a dialog the first tabable element always gets focussed. This can be:</p>
-
-<ul>
-<li>hyperlinks</li>
-<li>input boxes</li>
-<li>select boxes</li>
-<li>buttons</li>
-<li>textareas etc</li>
-</ul>
-
-
-<p>An example of this is:</p>
-
-<p><img src="http://chapter31.com/images/uploads/2012/09/Screen-shot-2012-09-14-at-4.06.09-PM.png" alt="" /></p>
-
-<p><img src="http://chapter31.com/images/uploads/2012/09/Screen-shot-2012-09-14-at-4.06.30-PM.png" alt="" /></p>
-
-<p>A quick way around this is to fire a <a href="http://api.jquery.com/blur/">blur()</a> method, targeting the first <em>tabable</em> element type of your dialog. So if I open up a dialog window with an id of <em>dialog</em>, I can do:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#dialog&#39;</span><span class="p">).</span><span class="nx">dialog</span><span class="p">(</span><span class="s1">&#39;open&#39;</span><span class="p">);</span>
-</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#dialog&#39;</span><span class="p">).</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;a, select, input, textarea, button&#39;</span><span class="p">).</span><span class="nx">first</span><span class="p">().</span><span class="nx">blur</span><span class="p">();</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>I was hoping to put this inside the open() method of the dialog, but it doesn&#8217;t seem to parse the contents of the dialog within that method. So the following did not work for me:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#dialog&#39;</span><span class="p">).</span><span class="nx">dialog</span><span class="p">({</span>
-</span><span class='line'>  <span class="nx">autoOpen</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
-</span><span class='line'>  <span class="nx">maxWidth</span><span class="o">:</span> <span class="mi">600</span><span class="p">,</span>
-</span><span class='line'>  <span class="nx">minWidth</span><span class="o">:</span> <span class="mi">500</span><span class="p">,</span>
-</span><span class='line'>  <span class="nx">modal</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-</span><span class='line'>  <span class="nx">resizable</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
-</span><span class='line'>  <span class="nx">open</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;a, select, input, textarea, button&#39;</span><span class="p">).</span><span class="nx">first</span><span class="p">().</span><span class="nx">blur</span><span class="p">();</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">});</span>
-</span></code></pre></td></tr></table></div></figure>
-
 ]]></content>
   </entry>
   
