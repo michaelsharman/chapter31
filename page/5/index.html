@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="For years here at Learnosity we&#8217;ve been using FarCry for most of our CMS requirements (yes, I know that FarCry, or rather farcrycms, is a lot &hellip;">
+	<meta name="description" content="Like most CMS solutions out there, Mura CMS gives you some cool hooks to override core functionality. See the developer guides for more information &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,125 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2011/05/31/mura-overriding-dspcrumblistlinks/">
+		
+			Mura - Overriding dspCrumblistLinks</a>
+	</h2>
+	<div class="entry-content">
+		<p>Like most CMS solutions out there, Mura CMS gives you some cool hooks to override core functionality. <a href="http://docs.getmura.com/index.cfm/developer-guides/">See the developer guides</a> for more information.</p>
+
+<p>I&#8217;ve created a <a href="https://github.com/michaelsharman/muracustomisations/">repository on github</a> to store any customisations or extensions that could be cherry picked for use in any Mura app.</p>
+
+<p>First up was a super simple one for breadcrumbs. By default, Mura will put an &#8220;a href&#8221; around the last item in the crumb list. The site I was working on specified that the last item should be plain text (no hyperlink).</p>
+
+<p>Mura makes this nice and easy by extending the contentRenderer.cfc inside your /[siteid]/includes folder. Here is the function which includes my custom argument <em>linkLastItem [bool]</em> to determine whether or not to link the last item:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cffunction</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;dspCrumblistLinks&quot;</span>  <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="nx">returntype</span><span class="o">=</span><span class="s2">&quot;string&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;id&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;string&quot;</span> <span class="k">default</span><span class="o">=</span><span class="s2">&quot;crumblist&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;separator&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;string&quot;</span> <span class="k">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;linkLastItem&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;boolean&quot;</span> <span class="nx">required</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="k">default</span><span class="o">=</span><span class="s2">&quot;true&quot;</span> <span class="nx">hint</span><span class="o">=</span><span class="s2">&quot;Whether to generate an &#39;a href&#39; for the last crumb item&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfset</span> <span class="kd">var</span> <span class="nx">thenav</span><span class="o">=</span><span class="s2">&quot;&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfset</span> <span class="kd">var</span> <span class="nx">theOffset</span><span class="o">=</span><span class="nx">arrayLen</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">crumbdata</span><span class="p">)</span><span class="o">-</span> <span class="k">this</span><span class="p">.</span><span class="nx">navOffSet</span> <span class="o">/&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfset</span> <span class="kd">var</span> <span class="nx">I</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">arrayLen</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">crumbdata</span><span class="p">)</span> <span class="nx">gt</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">navOffSet</span><span class="p">)</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfsavecontent</span> <span class="nx">variable</span><span class="o">=</span><span class="s2">&quot;theNav&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfoutput</span><span class="o">&gt;&lt;</span><span class="nx">ul</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;#arguments.id#&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>              <span class="o">&lt;</span><span class="nx">cfloop</span> <span class="nx">from</span><span class="o">=</span><span class="s2">&quot;#theOffset#&quot;</span> <span class="nx">to</span><span class="o">=</span><span class="s2">&quot;1&quot;</span> <span class="nx">index</span><span class="o">=</span><span class="s2">&quot;I&quot;</span> <span class="nx">step</span><span class="o">=</span><span class="s2">&quot;-1&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>                  <span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">I</span> <span class="nx">neq</span> <span class="mi">1</span><span class="o">&gt;</span>
+</span><span class='line'>                      <span class="o">&lt;</span><span class="nx">li</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;#iif(I eq theOffset,de(&#39;first&#39;),de(&#39;&#39;))#&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>                      <span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">i</span> <span class="nx">neq</span> <span class="nx">theOffset</span><span class="o">&gt;</span><span class="err">#</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">separator</span><span class="err">#</span><span class="o">&lt;</span><span class="err">/cfif&gt;</span>
+</span><span class='line'>                      <span class="err">#</span><span class="nx">addlink</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">crumbdata</span><span class="p">[</span><span class="nx">I</span><span class="p">].</span><span class="nx">type</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">crumbdata</span><span class="p">[</span><span class="nx">I</span><span class="p">].</span><span class="nx">filename</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">crumbdata</span><span class="p">[</span><span class="nx">I</span><span class="p">].</span><span class="nx">menutitle</span><span class="p">,</span> <span class="s1">&#39;_self&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">crumbdata</span><span class="p">[</span><span class="nx">I</span><span class="p">].</span><span class="nx">contentid</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">crumbdata</span><span class="p">[</span><span class="nx">I</span><span class="p">].</span><span class="nx">siteid</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="nx">application</span><span class="p">.</span><span class="nx">configBean</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(),</span> <span class="nx">application</span><span class="p">.</span><span class="nx">configBean</span><span class="p">.</span><span class="nx">getStub</span><span class="p">(),</span> <span class="nx">application</span><span class="p">.</span><span class="nx">configBean</span><span class="p">.</span><span class="nx">getIndexFile</span><span class="p">(),</span> <span class="nx">event</span><span class="p">.</span><span class="nx">getValue</span><span class="p">(</span><span class="s1">&#39;showMeta&#39;</span><span class="p">),</span><span class="mi">0</span><span class="p">)</span><span class="err">#</span><span class="o">&lt;</span><span class="err">/li&gt;</span>
+</span><span class='line'>                  <span class="o">&lt;</span><span class="nx">cfelse</span><span class="o">&gt;</span>
+</span><span class='line'>                      <span class="o">&lt;</span><span class="nx">li</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;#iif(arraylen(this.crumbdata),de(&#39;last&#39;),de(&#39;first&#39;))#&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>                          <span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">linkLastItem</span><span class="o">&gt;</span>
+</span><span class='line'>                              <span class="err">#</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">separator</span><span class="err">##</span><span class="nx">addlink</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">crumbdata</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">type</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">crumbdata</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">filename</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">crumbdata</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">menutitle</span><span class="p">,</span> <span class="s1">&#39;_self&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">crumbdata</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">contentid</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">crumbdata</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">siteid</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="nx">application</span><span class="p">.</span><span class="nx">configBean</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(),</span> <span class="nx">application</span><span class="p">.</span><span class="nx">configBean</span><span class="p">.</span><span class="nx">getStub</span><span class="p">(),</span> <span class="nx">application</span><span class="p">.</span><span class="nx">configBean</span><span class="p">.</span><span class="nx">getIndexFile</span><span class="p">(),</span><span class="nx">event</span><span class="p">.</span><span class="nx">getValue</span><span class="p">(</span><span class="s1">&#39;showMeta&#39;</span><span class="p">),</span><span class="mi">0</span><span class="p">)</span><span class="err">#</span>
+</span><span class='line'>                          <span class="o">&lt;</span><span class="nx">cfelse</span><span class="o">&gt;</span>
+</span><span class='line'>                              <span class="err">#</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">separator</span><span class="err">##</span><span class="k">this</span><span class="p">.</span><span class="nx">crumbdata</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">menutitle</span><span class="err">#</span>
+</span><span class='line'>                          <span class="o">&lt;</span><span class="err">/cfif&gt;</span>
+</span><span class='line'>                      <span class="o">&lt;</span><span class="err">/li&gt;</span>
+</span><span class='line'>                  <span class="o">&lt;</span><span class="err">/cfif&gt;</span>
+</span><span class='line'>              <span class="o">&lt;</span><span class="err">/cfloop&gt;</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="err">/ul&gt;&lt;/cfoutput&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="err">/cfsavecontent&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cfif&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfreturn</span> <span class="nx">trim</span><span class="p">(</span><span class="nx">theNav</span><span class="p">)</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cffunction&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-05-31T22:31:00+10:00" pubdate data-updated="true">May 31<span>st</span>, 2011</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/mura/'>Mura</a>, <a class='category' href='/categories/railo/'>Railo</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2011/05/31/mura-overriding-dspcrumblistlinks//page/5/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -771,90 +890,6 @@ MySQL / MSSQL (or whatever database your version of FarCry supports)</p>
 </div>
 	
 		<div class="comments"><a href="/2010/11/15/importing-a-csv-into-mysql-using-the-command-line//page/5/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2010/10/04/case-sensitive-development-on-mac-os-x/">
-		
-			Case Sensitive Development on Mac OS X</a>
-	</h2>
-	<div class="entry-content">
-		<p><a href="http://www.learnosity.com/">At work</a> most of the developers are on Mac OS X but our staging and production environments are Linux based. This means development is case insensitive but stage/production is case sensitive. Although we have development guidelines/standards which dictate file and database naming conventions etc, human error can still occur (in terms of referencing files with a different &#8220;case&#8221;). We also use a few open source packages where we obviously don&#8217;t have control over the naming of files or the references to database tables within those files.</p>
-
-<p>Why is this an issue?</p>
-
-<p>Linux is a case sensitive environment, so calling <em>myClass.cfc</em> when the actual name of the file is <em>MyClass.cfc</em> will fail on Linux, but will be ok during development as Mac OS X isn&#8217;t case sensitive by default. The same would happen for MySQL table references in the codebase as tables are stored as files on the file system.</p>
-
-<p>This has been an ongoing issue for us over the years particularly with open source libraries we may be using. So last week I decided to change my working environment to avoid finding these issues only once code had been deployed to staging. Overall the process was simple and really only took an hour or so (and most of that was waiting for files to copy across to the new location).</p>
-
-<p>What I did was to create a case sensitive partition on the Mac and move my &#8220;Workspace&#8221; (project folders and files) and &#8220;MySQL&#8221; install to the new partition. Now any case sensitive issues will be found during development which is much preferable to finding them in staging/production :)</p>
-
-<p>Setting up the new partition was done using <a href="http://www.coriolis-systems.com/iPartition.php">iPartition</a> but you could just as easily use the Disk Utility. I setup a new 50GB jhfsx partition (HFS Journaled case sensitive). Once that was done I copied my <em>workspace</em> folder across, then the <em>MySQL</em> folder. Finally, create symlinks for both the workspace and mysql paths so I didn&#8217;t run into any pathing issues in my apache conf etc.</p>
-
-<p>Steps:</p>
-
-<ol>
-<li><p>Create your case sensitive <em>jhfsx (HFS Journaled case sensitive)</em> partition. 50GB was fine for me; your requirements may vary. Remember that you need enough space for your MySQL databases and your project files (both current and future).</p></li>
-<li><p>Stop MySQL</p>
-
-<blockquote><p>$ mysqladmin -uroot -p shutdown</p></blockquote></li>
-<li><p>Copy the MySQL and Workspaces folders to the new paritition (I named my new partition &#8220;Learnosity&#8221;)</p>
-
-<blockquote><p>$ sudo cp -rp /usr/local/mysql /Volumes/Learnosity
-$ sudo cp -rp /users/michaelsharman/Workspaces /Volumes/Learnosity</p></blockquote></li>
-<li><p>symlink your previous paths to the new partition to save you having to remap apache confs and MySQL commands etc</p>
-
-<blockquote><p>$ sudo ln -sf /Volumes/Learnosity/mysql /usr/local/mysql
-$ sudo ln -sf /Volumes/Learnosity/Workspaces /users/michaelsharman/Workspaces</p></blockquote></li>
-<li><p>Set the MySQL <em>lower_case_table_names</em> to 0 (same as it is on Linux by default) by adding this line in /etc/my.cnf</p>
-
-<blockquote><p>lower_case_table_names = 0</p></blockquote></li>
-</ol>
-
-
-<p>If you run <em>$ mysqladmin -uroot -p variables</em> you can see all global variables for your MySQL instance.</p>
-
-<ol>
-<li>Start MySQL
-
-<blockquote><p>$ sudo mysqld -uroot</p></blockquote></li>
-</ol>
-
-
-<p>That should be it, don&#8217;t need to do anything else except change the location to your Workspaces folder in your editor of choice.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-10-04T22:36:00+11:00" pubdate data-updated="true">Oct 4<span>th</span>, 2010</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/databases/'>Databases</a>, <a class='category' href='/categories/mac/'>Mac</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2010/10/04/case-sensitive-development-on-mac-os-x//page/5/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

@@ -4,7 +4,7 @@
   <title><![CDATA[chapter31 &raquo;]]></title>
   <link href="http://chapter31.com/atom.xml" rel="self"/>
   <link href="http://chapter31.com/"/>
-  <updated>2013-06-02T19:06:59+10:00</updated>
+  <updated>2013-06-03T11:12:37+10:00</updated>
   <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
@@ -12,6 +12,88 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[PHP Composer error - cannot redeclare class]]></title>
+    <link href="http://chapter31.com/2013/06/03/php-composer-error-cannot-redeclare-class/"/>
+    <updated>2013-06-03T09:16:00+10:00</updated>
+    <id>http://chapter31.com/2013/06/03/php-composer-error-cannot-redeclare-class</id>
+    <content type="html"><![CDATA[<p>I rebuilt PHP last night to include APC and all of a sudden composer stopped working in my project. Whenever I ran a simple update, install or dump-autoload I&#8217;d get:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>composer update
+</span><span class='line'>PHP Fatal error:  include<span class="o">()</span>: Cannot redeclare class symfony<span class="se">\c</span>omponent<span class="se">\p</span>rocess<span class="se">\p</span>rocess in phar:///usr/local/bin/composer/vendor/composer/ClassLoader.php on line 183
+</span><span class='line'>
+</span><span class='line'>Fatal error: include<span class="o">()</span>: Cannot redeclare class symfony<span class="se">\c</span>omponent<span class="se">\p</span>rocess<span class="se">\p</span>rocess in phar:///usr/local/bin/composer/vendor/composer/ClassLoader.php on line 183
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A quick google told me <a href="https://github.com/composer/composer/issues/1432">others</a> also had the <a href="https://github.com/composer/composer/issues/264">same</a> issue.</p>
+
+<p>It seems that there&#8217;s a bug between composer.phar and APC. From one of the composer issues:</p>
+
+<pre><code>Quite weird, but then again the php docs seem to acknowledge that APC should not really be
+enabled on the CLI. It seems to be a phar+apc bug, see https://bugs.php.net/bug.php?id=59398
+https://bugs.php.net/bug.php?id=59829 https://bugs.php.net/bug.php?id=59907 as well.
+</code></pre>
+
+<p>There are a couple of things you can do to fix this, but they all involve turning off APC for php-cli. First, run <em>composer diag</em> to see whether any more information can be gleaned:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>composer diag
+</span><span class='line'>Checking platform settings: FAIL
+</span><span class='line'>
+</span><span class='line'>The apc.enable_cli setting is incorrect.
+</span><span class='line'>Add the following to the end of your <span class="sb">`</span>php.ini<span class="sb">`</span>:
+</span><span class='line'>    apc.enable_cli <span class="o">=</span> Off
+</span><span class='line'>
+</span><span class='line'>The php.ini used by your <span class="nb">command</span>-line PHP is: /opt/php-5.4.15/lib/php.ini
+</span><span class='line'>If you can not modify the ini file, you can also run <span class="sb">`</span>php -d <span class="nv">option</span><span class="o">=</span>value<span class="sb">`</span> to modify ini values on the fly. You can use -d multiple times.
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you get that message, you know you have the same problem as I did :) You can also check the <a href="http://getcomposer.org/doc/articles/troubleshooting.md">troubleshooting</a> page on getcomposer.org</p>
+
+<p>You can try running the <em>self-update</em> (for me I don&#8217;t reference the .phar file because I use the unix install convention).</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>php /usr/local/bin/composer self-update
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Those are really just everyday things to try if you have composer issues, to really fix this you need to disable APC for php-cli. You should set this option to <em>0</em> in your php.ini</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>apc.enable_cli<span class="o">=</span>0
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you don&#8217;t have access to php.ini, you can disable APC on the CLI per command:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>php -d apc.enable_cli<span class="o">=</span>0 /usr/local/bin/composer install
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note: if you have composer.phar in your project you could just do:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>php -d apc.enable_cli<span class="o">=</span>0 composer.phar install
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Installing APC in PHP 5.4.x on Mac OSX]]></title>
@@ -1544,74 +1626,6 @@ Select #3 had 8192* possible combinations</p>
 </code></pre></li>
 </ul>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Whitespace issues in cfscript based functions]]></title>
-    <link href="http://chapter31.com/2012/09/20/whitespace-issues-in-cfscript-based-functions/"/>
-    <updated>2012-09-20T17:28:08+10:00</updated>
-    <id>http://chapter31.com/2012/09/20/whitespace-issues-in-cfscript-based-functions</id>
-    <content type="html"><![CDATA[<p>Ok now we all know that ColdFusion is kind of lame when it comes to whitespace management, unless you specifically have &#8220;whitespace management&#8221; turned on for your server.</p>
-
-<p>I have a function that is used to build the <em>href</em> value of a hyperlink. Nothing special there. However when I viewed the source of the page I was a little surprised to see a mountain of whitespace coming back from the function.</p>
-
-<p>All I do is return a string from the function, I don&#8217;t output any text from within the function.</p>
-
-<p>Here it is:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kr">public</span> <span class="nx">string</span> <span class="kd">function</span> <span class="nx">getFullPageURI</span><span class="p">(</span><span class="nx">required</span> <span class="nx">string</span> <span class="nx">pagename</span><span class="p">)</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>  <span class="kd">var</span> <span class="nx">pages</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">lib</span><span class="p">.</span><span class="nx">services</span><span class="p">.</span><span class="nx">pages</span><span class="p">();</span>
-</span><span class='line'>  <span class="kd">var</span> <span class="nx">page</span> <span class="o">=</span> <span class="nx">pages</span><span class="p">.</span><span class="nx">getPageByNavURL</span><span class="p">(</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">pagename</span><span class="p">,</span> <span class="nx">getId</span><span class="p">());</span>
-</span><span class='line'>  <span class="k">return</span> <span class="nx">page</span><span class="p">.</span><span class="nx">getPageURI</span><span class="p">();</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>And the link source:</p>
-
-<p><img src="http://chapter31.com/images/uploads/2012/09/Screen-shot-2012-09-20-at-5.24.32-PM.png" alt="" /></p>
-
-<p>Hmm, could that suck any more? Now what happens if I add output=&#8221;false&#8221; (not particularly intuitive) to the end of the function, like this:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kr">public</span> <span class="nx">string</span> <span class="kd">function</span> <span class="nx">getFullPageURI</span><span class="p">(</span><span class="nx">required</span> <span class="nx">string</span> <span class="nx">pagename</span><span class="p">)</span> <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;false&quot;</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>  <span class="kd">var</span> <span class="nx">pages</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">lib</span><span class="p">.</span><span class="nx">services</span><span class="p">.</span><span class="nx">pages</span><span class="p">();</span>
-</span><span class='line'>  <span class="kd">var</span> <span class="nx">page</span> <span class="o">=</span> <span class="nx">pages</span><span class="p">.</span><span class="nx">getPageByNavURL</span><span class="p">(</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">pagename</span><span class="p">,</span> <span class="nx">getId</span><span class="p">());</span>
-</span><span class='line'>  <span class="k">return</span> <span class="nx">page</span><span class="p">.</span><span class="nx">getPageURI</span><span class="p">();</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Now I get:</p>
-
-<p><img src="http://chapter31.com/images/uploads/2012/09/Screen-shot-2012-09-20-at-5.25.54-PM.png" alt="" /></p>
-
-<p>Sorry but that&#8217;s just insane. cfscript should behave like cfsilent all the time unless you specify a writeOutput();</p>
-
-<p>Hope this helps any other people out there. The lesson learned is that you can specify output=&#8221;false&#8221; in a cfscript based function, but ONLY AFTER THE METHOD SIGNATAURE!</p>
-
-<p>So if you did this:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kr">public</span> <span class="nx">string</span> <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="kd">function</span> <span class="nx">getFullPageURI</span><span class="p">(</span><span class="nx">required</span> <span class="nx">string</span> <span class="nx">pagename</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>If would fail. It needs to occur after the parens.</p>
 ]]></content>
   </entry>
   

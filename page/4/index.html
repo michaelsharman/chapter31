@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Occasionally when I&#8217;m restoring a database that was backed up from a different server than the one I&#8217;m restoring on I get an error along &hellip;">
+	<meta name="description" content="Often with doing a find and replace you want to use line breaks in the find (or replace) criteria. Sometimes I&#8217;ll have a column of data from a &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,67 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2012/03/17/find-and-replace-with-line-breaks-in-eclipse/">
+		
+			Find and Replace With Line Breaks in Eclipse</a>
+	</h2>
+	<div class="entry-content">
+		<p>Often with doing a find and replace you want to use line breaks in the find (or replace) criteria. Sometimes I&#8217;ll have a column of data from a csv that I want to modify&#8230;whatever.</p>
+
+<p>You can now check the &#8220;regular expressions&#8221; checkbox while doing a file search in Eclipse and specify &#8220;\R&#8221; to find or replace line breaks (platform independent).</p>
+
+<p>Eg replace line breaks with commas:</p>
+
+<p><img src="/images/uploads/2012/03/Screen-shot-2012-03-17-at-1.54.41-PM.png" alt="" /></p>
+
+<p>Other interesting and useful options are:</p>
+
+<ul>
+<li>\t - tabs</li>
+<li>\n - newline</li>
+<li>\R - platform indepedent line delimiter</li>
+<li>\r - carriage return</li>
+<li>^ - line start</li>
+</ul>
+
+
+<p>This was introduced in Eclipse 3.4.x, <a href="http://archive.eclipse.org/eclipse/downloads/drops/R-3.4-200806172000/whatsnew3.4/eclipse-news-part1.html">read more here</a>.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-17T13:56:45+11:00" pubdate data-updated="true">Mar 17<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2012/03/17/find-and-replace-with-line-breaks-in-eclipse//page/4/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -1157,125 +1218,6 @@ MySQL 5+</p>
 </div>
 	
 		<div class="comments"><a href="/2011/06/30/farcry-tip-remove-install-directory//page/4/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2011/05/31/mura-overriding-dspcrumblistlinks/">
-		
-			Mura - Overriding dspCrumblistLinks</a>
-	</h2>
-	<div class="entry-content">
-		<p>Like most CMS solutions out there, Mura CMS gives you some cool hooks to override core functionality. <a href="http://docs.getmura.com/index.cfm/developer-guides/">See the developer guides</a> for more information.</p>
-
-<p>I&#8217;ve created a <a href="https://github.com/michaelsharman/muracustomisations/">repository on github</a> to store any customisations or extensions that could be cherry picked for use in any Mura app.</p>
-
-<p>First up was a super simple one for breadcrumbs. By default, Mura will put an &#8220;a href&#8221; around the last item in the crumb list. The site I was working on specified that the last item should be plain text (no hyperlink).</p>
-
-<p>Mura makes this nice and easy by extending the contentRenderer.cfc inside your /[siteid]/includes folder. Here is the function which includes my custom argument <em>linkLastItem [bool]</em> to determine whether or not to link the last item:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cffunction</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;dspCrumblistLinks&quot;</span>  <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="nx">returntype</span><span class="o">=</span><span class="s2">&quot;string&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;id&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;string&quot;</span> <span class="k">default</span><span class="o">=</span><span class="s2">&quot;crumblist&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;separator&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;string&quot;</span> <span class="k">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;linkLastItem&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;boolean&quot;</span> <span class="nx">required</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="k">default</span><span class="o">=</span><span class="s2">&quot;true&quot;</span> <span class="nx">hint</span><span class="o">=</span><span class="s2">&quot;Whether to generate an &#39;a href&#39; for the last crumb item&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfset</span> <span class="kd">var</span> <span class="nx">thenav</span><span class="o">=</span><span class="s2">&quot;&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfset</span> <span class="kd">var</span> <span class="nx">theOffset</span><span class="o">=</span><span class="nx">arrayLen</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">crumbdata</span><span class="p">)</span><span class="o">-</span> <span class="k">this</span><span class="p">.</span><span class="nx">navOffSet</span> <span class="o">/&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfset</span> <span class="kd">var</span> <span class="nx">I</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">/&gt;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">arrayLen</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">crumbdata</span><span class="p">)</span> <span class="nx">gt</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">navOffSet</span><span class="p">)</span><span class="o">&gt;</span>
-</span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfsavecontent</span> <span class="nx">variable</span><span class="o">=</span><span class="s2">&quot;theNav&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfoutput</span><span class="o">&gt;&lt;</span><span class="nx">ul</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;#arguments.id#&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>              <span class="o">&lt;</span><span class="nx">cfloop</span> <span class="nx">from</span><span class="o">=</span><span class="s2">&quot;#theOffset#&quot;</span> <span class="nx">to</span><span class="o">=</span><span class="s2">&quot;1&quot;</span> <span class="nx">index</span><span class="o">=</span><span class="s2">&quot;I&quot;</span> <span class="nx">step</span><span class="o">=</span><span class="s2">&quot;-1&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>                  <span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">I</span> <span class="nx">neq</span> <span class="mi">1</span><span class="o">&gt;</span>
-</span><span class='line'>                      <span class="o">&lt;</span><span class="nx">li</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;#iif(I eq theOffset,de(&#39;first&#39;),de(&#39;&#39;))#&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>                      <span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">i</span> <span class="nx">neq</span> <span class="nx">theOffset</span><span class="o">&gt;</span><span class="err">#</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">separator</span><span class="err">#</span><span class="o">&lt;</span><span class="err">/cfif&gt;</span>
-</span><span class='line'>                      <span class="err">#</span><span class="nx">addlink</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">crumbdata</span><span class="p">[</span><span class="nx">I</span><span class="p">].</span><span class="nx">type</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">crumbdata</span><span class="p">[</span><span class="nx">I</span><span class="p">].</span><span class="nx">filename</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">crumbdata</span><span class="p">[</span><span class="nx">I</span><span class="p">].</span><span class="nx">menutitle</span><span class="p">,</span> <span class="s1">&#39;_self&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">crumbdata</span><span class="p">[</span><span class="nx">I</span><span class="p">].</span><span class="nx">contentid</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">crumbdata</span><span class="p">[</span><span class="nx">I</span><span class="p">].</span><span class="nx">siteid</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="nx">application</span><span class="p">.</span><span class="nx">configBean</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(),</span> <span class="nx">application</span><span class="p">.</span><span class="nx">configBean</span><span class="p">.</span><span class="nx">getStub</span><span class="p">(),</span> <span class="nx">application</span><span class="p">.</span><span class="nx">configBean</span><span class="p">.</span><span class="nx">getIndexFile</span><span class="p">(),</span> <span class="nx">event</span><span class="p">.</span><span class="nx">getValue</span><span class="p">(</span><span class="s1">&#39;showMeta&#39;</span><span class="p">),</span><span class="mi">0</span><span class="p">)</span><span class="err">#</span><span class="o">&lt;</span><span class="err">/li&gt;</span>
-</span><span class='line'>                  <span class="o">&lt;</span><span class="nx">cfelse</span><span class="o">&gt;</span>
-</span><span class='line'>                      <span class="o">&lt;</span><span class="nx">li</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;#iif(arraylen(this.crumbdata),de(&#39;last&#39;),de(&#39;first&#39;))#&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>                          <span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">linkLastItem</span><span class="o">&gt;</span>
-</span><span class='line'>                              <span class="err">#</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">separator</span><span class="err">##</span><span class="nx">addlink</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">crumbdata</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">type</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">crumbdata</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">filename</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">crumbdata</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">menutitle</span><span class="p">,</span> <span class="s1">&#39;_self&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">crumbdata</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">contentid</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">crumbdata</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">siteid</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="nx">application</span><span class="p">.</span><span class="nx">configBean</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(),</span> <span class="nx">application</span><span class="p">.</span><span class="nx">configBean</span><span class="p">.</span><span class="nx">getStub</span><span class="p">(),</span> <span class="nx">application</span><span class="p">.</span><span class="nx">configBean</span><span class="p">.</span><span class="nx">getIndexFile</span><span class="p">(),</span><span class="nx">event</span><span class="p">.</span><span class="nx">getValue</span><span class="p">(</span><span class="s1">&#39;showMeta&#39;</span><span class="p">),</span><span class="mi">0</span><span class="p">)</span><span class="err">#</span>
-</span><span class='line'>                          <span class="o">&lt;</span><span class="nx">cfelse</span><span class="o">&gt;</span>
-</span><span class='line'>                              <span class="err">#</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">separator</span><span class="err">##</span><span class="k">this</span><span class="p">.</span><span class="nx">crumbdata</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">menutitle</span><span class="err">#</span>
-</span><span class='line'>                          <span class="o">&lt;</span><span class="err">/cfif&gt;</span>
-</span><span class='line'>                      <span class="o">&lt;</span><span class="err">/li&gt;</span>
-</span><span class='line'>                  <span class="o">&lt;</span><span class="err">/cfif&gt;</span>
-</span><span class='line'>              <span class="o">&lt;</span><span class="err">/cfloop&gt;</span>
-</span><span class='line'>          <span class="o">&lt;</span><span class="err">/ul&gt;&lt;/cfoutput&gt;</span>
-</span><span class='line'>      <span class="o">&lt;</span><span class="err">/cfsavecontent&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cfif&gt;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfreturn</span> <span class="nx">trim</span><span class="p">(</span><span class="nx">theNav</span><span class="p">)</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/cffunction&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-05-31T22:31:00+10:00" pubdate data-updated="true">May 31<span>st</span>, 2011</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/mura/'>Mura</a>, <a class='category' href='/categories/railo/'>Railo</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2011/05/31/mura-overriding-dspcrumblistlinks//page/4/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

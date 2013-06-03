@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Most tools or languages you work with have words which are &#8220;reserved&#8221;, meaning you cannot use them in a variable declaration or schema &hellip;">
+	<meta name="description" content="I had some problems a little while ago using dateCompare() and the same thing bit me recently with dateDiff(). Well really I had a problem with &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,95 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/11/03/caveat-using-datediff-to-compare-difference-in-days/">
+		
+			Caveat Using dateDiff() to Compare Difference in Days</a>
+	</h2>
+	<div class="entry-content">
+		<p>I had <a href="http://www.chapter31.com/2007/10/05/createodbcdate-returns-time-as-well/">some problems a little while ago</a> using dateCompare() and the same thing bit me recently with dateDiff(). Well really I had a problem with createODBCDate(), but let me explain.</p>
+
+<p>I wanted to compare the &#8220;day&#8221; value between 2 dates like;</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfscript</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="nx">date1</span> <span class="o">=</span> <span class="nx">now</span><span class="p">();</span>
+</span><span class='line'>  <span class="nx">date2</span> <span class="o">=</span> <span class="nx">myQuery</span><span class="p">.</span><span class="nx">dateCreated</span><span class="p">;</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="nx">dateDifference</span> <span class="o">=</span> <span class="nx">dateDiff</span><span class="p">(</span><span class="s2">&quot;d&quot;</span><span class="p">,</span> <span class="nx">date1</span><span class="p">,</span> <span class="nx">date2</span><span class="p">);</span>  
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfscript&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The initial problem was that &#8220;myQuery.dateCreated&#8221; has a time value associated with it, as does the value of now(). This meant that where I should have had (or expected to have) a value of &#8220;1&#8221; if date2 was the next day, I wasn&#8217;t because the times were being calculated and both dates where within a 24-hour range. Makes sense.</p>
+
+<p>My first simple fix (which was <a href="http://www.chapter31.com/2007/10/05/createodbcdate-returns-time-as-well/">what I tried before</a>) was to add a <em>createODBCDate()</em> around my dates.</p>
+
+<p>This doesn&#8217;t work though, indeed when you ouput the results of createODBCDate() it looks as though you have a date object with no time but you really DO have a time&#8230;you just can&#8217;t see it :(</p>
+
+<p>2 ways around this both involve stripping out the time part&#8230;using createDate() which is a bit unwieldy:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfscript</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="nx">date1</span> <span class="o">=</span> <span class="nx">createDate</span><span class="p">(</span><span class="nx">year</span><span class="p">(</span><span class="nx">now</span><span class="p">()),</span> <span class="nx">month</span><span class="p">(</span><span class="nx">now</span><span class="p">()),</span> <span class="nx">day</span><span class="p">(</span><span class="nx">now</span><span class="p">()));</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfscript&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Or using dateFormat():</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfscript</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="nx">date1</span> <span class="o">=</span> <span class="nx">dateFormat</span><span class="p">(</span><span class="nx">now</span><span class="p">(),</span> <span class="s2">&quot;yyyy/mmm/dd&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfscript&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So another note to self&#8230;whenever you want to do any sort of date comparisons watch out for the &#8220;time&#8221; values unless of course you want the times as part of your comparison!</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-11-03T17:34:48+11:00" pubdate data-updated="true">Nov 3<span>rd</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/11/03/caveat-using-datediff-to-compare-difference-in-days//page/9/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -773,104 +862,6 @@ Import FLVs from your computer - including h.264 encoded videos, browse categori
 </div>
 	
 		<div class="comments"><a href="/2008/08/16/2-cool-things-about-railo//page/9/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2008/08/16/farcry-5-running-on-railo-3-windows/">
-		
-			FarCry 5 Running on Railo 3 (Windows)</a>
-	</h2>
-	<div class="entry-content">
-		<p>The CFML market is hotting up with <a href="http://www.railo-technologies.com/">Railo</a> going open source (in version 3.1) and joining forces with <a href="http://www.jboss.org/railo/">JBoss</a> for an end of 2008 release! With that in mind I figured it was time to check out Railo with the latest version of FarCry.</p>
-
-<p>My environment:</p>
-
-<ul>
-<li>Windows XP</li>
-<li>Railo 3.0.0.003</li>
-<li><del>FarCry 5.0.0 (although 5.0.2 is out, the latest distro from the site offers only 5.0.0)</del></li>
-<li>FarCry 5.0.2</li>
-<li>MySQL 5</li>
-</ul>
-
-
-<p>I&#8217;m using the &#8220;express&#8221; version of Railo which bundles with Jetty Application Server, so no need for any apache configurations as everything runs off port 8888. This is not how you would have things running in a production environment of course, but is great for evaluation purposes as you can just put the Railo files anywhere you want with no actual installation required.</p>
-
-<p>I already had MySQL installed, so I got a <a href="http://www.farcrycore.org/go/code-branch/5-0-2">fresh zip of FarCry 5.0.2</a> and the latest <a href="http://www.railo-technologies.com/en/index.cfm?treeID=361">release candidate for Railo</a>.</p>
-
-<p>I unpacked Railo into D:/ (this could be anywhere on your system) then unpacked FarCry into the &#8220;webroot&#8221; folder of Railo following the <a href="http://docs.farcrycms.org/display/FCDEV50/FarCry+Installation">standard FarCry 5 installation instructions</a>.</p>
-
-<p>Next was starting Railo, on Windows open a command prompt (cmd) and run the start.bat file which is in the Railo root directory:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">start</span><span class="p">.</span><span class="nx">bat</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Now that Railo is running I needed to create a datasource to point to a fresh database created for my new FarCry app. To do this visit the admin area of Railo at http://localhost:8888/railo-context/.</p>
-
-<p>The first time you do this you&#8217;ll be asked to enter a password which will be used in the future to access the admin area.</p>
-
-<p><a href="/images/uploads/2008/08/newpassword2.png"><img src="/images/uploads/2008/08/newpassword2-300x173.png" alt="" /></a></p>
-
-<p>Create and verify a datasource just as you would in ColdFusion Administrator and you&#8217;re ready for the FarCry install.</p>
-
-<p>To install FarCry visit http://localhost:8888/farcry/ and follow the instructions. As mentioned above you first have to create an empty database for your FarCry site.</p>
-
-<p><a href="/images/uploads/2008/08/installingfarcry2.png"><img src="/images/uploads/2008/08/installingfarcry2-300x267.png" alt="" /></a></p>
-
-<p>After FarCry installed (without a hitch!) it was time to look around my new site to see if everything is working as normal (well, as it would normally under ColdFusion). Upon initial inspection everything is working fine with just a few exceptions (pun intended!).</p>
-
-<p>Firstly it seems there is a reserved word conflict with the FarCry core codebase and Railo which prevented me from viewing one of the pages (support) in the mollio skeleton site FarCry installs by default (and also some pages from the webtop).</p>
-
-<p>Railo threw the following error:</p>
-
-<p><em>invalid argument for function query, only array as value are allowed</em></p>
-
-<p>The code in question was calling a FarCry method called <em>query()</em>. I renamed the method to <em>execQuery()</em> and updated the calls to it and everything started working as expected.</p>
-
-<p>I also added this as a <a href="http://bugs.farcrycms.org/browse/FC-1459">FarCry bug</a> so hopefully it will be resolved by the <a href="http://www.daemon.com.au/">Daemon</a> guys in the next FarCry release.</p>
-
-<p>There were a couple of other small issues (with containers/publishing rules and a permission problem in the webtop) which I&#8217;ve contacted Daemon about. Hopefully they will be resolved quickly.</p>
-
-<p>All in all it looks as though FarCry is a success on Railo which great news!</p>
-
-<p>Although I was only looking at the express version of Railo, I was extremely impressed with just how simple everything was. Comparing CF8 and Railo (browsing the FarCry admin console), Railo looks a lot faster to me. Of course I did no actual load/performance testing. But it was interesting that I noticed the speed difference by simply browsing.</p>
-
-<p>I&#8217;m looking forward to playing with it further, particularly when 3.1 comes out :)</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-08-16T18:15:50+10:00" pubdate data-updated="true">Aug 16<span>th</span>, 2008</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/farcry/'>Farcry</a>, <a class='category' href='/categories/railo/'>Railo</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2008/08/16/farcry-5-running-on-railo-3-windows//page/9/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 
