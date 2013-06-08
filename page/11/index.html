@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Reading a blog entry this morning got me thinking. Essentially the author had experienced problems (after installing the latest ColdFusion hotfix) &hellip;">
+	<meta name="description" content="Mark Kruger has another interesting and timely read about an ambitious SQL injection attack one of his clients recently experienced. One things for &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,58 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/07/19/another-reminder-of-the-importance-of-preventing-sql-injection/">
+		
+			Another Reminder of the Importance of Preventing SQL Injection</a>
+	</h2>
+	<div class="entry-content">
+		<p><a href="http://www.coldfusionmuse.com/">Mark Kruger</a> has another <a href="http://www.coldfusionmuse.com/index.cfm/2008/7/18/Injection-Using-CAST-And-ASCII">interesting and timely read</a> about an ambitious SQL injection attack one of his clients recently experienced.</p>
+
+<p>One things for sure, it&#8217;s certainly an <em>interesting</em> time to be a developer. Hackers and spammers make sure of that :(</p>
+
+<p>SQL injection has been around for so long, it is truly a crime if developers (ColdFusion developers at least) aren&#8217;t using <a href="http://livedocs.adobe.com/coldfusion/8/Tags_p-q_18.html">cfqueryparam</a> for <strong>every WHERE clause in their queries</strong>. ColdFusion 8 allows you to use cachedwithin whilst using queryparam, so there is really no excuse.</p>
+
+<p>And as Mark says&#8230;client side validation is a nice user experience but doesn&#8217;t cut it at all. If you or someone on your team uses client side (JavaScript) validation only and/or doesn&#8217;t sanitise user/URL parameters then they need to be educated or get out of the game.</p>
+
+<h3>Update 25th July 2008</h3>
+
+<p><a href="http://www.petefreitag.com/">Pete Freitag</a> has a <a href="http://www.petefreitag.com/item/677.cfm">nice article</a> about the times where you can&#8217;t use cfqueryparam, and some nice solutions you can try instead. Well worth a read.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-07-19T11:59:35+10:00" pubdate data-updated="true">Jul 19<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/07/19/another-reminder-of-the-importance-of-preventing-sql-injection//page/11/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -719,70 +771,6 @@
 </div>
 	
 		<div class="comments"><a href="/2008/06/14/does-your-bank-do-online-statements//page/11/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2008/06/13/webdu-over-for-another-year/">
-		
-			WebDU Over for Another Year :(</a>
-	</h2>
-	<div class="entry-content">
-		<p>Unfortunately <a href="http://www.webdu.com.au/">WebDU</a> has been and gone, all the good things go by so quickly :(</p>
-
-<p>It was a fantastic event yet again and a HUGE thank you to Geoff, Julie, Vanessa and all the <a href="http://www.daemon.com.au/">Daemonites</a> for putting on a spectacular couple of days.</p>
-
-<p>I don&#8217;t know what the highlight was, the great speakers/topics or the night of activities (bowling, pool, laser skirmish and drinking&#8230;lots of drinking!).</p>
-
-<p>One of the cool things about WebDU is the calibre of speakers it attracts from all over the globe. It was great to meet and chat with people from all walks of life including heavyweights from Adobe. It was fun trying to get <a href="http://www.adrocknaphobia.com/">Adam Lehman</a> to give me the inside scoop on ColdFusion 9 after he&#8217;d had a few beers. Didn&#8217;t work though ;)</p>
-
-<p>Can&#8217;t wait for next year, if you missed out this time try to make it next time.</p>
-
-<p>Some quick session highlights:</p>
-
-<ul>
-<li>Mike Downey&#8217;s keynote on day 1</li>
-<li>Phil Truesdale&#8217;s &#8220;Mayo Clinic&#8221; case study</li>
-<li>Adam Lehman&#8217;s CF performance monitoring</li>
-<li>Thursday night&#8217;s activities :)</li>
-<li>Mike Labriola&#8217;s under the hood breakdown when Flex compiles</li>
-<li>Mark Mandel&#8217;s Transfer</li>
-</ul>
-
-
-<p>Congratulations and well done to all of the speakers.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-06-13T20:23:05+10:00" pubdate data-updated="true">Jun 13<span>th</span>, 2008</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/misc/'>Misc</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2008/06/13/webdu-over-for-another-year//page/11/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

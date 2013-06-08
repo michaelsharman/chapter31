@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="&#8220;Time is the tiny bits of space between one busy moment and the next.&#8221; A friend wrote this and got me thinking, I don&#8217;t know about &hellip;">
+	<meta name="description" content="Rahul Narula has a great post on Multi-step forms. As web developers forms are a part of our everyday lives, sometimes those forms exist over &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,133 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2006/09/06/multi-step-forms/">
+		
+			Multi-step Forms</a>
+	</h2>
+	<div class="entry-content">
+		<p><a href="http://rahulnarula.blogspot.com/">Rahul Narula</a> has a great post on <a href="http://rahulnarula.blogspot.com/2006/09/multi-step-forms.html">Multi-step forms</a>. As web developers forms are a part of our everyday lives, sometimes those forms exist over several pages instead of 1 looong page. That being said we need a way to hold the data entered by the user at each step (page) thoughout the process.</p>
+
+<p>We can of course use either of the following:</p>
+
+<ul>
+<li>Database</li>
+<li>Session scope</li>
+<li>Structures</li>
+<li>URL</li>
+</ul>
+
+
+<p>There are probably more but that would be all I would consider (at this stage!).</p>
+
+<p>The database is fine but poses problems; namely we need to create a new record after the submission from step 1. Lets say there are 4 steps (pages) to this form. If a user doesn&#8217;t complete all steps (they may give up!) then we need a mechanism for clearing out the now (presumably) invalid data from the database. Of course there are many ways to do this which really aren’t that difficult, but it is still more work for you to do! Also consider the extra load on the database server in a high traffic environment.</p>
+
+<p>Sessions work really well here, no extra database load and no cleaning up the database if a user doesn&#8217;t complete all steps. This is one I use all the time.</p>
+
+<p>The URL (via action=&#8221;get&#8221;) is an option, particularly if you don’t want to (or can&#8217;t) use session. Things get tricky however if users are allowed to jump back to prior pages. i.e. if they are on step 4 and they want to go back to step 2. They can use the back button, but it&#8217;s not very elegant.</p>
+
+<p>Rahul&#8217;s method uses a UDF to generate hidden fields on each subsequent page. A nice and elegant solution including the ability to &#8216;exclude&#8217; a list of fields.</p>
+
+<p>An excerpt from his site:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cffunction</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;createHiddenFields&quot;</span> <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;no&quot;</span> <span class="nx">returntype</span><span class="o">=</span><span class="s2">&quot;string&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;excludeFields&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;string&quot;</span> <span class="k">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="o">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'> <span class="o">&lt;</span><span class="nx">cfscript</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">formFieldsList</span> <span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">;</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">formFieldArray</span><span class="o">=</span> <span class="nx">ArrayNew</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">formHTML</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">;</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">element</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">exclude</span> <span class="o">=</span> <span class="nx">listappend</span><span class="p">(</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">excludeFields</span><span class="p">,</span><span class="s2">&quot;formfields&quot;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">if</span><span class="p">(</span><span class="nx">structKeyExists</span><span class="p">(</span><span class="nx">form</span><span class="p">,</span><span class="s2">&quot;fieldnames&quot;</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>   <span class="nx">formFieldsList</span> <span class="o">=</span> <span class="nx">form</span><span class="p">.</span><span class="nx">fieldnames</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="nx">formFieldArray</span> <span class="o">=</span> <span class="nx">listtoArray</span><span class="p">(</span><span class="nx">formFieldsList</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'> <span class="o">&lt;</span><span class="err">/cfscript&gt;</span>
+</span><span class='line'>
+</span><span class='line'> <span class="o">&lt;</span><span class="nx">cfsavecontent</span> <span class="nx">variable</span><span class="o">=</span><span class="s2">&quot;formHTML&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>   <span class="o">&lt;</span><span class="nx">cfoutput</span><span class="o">&gt;</span>
+</span><span class='line'> <span class="o">&lt;</span><span class="nx">cfloop</span> <span class="nx">from</span> <span class="o">=</span><span class="s2">&quot;1&quot;</span> <span class="nx">to</span><span class="o">=</span><span class="s2">&quot;#ArrayLen(formFieldArray)#&quot;</span> <span class="nx">index</span><span class="o">=</span><span class="s2">&quot;element&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>   <span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">listfindnocase</span><span class="p">(</span><span class="nx">exclude</span><span class="p">,</span><span class="nx">formFieldArray</span><span class="p">[</span><span class="nx">element</span><span class="p">])</span> <span class="nx">eq</span> <span class="mi">0</span><span class="o">&gt;</span>
+</span><span class='line'>     <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;hidden&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;#lcase(formFieldArray[element])#&quot;</span>  <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#htmleditformat(form[formFieldArray[element]])#&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cfif&gt;</span>
+</span><span class='line'>   <span class="o">&lt;</span><span class="err">/cfloop&gt;</span>
+</span><span class='line'> <span class="o">&lt;</span><span class="err">/cfoutput&gt;</span>
+</span><span class='line'> <span class="o">&lt;</span><span class="err">/cfsavecontent&gt; </span>
+</span><span class='line'>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfreturn</span> <span class="nx">formHTML</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cffunction&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To use the UDF just call this udf anywhere within the &lt;form&gt;…&lt;/form&gt; in your page</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-09-06T09:23:30+10:00" pubdate data-updated="true">Sep 6<span>th</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2006/09/06/multi-step-forms//page/24/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -679,69 +806,6 @@ Log file: [myDatabase_Log]</p>
 </div>
 	
 		<div class="comments"><a href="/2006/06/20/flash-of-unstyled-content//page/24/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2006/05/06/determining-machine-name-using-java/">
-		
-			Determining Machine Name Using Java</a>
-	</h2>
-	<div class="entry-content">
-		<p>Often when you are developing in a team environment you will be using the same code base checked in and out of a source control repository (SVN, CVS etc). Sometimes you may have problems with developers having a different machine configuration than you do when these settings are stored as variables in a project config file.</p>
-
-<p>One way we do things at <a href="http://www.daemon.com.au/">Daemon</a> is:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">machineName</span><span class="o">=</span><span class="nx">createObject</span><span class="p">(</span><span class="s2">&quot;java&quot;</span><span class="p">,</span> <span class="s2">&quot;java.net.InetAddress&quot;</span><span class="p">).</span><span class="nx">localhost</span><span class="p">.</span><span class="nx">getHostName</span><span class="p">()</span> <span class="o">/&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">cfswitch</span> <span class="nx">expression</span><span class="o">=</span><span class="s2">&quot;#machinename#&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>    <span class="o">&lt;</span><span class="nx">cfcase</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;sharmo&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>        <span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">myVar</span> <span class="o">=</span> <span class="s2">&quot;test&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'>    <span class="o">&lt;</span><span class="err">/cfcase&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/cfswitch&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This way each developer can script his or her own machine specific configuration in a case statement and not have a problem when checking into source control because everyone’s config is in the same file. Of course you may have problems if developers are in remote locations and have the same machine name</p>
-
-<p>At Daemon the &lt;defaultcase&gt; is reserved for production settings only for safety.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2006-05-06T17:33:47+10:00" pubdate data-updated="true">May 6<span>th</span>, 2006</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2006/05/06/determining-machine-name-using-java//page/24/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

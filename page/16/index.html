@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="That&#8217;s right, the ColdFusion 8 quick docs for Apple&#8217;s iPod! I found this one a while ago and quickly tried it out and it&#8217;s really &hellip;">
+	<meta name="description" content="I was looking for some information the other day about line separators across Windows/MAC/Linux etc when I stumbled upon 3 great articles from &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,104 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2007/11/02/making-your-web-applications-platform-independant/">
+		
+			Making Your Web Applications Platform Independant</a>
+	</h2>
+	<div class="entry-content">
+		<p>I was looking for some information the other day about line separators across Windows/MAC/Linux etc when I stumbled upon 3 great articles from <a href="http://weblogs.macromedia.com/cantrell/">Christian Cantrell</a>.</p>
+
+<p>Although the articles are quite old they were very informative for me so I thought I&#8217;d share them in case others didn&#8217;t know this already.</p>
+
+<p><a href="http://weblogs.macromedia.com/cantrell/archives/2003/03/making_your_col.cfm">Making Your ColdFusion Applications More Platform Independent (Part I)</a>
+Basically about case sensitive filenames which is very important on *nix, but also included the following which I&#8217;ve never heard and to be honest would like to test:</p>
+
+<blockquote><p>Additionally, make sure you use all lowercase when naming your components. ColdFusion MX will automatically lower-case your component names, which you would never notice on Windows, however on Unix, it will become apparent very quickly when you start getting errors that your components do not exist.</p></blockquote>
+
+<p><a href="http://weblogs.macromedia.com/cantrell/archives/2003/03/making_your_col_1.cfm">Making Your ColdFusion Applications More Platform Independent (Part II)</a>
+Shows an automatic way (via Java) to get the current servers file path separator (either a &#8216;/&#8217; or &#8216;&#39;), OS dependant.</p>
+
+<p><a href="http://weblogs.macromedia.com/cantrell/archives/2005/07/making_your_col_2.cfm">Making Your ColdFusion Applications More Platform Independent (Part III)</a>
+I&#8217;ve been annoyed many times with the whole chr(10)chr(13) on Windows vs chr(10) on a Mac etc, another automated way to get the server OS &#8216;line separator&#8217; via Java.</p>
+
+<p>Here are the line and file separators as functions which I&#8217;ve also added to my <a href="http://www.chapter31.com/utilscfc/">Utils.cfc</a></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cffunction</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;getFileSeparator&quot;</span> <span class="nx">access</span><span class="o">=</span><span class="s2">&quot;public&quot;</span> <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="nx">returntype</span><span class="o">=</span><span class="s2">&quot;string&quot;</span> <span class="nx">hint</span><span class="o">=</span><span class="s2">&quot;Returns the system file path separator&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfscript</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="k">return</span> <span class="nx">createObject</span><span class="p">(</span><span class="s2">&quot;java&quot;</span><span class="p">,</span> <span class="s2">&quot;java.io.File&quot;</span><span class="p">).</span><span class="nx">separator</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cfscript&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cffunction&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cffunction</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;getLineSeparator&quot;</span> <span class="nx">access</span><span class="o">=</span><span class="s2">&quot;public&quot;</span> <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="nx">returntype</span><span class="o">=</span><span class="s2">&quot;string&quot;</span> <span class="nx">hint</span><span class="o">=</span><span class="s2">&quot;Returns the system line separator&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfscript</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="k">return</span> <span class="nx">createObject</span><span class="p">(</span><span class="s2">&quot;java&quot;</span><span class="p">,</span> <span class="s2">&quot;java.lang.System&quot;</span><span class="p">).</span><span class="nx">getProperty</span><span class="p">(</span><span class="s2">&quot;line.separator&quot;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cfscript&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cffunction&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-11-02T16:27:46+11:00" pubdate data-updated="true">Nov 2<span>nd</span>, 2007</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2007/11/02/making-your-web-applications-platform-independant//page/16/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -747,68 +845,6 @@
 </div>
 	
 		<div class="comments"><a href="/2007/09/27/creating-a-custom-farcry-login-page//page/16/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2007/09/27/coldfire-10-released/">
-		
-			ColdFire 1.0 Released</a>
-	</h2>
-	<div class="entry-content">
-		<p>Yesterday there was some news from <a href="http://www.coldfusionjedi.com/">Ray</a> and <a href="http://www.mischefamily.com/">Nathan Mische</a> regarding the 1.0 release of <a href="http://coldfire.riaforge.org/">ColdFire</a>, Nathan has a great <a href="http://www.mischefamily.com/nathan/index.cfm/2007/9/25/Get-ColdFire">write up here</a>.</p>
-
-<p>From RIAForge:</p>
-
-<blockquote><p>ColdFire is an extension to FireBug. It provides debug information in a FireBug tab as opposed to the bottom of the page. This lets you debug and keep your site layout intact, since ColdFusion&#8217;s built-in debug information can sometimes mess with your site layout.</p>
-
-<p>ColdFire currently supports debugging information for:</p>
-
-<p>General Information<br/>
-Templates<br/>
-Queries<br/>
-CFTRACE<br/>
-CFTIMER<br/>
-Variables<br/>
-Trace</p></blockquote>
-
-<p>To use ColdFire you need <a href="http://www.getfirebug.com/">Firebug</a> for Firefox, for those that aren&#8217;t using Firebug at all&#8230;do yourselves a favour and get it now. It is an AMAZING tool to develop with.</p>
-
-<p>I only just installed ColdFire and already I can see it will be another invaluable tool to use, so check it out.</p>
-
-<p>The only thing for me so far is that I get no &#8216;Variables&#8217; output when developing with FarCry (v4). I&#8217;ll need to keep looking into this one. Have any other FarCry developers run across this?</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2007-09-27T10:13:37+10:00" pubdate data-updated="true">Sep 27<span>th</span>, 2007</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/farcry/'>Farcry</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2007/09/27/coldfire-10-released//page/16/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

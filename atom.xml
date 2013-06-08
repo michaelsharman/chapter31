@@ -4,7 +4,7 @@
   <title><![CDATA[chapter31 &raquo;]]></title>
   <link href="http://chapter31.com/atom.xml" rel="self"/>
   <link href="http://chapter31.com/"/>
-  <updated>2013-06-03T11:12:37+10:00</updated>
+  <updated>2013-06-08T23:37:15+10:00</updated>
   <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
@@ -12,6 +12,49 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Error writing git commit messages with vi]]></title>
+    <link href="http://chapter31.com/2013/06/08/error-writing-git-commit-messages-with-vi/"/>
+    <updated>2013-06-08T23:24:00+10:00</updated>
+    <id>http://chapter31.com/2013/06/08/error-writing-git-commit-messages-with-vi</id>
+    <content type="html"><![CDATA[<p>I typically write my git commit messages in the terminal, but today I wanted to write a multi-line comment so I left out the <em>-m</em> argument to <em>git commit</em> so it would open up my default editor, which is <em>vi</em>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>git commit
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I wrote my comment, saved and exit but got an error:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>git commit
+</span><span class='line'>error: There was a problem with the editor <span class="s1">&#39;vi&#39;</span>.
+</span><span class='line'>Please supply the message using either -m or -F option.
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A quick google and I <a href="http://tooky.co.uk/2010/04/08/there-was-a-problem-with-the-editor-vi-git-on-mac-os-x.html">found the solution</a>, I thought I&#8217;d repost it here for myself as well as others.</p>
+
+<p>There are a couple of solutions offered in that article, for me I just set the full path to <em>vi</em> with a <em>-f</em> flag in my .gitconfig:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>core<span class="o">]</span>
+</span><span class='line'>  <span class="nv">editor</span> <span class="o">=</span> /usr/bin/vi -f
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>As an FYI&#8230;if you want to see the values in git config, you can run this command in your project and it will list your global and project configuration:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>git config -l
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[PHP Composer error - cannot redeclare class]]></title>
@@ -322,7 +365,7 @@ Base16 is both a color scheme and a template.
 <li>Run: <code>./configure</code></li>
 <li>Run: <code>make</code></li>
 <li>Run: <code>sudo mkdir -p /usr/lib/php/extensions/no-debug-non-zts-20100525</code></li>
-<li>Run: <code>cp modules/xdebug.so /usr/lib/php/extensions/no-debug-non-zts-20100525</code></li>
+<li>Run: <code>sudo cp modules/xdebug.so /usr/lib/php/extensions/no-debug-non-zts-20100525</code></li>
 <li>Update your /etc/php.ini and uncomment/add the line
 <code>zend_extension = /usr/lib/php/extensions/no-debug-non-zts-20100525/xdebug.so</code></li>
 <li>Restart the webserver</li>
@@ -1600,32 +1643,6 @@ Select #3 had 8192* possible combinations</p>
 
 
 <p>This is really handy for us as we disallow access to the Railo admin GUI.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Installing new fonts on Ubuntu server]]></title>
-    <link href="http://chapter31.com/2012/09/24/installing-new-fonts-on-ubuntu-server/"/>
-    <updated>2012-09-24T13:41:55+10:00</updated>
-    <id>http://chapter31.com/2012/09/24/installing-new-fonts-on-ubuntu-server</id>
-    <content type="html"><![CDATA[<p>I had some new fonts to install on our test server that runs Ubuntu server. Pretty simple really, just noting it down here for next time:</p>
-
-<ul>
-<li>Upload/ssh the font(s) to your home folder on the server</li>
-<li>Copy font to the system fonts folder, this way it can be used by all users on the system
-
-<pre><code>sudo cp -R ~/trade-gothic /usr/share/fonts/truetype/    
-</code></pre></li>
-<li>Check permissions
-
-<pre><code>sudo chmod 755 /usr/share/fonts/truetype/trade-gothic/
-</code></pre></li>
-<li>Install the fonts so applications can use them
-
-<pre><code>sudo fc-cache -f -v
-</code></pre></li>
-</ul>
-
 ]]></content>
   </entry>
   

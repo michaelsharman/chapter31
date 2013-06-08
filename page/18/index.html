@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Often when creating ColdFusion components developers will create a structure to hold component instance data. This data is stored in the components &hellip;">
+	<meta name="description" content="Like a lot of people I spend quite a bit of time reading the technical blogs as a constant source of knowledge and advancement. A couple of posts &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,70 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2007/06/18/inspirational-posts-from-the-community/">
+		
+			Inspirational Posts From the Community</a>
+	</h2>
+	<div class="entry-content">
+		<p>Like a lot of people I spend quite a bit of time reading the technical blogs as a constant source of knowledge and advancement.</p>
+
+<p>A couple of posts both inspired and got me thinking over the weekend so I thought I&#8217;d quickly mention both in case anybody missed them, they&#8217;re a great read.</p>
+
+<p>The first was by <a href="http://www.bennadel.com/">Ben Nadel</a> on a book called <a href="http://www.bennadel.com/index.cfm?dax=blog:776.view">The Dip</a> which is subtitled &#8220;A Little Book That Teaches You When To Quit (And When To Stick)&#8221; and delivers a huge message:</p>
+
+<blockquote><p>you MUST quit when you know you&#8217;re on a dead end path.</p></blockquote>
+
+<p>Ben lists a couple of quotes from the book including:</p>
+
+<blockquote><p>&#8230; the real success goes to those who obsess. The focus that leads you through the Dip to the other side is rewarded by a marketplace in search of the best in the world. A woodpecker can tap twenty times on a thousand trees and get nowhere, but stay busy. Or he can tap twenty-thousand times on one tree and get dinner.</p></blockquote>
+
+<p>The second post was by <a href="http://www.pbell.com/">Peter</a> (oh my god I have no idea how that guy has the time and energy to write as frequently as he does and still find time to breathe let alone work!) <a href="http://www.pbell.com/">Bell</a> on <a href="http://www.pbell.com/index.cfm/2007/6/17/Why-You-Want-to-Learn-About-DSLs">Why you want to learn DSLs</a>.</p>
+
+<p>I actually got a lot out of the following which mightn&#8217;t have actually been the &#8216;meat&#8217; of Peter&#8217;s original post:</p>
+
+<blockquote><p>The most powerful tools a programmer has are the concepts that they use to think about solving problems.</p>
+
+<p>Generally programmers with more concepts are more likely to come up with better solutions to a wider range of problems as they have more tools in their toolkit (which is why it is worth learning about OO and functional programming even if you&#8217;re not planning to write code in Java and Haskell any time soon).</p>
+
+<p>The problem as a programmer is that when you only have a hammer, every problem looks like a nail. This works fine until you come across a screw and suddenly your trusty hammer doesn&#8217;t seem quite as useful as it used to.</p></blockquote>
+
+<p>Thanks to both Ben and Peter for sharing these with us, great reading and quite (for me at least) thought provoking.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-06-18T09:50:47+10:00" pubdate data-updated="true">Jun 18<span>th</span>, 2007</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/misc/'>Misc</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2007/06/18/inspirational-posts-from-the-community//page/18/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -912,138 +976,6 @@ myCustom.cfc
 </div>
 	
 		<div class="comments"><a href="/2007/02/04/adobe-feature-requestbug-report-form//page/18/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2007/02/04/cfqueryparam-and-conditional-handling-of-nulls/">
-		
-			Cfqueryparam and Conditional Handling of NULL&#8217;s</a>
-	</h2>
-	<div class="entry-content">
-		<p>Most people know that you should always use <a href="http://livedocs.macromedia.com/coldfusion/6.1/htmldocs/tags-b20.htm">cfqueryparam</a> on your query parameters when querying a database to (among other things):</p>
-
-<ul>
-<li>secure your database from unauthorised/malicious users</li>
-<li>perform data validation</li>
-<li>take advantage of SQL bind parameters</li>
-</ul>
-
-
-<p>The cfqueryparam tag can and should be used whether the query be a SELECT, UPDATE, DELETE or INSERT.</p>
-
-<p>One of the problems I&#8217;ve had in the past is when I want to either INSERT or UPDATE a column which has an INT datatype (MSSQL), but that column is not mandatory and therefore allows NULL values. Traditionally (if not using a stored procedure) I would have an approach as follows:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&lt;</span><span class="n">cfquery</span> <span class="nb">name</span><span class="o">=</span><span class="s2">&quot;qAddUser&quot;</span> <span class="n">datasource</span><span class="o">=</span><span class="s2">&quot;#application.dsn#&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="no">INSERT</span> <span class="no">INTO</span> <span class="no">MyUsers</span>
-</span><span class='line'>  <span class="p">(</span>
-</span><span class='line'>  <span class="no">Age</span><span class="p">,</span>
-</span><span class='line'>  <span class="no">FirstName</span><span class="p">,</span>
-</span><span class='line'>  <span class="no">LastName</span>
-</span><span class='line'>  <span class="p">)</span>
-</span><span class='line'>  <span class="no">VALUES</span>
-</span><span class='line'>  <span class="p">(</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="n">cfqueryparam</span> <span class="n">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_integer&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s2">&quot;#trim(form.iAge)#&quot;</span> <span class="n">maxlength</span><span class="o">=</span><span class="s2">&quot;3&quot;</span> <span class="sr">/&gt;,</span>
-</span><span class='line'><span class="sr"> &lt;cfqueryparam cfsqltype=&quot;cf_sql_varchar&quot; value=&quot;#trim(form.sFirstName)#&quot; maxlength=&quot;50&quot; /</span><span class="o">&gt;</span><span class="p">,</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="n">cfqueryparam</span> <span class="n">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s2">&quot;#trim(form.sLastName)#&quot;</span> <span class="n">maxlength</span><span class="o">=</span><span class="s2">&quot;50&quot;</span> <span class="sr">/&gt;</span>
-</span><span class='line'><span class="sr"> )</span>
-</span><span class='line'><span class="sr">&lt;/</span><span class="n">cfquery</span><span class="o">&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This works nicely except remember that &#8216;Age&#8217; isn&#8217;t a mandatory column in the database, so if the user leaves that form field blank I&#8217;ll be passing through an empty string (form.iAge) to the cfqueryparam. Because the database is expecting an INT value it really won&#8217;t like my empty string so I&#8217;ll get a nice big error. Now to get around this I have a couple of immediate options.</p>
-
-<ul>
-<li>use a database default (e.g. 0)</li>
-<li>Use conditional logic to set the empty string to an INT, like 0</li>
-<li>Use conditional logic to use the NULL attribute of cfqueryparam</li>
-</ul>
-
-
-<p>Number 3 is my preferred option, I don&#8217;t want the value &#8216;0&#8217; in the database when I don&#8217;t know if it&#8217;s really a valid value. Did the user type in &#8216;0&#8217; or is it my default database value? Sure I could use something like &#8216;-1&#8217; instead or code my application to know that if a &#8216;0&#8217; (or &#8216;-1&#8217;) was found then I know that it&#8217;s actually a NULL value. But that just seems messy to me.</p>
-
-<p>The NULL attribute of cfqueryparam can take a value of &#8216;yes|true&#8217; or &#8216;no|false&#8217; and if set to &#8216;yes|true&#8217; then anything in the &#8216;value&#8217; attribute is ignored and a NULL is passed to the database. This is what we want! Unfortunately though if I do use null=&#8221;yes&#8221; and I also have a &#8216;value&#8217;, then that value will be ignored and NULL will be used instead. To get around this I need to do something like:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&lt;</span><span class="n">cfif</span> <span class="no">NOT</span> <span class="n">len</span><span class="p">(</span><span class="n">trim</span><span class="p">(</span><span class="n">form</span><span class="o">.</span><span class="n">iAge</span><span class="p">))</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="n">cfqueryparam</span> <span class="n">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_integer&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s2">&quot;#trim(form.iAge)#&quot;</span> <span class="n">maxlength</span><span class="o">=</span><span class="s2">&quot;3&quot;</span> <span class="n">null</span><span class="o">=</span><span class="s2">&quot;yes&quot;</span> <span class="sr">/&gt;</span>
-</span><span class='line'><span class="sr">&lt;cfelse&gt;</span>
-</span><span class='line'><span class="sr"> &lt;cfqueryparam cfsqltype=&quot;cf_sql_integer&quot; value=&quot;#trim(form.iAge)#&quot; maxlength=&quot;3&quot; /</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="sr">/cfif&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>That would work but it&#8217;s not really that neat or optimal (in terms of coding and reading).</p>
-
-<p>As usual it&#8217;s always the simple solutions which are right in front of you that work the best! Today I saw a nice solution to this all too common problem from Ian Skinner over on <a href="http://groups.google.com/group/macromedia.coldfusion.cfml_general_discussion/topics">Google groups</a> where Ian used the yesNoFormat() and len() functions to conditionally pass in null or a value like:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&lt;</span><span class="n">cfqueryparam</span> <span class="n">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_integer&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s2">&quot;#trim(form.iAge)#&quot;</span> <span class="n">maxlength</span><span class="o">=</span><span class="s2">&quot;3&quot;</span> <span class="n">null</span><span class="o">=</span><span class="s2">&quot;#yesNoFormat(NOT len(trim(form.iAge)))#&quot;</span> <span class="sr">/&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This is nice an simple, the len() function will return the length of the string (0 or more) and the yesNoFormat() will translate that into the boolean value we need for the NULL attribute.</p>
-
-<p>However because we want to use the NULL attribute if the string DOESN&#8217;T have a length&#8230;we use the NOT boolean operator to reverse the results.</p>
-
-<p>Note that because we are using NOT, our result will be the desired boolean therefore negating the need to use yesNoFormat(). That leaves us with:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&lt;</span><span class="n">cfqueryparam</span> <span class="n">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_integer&quot;</span> <span class="n">value</span><span class="o">=</span><span class="s2">&quot;#trim(form.iAge)#&quot;</span> <span class="n">maxlength</span><span class="o">=</span><span class="s2">&quot;3&quot;</span> <span class="n">null</span><span class="o">=</span><span class="s2">&quot;#NOT len(trim(form.iAge))#&quot;</span> <span class="sr">/&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Nice and clean :)</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2007-02-04T17:45:38+11:00" pubdate data-updated="true">Feb 4<span>th</span>, 2007</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2007/02/04/cfqueryparam-and-conditional-handling-of-nulls//page/18/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

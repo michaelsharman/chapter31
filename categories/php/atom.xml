@@ -4,7 +4,7 @@
   <title><![CDATA[Category: php | chapter31 &raquo;]]></title>
   <link href="http://chapter31.com/categories/php/atom.xml" rel="self"/>
   <link href="http://chapter31.com/"/>
-  <updated>2013-06-03T11:12:37+10:00</updated>
+  <updated>2013-06-08T23:37:15+10:00</updated>
   <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
@@ -40,7 +40,7 @@ zend_extension="/usr/lib/php/extensions/no-debug-non-zts-20090626/xdebug.so"
 <li>Run: <code>./configure</code></li>
 <li>Run: <code>make</code></li>
 <li>Run: <code>sudo mkdir -p /usr/lib/php/extensions/no-debug-non-zts-20100525</code></li>
-<li>Run: <code>cp modules/xdebug.so /usr/lib/php/extensions/no-debug-non-zts-20100525</code></li>
+<li>Run: <code>sudo cp modules/xdebug.so /usr/lib/php/extensions/no-debug-non-zts-20100525</code></li>
 <li>Update your /etc/php.ini and uncomment/add the line
 <code>zend_extension = /usr/lib/php/extensions/no-debug-non-zts-20100525/xdebug.so</code></li>
 <li>Restart the webserver</li>

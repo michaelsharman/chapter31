@@ -4,7 +4,7 @@
   <title><![CDATA[Category: git | chapter31 &raquo;]]></title>
   <link href="http://chapter31.com/categories/git/atom.xml" rel="self"/>
   <link href="http://chapter31.com/"/>
-  <updated>2013-06-03T11:12:37+10:00</updated>
+  <updated>2013-06-08T23:37:15+10:00</updated>
   <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
@@ -12,6 +12,42 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Error writing git commit messages with vi]]></title>
+    <link href="http://chapter31.com/2013/06/08/error-writing-git-commit-messages-with-vi/"/>
+    <updated>2013-06-08T23:24:00+10:00</updated>
+    <id>http://chapter31.com/2013/06/08/error-writing-git-commit-messages-with-vi</id>
+    <content type="html"><![CDATA[<p>I typically write my git commit messages in the terminal, but today I wanted to write a multi-line comment so I left out the <em>-m</em> argument to <em>git commit</em> so it would open up my default editor, which is <em>vi</em>:</p>
+
+<p><code>bash
+git commit
+</code></p>
+
+<p>I wrote my comment, saved and exit but got an error:</p>
+
+<p><code>bash
+$ git commit
+error: There was a problem with the editor 'vi'.
+Please supply the message using either -m or -F option.
+</code></p>
+
+<p>A quick google and I <a href="http://tooky.co.uk/2010/04/08/there-was-a-problem-with-the-editor-vi-git-on-mac-os-x.html">found the solution</a>, I thought I'd repost it here for myself as well as others.</p>
+
+<p>There are a couple of solutions offered in that article, for me I just set the full path to <em>vi</em> with a <em>-f</em> flag in my .gitconfig:</p>
+
+<p><code>bash
+[core]
+  editor = /usr/bin/vi -f
+</code></p>
+
+<p>As an FYI...if you want to see the values in git config, you can run this command in your project and it will list your global and project configuration:</p>
+
+<p><code>bash
+git config -l
+</code></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Migrating from bitbucket to github]]></title>

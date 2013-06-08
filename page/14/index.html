@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="* Note: These examples reference the Prototype JavaScript framework. Often I find that I want to load content onto a page but have its default view &hellip;">
+	<meta name="description" content="Another tip from my Prototype travels&#8230; &#8216;Observers&#8217; let you create a listener for a user event, for example on a form submission &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,80 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/03/11/passing-extra-parameters-to-prototype-observer-handlers/">
+		
+			Passing Extra Parameters to Prototype Observer Handlers</a>
+	</h2>
+	<div class="entry-content">
+		<p>Another tip from my <a href="http://www.prototypejs.org/">Prototype</a> travels&#8230;</p>
+
+<p>&#8216;Observers&#8217; let you create a listener for a user event, for example on a form submission you may want to run some client side validation before actually submitting the form.</p>
+
+<p>Of course you can add &#8216;onsubmit()&#8217; in your <form> tag, but isn&#8217;t it much nicer to keep your markup clean of this type of thing?</p>
+
+<p>In your dom:loaded observer you can &#8216;listen&#8217; for a form submission as follows:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;myForm&#39;</span><span class="p">).</span><span class="nx">observe</span><span class="p">(</span><span class="s1">&#39;submit&#39;</span><span class="p">,</span> <span class="nx">validateMyForm</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Whenever a form with and Id of &#8216;myForm&#8217; is submitted the function &#8216;validateMyForm&#8217; will fire and automagically be passed an &#8216;event&#8217; which will essentially be a reference to the form. This is great, but sometimes you may want to pass extra parameters to the function you want to execute which might be localised to the specific user event (the function might be rather generic etc).</p>
+
+<p>T.J. Crowder gave me a great workaround for this situation on the <a href="http://groups.google.com/group/rubyonrails-spinoffs/">Prototype groups</a>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;myForm&#39;</span><span class="p">).</span><span class="nx">observe</span><span class="p">(</span><span class="s1">&#39;submit&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">validateMyForm</span><span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">param1</span><span class="p">,</span> <span class="nx">param2</span><span class="p">);</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note that you need to add an anonymous function here, you can&#8217;t just add the parameters with the normal syntax.</p>
+
+<p>Any extra parameters can of course be strings or variables set outside of the observer (as long as they&#8217;re within the parent function of course).</p>
+
+<p>Thanks T.J.</p>
+
+<p>:)</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-03-11T13:26:12+11:00" pubdate data-updated="true">Mar 11<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/javascript/'>Javascript</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/03/11/passing-extra-parameters-to-prototype-observer-handlers//page/14/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -807,65 +881,6 @@
 </div>
 	
 		<div class="comments"><a href="/2008/02/21/using-mysql-administrator-to-view-real-time-stats//page/14/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2008/02/19/a-couple-more-cool-firefox-tips/">
-		
-			A Couple More Cool Firefox Tips</a>
-	</h2>
-	<div class="entry-content">
-		<p>Another couple of cool Firefox features which most people probably already know about.</p>
-
-<p>How many times have you closed a tab only to realise &#8221;<em>Damn&#8230;I still wanted that open!</em>&#8221;? Well I do that about everyday and although you have the general history manager&#8230;if you&#8217;ve visited 100 sites that day it&#8217;s a pain to wade through to find the tab you just closed.</p>
-
-<p>Instead you can visit the History menu and see the item &#8220;Recently Closed Tabs&#8221; for a list of the last 10 viewed tabs. From memory there is also an addon which allows you to &#8220;undo&#8221; a close operation on a tab, but this menu option is cool!</p>
-
-<p>Another thing is making sure you get alerted whenever there is a JavaScript error, I think this is quite important as a developer and although you do have the &#8220;console&#8221; it&#8217;s nice to have an &#8220;in your face&#8221; reminder that there is an error on your page.</p>
-
-<p>To turn this on using the invaluable <a href="http://chrispederick.com/work/web-developer/">Web Developer Toolbar</a> addon, click Tools -> Web Developer -> Options -> Options and under &#8220;Miscellaneous&#8221; you can choose up to 3 options for opening the console (you can also get to this from Options -> Options on the actual Web Developer Toolbar):</p>
-
-<ul>
-<li>When there is a CSS error</li>
-<li>When there is a JavaScript warning</li>
-<li>When there is a JavaScript error</li>
-</ul>
-
-
-<p>It&#8217;s this last option that I turn on during development to get an error popup. Note that it is sometimes best to turn this off when surfing the web as there are SO many sites which have little JavaScript errors, causing popup hell :(</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-02-19T07:50:05+11:00" pubdate data-updated="true">Feb 19<span>th</span>, 2008</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/misc/'>Misc</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2008/02/19/a-couple-more-cool-firefox-tips//page/14/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 
