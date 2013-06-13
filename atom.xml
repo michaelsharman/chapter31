@@ -4,7 +4,7 @@
   <title><![CDATA[chapter31 &raquo;]]></title>
   <link href="http://chapter31.com/atom.xml" rel="self"/>
   <link href="http://chapter31.com/"/>
-  <updated>2013-06-08T23:37:15+10:00</updated>
+  <updated>2013-06-13T16:57:40+10:00</updated>
   <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
@@ -12,6 +12,32 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[INI Syntax Highlighting in Sublime Text]]></title>
+    <link href="http://chapter31.com/2013/06/13/ini-syntax-highlighting-in-sublime-text/"/>
+    <updated>2013-06-13T16:37:00+10:00</updated>
+    <id>http://chapter31.com/2013/06/13/ini-syntax-highlighting-in-sublime-text</id>
+    <content type="html"><![CDATA[<p>I went searching for a package to provide syntax highlighting for INI files in Sublime Text. The reason? INI files are ugly ;(</p>
+
+<p> <img src="http://chapter31.com/images/ini-before.png" alt="INI no syntax highlighting" /></p>
+
+<p>I found one that works well called <a href="https://github.com/clintberry/sublime-text-2-ini">sublime-text-2-ini</a>.</p>
+
+<p>Installation isn&#8217;t done via the package manager, but it&#8217;s still simple. Open a terminal and navigate to your Sublime <em>Packages</em> folder, then clone in the package from github.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd</span> ~/Library/Application<span class="se">\ </span>Support/Sublime<span class="se">\ </span>Text<span class="se">\ </span>2/Packages/
+</span><span class='line'>git clone git@github.com:clintberry/sublime-text-2-ini.git ./INI
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That&#8217;s it! Here&#8217;s what it looks like after installation:</p>
+
+<p><img src="http://chapter31.com/images/ini-after.png" alt="INI with syntax highlighting" /></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Error writing git commit messages with vi]]></title>
@@ -1594,55 +1620,6 @@ Select #3 had 8192* possible combinations</p>
 <p>Although we could have extended framework.cfc with our own file (and just defined these 2 methods), we just altered the original framework.cfc as we store a local copy in source control that all our projects can draw from.</p>
 
 <p><a href="https://github.com/michaelsharman/fw1">Here is the fork of FW/1</a> (really just a change to framework.cfc), version 2.0.1.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Adding a mail server to a Railo instance]]></title>
-    <link href="http://chapter31.com/2012/09/26/adding-a-mail-server-to-a-railo-instance/"/>
-    <updated>2012-09-26T22:04:00+10:00</updated>
-    <id>http://chapter31.com/2012/09/26/adding-a-mail-server-to-a-railo-instance</id>
-    <content type="html"><![CDATA[<p>We turn off all GUI based administration consoles in our production environments, this includes Railo&#8217;s admin area.</p>
-
-<p>If you need to configure your Railo instance to include an SMTP server, you can add a line in WEB-INF/railo/railo-web.xml.cfm</p>
-
-<p>Open up that file (probably as sudo), look for the <mail> tag (which is empty by default) and insert the following:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;server port="25" smtp="127.0.0.1" /&gt;</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The &#8220;smtp&#8221; attribute should be the IP address of your SMTP server. Also, if your SMTP server requires a username and password, you can add them like so:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;server port="25" smtp="127.0.0.1" username="myusername" password="mypassword" /&gt;</span></code></pre></td></tr></table></div></figure>
-
-
-<p>At the end of the day your config entry should look something like:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;mail log="{railo-web}/logs/mail.log"&gt;
-</span><span class='line'>  &lt;server port="25" smtp="127.0.0.1"/&gt;
-</span><span class='line'>&lt;/mail&gt;</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Update - January 2013</h2>
-
-<p>I was googling something else when I came across a post on the Railo groups indicating that by default only <em>error</em> logging is enabled for mail. This means that in the event of an error (where Railo is unable to send the mail) you can check the WEB-INF/railo/logs/mail.log for information.</p>
-
-<p>However, you can turn on <em>info</em> logging as well to presumably track whenever mail is actually sent. This can be done in either railo-server.xml or railo-web.xml. Eg:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;mail log-level="info" log="{railo-web}/logs/mail.log"&gt;
-</span><span class='line'>  &lt;server port="25" smtp="127.0.0.1"/&gt;
-</span><span class='line'>&lt;/mail&gt;</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This is really handy for us as we disallow access to the Railo admin GUI.</p>
 ]]></content>
   </entry>
   

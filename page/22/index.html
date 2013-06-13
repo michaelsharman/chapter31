@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Adam Howitt blogged recently about Pagination made easier with SQL Server 2005, have a read of his post and take the time to implement the solution &hellip;">
+	<meta name="description" content="So ok, I&#8217;ve run into this problem in the past where I&#8217;m using an onclick event to submit a form from a button control. When you click &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,86 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2006/10/12/when-not-to-use-thisformsubmit/">
+		
+			When Not to Use this.form.submit()</a>
+	</h2>
+	<div class="entry-content">
+		<p>So ok, I&#8217;ve run into this problem in the past where I&#8217;m using an onclick event to submit a form from a button control. When you click the button you get a nice little Javascript error stating:</p>
+
+<blockquote><p>this.form.submit is not a function</p></blockquote>
+
+<p>Bugger&#8230;wtf?</p>
+
+<p>This only seems to happen when you have a form element named &#8220;submit&#8221; already on your page, so the browser treats that &#8220;submit&#8221; element as an object which is of course NOT a function.</p>
+
+<p>I seem to run into this when I want 2 ways of submitting the form as follows:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">form</span><span class="o">&gt;</span>
+</span><span class='line'>   <span class="p">...</span>
+</span><span class='line'>   <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;submit&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;submit&quot;</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;submit&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;Submit Me&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>   <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;button&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;submit2&quot;</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;submit2&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;Save Me&quot;</span> <span class="nx">onclick</span><span class="o">=</span><span class="s2">&quot;this.form.submit();&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/form&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note the name of the submit button is &#8220;submit&#8221;, hence causing an error :(</p>
+
+<p>Make sure you don&#8217;t name your submit button as &#8220;submit&#8221; when you want to have multiples submits:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">form</span><span class="o">&gt;</span>
+</span><span class='line'>   <span class="p">...</span>
+</span><span class='line'>   <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;submit&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;btnSubmit&quot;</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;btnSubmit&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;Submit Me&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>   <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;button&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;btnSave&quot;</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;btnSave&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;Save Me&quot;</span> <span class="nx">onclick</span><span class="o">=</span><span class="s2">&quot;this.form.submit();&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/form&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-10-12T23:51:00+10:00" pubdate data-updated="true">Oct 12<span>th</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/javascript/'>Javascript</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2006/10/12/when-not-to-use-thisformsubmit//page/22/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -695,153 +775,6 @@ Bottom line is that while bots are great for indexing your content, they can cau
 </div>
 	
 		<div class="comments"><a href="/2006/10/01/javascript-function-properties//page/22/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2006/09/29/firefox-web-developer-toolbar/">
-		
-			Firefox Web Developer Toolbar</a>
-	</h2>
-	<div class="entry-content">
-		<p><a href="http://www.boyzoid.com/blog/index.cfm">Scott Stroz</a> (aka boyzoid) has a <a href="http://www.boyzoid.com/blog/index.cfm/2006/9/28/Web-Developer-Toolbar">nice little post</a> on the <a href="https://addons.mozilla.org/firefox/60/">Firefox Web Developer Toolbar</a> by Chris Pederick.</p>
-
-<p>The toolbar (which has been around for ages) is a must have for any web developer, I thought I&#8217;d post some of the tools including their shortcuts which I use regularly.</p>
-
-<h3>CSS</h3>
-
-<p>Viewing CSS - Ctrl+Shift+C</p>
-
-<pre><code>Opens up a new tab with the current pages CSS. I also use the [JSView](https://addons.mozilla.org/firefox/2076/) for this because it lets you view and individual Javascript or CSS files
-</code></pre>
-
-<p>View Style Information - Ctrl+Shift+Y</p>
-
-<pre><code>In this mode you can hover your mouse over any area of the page and the status bar will show you where you are in the markup
-</code></pre>
-
-<p>Edit CSS - Ctrl+Shift+E</p>
-
-<pre><code>This one I use all the time, you can edit CSS (even on a remote site!) in real time. Saves making changes to your CSS, saving the file, switching to your browser and refreshing when you want to experiment with your CSS/markup
-</code></pre>
-
-<p>Disable Styles - Ctrl+Shift+S</p>
-
-<pre><code>Now we all test our pages to ensure they display correctly with no styles don't we?
-</code></pre>
-
-<h3>Forms</h3>
-
-<p>Display Form Details</p>
-
-<pre><code>Excellent for showing all field types, names and values
-</code></pre>
-
-<p>Show Passwords</p>
-
-<pre><code>If ever you need to see the value of a password field, this saves you having to view source
-</code></pre>
-
-<p>Clear Radio Buttons</p>
-
-<pre><code>Ever wished you could uncheck a radio button?
-</code></pre>
-
-<p>Populate Form Fields</p>
-
-<pre><code>When you're developing with forms it is a PAIN to keep filling them out every time you want to test a submission.
-</code></pre>
-
-<h3>Images</h3>
-
-<p>Display Image Paths</p>
-
-<pre><code>Very handy when you want to see the path of broken images etc
-</code></pre>
-
-<h3>Information</h3>
-
-<p>View Color Information</p>
-
-<pre><code>I sometimes use [pixie](http://www.nattyware.com/pixie.html) for this, but it is really handy to get hex values for all colours on the current page
-</code></pre>
-
-<h3>Miscellaneous</h3>
-
-<p>Edit HTML</p>
-
-<pre><code>Much like edit css, this allows you to edit your HTML in real time without needing to flick between your editor and a browser. Of course this doesn't actually save changes to your file, it's best used to see what things look like before deciding on the final edit to make in your file/IDE.
-</code></pre>
-
-<p>Show Ruler</p>
-
-<pre><code>When you want to measure an element on the page
-</code></pre>
-
-<p>Clear Cache</p>
-
-<pre><code>When you need to get the latest data, particularly usefull when working with flash content
-</code></pre>
-
-<h3>Resize</h3>
-
-<p>800 x 600</p>
-
-<pre><code>To test your page in a different resolution
-</code></pre>
-
-<h3>Tools</h3>
-
-<p>Validate</p>
-
-<pre><code>There are a lot of tools which you should use to validate your pages before going into production environments. CSS and HTML are 2 which I validate regularly. HTML shortcut is Ctrl+Shift+H
-</code></pre>
-
-<p>Javascript Console - Ctrl+Shift+J</p>
-
-<pre><code>When working with Javascript, the console keeps you informed about any bugs in your code. Note that [firebug](https://addons.mozilla.org/firefox/1843/) is also a great tool for this.
-</code></pre>
-
-<p>Validate Local CSS</p>
-
-<pre><code>When you're working in a development environment, external site might not have access to your web site.
-</code></pre>
-
-<p>All in all the web developer toolbar provides a wealth of information and can save you a LOT of time and heartache in day to day development.</p>
-
-<p>Learn to know and use these tools and you&#8217;ll be smiling wider in no time :)</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2006-09-29T11:11:11+10:00" pubdate data-updated="true">Sep 29<span>th</span>, 2006</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/css/'>CSS</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2006/09/29/firefox-web-developer-toolbar//page/22/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

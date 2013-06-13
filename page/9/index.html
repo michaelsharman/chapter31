@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Ok this was annoying&#8230;I had an older trial version of the standalone Flex Builder 3 on my system (Mac 10.5) and wanted to activate it with a &hellip;">
+	<meta name="description" content="As everybody knows you should var scope ALL local function variables inside ColdFusion components, and these variables must be declared at the top &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,108 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/11/12/var-scoping-how-and-where-do-you-set-your-function-variables/">
+		
+			Var Scoping - How and Where Do You Set Your Function Variables?</a>
+	</h2>
+	<div class="entry-content">
+		<p>As everybody knows you should var scope ALL local function variables inside ColdFusion components, and these variables must be declared at the top of your function before any other code. If you place other code above a &#8220;var&#8221; scoped variable in your method signature an exception will be thrown.</p>
+
+<p>Depending on how you define you methods this will probably be fine, but I got to thinking recently on how this works with exception handling within your function, specifically for try/catch blocks.</p>
+
+<p>As you can&#8217;t add code above your var scoped variables there is no way to wrap your var scope block in a try/catch block. With this being the case you <em>may</em> have problems if an exception is thrown when you var scope a local variable.</p>
+
+<p>An example of what I&#8217;m talking about:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cffunction</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;getWorkSchedule&quot;</span> <span class="nx">access</span><span class="o">=</span><span class="s2">&quot;public&quot;</span> <span class="nx">returntype</span><span class="o">=</span><span class="s2">&quot;query&quot;</span><span class="o">&gt;</span>  
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfset</span> <span class="kd">var</span> <span class="nx">oUser</span> <span class="o">=</span> <span class="nx">getUserService</span><span class="p">().</span><span class="nx">getUser</span><span class="p">()</span> <span class="o">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cftry</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="p">...</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfcatch</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="err">/cfcatch&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cftry&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cffunction&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In the fictional example shown above we have a method which returns a users work schedule, the first thing done is retrieving an instance of <em>User</em> from the <em>UserService</em>. As this has been set at the same time we var scope our variable (oUser), what happens if the call to <em>getUserService().getUser()</em> throws an exception? The exception would bubble up to the calling template (the template that called getWorkSchedule()) which might be fine but might also be unexpected.</p>
+
+<p>This is just food for thought, it may be that instead you want to define your method like:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cffunction</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;getWorkSchedule&quot;</span> <span class="nx">access</span><span class="o">=</span><span class="s2">&quot;public&quot;</span> <span class="nx">returntype</span><span class="o">=</span><span class="s2">&quot;query&quot;</span><span class="o">&gt;</span>  
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfset</span> <span class="kd">var</span> <span class="nx">oUser</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cftry</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">oUser</span> <span class="o">=</span> <span class="nx">getUserService</span><span class="p">().</span><span class="nx">getUser</span><span class="p">()</span> <span class="o">/&gt;</span>
+</span><span class='line'>      <span class="p">...</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfcatch</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="err">/cfcatch&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cftry&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cffunction&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Here we take the approach of always declaring our local variables as empty strings or integers etc (simple values) <strong>before</strong> setting explicit values into them. This means all your variables are cleanly defined and you can catch any possible exceptions if you need to inside the try/catch.</p>
+
+<p>The only is that is feels like a bit of double handling because I need to <cfset> my variables twice&#8230;</p>
+
+<p>How do other people handle this? Lend me your thoughts :)</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-11-12T11:40:34+11:00" pubdate data-updated="true">Nov 12<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/11/12/var-scoping-how-and-where-do-you-set-your-function-variables//page/9/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -790,83 +892,6 @@ Import FLVs from your computer - including h.264 encoded videos, browse categori
 </div>
 	
 		<div class="comments"><a href="/2008/08/25/gmail-hacking-tool-do-you-access-your-email-securely//page/9/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2008/08/22/mysql-alias-just-like-table-names-are-case-sensitive-on-nix/">
-		
-			MySQL Aliases (Just Like Table Names) Are Case Sensitive on *nix</a>
-	</h2>
-	<div class="entry-content">
-		<p>As you might know when using MySQL on a case-sensitive OS (like Linux) you must reference your table names in a case sensitive manner. So if you have a table called <em>products</em> the following sample query will NOT work:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">SELECT</span> <span class="nx">productId</span>
-</span><span class='line'><span class="nx">FROM</span>  <span class="nx">Products</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>It won&#8217;t work because MySQL stores the table information in directories on the file system, therefore these directories are case sensitive. So your query must be as follows (note the lower case <em>products</em>):</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">SELECT</span> <span class="nx">productId</span>
-</span><span class='line'><span class="nx">FROM</span>  <span class="nx">products</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>That&#8217;s all good and well, but did you know that using table aliases are also case sensitive? I found this out the other day when debugging an issue with some existing code and confirmed on the MySQL site that &#8221;<em>By default, table aliases are case sensitive on Unix, but not so on Windows or Mac OSX</em>&#8221;.</p>
-
-<p>So the following query will fail because the alias used in the WHERE clause is different from the one used in the FROM definition:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">SELECT</span> <span class="nx">productId</span>
-</span><span class='line'><span class="nx">FROM</span>  <span class="nx">products</span> <span class="nx">AS</span> <span class="nx">p</span>
-</span><span class='line'><span class="nx">WHERE</span> <span class="nx">P</span><span class="p">.</span><span class="nx">productId</span> <span class="o">&gt;</span> <span class="mi">1000</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<blockquote><p>Although database and table names are not case sensitive on some platforms, you should not refer to a given database or table using different cases within the same statement. The following statement would not work because it refers to a table both as my_table and as MY_TABLE:</p>
-
-<p>mysql> SELECT * FROM my_table WHERE MY_TABLE.col=1;</p></blockquote>
-
-<p>If your interested you can read more on MySQL <a href="http://dev.mysql.com/doc/refman/5.0/en/identifier-case-sensitivity.html">identifier case sensitivity here</a>.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-08-22T13:00:47+10:00" pubdate data-updated="true">Aug 22<span>nd</span>, 2008</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/databases/'>Databases</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2008/08/22/mysql-alias-just-like-table-names-are-case-sensitive-on-nix//page/9/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

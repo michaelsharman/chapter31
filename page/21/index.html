@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Stored procedures are great for many reasons but one of the reasons I might not use them is you can&#8217;t cache them&#8230;or can you? A &hellip;">
+	<meta name="description" content="I&#8217;ve often used browsercam for testing my sites in different browsers on different operating systems. So I can pass a URL (which must be &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,54 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2006/11/08/browser-testing-your-site-design/">
+		
+			Browser Testing Your Site Design</a>
+	</h2>
+	<div class="entry-content">
+		<p>I&#8217;ve often used <a href="http://www.browsercam.com/">browsercam</a> for testing my sites in different browsers on different operating systems. So I can pass a URL (which must be publicly available) and see screenshot results on Windows, Linux and Mac across just about any browser you like&#8230;from Flock to Firefox and Safari to Konqueror. A full browser list can be <a href="http://www.browsercam.com/Features.aspx#Browsers">seen here</a>.</p>
+
+<p>Now browsercam is also cool because it lets you devicecheck, meaning testing your site on Blackberries or Windows Mobile&#8230;nice :) Only problem is that browsercam is commercial, so if you&#8217;re a sole trader you may not have the budget for what is such an ESSENTIAL part of web development. You absolutely and categorically <strong>must check your sites in different browsers and operating systems</strong>!</p>
+
+<p>Thankfully there is a free tool out there to help you out. <a href="http://browsershots.org/">Browser Shots</a> does pretty much the same thing as Browser Cam minus the cost of course. Testing is available for Windows, Mac and various flavours of Linux with a tonne of browsers!</p>
+
+<p>The only possible downside is that your screen shots are publically viewable. If that&#8217;s not an option you may need to use something else.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-11-08T12:59:50+11:00" pubdate data-updated="true">Nov 8<span>th</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/x-html/'>(X)HTML</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2006/11/08/browser-testing-your-site-design//page/21/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -670,86 +718,6 @@ html comment (used with xml files)</p>
 </div>
 	
 		<div class="comments"><a href="/2006/10/15/validating-a-user-defined-password-with-reg-exp//page/21/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2006/10/12/when-not-to-use-thisformsubmit/">
-		
-			When Not to Use this.form.submit()</a>
-	</h2>
-	<div class="entry-content">
-		<p>So ok, I&#8217;ve run into this problem in the past where I&#8217;m using an onclick event to submit a form from a button control. When you click the button you get a nice little Javascript error stating:</p>
-
-<blockquote><p>this.form.submit is not a function</p></blockquote>
-
-<p>Bugger&#8230;wtf?</p>
-
-<p>This only seems to happen when you have a form element named &#8220;submit&#8221; already on your page, so the browser treats that &#8220;submit&#8221; element as an object which is of course NOT a function.</p>
-
-<p>I seem to run into this when I want 2 ways of submitting the form as follows:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">form</span><span class="o">&gt;</span>
-</span><span class='line'>   <span class="p">...</span>
-</span><span class='line'>   <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;submit&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;submit&quot;</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;submit&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;Submit Me&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'>   <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;button&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;submit2&quot;</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;submit2&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;Save Me&quot;</span> <span class="nx">onclick</span><span class="o">=</span><span class="s2">&quot;this.form.submit();&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/form&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Note the name of the submit button is &#8220;submit&#8221;, hence causing an error :(</p>
-
-<p>Make sure you don&#8217;t name your submit button as &#8220;submit&#8221; when you want to have multiples submits:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">form</span><span class="o">&gt;</span>
-</span><span class='line'>   <span class="p">...</span>
-</span><span class='line'>   <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;submit&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;btnSubmit&quot;</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;btnSubmit&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;Submit Me&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'>   <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;button&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;btnSave&quot;</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;btnSave&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;Save Me&quot;</span> <span class="nx">onclick</span><span class="o">=</span><span class="s2">&quot;this.form.submit();&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/form&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2006-10-12T23:51:00+10:00" pubdate data-updated="true">Oct 12<span>th</span>, 2006</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/javascript/'>Javascript</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2006/10/12/when-not-to-use-thisformsubmit//page/21/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Another couple of cool Firefox features which most people probably already know about. How many times have you closed a tab only to realise &#8221; &hellip;">
+	<meta name="description" content="I was working on piece of code today which was sending an Ajax request to the server. The result of this request could have been 0 - 5 database &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,75 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/02/21/using-mysql-administrator-to-view-real-time-stats/">
+		
+			Using MySQL Administrator to View Real Time Stats</a>
+	</h2>
+	<div class="entry-content">
+		<p>I was working on piece of code today which was sending an Ajax request to the server. The result of this request could have been 0 - 5 database UPDATE statements.</p>
+
+<p>What I needed was a way to test my code to make sure the correct number of database statements were being executed based on the user event which fired the request.</p>
+
+<p>There are of course a number of ways I could have done this including:</p>
+
+<ul>
+<li>Returning a &#8216;count&#8217; or equivalent from the server to my Ajax callback</li>
+<li>Manually checking the relevant records in the database via a query</li>
+<li>Logging the results etc</li>
+</ul>
+
+
+<p>While all of these are fine, they all involved a bit more effort so I wanted to find another way to simply see how many UPDATES where being run.</p>
+
+<p>Enter <a href="http://www.mysql.com/products/tools/administrator/">MySQL Administrator</a> :)</p>
+
+<p>There are a BUNCH of useful operations you can perform using this free tool as well as viewing real time performance stats including the current server health (such as memory usage and current traffic) and the number of cached queries vs actual queries which are being accessed.</p>
+
+<p>The one I was interested in resides in the &#8216;Health&#8217; area and allows you to view a real time count of all DDL and DML statements which hit the server. Perfect!</p>
+
+<p><a href="/images/uploads/2008/02/mysql_admin.jpg"><img src="/images/uploads/2008/02/mysql_admin.thumbnail.jpg" alt="mysql administrator" /></a></p>
+
+<p>All I needed to do was run my page, fire the Ajax event and then &#8216;refresh&#8217; the Health view in MySQL Admin.</p>
+
+<p>For those that use MySQL and don&#8217;t really know this tool, take the time&#8230;it&#8217;s well worth it!</p>
+
+<p>I&#8217;m sure MSSQL has similar tools like the Profiler etc, but I&#8217;m really not using it these days.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-02-21T17:49:15+11:00" pubdate data-updated="true">Feb 21<span>st</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/databases/'>Databases</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/02/21/using-mysql-administrator-to-view-real-time-stats//page/15/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -938,75 +1007,6 @@
 </div>
 	
 		<div class="comments"><a href="/2007/11/14/flex-not-working-on-ubuntu-using-the-gnash-player//page/15/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2007/11/13/using-google-mail-as-your-local-smtp-server/">
-		
-			Using Google Mail as Your Local SMTP Server</a>
-	</h2>
-	<div class="entry-content">
-		<p>As a server-side developer you are often sending emails from your web application, whether those emails be for debugging/exception handling or actual application functionality (such as a contact form etc).</p>
-
-<p>Although some developers decide to turn off mail debugging locally (and instead view the errors inline), you pretty much always have the need to send emails from your development environment.</p>
-
-<p>In the past I have either connected to a staging mail server or used a free SMTP server (installed locally on my workstation) like <a href="http://www.mailenable.com/">MailEnable</a>. Well today <a href="http://www.lynchconsulting.com.au/blog/">Marko Tomic</a> let me in on something which is probably already well known! You can setup <a href="http://www.gmail.com/">GMail</a> as an SMTP server in ColdFusion Administrator :)</p>
-
-<p>What this means is you now don&#8217;t have to bother installing your own SMTP server or getting mail details from your systems administrator&#8230;you can just use your very own gmail account! Nice.</p>
-
-<p>Note that I did also google this a bit and found a couple of posts including <a href="http://groups.google.com/group/mach-ii-for-coldfusion/browse_thread/thread/608cdead2943930d">this one</a> suggesting you use TLS (via the Administrator or cfmail attributes), but I needed to use SSL instead. I had no success with TLS.</p>
-
-<p>Also reading <a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=Tags_m-o_01.html">the docs</a> I&#8217;m not sure if this will work pre-CF8, as SSL and TLS were added as attributes in CF8.</p>
-
-<p>Below are some examples of setting this up either in Administrator or in code, note the port number is <strong>not 25</strong> as is the default, instead you must use port 465:</p>
-
-<p><img src="/images/uploads/2007/11/mail.png" alt="ColdFusion Administrator - mail" /></p>
-
-<p>And in CFML:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfmail</span> <span class="nx">to</span><span class="o">=</span><span class="s2">&quot;me@wherever.com&quot;</span> <span class="nx">subject</span><span class="o">=</span><span class="s2">&quot;Read me&quot;</span> <span class="nx">from</span><span class="o">=</span><span class="s2">&quot;you@wherever.com&quot;</span> <span class="nx">server</span><span class="o">=</span><span class="s2">&quot;smtp.gmail.com&quot;</span> <span class="nx">useSSL</span><span class="o">=</span><span class="s2">&quot;true&quot;</span> <span class="nx">username</span><span class="o">=</span><span class="s2">&quot;gmailUsername&quot;</span> <span class="nx">password</span><span class="o">=</span><span class="s2">&quot;gmailPassword&quot;</span> <span class="nx">port</span><span class="o">=</span><span class="s2">&quot;465&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="nx">This</span> <span class="nx">is</span> <span class="nx">a</span> <span class="nx">test</span> <span class="nx">email</span><span class="o">!</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/cfmail&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The nice thing about doing this in ColdFusion administrator (apart from not having to specify a cfmail server and username/password etc in your code) is that you can verify your connection to the SMTP server.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2007-11-13T15:27:59+11:00" pubdate data-updated="true">Nov 13<span>th</span>, 2007</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2007/11/13/using-google-mail-as-your-local-smtp-server//page/15/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: sublime | chapter31 &raquo;]]></title>
+  <link href="http://chapter31.com/categories/sublime/atom.xml" rel="self"/>
+  <link href="http://chapter31.com/"/>
+  <updated>2013-06-13T16:57:40+10:00</updated>
+  <id>http://chapter31.com/</id>
+  <author>
+    <name><![CDATA[Michael Sharman]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[INI Syntax Highlighting in Sublime Text]]></title>
+    <link href="http://chapter31.com/2013/06/13/ini-syntax-highlighting-in-sublime-text/"/>
+    <updated>2013-06-13T16:37:00+10:00</updated>
+    <id>http://chapter31.com/2013/06/13/ini-syntax-highlighting-in-sublime-text</id>
+    <content type="html"><![CDATA[<p>I went searching for a package to provide syntax highlighting for INI files in Sublime Text. The reason? INI files are ugly ;(</p>
+
+<p> <img src="/images/ini-before.png" alt="INI no syntax highlighting" /></p>
+
+<p>I found one that works well called <a href="https://github.com/clintberry/sublime-text-2-ini">sublime-text-2-ini</a>.</p>
+
+<p>Installation isn't done via the package manager, but it's still simple. Open a terminal and navigate to your Sublime <em>Packages</em> folder, then clone in the package from github.</p>
+
+<p><code>bash
+cd ~/Library/Application\ Support/Sublime\ Text\ 2/Packages/
+git clone git@github.com:clintberry/sublime-text-2-ini.git ./INI
+</code></p>
+
+<p>That's it! Here's what it looks like after installation:</p>
+
+<p><img src="/images/ini-after.png" alt="INI with syntax highlighting" /></p>
+]]></content>
+  </entry>
+  
+</feed>
