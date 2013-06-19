@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="We recently upgraded a project which was using the Prototype JavaScript framework to use jQuery and ran into a few methods which didn&#8217;t exist &hellip;">
+	<meta name="description" content="We run several FarCry projects at Learnosity and all of them run on Linux. We have occasionally come across issues where the FarCry codebase will &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,79 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2011/01/13/checking-for-correct-case-sensitive-tables-in-farcry/">
+		
+			Checking for Correct Case-sensitive Tables in FarCry</a>
+	</h2>
+	<div class="entry-content">
+		<p>We run several FarCry projects at Learnosity and all of them run on Linux. We have occasionally come across issues where the FarCry codebase will refer to a MySQL table in the wrong &#8220;case&#8221;.</p>
+
+<p>E.g. referring to &#8220;dmhtml&#8221; where the actual table name is &#8220;dmHTML&#8221;.</p>
+
+<p>This is course fails in any case sensitive environment. Note that we also run our <a href="http://www.chapter31.com/2010/10/04/case-sensitive-development-on-mac-os-x/">Macs as case sensitive in development</a> to help find these issues before deploying to a stage/production server.</p>
+
+<p>Anyway, I wrote a small test script to introspect the FarCry codebase for types and rules etc to compare that with a local MySQL database to attempt to find (and fix) any case sensitive issues that might occur.</p>
+
+<p>We already have a custom area under the &#8220;Admin&#8221; tab in the webtop, I added the file there.</p>
+
+<p><img src="/images/uploads/2011/01/webtop.png" alt="webtop" /></p>
+
+<p>If you&#8217;re interesting in having a look, <a href="/images/uploads/2011/01/diff.cfm">download diff.cfm</a> and put inside your projects &#8220;customAdmin&#8221; folder and link to it from customadmin.xml e.g.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">section</span> <span class="nx">mergeType</span><span class="o">=</span><span class="s2">&quot;merge&quot;</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;admin&quot;</span> <span class="nx">sequence</span><span class="o">=</span><span class="s2">&quot;4100&quot;</span> <span class="nx">permission</span><span class="o">=</span><span class="s2">&quot;MainNavAdminTab&quot;</span> <span class="nx">label</span><span class="o">=</span><span class="s2">&quot;Admin&quot;</span> <span class="nx">icon</span><span class="o">=</span><span class="s2">&quot;config&quot;</span> <span class="nx">description</span><span class="o">=</span><span class="s2">&quot;administration/utility tasks&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">subsection</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;learnosity&quot;</span> <span class="nx">sequence</span><span class="o">=</span><span class="s2">&quot;10000&quot;</span> <span class="nx">label</span><span class="o">=</span><span class="s2">&quot;Table Name Check&quot;</span> <span class="nx">permission</span><span class="o">=</span><span class="s2">&quot;AdminGeneralTab&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">menu</span> <span class="nx">sequence</span><span class="o">=</span><span class="s2">&quot;10&quot;</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;intranetmenu&quot;</span> <span class="nx">label</span><span class="o">=</span><span class="s2">&quot;Utility Tasks&quot;</span> <span class="nx">labelType</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">menuitem</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;diff&quot;</span> <span class="nx">sequence</span><span class="o">=</span><span class="s2">&quot;1&quot;</span> <span class="nx">label</span><span class="o">=</span><span class="s2">&quot;FarCry/MySQL Diff&quot;</span> <span class="nx">link</span><span class="o">=</span><span class="s2">&quot;/admin/customadmin.cfm?module=diff.cfm&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="err">/menu&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/subsection&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/section&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Hope it helps!</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-01-13T09:47:45+11:00" pubdate data-updated="true">Jan 13<span>th</span>, 2011</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/farcry/'>Farcry</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2011/01/13/checking-for-correct-case-sensitive-tables-in-farcry//page/6/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -770,64 +843,6 @@ $ sudo ln -sf /Volumes/Learnosity/Workspaces /users/michaelsharman/Workspaces</p
 </div>
 	
 		<div class="comments"><a href="/2010/03/03/detecting-https-across-railo-and-coldfusion-server//page/6/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2010/01/20/cfhttp-issues-using-local-on-max-osx/">
-		
-			Cfhttp Issues Using &#8220;.local&#8221; on Max OSX</a>
-	</h2>
-	<div class="entry-content">
-		<p>Ran into an interesting problem today doing something quite simple. Basically all I was doing was posting xml data to a URL, but I kept getting a 408 request timeout and I didn&#8217;t know why.</p>
-
-<p>We happen to use the &#8220;.local&#8221; domain name structure for local development. I was posting data from one local site to another e.g.</p>
-
-<p>http://mysite1.local   ->   http://mysite2.local</p>
-
-<p>When I dumped cfhttp on the posting page I got the following error:</p>
-
-<p><a href="/images/uploads/2010/01/cfhttp.png"><img src="/images/uploads/2010/01/cfhttp.png" alt="cfhttp" /></a></p>
-
-<p>Now I hadn&#8217;t come across this error before with cfhttp and nothing I did fixed the issue, I even got that message using a &#8220;GET&#8221; method. It wasn&#8217;t till I tried &#8220;GET&#8221; from a public domain (http://www.google.com, which worked) that I thought to try a local domain which didn&#8217;t use &#8220;.local&#8221;.</p>
-
-<p>Success!</p>
-
-<p><a href="http://www.lynchconsulting.com.au/go/blog">Mark</a> mentioned that it could be a problem with Bonjour (as I&#8217;m on a Mac) which uses .local.</p>
-
-<p>This is kinda timely as we&#8217;re moving away from the &#8220;.local&#8221; convention in favour of &#8220;.cf7&#8221;, &#8220;.cf9&#8221;, &#8220;.railo&#8221; etc as we&#8217;re using multiple cfmx engines for different projects and that provides a way to easily test codebases against different engines easily.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-01-20T10:28:00+11:00" pubdate data-updated="true">Jan 20<span>th</span>, 2010</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2010/01/20/cfhttp-issues-using-local-on-max-osx//page/6/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Mark Kruger has a nice article (with mention from Sean Corfield) on APPLICATION variable locking. Sean basically added that in the initial example ( &hellip;">
+	<meta name="description" content="In CFMX7 Macromedia introduced a new (and optional) attribute to the cfstoredproc tag called &#8220;result&#8221; which specifies a name for the &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,73 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2006/03/16/cfstoredproc-in-mx7/">
+		
+			New &#8216;Result&#8217; Attribute in MX7 Cfstoredproc</a>
+	</h2>
+	<div class="entry-content">
+		<p>In CFMX7 Macromedia introduced a new (and optional) attribute to the cfstoredproc tag called &#8220;result&#8221; which specifies a name for the structure in which cfstoredproc returns the statusCode and ExecutionTime variables. If set, this value replaces cfstoredproc as the prefix to use when accessing those variables.</p>
+
+<p>The result attribute provides a way for stored procedures that are called from multiple pages, possibly at the same time, to avoid overwriting the results of one call with another. If you set the result attribute to myResult, for example, you would access ExecutionTime as myResult.ExecutionTime. Otherwise, you would access it as cfstoredproc.ExecutionTime.</p>
+
+<p>e.g.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfstoredproc</span>
+</span><span class='line'>  <span class="nx">procedure</span> <span class="o">=</span> <span class="s2">&quot;foo_proc&quot;</span>
+</span><span class='line'>  <span class="nx">dataSource</span> <span class="o">=</span> <span class="s2">&quot;myDSN&quot;</span>
+</span><span class='line'>  <span class="nx">returnCode</span> <span class="o">=</span> <span class="s2">&quot;myResultStats&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="o">&lt;</span><span class="nx">cfprocresult</span> <span class="nx">name</span> <span class="o">=</span> <span class="s2">&quot;RS1&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfstoredproc&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>instead of using #cfstoredproc.executionTime# you can use #myResultStats.executionTime#</p>
+
+<p><a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/wwhelp/wwhimpl/common/html/wwhelp.htm?context=ColdFusion_Documentation&amp;file=00000338.htm">cfstoredproc Livedocs</a></p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-03-16T10:51:57+11:00" pubdate data-updated="true">Mar 16<span>th</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2006/03/16/cfstoredproc-in-mx7//page/26/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">

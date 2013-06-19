@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="I&#8217;ve often used browsercam for testing my sites in different browsers on different operating systems. So I can pass a URL (which must be &hellip;">
+	<meta name="description" content="ColdFusion hosting (shared) certainly isn&#8217;t as ubiquitous as say PHP, but there are some well known hosting providers that you can use &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,70 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2006/11/09/cheap-coldfusion-hosting/">
+		
+			Cheap ColdFusion Hosting?</a>
+	</h2>
+	<div class="entry-content">
+		<p>ColdFusion hosting (shared) certainly isn&#8217;t as ubiquitous as say PHP, but there are some well known hosting providers that you can use particuarly for smaller clients on a budget.</p>
+
+<p>Some of the more popular ones are <a href="http://www.hostmysite.com/">Hostmysite</a> and <a href="http://www.crystaltech.com/">Crystal Tech</a>. Last week some colleagues turned me on to <a href="http://www.hostingatoz.com/">Hosting A to Z</a> who are the cheapest I&#8217;ve ever seen, with prices as low as USD$34.99 a year (not a month&#8230;a year!). That particular plan includes 1 MSSQL database, free setup fee and reasonable traffic. Only 500MB of disk space though which may be a problem for some sites.</p>
+
+<p>As usual there are concerns when putting your site on a shared host, performance probably being at the top of the list. Other concerns may be things like:</p>
+
+<ul>
+<li>Amount of RAM</li>
+<li>CPU</li>
+<li>Other clients/applications running (and typing up resources)</li>
+<li>Network speeds</li>
+<li>Database connectivity and speeds</li>
+<li>Disaster Recovery</li>
+<li>Stats package</li>
+<li>etc al</li>
+</ul>
+
+
+<p>hostingatoz run Intel Xeon&#8217;s with 2.8 to 3.2 CPU&#8217;s with 2-4GB of RAM, boast 99.9% uptime and 24 x 7 x 365 customer support. Not too bad for the price. Oh and by the way, they run ColdFusion MX 7 Enterprise.</p>
+
+<p>The only thing for me is that I&#8217;d never heard of them. In itself that certainly isn&#8217;t a reason not to try them, but I do know that a LOT of people use hostmysite and crystaltech and I&#8217;ve generally heard good things about them.</p>
+
+<p>You can <a href="http://www.hostingatoz.com/shared_hosting.cfx">read more here</a>. Happy hosting :)</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-11-09T13:29:21+11:00" pubdate data-updated="true">Nov 9<span>th</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2006/11/09/cheap-coldfusion-hosting//page/21/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -669,55 +733,6 @@ html comment (used with xml files)</p>
 </div>
 	
 		<div class="comments"><a href="/2006/10/17/making-coldfusion-sleep//page/21/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2006/10/15/validating-a-user-defined-password-with-reg-exp/">
-		
-			Validating a User Defined Password With Reg Exp</a>
-	</h2>
-	<div class="entry-content">
-		<p>A nice little reg exp from the <a href="http://www.coldfusioncookbook.com/">ColdFusion Cookbook</a> when you need to make sure a users new password (which they are setting) contains at least 1 letter and 1 number.</p>
-
-<p>You can also make sure the password length is within a range, the following makes sure the password is between 6 and 15 characters long.</p>
-
-<pre><code>&lt;cfif NOT reFind("^[[:alnum:]]{6,15}$", form.sPassword) /&gt;
-</code></pre>
-
-<p>Don&#8217;t you just love regular expressions :)</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2006-10-15T09:17:51+10:00" pubdate data-updated="true">Oct 15<span>th</span>, 2006</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2006/10/15/validating-a-user-defined-password-with-reg-exp//page/21/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

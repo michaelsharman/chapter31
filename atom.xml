@@ -4,7 +4,7 @@
   <title><![CDATA[chapter31 &raquo;]]></title>
   <link href="http://chapter31.com/atom.xml" rel="self"/>
   <link href="http://chapter31.com/"/>
-  <updated>2013-06-13T16:57:40+10:00</updated>
+  <updated>2013-06-19T12:10:26+10:00</updated>
   <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
@@ -12,6 +12,42 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Problem dumping MySQL database - Unknown system variable 'GTID_MODE']]></title>
+    <link href="http://chapter31.com/2013/06/19/problem-dumping-mysql-database-unknown-system-variable-gtid-mode/"/>
+    <updated>2013-06-19T12:01:00+10:00</updated>
+    <id>http://chapter31.com/2013/06/19/problem-dumping-mysql-database-unknown-system-variable-gtid-mode</id>
+    <content type="html"><![CDATA[<p>I was trying to dump and restore a MySQL database today, but received the following error when I tried to dump:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>mysqldump: Couldn<span class="s1">&#39;t execute &#39;</span>SELECT @@GTID_MODE<span class="s1">&#39;: Unknown system variable &#39;</span>GTID_MODE<span class="err">&#39;</span> <span class="o">(</span>1193<span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The MySQL version of the database I was trying to dump was 5.5.28 and the server I was trying to restore into was 5.6.10.</p>
+
+<p>A quick google told me that the error was likely due to this mismatch in versions. From the <a href="http://blog.teamextension.com/mysqldump-couldnt-execute-select-gtid_mode-unknown-system-variable-gtid_mode-1193-1246">teamextension blog</a>:</p>
+
+<pre><code>This error is in part due to the introduction of Global Transaction Identifiers (GTIDs) in MySQL 5.6.
+GTIDs make it simple to track and compare replication across a master-slave topology.
+</code></pre>
+
+<p>The solution is adding the following option to your dump statement:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>--set-gtid-purged<span class="o">=</span>OFF
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In all, my statement was:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>mysqldump -h<span class="o">[</span>host<span class="o">]</span> -u<span class="o">[</span>user<span class="o">]</span> --single-transaction --routines --triggers --set-gtid-purged<span class="o">=</span>OFF --compatible<span class="o">=</span>ansi <span class="o">[</span>database<span class="o">]</span> | mysql --h<span class="o">[</span>host<span class="o">]</span> -u<span class="o">[</span>user<span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[INI Syntax Highlighting in Sublime Text]]></title>
@@ -1547,79 +1583,6 @@ Select #3 had 8192* possible combinations</p>
 <p>You can see in the example above that we override the default values we set initially, so that if we&#8217;re in <em>development</em> mode we not only <a href="http://www.chapter31.com/2012/09/27/preventing-fw1-from-reinitialising-an-app-via-the-url/">have the ability to reload the application (using a custom property called <em>disableReloadApplication</em>)</a>, but we also reload the application on every request.</p>
 
 <p>2 things to note here, are that we can&#8217;t use setupRequest() for this, as it&#8217;s called too late by framework.cfc and won&#8217;t enable us to override any <em>variables.framework</em> properties. So instead we use onRequestStart(), which gives us the 2nd thing to watch out for, and that is that you must be careful to call super.onRequestStart(targetPath); at the conclusion of this method. Or you might get strange results.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Preventing FW/1 from reinitialising an app via the URL]]></title>
-    <link href="http://chapter31.com/2012/09/27/preventing-fw1-from-reinitialising-an-app-via-the-url/"/>
-    <updated>2012-09-27T22:57:23+10:00</updated>
-    <id>http://chapter31.com/2012/09/27/preventing-fw1-from-reinitialising-an-app-via-the-url</id>
-    <content type="html"><![CDATA[<p>One of the things that <a href="https://github.com/seancorfield/fw1">FW/1</a> allows you to do is configure a reload &#8220;key&#8221; and &#8220;password&#8221; which you can use to reinit your application via URL.</p>
-
-<p>So inside your Application.cfc you might have:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>variables.framework = {
-</span><span class='line'>  reload = 'reinit',
-</span><span class='line'>  password = "mysecretkey"
-</span><span class='line'>  …
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
-
-
-<p>So you can reinit your application (flush the application scope by re-running onApplicationStart()) by calling something like:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>http://www.example.com/?reinit=mysecretkey</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The &#8220;reload&#8221; and &#8220;password&#8221; properties can be changed to whatever you want for securities sake.</p>
-
-<p>We wanted a little extra security, that being the option to never allow an application to be reinitialised via a URL. Typically we want this in a production environment only. What you lose in flexibility, being able to reinit the application quickly and easily after a release/deployment, you (arguably) gain in security. Perhaps this is being a little over-cautious, but we like to be better safe than sorry, especially when reducing possible DOS vectors. Also it makes life easier when dealing with system administrators and/or security audits :)</p>
-
-<p>To achieve this we simply added a new property to the <em>variables.framework</em> structure inside Application.cfc, called &#8220;disableReloadApplication&#8221;, which accepts true|false. If <em>true</em>, then even if you know the &#8220;reload&#8221; and &#8220;password&#8221; values…the application cannot be reinitialised via the URL. So the following would NOT reinit the app:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>http://www.example.com/?reinit=mysecretkey</span></code></pre></td></tr></table></div></figure>
-
-
-<p>A few extra lines were needed inside framework.cfc to make this happen:</p>
-
-<p>setupFrameworkDefaults()</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>…
-</span><span class='line'>if ( !structKeyExists(variables.framework, 'disableReloadApplication') ) {
-</span><span class='line'>  variables.framework.disableReloadApplication = false;
-</span><span class='line'>}
-</span><span class='line'>…</span></code></pre></td></tr></table></div></figure>
-
-
-<p>and isFrameworkReloadRequest()</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>return ( !variables.framework.disableReloadApplication &&
-</span><span class='line'>  ((isDefined( 'URL' ) &&
-</span><span class='line'>  structKeyExists( URL, variables.framework.reload ) &&
-</span><span class='line'>  URL[ variables.framework.reload ] == variables.framework.password ) ||
-</span><span class='line'>  variables.framework.reloadApplicationOnEveryRequest));</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Although we could have extended framework.cfc with our own file (and just defined these 2 methods), we just altered the original framework.cfc as we store a local copy in source control that all our projects can draw from.</p>
-
-<p><a href="https://github.com/michaelsharman/fw1">Here is the fork of FW/1</a> (really just a change to framework.cfc), version 2.0.1.</p>
 ]]></content>
   </entry>
   

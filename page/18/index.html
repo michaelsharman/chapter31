@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Ok&#8230; I understand (though I&#8217;m not happy) that advertising is a part of our everyday lives and &#8216;online&#8217; is no exception. I &hellip;">
+	<meta name="description" content="There was a recent thread on the mach-ii mailing list where a user wanted to detect whether a request was being made via http or https. This is &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,97 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2007/07/21/detecting-and-redirecting-http-to-https/">
+		
+			Detecting and Redirecting Http to Https</a>
+	</h2>
+	<div class="entry-content">
+		<p>There was a <a href="http://groups.google.com/group/mach-ii-for-coldfusion/browse_thread/thread/c742be0d8ab0395c?hl=en">recent thread</a> on the <a href="http://groups.google.com/group/mach-ii-for-coldfusion/">mach-ii mailing list</a> where a user wanted to detect whether a request was being made via http or https.</p>
+
+<p>This is quite a common step developers take when working on a site with secure (SSL) and non-secure areas. As the list is mach-ii there are a couple of obvious framework specific options to take, those being Filters and Plugins. Although Peter Farrel does have an sslPlugin available, I liked the approach put forward by <a href="http://www.pteradactylcry.com/blog/">Matt Osbun</a>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">Compare</span><span class="p">(</span><span class="nx">cgi</span><span class="p">.</span><span class="nx">SERVER_PORT</span><span class="p">,</span><span class="mi">443</span><span class="p">)</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cflocation</span> <span class="nx">url</span><span class="o">=</span><span class="s2">&quot;https://#cgi.server_name##cgi.path_info#?#cgi.query_string#&quot;</span> <span class="nx">addtoken</span><span class="o">=</span><span class="s2">&quot;false&quot;</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfif&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now I know a lot of people don&#8217;t like using CGI scoped variables, even the more common ones, so I thought I&#8217;d try it out with getPageContext().</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c">&lt;!--</span><span class="o">-</span> <span class="nx">set</span> <span class="nx">up</span> <span class="nx">the</span> <span class="nx">getRequest</span> <span class="nx">method</span> <span class="k">for</span> <span class="nx">easy</span> <span class="nx">access</span> <span class="o">---&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">oRequest</span> <span class="o">=</span> <span class="nx">getPageContext</span><span class="p">().</span><span class="nx">getRequest</span><span class="p">()</span> <span class="o">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">compare</span><span class="p">(</span><span class="nx">oRequest</span><span class="p">.</span><span class="nx">getServerPort</span><span class="p">(),</span> <span class="mi">443</span><span class="p">)</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cflocation</span> <span class="nx">url</span><span class="o">=</span><span class="s2">&quot;https://#oRequest.getServerName()##oRequest.getRequestURI()#?#oRequest.getQueryString()#&quot;</span> <span class="nx">addtoken</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfif&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>As you can see it&#8217;s a little bit longer, but I believe is a safer option than relying on CGI variables.</p>
+
+<p>A slight modification (using getRequest()) is testing the isSecure() which &#8221;<em>Returns true if this protocol is secure</em>&#8221;:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c">&lt;!--</span><span class="o">-</span> <span class="nx">set</span> <span class="nx">up</span> <span class="nx">the</span> <span class="nx">getRequest</span> <span class="nx">method</span> <span class="k">for</span> <span class="nx">easy</span> <span class="nx">access</span> <span class="o">---&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">oRequest</span> <span class="o">=</span> <span class="nx">getPageContext</span><span class="p">().</span><span class="nx">getRequest</span><span class="p">()</span> <span class="o">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">NOT</span> <span class="nx">oRequest</span><span class="p">.</span><span class="nx">isSecure</span><span class="p">()</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cflocation</span> <span class="nx">url</span><span class="o">=</span><span class="s2">&quot;https://#oRequest.getServerName()##oRequest.getRequestURI()#?#oRequest.getQueryString()#&quot;</span> <span class="nx">addtoken</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfif&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I&#8217;m still (slowly) making my way through getPageContext(), it can provide an absolute wealth of knowledge for the ColdFusion programmer. You can view the 1.4 <a href="http://java.sun.com/j2ee/1.4/docs/api/javax/servlet/jsp/PageContext.html">pagecontext docs here</a> and the <a href="http://java.sun.com/j2ee/1.4/docs/api/javax/servlet/ServletRequest.html">servletrequest docs here</a>.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-07-21T15:43:41+10:00" pubdate data-updated="true">Jul 21<span>st</span>, 2007</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2007/07/21/detecting-and-redirecting-http-to-https//page/18/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -919,71 +1010,6 @@ myCustom.cfc
 </div>
 	
 		<div class="comments"><a href="/2007/04/10/cfquery-result-attribute-caveat//page/18/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2007/03/25/the-coolest-dhtml-calendar/">
-		
-			The &#8216;Coolest&#8217; DHTML Calendar</a>
-	</h2>
-	<div class="entry-content">
-		<p>As web developers we are often some of the first people to see the newer techniques and tools available for use in web applications. This can be great as we can then hurry off and implement these things into our new projects.</p>
-
-<p>But of course there are still millions of older sites (which will no doubt still be around for years to come!) using <em>old</em> techniques and tools. Ugh!</p>
-
-<p>One of the more common things you find is the age old popup calendar window which is SLOW and could be blocked by the numerous popup blockers out there today. I don&#8217;t know why but I really dislike sites that use this approach. Of course for older sites (when other solutions weren&#8217;t readily available) this is fine, but for newly released sites there is no excuse!</p>
-
-<p>A technique which is definitely not so new but oh so cool, is using DHTML to display a calendar for users to choose a date. Although there are a lot of these solutions out there the one I keep coming back to is offered by <a href="http://www.dynarch.com/projects/calendar/">Dynarch.com</a> and has been around for over 2 years :)</p>
-
-<p>The benefits of this type of approach are numerous:</p>
-
-<ul>
-<li><p>Cosmetic - DHTML calendars look so much better than their popup counterparts and can be easily modified with CSS</p></li>
-<li><p>Speed - as the DHTML is loaded in the browser is is MUCH quicker and more responsive</p></li>
-<li><p>Popup blockers - as it&#8217;s just HTML it won&#8217;t be blocked</p></li>
-<li><p>Configuration - easy as pie, just a little javascript tweaking</p></li>
-<li><p>Cross browser support</p></li>
-</ul>
-
-
-<p>Another great thing about the Dynarch solution is that it&#8217;s open source under the <a href="http://www.gnu.org/licenses/lgpl.html">GNU Lesser General Public License</a>.</p>
-
-<p><a href="http://www.dynarch.com/demos/jscalendar/">Click here</a> for the demo page</p>
-
-<p><img src="/images/uploads/2007/03/dynarch.gif" alt="Dynarch" /></p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2007-03-25T17:25:13+10:00" pubdate data-updated="true">Mar 25<span>th</span>, 2007</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/x-html/'>(X)HTML</a>, <a class='category' href='/categories/javascript/'>Javascript</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2007/03/25/the-coolest-dhtml-calendar//page/18/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: mysql | chapter31 &raquo;]]></title>
   <link href="http://chapter31.com/categories/mysql/atom.xml" rel="self"/>
   <link href="http://chapter31.com/"/>
-  <updated>2013-06-13T16:57:40+10:00</updated>
+  <updated>2013-06-19T12:10:26+10:00</updated>
   <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
@@ -12,6 +12,39 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Problem dumping MySQL database - Unknown system variable 'GTID_MODE']]></title>
+    <link href="http://chapter31.com/2013/06/19/problem-dumping-mysql-database-unknown-system-variable-gtid-mode/"/>
+    <updated>2013-06-19T12:01:00+10:00</updated>
+    <id>http://chapter31.com/2013/06/19/problem-dumping-mysql-database-unknown-system-variable-gtid-mode</id>
+    <content type="html"><![CDATA[<p>I was trying to dump and restore a MySQL database today, but received the following error when I tried to dump:</p>
+
+<p><code>bash
+mysqldump: Couldn't execute 'SELECT @@GTID_MODE': Unknown system variable 'GTID_MODE' (1193)
+</code></p>
+
+<p>The MySQL version of the database I was trying to dump was 5.5.28 and the server I was trying to restore into was 5.6.10.</p>
+
+<p>A quick google told me that the error was likely due to this mismatch in versions. From the <a href="http://blog.teamextension.com/mysqldump-couldnt-execute-select-gtid_mode-unknown-system-variable-gtid_mode-1193-1246">teamextension blog</a>:</p>
+
+<pre><code>This error is in part due to the introduction of Global Transaction Identifiers (GTIDs) in MySQL 5.6.
+GTIDs make it simple to track and compare replication across a master-slave topology.
+</code></pre>
+
+<p>The solution is adding the following option to your dump statement:</p>
+
+<p><code>bash
+--set-gtid-purged=OFF
+</code></p>
+
+<p>In all, my statement was:</p>
+
+<p><code>bash
+mysqldump -h[host] -u[user] --single-transaction --routines --triggers --set-gtid-purged=OFF --compatible=ansi [database] | mysql --h[host] -u[user]
+</code></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[MySQL thread_stack overrun error]]></title>

@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Took me a little bit to find the solution for this across several different board posts so I thought I&#8217;d quickly write it up. For those of us &hellip;">
+	<meta name="description" content="Call me crazy, but it doesn&#8217;t seem like you can &#8220;natively&#8221; lock your screen on a Mac like you can on Windows. Very odd and &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,60 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/07/22/how-do-you-lock-your-screen-on-a-mac/">
+		
+			How Do You Lock Your Screen on a Mac?</a>
+	</h2>
+	<div class="entry-content">
+		<p>Call me crazy, but it doesn&#8217;t seem like you can &#8220;natively&#8221; lock your screen on a Mac like you can on Windows. Very odd and annoying as it&#8217;s something I do everytime I leave my workstation, I&#8217;ve even had to agree to a policy that I will never leave my workstation open as I have secure access to production servers (via ssh).</p>
+
+<p>I found some craziness on google where users setup &#8220;hot corners&#8221; with mouse gestures with the idea that when you &#8220;drag your cursor&#8221; into that corner the screensaver will be activated requiring a password to get back to the desktop.</p>
+
+<p>You&#8217;re joking right?</p>
+
+<p>I can just imagine how many times a day I&#8217;d <em>accidentally</em> activate this, especially using dual monitors.</p>
+
+<p>Here is a cool utility I found to get around this apparent shortcoming without silly workarounds, it&#8217;s called <a href="http://www.macupdate.com/info.php/id/24628/utility-lock">Utility Lock</a>.</p>
+
+<blockquote><p>Utility Lock (formerly known as SleepLock) is a custom built Screen Locking mechanism, it was designed after the Apple lock that is available in Apple Remote Desktop, its purpose is to allow for a greater customization in how the screen is locked, you can now have it locked on Sleep/Idle/Intervals and with the AppleScript support you can combine it with other applications like WiFiScriptor.</p></blockquote>
+
+<p>Nice and simple :)</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-07-22T23:01:00+10:00" pubdate data-updated="true">Jul 22<span>nd</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/mac/'>Mac</a>, <a class='category' href='/categories/tools/'>Tools</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/07/22/how-do-you-lock-your-screen-on-a-mac//page/11/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -634,181 +688,6 @@
 </div>
 	
 		<div class="comments"><a href="/2008/06/20/careful-when-copying-code-sent-from-an-im-client//page/11/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2008/06/19/farcry-finding-a-page-by-typename-somewhere-above-the-current-page/">
-		
-			FarCry - Finding a Page by &#8216;Typename&#8217; Somewhere Above the Current Page</a>
-	</h2>
-	<div class="entry-content">
-		<p><strong>Note:</strong> This is for FarCry v3 which is a bit old now but should work for v5 :)</p>
-
-<p>Sometimes when using FarCry I have a need to find an occurance of a page &#8220;type&#8221; which sits somewhere above where I currently am in the the navigation hierachy.</p>
-
-<p>Say I want to find the &#8220;VehicleType&#8221; page (which could be Car or Bike etc) above where I am in the navigation hierachy as listed below (when I&#8217;m on the &#8220;Models&#8221; page):</p>
-
-<ul>
-<li>Home
-
-<ul>
-<li>Vehicles
-
-<ul>
-<li>Bike</li>
-<li>Car
-
-<ul>
-<li>Sedans
-
-<ul>
-<li><strong><em>Models</em></strong></li>
-</ul>
-</li>
-<li>Wagons</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-
-<p>I want to know whether I&#8217;m in the &#8220;Car&#8221; or &#8220;Bike&#8221; part of the navigation tree and I want the content object of that page.</p>
-
-<p>There are a couple of ways to do this, using categories (tags) would be one way. Another is to simply look for an occurance of my type (VehicleType) in the tree <em>above</em> the current page you&#8217;re on.</p>
-
-<p>The following function will do just that, just pass in the <strong>request.navId</strong> of the page you&#8217;re on (Models), the <strong>typename</strong> and <strong>displayMethod</strong> you&#8217;re looking for (VehicleType).</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cffunction</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;getParentPageByTypename&quot;</span> <span class="nx">access</span><span class="o">=</span><span class="s2">&quot;public&quot;</span> <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="nx">returnType</span><span class="o">=</span><span class="s2">&quot;struct&quot;</span> <span class="nx">hint</span><span class="o">=</span><span class="s2">&quot;Returns the first tree occurance of a page &#39;typename&#39; based on an ancestor search.&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;objectId&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;string&quot;</span> <span class="nx">required</span><span class="o">=</span><span class="s2">&quot;true&quot;</span> <span class="nx">hint</span><span class="o">=</span><span class="s2">&quot;Current nav id of the page we want to search above in the tree&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;typename&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;string&quot;</span> <span class="nx">required</span><span class="o">=</span><span class="s2">&quot;true&quot;</span> <span class="nx">hint</span><span class="o">=</span><span class="s2">&quot;Which page typename are we looking for&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;displayMethod&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;string&quot;</span> <span class="nx">required</span><span class="o">=</span><span class="s2">&quot;true&quot;</span> <span class="nx">hint</span><span class="o">=</span><span class="s2">&quot;Which page display method are we looking for&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;nLevel&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;numeric&quot;</span> <span class="nx">required</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="k">default</span><span class="o">=</span><span class="s2">&quot;1&quot;</span> <span class="nx">hint</span><span class="o">=</span><span class="s2">&quot;Which nLevel to start looking in the ancestor query. Usually we can start at 3 or higher (1 being &#39;Root&#39; and 2 being &#39;Home&#39;)&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;oTree&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;any&quot;</span> <span class="nx">required</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="k">default</span><span class="o">=</span><span class="s2">&quot;#application.factory.oTree#&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'>  
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfscript</span><span class="o">&gt;</span>
-</span><span class='line'>  
-</span><span class='line'>      <span class="kd">var</span> <span class="nx">qAncestors</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
-</span><span class='line'>      <span class="kd">var</span> <span class="nx">lAncestorIds</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
-</span><span class='line'>      <span class="kd">var</span> <span class="nx">aLeafNodes</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
-</span><span class='line'>      <span class="kd">var</span> <span class="nx">iArrayLength</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'>      <span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'>      <span class="kd">var</span> <span class="nx">stCurrentSubject</span> <span class="o">=</span> <span class="nx">structNew</span><span class="p">();</span>   <span class="c1">//Default here in case we don&#39;t find anything, an empty struct will be returned</span>
-</span><span class='line'>  
-</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cfscript&gt;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c">&lt;!--</span><span class="o">-</span> <span class="nx">Get</span> <span class="nx">the</span> <span class="nx">ancestor</span> <span class="nx">nav</span> <span class="nx">nodes</span> <span class="k">for</span> <span class="nx">the</span> <span class="nx">object</span> <span class="nx">argument</span> <span class="o">---&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">qAncestors</span> <span class="o">=</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">oTree</span><span class="p">.</span><span class="nx">getAncestors</span><span class="p">(</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">objectId</span><span class="p">)</span> <span class="o">/&gt;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c">&lt;!--</span><span class="o">-</span> <span class="nx">Put</span> <span class="nx">the</span> <span class="nx">objectIds</span> <span class="nx">of</span> <span class="nx">the</span> <span class="nx">parent</span> <span class="nx">nav</span> <span class="nx">nodes</span> <span class="nx">into</span> <span class="nx">a</span> <span class="nx">list</span> <span class="nx">so</span> <span class="nx">we</span> <span class="nx">can</span> <span class="nx">retrieve</span> <span class="nx">their</span> <span class="s1">&#39;leaf&#39;</span> <span class="nx">values</span><span class="p">.</span> <span class="nx">Using</span> <span class="nx">nLevel</span> <span class="nx">we</span> <span class="nx">can</span> <span class="nx">skip</span> <span class="nx">nodes</span> <span class="nx">we</span> <span class="nx">know</span> <span class="nx">we</span><span class="s1">&#39;re not interested in ---&gt;</span>
-</span><span class='line'><span class="s1"> &lt;cfloop query=&quot;qAncestors&quot; startrow=&quot;#arguments.nLevel#&quot;&gt;</span>
-</span><span class='line'><span class="s1">     &lt;cfset lAncestorIds = listAppend(lAncestorIds, qAncestors.objectId) /&gt;</span>
-</span><span class='line'><span class="s1"> &lt;/cfloop&gt;</span>
-</span><span class='line'><span class="s1"> </span>
-</span><span class='line'><span class="s1"> &lt;!--- Retrieve an array of leaf node information from a list of ancestor nav Id&#39;</span><span class="nx">s</span> <span class="o">---&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">aLeafNodes</span> <span class="o">=</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">oTree</span><span class="p">.</span><span class="nx">getLeaves</span><span class="p">(</span><span class="nx">lAncestorIds</span><span class="p">)</span><span class="o">&gt;</span>     
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">iArrayLength</span> <span class="o">=</span> <span class="nx">arrayLen</span><span class="p">(</span><span class="nx">aLeafNodes</span><span class="p">)</span> <span class="o">/&gt;</span>
-</span><span class='line'>  
-</span><span class='line'>  <span class="c">&lt;!--</span><span class="o">-</span> <span class="nx">Loop</span> <span class="nx">over</span> <span class="nx">the</span> <span class="nx">leaf</span> <span class="nx">nodes</span> <span class="nx">returned</span> <span class="nx">and</span> <span class="nx">look</span> <span class="k">for</span> <span class="nx">the</span> <span class="nx">typename</span> <span class="nx">we</span><span class="err">&#39;</span><span class="nx">re</span> <span class="nx">after</span> <span class="o">---&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfloop</span> <span class="nx">from</span><span class="o">=</span><span class="s2">&quot;1&quot;</span> <span class="nx">to</span><span class="o">=</span><span class="s2">&quot;#iArrayLength#&quot;</span> <span class="nx">index</span><span class="o">=</span><span class="s2">&quot;i&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">aLeafNodes</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="s2">&quot;typename&quot;</span><span class="p">]</span> <span class="nx">EQ</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">typename</span> <span class="nx">AND</span> <span class="nx">aLeafNodes</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="s2">&quot;displayMethod&quot;</span><span class="p">]</span> <span class="nx">EQ</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">displayMethod</span><span class="o">&gt;</span>
-</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">stCurrentSubject</span> <span class="o">=</span> <span class="nx">aLeafNodes</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">/&gt;</span>
-</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfbreak</span> <span class="o">/&gt;</span>
-</span><span class='line'>      <span class="o">&lt;</span><span class="err">/cfif&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cfloop&gt;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfreturn</span> <span class="nx">stCurrentSubject</span> <span class="o">/&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/cffunction&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>For example:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">stVehicleType</span> <span class="o">=</span> <span class="nx">getParentPageByTypename</span><span class="p">(</span><span class="nx">objectId</span><span class="o">=</span><span class="nx">request</span><span class="p">.</span><span class="nx">navId</span><span class="p">,</span> <span class="nx">typeName</span><span class="o">=</span><span class="s2">&quot;vehicleType&quot;</span><span class="p">,</span> <span class="nx">displayMethod</span><span class="o">=</span><span class="s2">&quot;displayPageStandard&quot;</span><span class="p">,</span> <span class="nx">nLevel</span><span class="o">=</span><span class="mi">3</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Note that the &#8220;nLevel&#8221; argument in the function allows you to skip the ancestor nodes you know you&#8217;re not interested in such as &#8220;Root&#8221; and &#8220;Home&#8221;.</p>
-
-<p>Hope this helps some people.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-06-19T10:47:06+10:00" pubdate data-updated="true">Jun 19<span>th</span>, 2008</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/farcry/'>Farcry</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2008/06/19/farcry-finding-a-page-by-typename-somewhere-above-the-current-page//page/11/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 
