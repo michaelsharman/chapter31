@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Ran into an interesting problem today doing something quite simple. Basically all I was doing was posting xml data to a URL, but I kept getting a &hellip;">
+	<meta name="description" content="Previously I had a way of detecting whether page requests were being made via ssl but today I came across a scenario where this doesn&#8217;t work. &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,119 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2010/03/03/detecting-https-across-railo-and-coldfusion-server/">
+		
+			Detecting Https Across Railo and ColdFusion Server</a>
+	</h2>
+	<div class="entry-content">
+		<p>Previously I had a way of <a href="http://www.chapter31.com/2007/07/21/detecting-and-redirecting-http-to-https/">detecting whether page requests were being made via ssl</a> but today I came across a scenario where this doesn&#8217;t work. Let me explain&#8230;</p>
+
+<p>Right now we&#8217;re looking at developing across different ColdFusion engines, &#8220;ColdFusion&#8221; of course but also <a href="http://www.getrailo.com/">&#8220;Railo&#8221;</a>. One of the applications we had detected whether a request was being made securely (https) and if it wasn&#8217;t we turned off session management for security reasons. The basic code looked like the following snippet:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">oRequest</span> <span class="o">=</span> <span class="nx">getPageContext</span><span class="p">().</span><span class="nx">getRequest</span><span class="p">();</span>         
+</span><span class='line'><span class="k">if</span> <span class="p">(</span><span class="nx">oRequest</span><span class="p">.</span><span class="nx">isSecure</span><span class="p">())</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="k">this</span><span class="p">.</span><span class="nx">sessionManagement</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">this</span><span class="p">.</span><span class="nx">sessionTimeout</span> <span class="o">=</span> <span class="nx">createTimeSpan</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+</span><span class='line'>  <span class="k">this</span><span class="p">.</span><span class="nx">setClientCookies</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="k">else</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="k">this</span><span class="p">.</span><span class="nx">sessionManagement</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">this</span><span class="p">.</span><span class="nx">setClientCookies</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This was working all fine and dandy for ColdFusion Server, but was failing when we went to Railo (at least in the way we configure Railo). The reason was that we proxy page requests on Railo through Apache to Tomcat. This proxy is done over http regardless of the actual client request to the server. I guess the reason for this is that Apache to Tomcat is considered part of your secure (server) network. What was happening was that isSecure() was coming back false, because of this proxy request.</p>
+
+<p><a href="http://www.lynchconsulting.com.au">Mark</a> came up with a cool solution for this. We simply add a custom header in the Apache conf file.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">RequestHeader</span> <span class="nx">set</span> <span class="nx">https</span> <span class="nx">on</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>All this does is set a value into the header which we can pickup via the CGI scope, i.e. CGI.https</p>
+
+<p>Now this key (https) already exists on ColdFusion server and will be blank for http requests and &#8220;on&#8221; for https requests. This is the reason we set the custom header value to &#8220;on&#8221; in the Railo vhost, so our application code is easily compatible across the two ColdFusion engines.</p>
+
+<p>So now we just have a simple function to detect ssl requests:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cffunction</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;isRequestSecure&quot;</span> <span class="nx">access</span><span class="o">=</span><span class="s2">&quot;public&quot;</span> <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="nx">returnType</span><span class="o">=</span><span class="s2">&quot;boolean&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfset</span> <span class="kd">var</span> <span class="nx">secure</span> <span class="o">=</span> <span class="kc">false</span><span class="o">&gt;</span>
+</span><span class='line'>      
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">cgi</span><span class="p">.</span><span class="nx">https</span> <span class="nx">EQ</span> <span class="s2">&quot;on&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">secure</span> <span class="o">=</span> <span class="kc">true</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cfif&gt;</span>
+</span><span class='line'>      
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfreturn</span> <span class="nx">secure</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cffunction&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now we can easily call isRequestSecure() which will be either true or false. Nice :)</p>
+
+<p>Don&#8217;t forget that the CGI scope is kind of &#8220;magic&#8221;, in that we won&#8217;t ever need to param a key in that struct (like CGI.https).</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-03-03T14:14:56+11:00" pubdate data-updated="true">Mar 3<span>rd</span>, 2010</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/railo/'>Railo</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2010/03/03/detecting-https-across-railo-and-coldfusion-server//page/7/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -741,56 +854,6 @@ It enables us to both override the default farcry request scope variables and al
 </div>
 	
 		<div class="comments"><a href="/2009/05/29/setting-the-sort-order-for-custom-admin-items//page/7/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2009/05/29/changing-the-sort-order-of-farcry-categorieskeywords/">
-		
-			Changing the Sort Order of FarCry Categories/keywords</a>
-	</h2>
-	<div class="entry-content">
-		<p>Categorising content with keywords (or &#8220;tags&#8221;) is a well known concept these days and it&#8217;s good to know that <a href="http://farcrycms.org/">FarCry</a> has had this ability long before it became cool!</p>
-
-<p>I&#8217;m using categories to group content for a custom type but I needed to allow the editors to sort these categories and not rely on the alphabetical order of the category etc.</p>
-
-<p>Luckily in FarCry categories use the nested tree object model (exactly like the navigation tree) so sorting is absolutely possible. But has it been built into the UI?</p>
-
-<p>I first went to the original categories view in the webtop (Manage Keywords) to see if the UI allowed for sorting. It didn&#8217;t. But then I went to the flex equivalent &#8220;Manage Keywords (flex)&#8221; and was pleased to see that you can simply drag/drop your categories around much like you can in the &#8220;Site&#8221; tab for navigation elements.</p>
-
-<p>This funtionality is available in at least FarCry 5.1.4</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-05-29T09:23:50+10:00" pubdate data-updated="true">May 29<span>th</span>, 2009</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/farcry/'>Farcry</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2009/05/29/changing-the-sort-order-of-farcry-categorieskeywords//page/7/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

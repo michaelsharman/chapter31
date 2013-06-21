@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="There was a recent thread on the mach-ii mailing list where a user wanted to detect whether a request was being made via http or https. This is &hellip;">
+	<meta name="description" content="I&#8217;m getting some new production servers setup at the moment and I have a single ColdFusion application ready to go on one of them. Part of the &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,80 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2007/08/03/cfmail-failto-only-accepts-a-single-address/">
+		
+			<cfmail> Failto Only Accepts a Single Address?</a>
+	</h2>
+	<div class="entry-content">
+		<p>I&#8217;m getting some new production servers setup at the moment and I have a single ColdFusion application ready to go on one of them.</p>
+
+<p>Part of the setup was of course getting an SMTP server going, to test this I used a simple ColdFusion script with a cfmail tag. I was receiving the email successfully so all was good&#8230;until I tested sending emails as part of my application flow, no email :(</p>
+
+<p>Basically I had something in my project which I didn&#8217;t have in my test script, that being <em>multiple failto</em> recipients.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfmail</span> <span class="nx">to</span><span class="o">=</span><span class="s2">&quot;#to#&quot;</span> <span class="nx">from</span><span class="o">=</span><span class="s2">&quot;#from#&quot;</span> <span class="nx">subject</span><span class="o">=</span><span class="s2">&quot;my subject&quot;</span> <span class="nx">server</span><span class="o">=</span><span class="s2">&quot;#server#&quot;</span> <span class="nx">failto</span><span class="o">=</span><span class="s2">&quot;sample1@sample.com,sample2@sample.com&quot;</span><span class="o">&gt;</span>
+</span><span class='line'><span class="nx">message</span> <span class="nx">body</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfmail&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note the multiple &#8216;failto&#8217; recipients: failto=&#8221;sample1@sample.com,sample2@sample.com&#8221;</p>
+
+<p>No emails were being sent with the above code and it wasn&#8217;t until I removed the 2nd failto address that I started getting emails.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">failto</span><span class="o">=</span><span class="s2">&quot;sample1@sample.com&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This seems strange as I can have many to or from recipients, just not failto! The <a href="http://livedocs.adobe.com/coldfusion/7/htmldocs/wwhelp/wwhimpl/common/html/wwhelp.htm?context=ColdFusion_Documentation&amp;file=00000297.htm">docs</a> say:</p>
+
+<blockquote><p>&#8220;Address to which mailing systems should send delivery failure notifications. Sets the mail envelope reverse-path value.&#8221;</p></blockquote>
+
+<p>This doesn&#8217;t seem to say either way to me whether you can only have 1 or multiple addresses here.</p>
+
+<p>I tested this on both ColdFusion 7.0.2 and ColdFusion 8 Standard versions running on Windows Server SMTP.</p>
+
+<p>Has anyone successfully sent email with <cfmail> with multiple failto&#8217;s?</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-08-03T11:50:50+10:00" pubdate data-updated="true">Aug 3<span>rd</span>, 2007</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2007/08/03/cfmail-failto-only-accepts-a-single-address//page/18/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -901,115 +975,6 @@ myCustom.cfc
 </div>
 	
 		<div class="comments"><a href="/2007/04/11/combining-update-and-insert-sql-logic//page/18/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2007/04/10/cfquery-result-attribute-caveat/">
-		
-			Cfquery &#8216;Result&#8217; Attribute Caveat</a>
-	</h2>
-	<div class="entry-content">
-		<p>A great feature of <cfquery> which was introduced in CFMX7 is the addition of the &#8216;result&#8217; attribute. When used, a developer can access a Structure of query result variables including the following keys:</p>
-
-<ul>
-<li>Cache</li>
-<li>ColumnList</li>
-<li>ExecutionTime</li>
-<li>RecordCount</li>
-<li>SQL</li>
-<li>SQLParameters</li>
-</ul>
-
-
-<p>You can read more about the &#8216;result&#8217; attribute in a <a href="http://www.chapter31.com/2006/03/11/new-attribute-and-object-variable-in-for-cfmx7/">previous post</a> or at <a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/wwhelp/wwhimpl/common/html/wwhelp.htm?context=ColdFusion_Documentation&amp;file=00000316.htm">Live docs</a>.</p>
-
-<p>One thing I&#8217;ve come across is that the structure returned (by using the result attribute) is created <em>where</em> the query is executed and the value of &#8216;result&#8217; references this struct in the local variable scope.</p>
-
-<p>So an inline query followed by a reference to the &#8216;result&#8217; struct would run fine:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfquery</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;qData&quot;</span> <span class="nx">dsn</span><span class="o">=</span><span class="s2">&quot;myDSN&quot;</span> <span class="nx">result</span><span class="o">=</span><span class="s2">&quot;stResult&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="nx">SELECT</span>  <span class="o">*</span>
-</span><span class='line'>  <span class="nx">FROM</span>    <span class="nx">MyTable</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/cfquery&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">cfoutput</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="err">#</span><span class="nx">stResult</span><span class="p">.</span><span class="nx">sql</span><span class="err">#</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/cfoutput&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>But a problem exists when you have a query in a Component that is being returned by a method call. In this case the structure won&#8217;t exist in the calling templates &#8216;local&#8217; scope and an exception will be thrown.</p>
-
-<p><img src="/images/uploads/2007/04/stresulterrors.jpg" alt="stResult exception" /></p>
-
-<p>The simple way around this is to declare the &#8216;result&#8217; attribute in the request scope:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfquery</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;qData&quot;</span> <span class="nx">dsn</span><span class="o">=</span><span class="s2">&quot;myDSN&quot;</span> <span class="nx">result</span><span class="o">=</span><span class="s2">&quot;request.stResult&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="nx">SELECT</span>  <span class="o">*</span>
-</span><span class='line'>  <span class="nx">FROM</span>    <span class="nx">MyTable</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/cfquery&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Now you can reference the structure inside the calling template using the request scope:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfoutput</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="err">#</span><span class="nx">request</span><span class="p">.</span><span class="nx">stResult</span><span class="p">.</span><span class="nx">sql</span><span class="err">#</span>
-</span><span class='line'>  <span class="err">#</span><span class="nx">request</span><span class="p">.</span><span class="nx">stResult</span><span class="p">.</span><span class="nx">cached</span>
-</span><span class='line'>  <span class="nx">etc</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/cfoutput&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2007-04-10T13:40:26+10:00" pubdate data-updated="true">Apr 10<span>th</span>, 2007</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2007/04/10/cfquery-result-attribute-caveat//page/18/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Peter Freitag has a great post on &#8216;20 ways to secure your Apache Configuration&#8217; Seeing as Apache is a rather popular web server, this is &hellip;">
+	<meta name="description" content="bitesizestandards have a nice article on &#8216;semantic anchors&#8217; which are used to link to different areas of the current page you are &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,80 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2006/07/17/33/">
+		
+			Semantic Named Anchors</a>
+	</h2>
+	<div class="entry-content">
+		<p><a href="http://bitesizestandards.com/">bitesizestandards</a> have a nice article on &#8216;semantic anchors&#8217; which are used to link to different areas of the current page you are viewing.</p>
+
+<p>The usual way we all do this is with a named anchor as follows, &#8216;Name&#8217; a content area on your page:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;a name="myContent"&gt;&lt;/a&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Add the link to that content area</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;a href="#myContent"&gt;Go to myContent&lt;/a&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The problem is that this isn&#8217;t semantic and it&#8217;s not ideal to have empty &lt;a href&gt; elements on your page (&lt;a name=&#8221;&#8220;&gt;). A nice way around this? Use id&#8217;s instead :)</p>
+
+<p>So now you can do this instead:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;div id="myContent"&gt;
+</span><span class='line'>...
+</span><span class='line'>&lt;/div&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Much nicer, cleaner and semantic as well! You can link to your content the normal way:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;a href="#myContent"&gt;Go to myContent&lt;/a&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="http://bitesizestandards.com/bites/cleaning-up-code-with-semantic-anchors">View the full article here</a></p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-07-17T18:22:23+10:00" pubdate data-updated="true">Jul 17<span>th</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/x-html/'>(X)HTML</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2006/07/17/33//page/25/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -680,67 +754,6 @@
 </div>
 	
 		<div class="comments"><a href="/2006/03/29/how-do-i-make-sure-a-string-is-safe-to-use-with-javascript//page/25/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2006/03/16/cfstoredproc-vs-cfquery/">
-		
-			Cfstoredproc vs Cfquery</a>
-	</h2>
-	<div class="entry-content">
-		<p>There are of course pros and cons to using each method to perform CRUD operations on a database.</p>
-
-<p><strong>cfstoredproc Pros:</strong></p>
-
-<ul>
-<li>With stored procedures you can control security in the database as well as the web pages.</li>
-<li>Transactions are handled at the database level, stored procedures are ideal here.</li>
-<li>Stored procedures provide greater performance, because the execution plan for the sql doesn&#8217;t have to be recreated and if a page has multiple calls to the database, you can combine them all in one stored procedure, meaning only one trip to and back from the db.</li>
-<li>Putting all of your sql in stored procedures provides centralization of your database code, so if your table structure or business rules change, all of your sql is located in your database stored procedures instead of distributed throughout your application code.</li>
-</ul>
-
-
-<p><strong>cfstoredproc Cons</strong></p>
-
-<ul>
-<li><del>You can have ColdFusion cache the query - which it doesn&#8217;t do with stored procedures.</del> <strong>Update Nov 2006</strong>: you can actually cache stored procedures! <a href="http://www.chapter31.com/2006/11/08/caching-stored-procedures/">See here for more info</a></li>
-<li>It often seems a waste to create a stored proc for a simple select statement.</li>
-<li>cfquery gives you maximum flexibility in terms of creating the sql for the query. there are many ways to make stored procedures &#8220;dynamic&#8221;, such as providing parameters for a where clause, the fields used in an order by clause, etc., but many of these sql solutions are clunky (involving multiple CASE statements) or impossible (dynamically assigning the table to do the query on).</li>
-</ul>
-
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2006-03-16T11:30:18+11:00" pubdate data-updated="true">Mar 16<span>th</span>, 2006</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2006/03/16/cfstoredproc-vs-cfquery//page/25/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

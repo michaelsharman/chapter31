@@ -7,8 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="ColdFusion developers have quite a few options when wanting to access full help documentation for ColdFusion 8 including: Livedocs
-CFQuickdocs &hellip;">
+	<meta name="description" content="Selecting random query results is something we often need to do, whether it be a single row or a small record set. You may want to display a random &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -82,6 +81,145 @@ CFQuickdocs &hellip;">
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/03/21/returning-random-results-with-mysql/">
+		
+			Returning Random Results With MySQL</a>
+	</h2>
+	<div class="entry-content">
+		<p>Selecting random query results is something we often need to do, whether it be a single row or a small record set. You may want to display a random list of &#8220;tips&#8221; or &#8220;facts&#8221;, a random &#8220;user&#8221; or &#8220;related product&#8221; etc.</p>
+
+<p>The simplest and most common solution you find uses the MySQL <a href="http://dev.mysql.com/doc/refman/5.0/en/mathematical-functions.html#function_rand">rand()</a> function (which can be used to create an integer from 0 to 1.0)</p>
+
+<h3>Solution 1</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">SELECT</span>     <span class="p">[...]</span>
+</span><span class='line'><span class="nx">FROM</span>      <span class="nx">Users</span>
+</span><span class='line'><span class="nx">ORDER</span> <span class="nx">BY</span>  <span class="nx">rand</span><span class="p">()</span>
+</span><span class='line'><span class="nx">LIMIT</span>     <span class="mi">1</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will return 1 random record from the &#8216;Users&#8217; table. Sometimes however simplest is not the best, this can often one of those times depending on the table size.</p>
+
+<p>The reason you won&#8217;t want to do this is because once the table grows larger the operation will be very slow as MySQL will have to process ALL the records in the table (performing a full table scan), order them randomly and then return the first row of the ordered result. This is of course quite intensive the larger your table size and really not a recommended practise for anything other than small lookup tables.</p>
+
+<p>Another often used solution (where the primary key is an auto-incrementing integer) is to use 2 queries, the first gets the min() and max() &#8216;ID&#8217; values and the second returns a recordset using a random number (between the min(Id) and max(Id)) in the WHERE clause.</p>
+
+<h3>Solution 2</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">SELECT</span> <span class="nx">min</span><span class="p">(</span><span class="nx">Id</span><span class="p">)</span> <span class="nx">as</span> <span class="nx">minId</span><span class="p">,</span> <span class="nx">max</span><span class="p">(</span><span class="nx">Id</span><span class="p">)</span> <span class="nx">as</span> <span class="nx">maxId</span>
+</span><span class='line'><span class="nx">FROM</span>  <span class="nx">Users</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">SELECT</span>    <span class="o">*</span>
+</span><span class='line'><span class="nx">FROM</span>  <span class="nx">Users</span>
+</span><span class='line'><span class="nx">WHERE</span>     <span class="nx">Id</span> <span class="o">&gt;=</span> <span class="err">#</span><span class="nx">randRange</span><span class="p">(</span><span class="nx">minId</span><span class="p">,</span> <span class="nx">maxId</span><span class="p">)</span><span class="err">#</span>
+</span><span class='line'><span class="nx">LIMIT</span>     <span class="mi">0</span><span class="p">,</span>   <span class="mi">1</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can increase the LIMIT to return more rows, but why might you not use this one? Well it uses 2 queries for a start (you could actually put this in a sub query but this method won&#8217;t work if you want more than 1 result returned), but this mightn&#8217;t be so bad. Another constraint is that it assumes an integer primary key which you <a href="http://www.chapter31.com/2007/01/30/coldfusion-uuids-and-mssql-newid/">may not be using</a>, meaning the randRange() won&#8217;t work. Also what happens if you don&#8217;t have sequential &#8216;Ids&#8217;? You may have deleted some rows for example which could render this solution invalid.</p>
+
+<p>Yet another way is to use the OFFSET argument to the LIMIT clause to get a random starting point to return your results from. First we query to get a random row number, then we query again using that random number as the OFFSET:</p>
+
+<h3>Solution 3</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">SELECT</span> <span class="nx">floor</span><span class="p">(</span><span class="nx">rand</span><span class="p">()</span> <span class="o">*</span> <span class="nx">count</span><span class="p">(</span><span class="o">*</span><span class="p">))</span> <span class="nx">AS</span> <span class="nx">theOffset</span>
+</span><span class='line'><span class="nx">FROM</span>  <span class="nx">Users</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//Then use that random &#39;seed&#39;</span>
+</span><span class='line'><span class="nx">SELECT</span>    <span class="o">*</span>
+</span><span class='line'><span class="nx">FROM</span>  <span class="nx">Users</span>
+</span><span class='line'><span class="nx">LIMIT</span>     <span class="err">#</span><span class="nx">theOffset</span><span class="err">#</span><span class="p">,</span> <span class="mi">1</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This one (again although it has 2 queries) works great, but if you want more than 1 row returned (by increasing the second argument in the LIMIT clause) only the <em>starting point</em> will be random, you will then get the next <em>x</em> rows returned <em>in order</em> which might not be what you are after.</p>
+
+<p>Another issue with this option is if the starting row returned (the OFFSET) from the initial query is too high than the amount of records you want returned, i.e. if there are 1000 records and the OFFSET value is 998 and you want 10 records&#8230;you&#8217;re not going to get 10 records, only 2!</p>
+
+<h2>Benchmarks</h2>
+
+<p>I wanted to see just how these solutions performed using 2 different tables, one with 56,000 rows and one with 150 rows (I&#8217;m only testing with solution 1 and 3):</p>
+
+<p>First with 56,000 rows:</p>
+
+<p>Solution 1 - average 4021ms</p>
+
+<p><img src="/images/uploads/2008/03/solution1.jpg" alt="mysql_solution1" /></p>
+
+<p>Solution 3 - average 32.1ms</p>
+
+<p><img src="/images/uploads/2008/03/solution3.jpg" alt="mysql_solution3" /></p>
+
+<p>Second with only 150 rows:</p>
+
+<p>Solution 1 - average 13.25ms</p>
+
+<p><img src="/images/uploads/2008/03/solution1_1501.jpg" alt="solution1_150_2" /></p>
+
+<p>Solution 3 - average 1.55ms</p>
+
+<p><img src="/images/uploads/2008/03/solution3_150.jpg" alt="solution3_150" /></p>
+
+<p>So when you only want 1 random row returned the best bet by far is solution 3. I ran the same test returning 10 rows and got very similar results for all 4 tests, you just need to watch for the case where the OFFSET is too high (check that #recordCount# - #theOffset# > 10 etc) and that only the &#8216;seed&#8217; row is random.</p>
+
+<p>Of course if you want 10 random rows from a small table (around 150) then solution 1 will perform fine.</p>
+
+<p>There are many other ways to achieve this <a href="http://www.chapter31.com/2008/03/21/random-database-results-with-coldfusion/">particularly when using a server side language like ColdFusion</a> but hopefully this sparks some purely MySQL ideas.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-03-21T14:20:13+11:00" pubdate data-updated="true">Mar 21<span>st</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/databases/'>Databases</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/03/21/returning-random-results-with-mysql//page/14/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -709,190 +847,6 @@ CFQuickdocs &hellip;">
 </div>
 	
 		<div class="comments"><a href="/2008/02/28/changing-the-cfeclipse-tag-insight-delay-time//page/14/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2008/02/26/code-tip-how-to-structure-your-queryparams/">
-		
-			Code Tip: How to Structure Your Queryparams</a>
-	</h2>
-	<div class="entry-content">
-		<p>If I were a betting man I&#8217;d bet a LOT of money (and perhaps even the house!) that you&#8217;ve done this before.</p>
-
-<p>Try to spot the error in the query below:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfquery</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;qCreate&quot;</span> <span class="nx">datasource</span><span class="o">=</span><span class="s2">&quot;#getDSN()#&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="nx">INSERT</span> <span class="nx">INTO</span> <span class="nx">myTable</span>
-</span><span class='line'>      <span class="p">(</span>
-</span><span class='line'>          <span class="nx">ObjectId</span><span class="p">,</span>
-</span><span class='line'>          <span class="nx">Country</span><span class="p">,</span>
-</span><span class='line'>          <span class="nx">DateOfBirth</span><span class="p">,</span>
-</span><span class='line'>          <span class="nx">Email</span><span class="p">,</span>
-</span><span class='line'>          <span class="nx">FirstName</span><span class="p">,</span>
-</span><span class='line'>          <span class="nx">Gender</span><span class="p">,</span>
-</span><span class='line'>          <span class="nx">LastName</span><span class="p">,</span>
-</span><span class='line'>          <span class="nx">MainSchoolId</span><span class="p">,</span>
-</span><span class='line'>          <span class="nx">PhoneHome</span><span class="p">,</span>
-</span><span class='line'>          <span class="nx">PhoneMobile</span><span class="p">,</span>
-</span><span class='line'>          <span class="nx">PostCode</span><span class="p">,</span>
-</span><span class='line'>          <span class="nx">State</span><span class="p">,</span>
-</span><span class='line'>          <span class="nx">Street</span><span class="p">,</span>
-</span><span class='line'>          <span class="nx">StudentId</span><span class="p">,</span>
-</span><span class='line'>          <span class="nx">StudentPassword</span><span class="p">,</span>
-</span><span class='line'>          <span class="nx">StudentPodId</span><span class="p">,</span>
-</span><span class='line'>          <span class="nx">Suburb</span>
-</span><span class='line'>      <span class="p">)</span>
-</span><span class='line'>  <span class="nx">VALUES</span>
-</span><span class='line'>      <span class="p">(</span>
-</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#createUUID()#&quot;</span> <span class="o">/&gt;</span><span class="p">,</span>
-</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;country&#39;)#&quot;</span> <span class="o">/&gt;</span><span class="p">,</span>
-</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_date&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#createODBCDate(arguments.oUser.get(&#39;dateOfBirth&#39;))#&quot;</span> <span class="o">/&gt;</span><span class="p">,</span>
-</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;email&#39;)#&quot;</span> <span class="o">/&gt;</span><span class="p">,</span>
-</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;firstName&#39;)#&quot;</span> <span class="o">/&gt;</span><span class="p">,</span>
-</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;gender&#39;)#&quot;</span> <span class="o">/&gt;</span><span class="p">,</span>
-</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;lastName&#39;)#&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_integer&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;mainSchoolId&#39;)#&quot;</span> <span class="o">/&gt;</span><span class="p">,</span>
-</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;phoneHome&#39;)#&quot;</span> <span class="o">/&gt;</span><span class="p">,</span>
-</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;phoneMobile&#39;)#&quot;</span> <span class="o">/&gt;</span><span class="p">,</span>
-</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;postCode&#39;)#&quot;</span> <span class="o">/&gt;</span><span class="p">,</span>
-</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;state&#39;)#&quot;</span> <span class="o">/&gt;</span><span class="p">,</span>
-</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;street&#39;)#&quot;</span> <span class="o">/&gt;</span><span class="p">,</span>
-</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_integer&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.getStudentId()#&quot;</span> <span class="o">/&gt;</span><span class="p">,</span>
-</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#hash(arguments.oUser.get(&#39;studentPassword&#39;))#&quot;</span> <span class="o">/&gt;</span><span class="p">,</span>
-</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#createUUID()#&quot;</span> <span class="o">/&gt;</span><span class="p">,</span>
-</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;suburb&#39;)#&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'>      <span class="p">)</span>            
-</span><span class='line'><span class="o">&lt;</span><span class="err">/cfquery&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Spot it? It&#8217;s one of those &#8220;Where&#8217;s Wally&#8221; errors where some people spot it straight away and some people (like me today) spend FAR too long searching for what went wrong.</p>
-
-<p>Ok&#8230;if you haven&#8217;t spotted it there is a missing comma in the SQL (after the 7th argument &#8216;lastName&#8217;).</p>
-
-<p>Even though in hindsight the error returned from MySQL was telling me exactly what was wrong:</p>
-
-<blockquote><p>&#8220;You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &#8216;MainSchoolId = 8459, PhoneHome = &#8221;, PhoneMobile = &#8221;, Post&#8217; at line 9&#8221;</p></blockquote>
-
-<p>Still took me longer than 5 minutes to debug. So&#8230;</p>
-
-<p>A new rule for me is going back to what I used to do all the time for this exact reason (no idea why I didn&#8217;t in this case).</p>
-
-<p>Putting the comma at the START of any argument like this:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#createUUID()#&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'><span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;country&#39;)#&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'><span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_date&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#createODBCDate(arguments.oUser.get(&#39;dateOfBirth&#39;))#&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'><span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;email&#39;)#&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'><span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;firstName&#39;)#&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'><span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;gender&#39;)#&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'><span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;lastName&#39;)#&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'><span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_integer&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;mainSchoolId&#39;)#&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'><span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;phoneHome&#39;)#&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'><span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;phoneMobile&#39;)#&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'><span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;postCode&#39;)#&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'><span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;state&#39;)#&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'><span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;street&#39;)#&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'><span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_integer&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.getStudentId()#&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'><span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#hash(arguments.oUser.get(&#39;studentPassword&#39;))#&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'><span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#createUUID()#&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'><span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.oUser.get(&#39;suburb&#39;)#&quot;</span> <span class="o">/&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Now it&#8217;s EASY to spot this all too common syntax error, especially if you&#8217;re copying and pasting from somewhere else :)</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-02-26T15:16:49+11:00" pubdate data-updated="true">Feb 26<span>th</span>, 2008</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2008/02/26/code-tip-how-to-structure-your-queryparams//page/14/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

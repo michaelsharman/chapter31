@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="I experienced some strange behaviour today when building a site which was using jQuery and SWFObject. Our Flash files were loading ok and 99% of the &hellip;">
+	<meta name="description" content="As most ColdFusion developers know, you cannot reference &#8216;application&#8217; scoped variables directly in Application.cfc&#8217;s onSessionEnd &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,103 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2007/09/28/caveat-when-calling-components-from-onsessionend/">
+		
+			Caveat When Calling Components From onSessionEnd()</a>
+	</h2>
+	<div class="entry-content">
+		<p>As most ColdFusion developers know, you cannot reference &#8216;application&#8217; scoped variables directly in Application.cfc&#8217;s <em>onSessionEnd()</em> method. Instead you need to use the <em>ApplicationScope</em> parameter. <a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=AppEvents_11.html">Notes from the docs</a>:</p>
+
+<blockquote><p>You must use the <em>ApplicationScope</em> parameter to access the Application scope. You cannot reference the Application scope directly; for example, use Arguments.ApplicationScope.myVariable, not Application.myVariable. Use a named lock when you reference variables in the Application scope, as shown in the example.</p></blockquote>
+
+<p>I ran into this today when working on some code a colleague wrote which was firing a method in an application scoped component, the code was as follows:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cffunction</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;onSessionEnd&quot;</span> <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="nx">returnType</span><span class="o">=</span><span class="s2">&quot;void&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;SessionScope&quot;</span> <span class="nx">required</span><span class="o">=</span><span class="s2">&quot;true&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;AppScope&quot;</span> <span class="nx">required</span><span class="o">=</span><span class="s2">&quot;true&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfscript</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="nx">arguments</span><span class="p">.</span><span class="nx">AppScope</span><span class="p">.</span><span class="nx">myCFC</span><span class="p">(</span><span class="nx">arg</span><span class="o">=</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">SessionScope</span><span class="p">.</span><span class="nx">arg</span><span class="p">);</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cfscript&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cffunction&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Obviously this method is being executed when the users session has expired. The use of <em>arguments.AppScope</em> means I can access the &#8216;myCFC&#8217; component which is stored in application scope.</p>
+
+<p>Now to the actual problem&#8230;inside the cfc was a method which was logging information in the database, but the <em>datasource</em> value was coming from application scope.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfquery</span> <span class="nx">datasource</span><span class="o">=</span><span class="s2">&quot;#application.dsn#&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;qInsert&quot;</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Obviously arguments should be passed to components instead of being accessed directly, but that&#8217;s another story :)</p>
+
+<p>I would have thought this would work fine, but no luck. It was a little bit of a pain to debug as you can&#8217;t see the results of onSessionEnd() being run.</p>
+
+<p>The fix was simply to pass in the required variables as arguments to the method:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cffunction</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;onSessionEnd&quot;</span> <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="nx">returnType</span><span class="o">=</span><span class="s2">&quot;void&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;SessionScope&quot;</span> <span class="nx">required</span><span class="o">=</span><span class="s2">&quot;true&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;AppScope&quot;</span> <span class="nx">required</span><span class="o">=</span><span class="s2">&quot;true&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfscript</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="nx">arguments</span><span class="p">.</span><span class="nx">AppScope</span><span class="p">.</span><span class="nx">myCFC</span><span class="p">(</span><span class="nx">arg</span><span class="o">=</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">SessionScope</span><span class="p">.</span><span class="nx">arg</span><span class="p">,</span><span class="nx">dsn</span><span class="o">=</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">Appscope</span><span class="p">.</span><span class="nx">dsn</span><span class="p">);</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cfscript&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cffunction&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Either way, be careful when doing this particularly if the method is being called from multiple application points and one of those could be <em>onSessionEnd()</em>.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-09-28T13:19:55+10:00" pubdate data-updated="true">Sep 28<span>th</span>, 2007</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2007/09/28/caveat-when-calling-components-from-onsessionend//page/17/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -694,80 +791,6 @@ Trace</p></blockquote>
 </div>
 	
 		<div class="comments"><a href="/2007/08/12/facebook-homepage-source-code-found//page/17/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2007/08/03/cfmail-failto-only-accepts-a-single-address/">
-		
-			<cfmail> Failto Only Accepts a Single Address?</a>
-	</h2>
-	<div class="entry-content">
-		<p>I&#8217;m getting some new production servers setup at the moment and I have a single ColdFusion application ready to go on one of them.</p>
-
-<p>Part of the setup was of course getting an SMTP server going, to test this I used a simple ColdFusion script with a cfmail tag. I was receiving the email successfully so all was good&#8230;until I tested sending emails as part of my application flow, no email :(</p>
-
-<p>Basically I had something in my project which I didn&#8217;t have in my test script, that being <em>multiple failto</em> recipients.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfmail</span> <span class="nx">to</span><span class="o">=</span><span class="s2">&quot;#to#&quot;</span> <span class="nx">from</span><span class="o">=</span><span class="s2">&quot;#from#&quot;</span> <span class="nx">subject</span><span class="o">=</span><span class="s2">&quot;my subject&quot;</span> <span class="nx">server</span><span class="o">=</span><span class="s2">&quot;#server#&quot;</span> <span class="nx">failto</span><span class="o">=</span><span class="s2">&quot;sample1@sample.com,sample2@sample.com&quot;</span><span class="o">&gt;</span>
-</span><span class='line'><span class="nx">message</span> <span class="nx">body</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/cfmail&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Note the multiple &#8216;failto&#8217; recipients: failto=&#8221;sample1@sample.com,sample2@sample.com&#8221;</p>
-
-<p>No emails were being sent with the above code and it wasn&#8217;t until I removed the 2nd failto address that I started getting emails.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">failto</span><span class="o">=</span><span class="s2">&quot;sample1@sample.com&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This seems strange as I can have many to or from recipients, just not failto! The <a href="http://livedocs.adobe.com/coldfusion/7/htmldocs/wwhelp/wwhimpl/common/html/wwhelp.htm?context=ColdFusion_Documentation&amp;file=00000297.htm">docs</a> say:</p>
-
-<blockquote><p>&#8220;Address to which mailing systems should send delivery failure notifications. Sets the mail envelope reverse-path value.&#8221;</p></blockquote>
-
-<p>This doesn&#8217;t seem to say either way to me whether you can only have 1 or multiple addresses here.</p>
-
-<p>I tested this on both ColdFusion 7.0.2 and ColdFusion 8 Standard versions running on Windows Server SMTP.</p>
-
-<p>Has anyone successfully sent email with <cfmail> with multiple failto&#8217;s?</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2007-08-03T11:50:50+10:00" pubdate data-updated="true">Aug 3<span>rd</span>, 2007</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2007/08/03/cfmail-failto-only-accepts-a-single-address//page/17/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 
