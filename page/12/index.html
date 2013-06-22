@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Ok this is a warning to all those who get sent commands to use via IM. Scenario: I was helping someone setup their Apache config today, so I copied &hellip;">
+	<meta name="description" content="The guys at Daemon have been busy of late. With the conference just barely over I just noticed they&#8217;ve found the time to launch a new site at &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,50 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/06/24/new-farcry-core-site/">
+		
+			New FarCry &#8220;Core&#8221; Site</a>
+	</h2>
+	<div class="entry-content">
+		<p>The guys at <a href="http://www.daemon.com.au/">Daemon</a> have been busy of late. With the <a href="http://www.webdu.com.au/">conference</a> just barely over I just noticed they&#8217;ve found the time to launch a new site at <a href="http://www.farcrycore.org/">http://www.farcrycore.org/</a> for all your information needs on the FarCry framework.</p>
+
+<p>Includes documentation, downloads (for the new version 5!) and more, go and take a look and try it out today.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-06-24T09:56:06+10:00" pubdate data-updated="true">Jun 24<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/farcry/'>Farcry</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/06/24/new-farcry-core-site//page/12/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -743,77 +787,6 @@
 </div>
 	
 		<div class="comments"><a href="/2008/05/22/insert-delayed-with-mysql//page/12/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2008/05/22/setting-up-svnexternals-with-subclipse/">
-		
-			Setting Up Svn:externals With Subclipse</a>
-	</h2>
-	<div class="entry-content">
-		<p>Setting up &#8220;externals&#8221; with subversion can assist you when you want to load external libraries into an existing project.</p>
-
-<p>You may have a JavaScript validation framework which you re-use amongst many projects. Of course you don&#8217;t want to copy and paste the code into every project, what would happen then if you wanted to upgrade the codebase?</p>
-
-<p>Using subclipse (in the Eclipse IDE) you can link a separate svn repository in the middle of your project by adding an <em>svn:externals</em> property. Right click the parent directory you want to import the external repository into and choose &#8220;Team -> Set Property&#8221;</p>
-
-<p><a href="/images/uploads/2008/05/cfeclipse-svnproperties.png"><img src="/images/uploads/2008/05/cfeclipse-svnproperties-281x300.png" alt="" /></a></p>
-
-<p>Once you load the properties dialog window you need to add the following into the property field:</p>
-
-<p>svn:externals</p>
-
-<p>Then in the property content box add the following:</p>
-
-<p>[yourLibraryName] -r98 [url to repo]</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">e</span><span class="p">.</span><span class="nx">g</span><span class="p">.</span> <span class="nx">jquery</span><span class="o">-</span><span class="nx">validation</span> <span class="o">-</span><span class="nx">r98</span> <span class="nx">https</span><span class="o">:</span><span class="c1">//myhome.com/svn/repos/jquery-validation/trunk</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><a href="/images/uploads/2008/05/screenshot-set-a-svn-property.png"><img src="/images/uploads/2008/05/screenshot-set-a-svn-property-300x233.png" alt="" /></a></p>
-
-<p>In the above example a directory called &#8220;jquery-validation&#8221; will be created with the contents of the repository located at &#8220;https://myhome.com/svn/repos/jquery-validation/trunk&#8221;.</p>
-
-<p>The &#8220;-r98&#8221; is the revision number of the external library you want to add. This is important because it means you can link to a snapshot of the library and not simply the trunk (which would mean you couldn&#8217;t control the updates to the library).</p>
-
-<p>Once that is done simply update your project and it will import your external codebase into your project.</p>
-
-<p>Thanks to <a href="http://www.lynchconsulting.com.au/">Mark</a> for showing me syntax for this one :)</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-05-22T17:30:43+10:00" pubdate data-updated="true">May 22<span>nd</span>, 2008</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/svn/'>SVN</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2008/05/22/setting-up-svnexternals-with-subclipse//page/12/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

@@ -7,11 +7,8 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Quick post to remind me how to check a table column for duplicate values next time I&#8217;m looking for it (when my memory fails!) 1
-2
-3
-4
-SELECT &hellip;">
+	<meta name="description" content="I was looking for a way to do isNull() in MySQL the other day, for those that don&#8217;t know this means you can do something like: 1
+SELECT isNull &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -85,6 +82,60 @@ SELECT &hellip;">
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2011/03/03/mysql-alternative-to-mssqls-isnull/">
+		
+			MySQL Alternative to MSSQL&#8221;s isNull()</a>
+	</h2>
+	<div class="entry-content">
+		<p>I was looking for a way to do isNull() in MySQL the other day, for those that don&#8217;t know this means you can do something like:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">SELECT</span> <span class="nx">isNull</span><span class="p">(</span><span class="nx">mycolumn</span><span class="p">,</span> <span class="s1">&#39;blah&#39;</span><span class="p">)</span> <span class="nx">FROM</span> <span class="nx">myTable</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If the value in <em>mycolumn</em> is NULL, then &#8216;blah&#8217; is returned, this can of course be any string literal/numeric value you want. MySQL doesn&#8217;t have isNull() but it does have <a href="http://dev.mysql.com/doc/refman/5.0/en/control-flow-functions.html#function_ifnull">ifNull()</a> which is basically the same.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">SELECT</span> <span class="nx">ifNull</span><span class="p">(</span><span class="nx">mycolumn</span><span class="p">,</span> <span class="s1">&#39;blah&#39;</span><span class="p">)</span> <span class="nx">FROM</span> <span class="nx">myTable</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-03-03T23:22:00+11:00" pubdate data-updated="true">Mar 3<span>rd</span>, 2011</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/databases/'>Databases</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2011/03/03/mysql-alternative-to-mssqls-isnull//page/6/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -735,58 +786,6 @@ $ sudo ln -sf /Volumes/Learnosity/Workspaces /users/michaelsharman/Workspaces</p
 </div>
 	
 		<div class="comments"><a href="/2010/05/10/ie-and-underscores-in-domain-names//page/6/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2010/04/22/support-details-tech-support-management/">
-		
-			Support Details - Tech Support Management</a>
-	</h2>
-	<div class="entry-content">
-		<p>Ever dealt with a client where you wanted to know their operating environment? Thinks like what operating system they are running (and version), which browser type and version, whether they have JavaScript enabled etc? Sounds easy but for some clients this is like being asked to provide a detailed analysis of early 7th century rock formations around Stone Henge&#8230;in Latin. :(</p>
-
-<p>Here&#8217;s a super simple solution that anyone could use :)</p>
-
-<p><a href="http://supportdetails.com/">http://supportdetails.com/</a></p>
-
-<p>Basically you send your client the URL above which they open. The web page will automatically detect their environment, all they have to do is enter your email address in a text box and click a button and in seconds you&#8217;ll receive an email detailing the system they are using. Nice!</p>
-
-<p>If you want to make it even easier you can provide the URL to them with your email already attached:</p>
-
-<p>E.g. http://supportdetails.com/?recipient=developer@mycompany.com</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-04-22T16:52:47+10:00" pubdate data-updated="true">Apr 22<span>nd</span>, 2010</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/tools/'>Tools</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2010/04/22/support-details-tech-support-management//page/6/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

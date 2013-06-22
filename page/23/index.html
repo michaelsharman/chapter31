@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Roger Johansson wrote a nice article on why web standards still matter. He notes that recently there has been an increased level of interest and &hellip;">
+	<meta name="description" content="The peeps over at Mach-II have been busy with the latest dot release of the Mach-II framework. Last week they released the Public Beta2 for 1.1.1 &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,54 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2006/10/04/mach-ii-111-public-beta2/">
+		
+			Mach-II 1.1.1 Public Beta2</a>
+	</h2>
+	<div class="entry-content">
+		<p>The peeps over at <a href="http://www.mach-ii.com/">Mach-II</a> have been busy with the latest dot release of the Mach-II framework. Last week they released the Public Beta2 for 1.1.1 which you can <a href="http://www.mach-ii.com/downloads/MachII_1_1_1_Beta2.zip">download here</a>.</p>
+
+<p>A big note for Version 1.1.1 is Application.cfc support :)</p>
+
+<p>Although Mach-II is a well known framework in the community it seems that <a href="http://model-glue.com/">Model Glue</a> is getting all the attention lately. With that in mind I&#8217;ve been looking forward to new releases from the Mach-II side.</p>
+
+<p>Watch the Breeze recording <a href="http://experts.breezecentral.com/p99942123/">What&#8217;s New in Mach-II 1.1.1?</a> with Mach-II Lead Developer Peter J. Farrell and Release Coordinator Matt Woodward for all the details on this release.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-10-04T09:20:22+10:00" pubdate data-updated="true">Oct 4<span>th</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2006/10/04/mach-ii-111-public-beta2//page/23/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -902,107 +950,6 @@
 </div>
 	
 		<div class="comments"><a href="/2006/09/11/cfcomponent-should-you-use-the-name-attribute//page/23/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2006/09/09/html-strip/">
-		
-			HTML Strip</a>
-	</h2>
-	<div class="entry-content">
-		<p>Let&#8217;s say you have a form or mechanism in a web application which allows users to enter content which may be displayed on a web page, a comment area for example.</p>
-
-<p>In these scenarios you need to be carefull of what my be entered by a malicious user, think cross site scripting. There are various reg exp’s available to assist you in cleaning the data but good folks a Adobe have given us a nice little function in <a href="http://livedocs.macromedia.com/coldfusion/6.1/htmldocs/funct116.htm">htmlEditFormat()</a>.</p>
-
-<p>This function basically converts any discovered HTML characters into HTML entities, thus rendering them safe from cross site scripting attacks. The following characters are transformed to HTML character entities:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span>        <span class="o">&amp;</span><span class="nx">lt</span><span class="p">;</span>
-</span><span class='line'><span class="o">&gt;</span>        <span class="o">&amp;</span><span class="nx">gt</span><span class="p">;</span>
-</span><span class='line'><span class="o">&amp;</span>        <span class="o">&amp;</span>
-</span><span class='line'><span class="s2">&quot;        &quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>So if a user enters something like:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;javascript&quot;</span><span class="o">&gt;</span><span class="p">...</span><span class="o">&lt;</span><span class="err">/script&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>All that will be returned from htmlEditFormat() will be</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&amp;</span><span class="nx">lt</span><span class="p">;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;javascript&quot;</span><span class="o">&amp;</span><span class="nx">gt</span><span class="p">;...</span><span class="o">&amp;</span><span class="nx">lt</span><span class="p">;</span><span class="err">/script&amp;gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>There is also <a href="http://livedocs.macromedia.com/coldfusion/6.1/htmldocs/funct115.htm#wp1105634">htmlCodeFormat()</a> which works the same as htmlEditFormat() but wraps the text in &lt;pre&gt; tags.</p>
-
-<p>You may of course want to strip HTML entirely, instead of simply escaping the relevant characters with entities. In this case you may want try something like:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">noHTML</span> <span class="o">=</span> <span class="nx">REReplace</span><span class="p">(</span><span class="nx">noHTML</span><span class="p">,</span> <span class="s2">&quot;&lt;[^&gt;]*&gt;&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="s2">&quot;All&quot;</span><span class="p">)</span> <span class="o">/&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Also note that line feed characters are preserved and there is no function to reverse the replacement of HTML characters into entities.</p>
-
-<p>Update 14th November 2006</p>
-
-<p>An easy way to clean your forms is to use the reg exp as a function and loop over your form fields. If our function was called <a href="http://www.cflib.org/udf.cfm?ID=12">stripHTML</a> (from Ray Camden at cflib) then you could do:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfscript</span><span class="o">&gt;</span>
-</span><span class='line'>   <span class="k">for</span><span class="p">(</span><span class="nx">key</span> <span class="k">in</span> <span class="nx">form</span><span class="p">)</span>
-</span><span class='line'>   <span class="p">{</span>
-</span><span class='line'>      <span class="nx">form</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">stripHTML</span><span class="p">(</span><span class="nx">form</span><span class="p">[</span><span class="nx">key</span><span class="p">]);</span>
-</span><span class='line'>   <span class="p">}</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/cfscript&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2006-09-09T13:19:54+10:00" pubdate data-updated="true">Sep 9<span>th</span>, 2006</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2006/09/09/html-strip//page/23/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

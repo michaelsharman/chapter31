@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Previously I had a way of detecting whether page requests were being made via ssl but today I came across a scenario where this doesn&#8217;t work. &hellip;">
+	<meta name="description" content="Ever dealt with a client where you wanted to know their operating environment? Thinks like what operating system they are running (and version), &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,58 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2010/04/22/support-details-tech-support-management/">
+		
+			Support Details - Tech Support Management</a>
+	</h2>
+	<div class="entry-content">
+		<p>Ever dealt with a client where you wanted to know their operating environment? Thinks like what operating system they are running (and version), which browser type and version, whether they have JavaScript enabled etc? Sounds easy but for some clients this is like being asked to provide a detailed analysis of early 7th century rock formations around Stone Henge&#8230;in Latin. :(</p>
+
+<p>Here&#8217;s a super simple solution that anyone could use :)</p>
+
+<p><a href="http://supportdetails.com/">http://supportdetails.com/</a></p>
+
+<p>Basically you send your client the URL above which they open. The web page will automatically detect their environment, all they have to do is enter your email address in a text box and click a button and in seconds you&#8217;ll receive an email detailing the system they are using. Nice!</p>
+
+<p>If you want to make it even easier you can provide the URL to them with your email already attached:</p>
+
+<p>E.g. http://supportdetails.com/?recipient=developer@mycompany.com</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-04-22T16:52:47+10:00" pubdate data-updated="true">Apr 22<span>nd</span>, 2010</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/tools/'>Tools</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2010/04/22/support-details-tech-support-management//page/7/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -793,67 +845,6 @@ It enables us to both override the default farcry request scope variables and al
 </div>
 	
 		<div class="comments"><a href="/2009/06/09/setting-application-variables-in-farcry//page/7/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2009/05/29/setting-the-sort-order-for-custom-admin-items/">
-		
-			Setting the Sort Order for Custom Admin Items in FarCry</a>
-	</h2>
-	<div class="entry-content">
-		<p>I&#8217;ve wanted to be able to control the sort order of <em>menu</em> and <em>menuitems</em> in the customadmin.xml (or equivalent) file for quite a while but hadn&#8217;t found how to do it. Only today did I find the ability, I believe it&#8217;s a <a href="http://farcrycms.org/">FarCry</a> 5+ feature which was why I didn&#8217;t see it before.</p>
-
-<p>The answer is simple, just add a &#8220;sequence&#8221; attribute to your menu or menuitem tag:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">menu</span> <span class="nx">mergeType</span><span class="o">=</span><span class="s2">&quot;merge&quot;</span> <span class="nx">sequence</span><span class="o">=</span><span class="s2">&quot;1&quot;</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;farcry_studentsonlineadminSubSection&quot;</span> <span class="nx">label</span><span class="o">=</span><span class="s2">&quot;Homepage Content&quot;</span> <span class="nx">labelType</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">menuitem</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;boardlinks&quot;</span> <span class="nx">sequence</span><span class="o">=</span><span class="s2">&quot;1&quot;</span> <span class="nx">label</span><span class="o">=</span><span class="s2">&quot;Board Links&quot;</span> <span class="nx">link</span><span class="o">=</span><span class="s2">&quot;/admin/customadmin.cfm?module=customlists/boardlinks_data.cfm&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">menuitem</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;boardlinks_sort&quot;</span> <span class="nx">sequence</span><span class="o">=</span><span class="s2">&quot;2&quot;</span> <span class="nx">label</span><span class="o">=</span><span class="s2">&quot;Board Links Sort Order&quot;</span> <span class="nx">link</span><span class="o">=</span><span class="s2">&quot;/admin/customadmin.cfm?module=customlists/boardlinks_sort.cfm&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">menuitem</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;calendar&quot;</span> <span class="nx">sequence</span><span class="o">=</span><span class="s2">&quot;3&quot;</span> <span class="nx">label</span><span class="o">=</span><span class="s2">&quot;Calendar&quot;</span> <span class="nx">link</span><span class="o">=</span><span class="s2">&quot;/admin/customadmin.cfm?module=customlists/lu_calendar.cfm&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">menuitem</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;faq&quot;</span> <span class="nx">sequence</span><span class="o">=</span><span class="s2">&quot;4&quot;</span> <span class="nx">label</span><span class="o">=</span><span class="s2">&quot;FAQ&#39;s&quot;</span> <span class="nx">link</span><span class="o">=</span><span class="s2">&quot;/admin/customadmin.cfm?module=customlists/lu_faq.cfm&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/menu&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>You can <a href="http://docs.farcrycms.org/display/FCDEV50/Inline+Webtop+Documentation">read more</a> cool things you can do with your custom objectadmin on the <a href="http://docs.farcrycms.org/">FarCry docs site</a>.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-05-29T10:56:46+10:00" pubdate data-updated="true">May 29<span>th</span>, 2009</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/farcry/'>Farcry</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2009/05/29/setting-the-sort-order-for-custom-admin-items//page/7/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

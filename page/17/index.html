@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="As most ColdFusion developers know, you cannot reference &#8216;application&#8217; scoped variables directly in Application.cfc&#8217;s onSessionEnd &hellip;">
+	<meta name="description" content="Recently I was just comparing 2 dates (one from a query and the other was now()) using the createODBCDate() and dateCompare() functions. I was using &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,81 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2007/10/05/createodbcdate-returns-time-as-well/">
+		
+			createODBCDate() Returns &#8216;Time&#8217; as Well?</a>
+	</h2>
+	<div class="entry-content">
+		<p>Recently I was just comparing 2 dates (one from a query and the other was now()) using the <a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=functions_c-d_19.html#1102341">createODBCDate()</a> and <a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=functions_c-d_26.html">dateCompare()</a> functions.</p>
+
+<p>I was using the createODBCDate() function because I only wanted the &#8216;date&#8217; part of a date object, not the &#8216;time&#8217;. More than likely I should have been using <a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=functions-pt0_05.html#1098968">dateFormat()</a>, but that&#8217;s another story :)</p>
+
+<p>I had the following:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">dateCompare</span><span class="p">(</span><span class="nx">createODBCDate</span><span class="p">(</span><span class="nx">q</span><span class="p">.</span><span class="nx">DateTimeCreated</span><span class="p">),</span> <span class="nx">createODBCDate</span><span class="p">(</span><span class="nx">now</span><span class="p">()))</span> <span class="nx">EQ</span> <span class="mi">0</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The problem was I kept getting -1 returned, meaning that &#8216;q.DateTimeCreated&#8217; was less than &#8216;now()&#8217;. As &#8216;q.DateTimeCreated&#8217; was technically created before &#8216;now()&#8217; (same day but an earlier &#8216;time&#8217;) it <strong>is</strong> actually <em>less than</em>, but I only wanted to compare the date&#8230;not the time. When I dumped both date objects I got:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="p">{</span><span class="nx">d</span> <span class="s1">&#39;2007-10-05&#39;</span><span class="p">}</span>
+</span><span class='line'><span class="p">{</span><span class="nx">d</span> <span class="s1">&#39;2007-10-05&#39;</span><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Looks the same to me&#8230;</p>
+
+<p>I <em>think</em> that those date objects actually have the &#8216;time&#8217; in them as well, they&#8217;re just not being displayed on cfdump or cfoutput. This seems strange especially considering there is a createODBCDateTime() function as well.</p>
+
+<p>My fix was to do what I probably should have done in the first place; use dateFormat()</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">dateCompare</span><span class="p">(</span><span class="nx">dateFormat</span><span class="p">(</span><span class="nx">q</span><span class="p">.</span><span class="nx">DateTimeCreated</span><span class="p">),</span> <span class="nx">dateFormat</span><span class="p">(</span><span class="nx">now</span><span class="p">()))</span> <span class="nx">EQ</span> <span class="mi">0</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That did the trick!</p>
+
+<p>Now the only thing bothering me is whether the createODBCDate() function actually <em>does</em> return the &#8216;time&#8217; as well&#8230;or was something else the culprit?</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-10-05T15:30:28+10:00" pubdate data-updated="true">Oct 5<span>th</span>, 2007</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2007/10/05/createodbcdate-returns-time-as-well//page/17/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -741,56 +816,6 @@ Trace</p></blockquote>
 </div>
 	
 		<div class="comments"><a href="/2007/08/14/storing-flash-coldfusion-and-sql-in-subversion//page/17/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2007/08/12/facebook-homepage-source-code-found/">
-		
-			Facebook Homepage Source Code Found!</a>
-	</h2>
-	<div class="entry-content">
-		<p>Hmm, seems a problem with the .htaccess file made the source for <a href="http://www.facebook.com/">Facebooks</a> homepage available.</p>
-
-<p><a href="http://www.nik.com.au/archives/2007/08/11/learning-from-facebook-preventing-php-leakage/">Nik Cubrilovic</a> offers an explanation from a technical standpoint:</p>
-
-<blockquote><p>PHP has always been notorious for sometimes not processing requests poorly and sending back the source code for pages to the client. Because of the way mod_php works with apache, if mod_php fails in intercepting and processing the request, then apache will just serve it back to the client as an ordinary text file.</p></blockquote>
-
-<p>He also goes on to suggest good security practices with PHP/Apache which is well worth a read for any developer.</p>
-
-<p><a href="http://facebooksecrets.blogspot.com/2007/08/facebook-home-page-code.html">Click here</a> to see the actual code and more Facebook &#8216;secrets&#8217;</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2007-08-12T22:45:00+10:00" pubdate data-updated="true">Aug 12<span>th</span>, 2007</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2007/08/12/facebook-homepage-source-code-found//page/17/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

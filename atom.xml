@@ -4,7 +4,7 @@
   <title><![CDATA[chapter31 &raquo;]]></title>
   <link href="http://chapter31.com/atom.xml" rel="self"/>
   <link href="http://chapter31.com/"/>
-  <updated>2013-06-21T12:15:13+10:00</updated>
+  <updated>2013-06-22T23:20:02+10:00</updated>
   <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
@@ -12,6 +12,53 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Careful using PHP array_merge]]></title>
+    <link href="http://chapter31.com/2013/06/22/careful-using-php-array-merge/"/>
+    <updated>2013-06-22T23:11:00+10:00</updated>
+    <id>http://chapter31.com/2013/06/22/careful-using-php-array-merge</id>
+    <content type="html"><![CDATA[<p>Using <code>array_merge</code> bit me today when I merged an array (which happened to be empty) with a numerically indexed array.</p>
+
+<p>Because the array I was merging was empty, I expected my other (numerically indexed) array to remain untouched. However that wasn&#8217;t the case, <a href="http://php.net/manual/en/function.array-merge.php">from the docs</a>:</p>
+
+<pre><code>Values in the input array with numeric keys will be renumbered with incrementing
+keys starting from zero in the result array.
+</code></pre>
+
+<p>This meant that the following array keys went from being their <em>constant</em> numeric values, to 0, 1, 2, 3:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="x">$pdoOptions = [</span>
+</span><span class='line'><span class="x">    PDO::ATTR_PERSISTENT         =&gt; false,</span>
+</span><span class='line'><span class="x">    PDO::ATTR_ERRMODE            =&gt; PDO::ERRMODE_WARNING,</span>
+</span><span class='line'><span class="x">    PDO::MYSQL_ATTR_INIT_COMMAND =&gt; &#39;SET NAMES utf8&#39;,</span>
+</span><span class='line'><span class="x">    PDO::ATTR_EMULATE_PREPARES   =&gt; false</span>
+</span><span class='line'><span class="x">];</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I really dislike this behaviour, but it is what it is so be warned. Instead I just looped over my merging array and set the keys manually:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="x">if (count($myArr)) {</span>
+</span><span class='line'><span class="x">    foreach ($myArr as $key =&gt; $value) {</span>
+</span><span class='line'><span class="x">        $otherArr[$key] = $value;</span>
+</span><span class='line'><span class="x">    }</span>
+</span><span class='line'><span class="x">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[PHP ['SCRIPT_NAME'] returning empty string]]></title>
@@ -1483,89 +1530,6 @@ Base16 is both a color scheme and a template.
 </span><span class='line'>http://ajax.cdnjs.com/ajax/libs/json2/20110223/json2.min.js
 </span></code></pre></td></tr></table></div></figure>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Generating a powerset in ColdFusion]]></title>
-    <link href="http://chapter31.com/2012/10/04/generating-a-powerset-in-coldfusion/"/>
-    <updated>2012-10-04T21:20:46+10:00</updated>
-    <id>http://chapter31.com/2012/10/04/generating-a-powerset-in-coldfusion</id>
-    <content type="html"><![CDATA[<p>I recently needed to generate a <a href="http://en.wikipedia.org/wiki/Power_set">powerset</a> (a set of all subsets) of 3 HTML select boxes. The idea was that a user could choose 1-many options from each box, and they had to choose a value from all 3 boxes (none could be empty).</p>
-
-<p>Select #1 had 4 values<br/>
-Select #2 had 7 values<br/>
-Select #3 had 13 values</p>
-
-<p>Now, I needed to generate every possible permutation for these 3 select boxes based on the rules I defined above. That meant the possible number of combinations for each box was:</p>
-
-<p>Select #1 had 16<em> possible combinations<br/>
-Select #2 had 128</em> possible combinations<br/>
-Select #3 had 8192* possible combinations</p>
-
-<p>* It was actually 1 less than that, because a powerset take into consideration an empty selection, so in reality the numbers would have been 15, 127 and 8191.</p>
-
-<p>This was calculated using 2n, where <em>n</em> is an number (integer) of options in a set, so 24, 27 and 213</p>
-
-<p>Now, how did I go about calculating these powersets? I cheated :smile:</p>
-
-<p>I grabbed a JavaScript function from <a href="http://rosettacode.org/wiki/Power_set#JavaScript">Rosetta Code</a> and ported it to ColdFusion.</p>
-
-<p>Here is the function to generate a powerset from a set (array) of data:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kr">public</span> <span class="nx">array</span> <span class="kd">function</span> <span class="nx">calculate</span><span class="p">(</span><span class="nx">required</span> <span class="nx">array</span> <span class="nx">data</span><span class="p">)</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>  <span class="kd">var</span> <span class="nx">ps</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">];</span>
-</span><span class='line'>  <span class="kd">var</span> <span class="nx">d</span> <span class="o">=</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">data</span><span class="p">;</span>
-</span><span class='line'>  <span class="kd">var</span> <span class="nx">lenData</span> <span class="o">=</span> <span class="nx">arrayLen</span><span class="p">(</span><span class="nx">d</span><span class="p">);</span>
-</span><span class='line'>  <span class="kd">var</span> <span class="nx">lenPS</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="nx">LTE</span> <span class="nx">lenData</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">{</span>
-</span><span class='line'>    <span class="nx">lenPS</span> <span class="o">=</span> <span class="nx">arrayLen</span><span class="p">(</span><span class="nx">ps</span><span class="p">);</span>
-</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">j</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">j</span> <span class="nx">LTE</span> <span class="nx">lenPS</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">{</span>
-</span><span class='line'>      <span class="nx">arrayAppend</span><span class="p">(</span><span class="nx">ps</span><span class="p">,</span> <span class="nx">listAppend</span><span class="p">(</span><span class="nx">ps</span><span class="p">[</span><span class="nx">j</span><span class="p">],</span> <span class="nx">d</span><span class="p">[</span><span class="nx">i</span><span class="p">]));</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="k">return</span> <span class="nx">ps</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>A sample powerset of 4 values (in this case 1,2,3,4) would be:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">Powerset</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Powerset</span><span class="p">();</span>
-</span><span class='line'><span class="kd">var</span> <span class="nx">res</span> <span class="o">=</span> <span class="nx">Powerset</span><span class="p">.</span><span class="nx">calculate</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]);</span>
-</span><span class='line'>
-</span><span class='line'><span class="nx">Outputs</span><span class="o">:</span>
-</span><span class='line'><span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="s2">&quot;1&quot;</span><span class="p">,</span><span class="s2">&quot;2&quot;</span><span class="p">,</span><span class="s2">&quot;1,2&quot;</span><span class="p">,</span><span class="s2">&quot;3&quot;</span><span class="p">,</span><span class="s2">&quot;1,3&quot;</span><span class="p">,</span><span class="s2">&quot;2,3&quot;</span><span class="p">,</span><span class="s2">&quot;1,2,3&quot;</span><span class="p">,</span><span class="s2">&quot;4&quot;</span><span class="p">,</span><span class="s2">&quot;1,4&quot;</span><span class="p">,</span><span class="s2">&quot;2,4&quot;</span><span class="p">,</span><span class="s2">&quot;1,2,4&quot;</span><span class="p">,</span><span class="s2">&quot;3,4&quot;</span><span class="p">,</span><span class="s2">&quot;1,3,4&quot;</span><span class="p">,</span><span class="s2">&quot;2,3,4&quot;</span><span class="p">,</span><span class="s2">&quot;1,2,3,4&quot;</span><span class="p">]</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>By the way, my total combination across all 3 sets was a mere 16,777,216.</p>
-
-<p><a href="https://github.com/michaelsharman/Powerset">Grab from github</a> if you prefer the CFC</p>
 ]]></content>
   </entry>
   

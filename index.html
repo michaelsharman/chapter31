@@ -7,8 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="I was working with Slim (v2.2.x) the other day and saw that a PHP warning was being thrown in one of the interal Slim files: 1
-Warning: strpos(): &hellip;">
+	<meta name="description" content="Using array_merge bit me today when I merged an array (which happened to be empty) with a numerically indexed array. Because the array I was merging &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -82,6 +81,86 @@ Warning: strpos(): &hellip;">
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2013/06/22/careful-using-php-array-merge/">
+		
+			Careful Using PHP Array_merge</a>
+	</h2>
+	<div class="entry-content">
+		<p>Using <code>array_merge</code> bit me today when I merged an array (which happened to be empty) with a numerically indexed array.</p>
+
+<p>Because the array I was merging was empty, I expected my other (numerically indexed) array to remain untouched. However that wasn&#8217;t the case, <a href="http://php.net/manual/en/function.array-merge.php">from the docs</a>:</p>
+
+<pre><code>Values in the input array with numeric keys will be renumbered with incrementing
+keys starting from zero in the result array.
+</code></pre>
+
+<p>This meant that the following array keys went from being their <em>constant</em> numeric values, to 0, 1, 2, 3:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="x">$pdoOptions = [</span>
+</span><span class='line'><span class="x">    PDO::ATTR_PERSISTENT         =&gt; false,</span>
+</span><span class='line'><span class="x">    PDO::ATTR_ERRMODE            =&gt; PDO::ERRMODE_WARNING,</span>
+</span><span class='line'><span class="x">    PDO::MYSQL_ATTR_INIT_COMMAND =&gt; &#39;SET NAMES utf8&#39;,</span>
+</span><span class='line'><span class="x">    PDO::ATTR_EMULATE_PREPARES   =&gt; false</span>
+</span><span class='line'><span class="x">];</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I really dislike this behaviour, but it is what it is so be warned. Instead I just looped over my merging array and set the keys manually:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="x">if (count($myArr)) {</span>
+</span><span class='line'><span class="x">    foreach ($myArr as $key =&gt; $value) {</span>
+</span><span class='line'><span class="x">        $otherArr[$key] = $value;</span>
+</span><span class='line'><span class="x">    }</span>
+</span><span class='line'><span class="x">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-22T23:11:00+10:00" pubdate data-updated="true">Jun 22<span>nd</span>, 2013</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/php/'>PHP</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2013/06/22/careful-using-php-array-merge//index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -909,99 +988,6 @@ Base16 is both a color scheme and a template.
 </div>
 	
 		<div class="comments"><a href="/2013/05/22/mysql-thread-stack-overrun-error//index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2013/05/09/ios-6-caching-post-requests/">
-		
-			iOS 6 Caching POST Requests</a>
-	</h2>
-	<div class="entry-content">
-		<p>Apparently I&#8217;ve been living under a rock, never having been bitten (that I know of) by the pretty massive bug Apple rolled out in iOS 6 (with Safari). The bug has been well documented around the interwebs, basically Safari caches HTTP POST requests. If you haven&#8217;t heard about this&#8230;stop and read that last bit again.</p>
-
-<p>Now, replicating this bug is dependent on the payload of the POST not changing between requests, so in many circumstances you may be fine. However let&#8217;s talk about something like a simple login form.</p>
-
-<ul>
-<li>User enters credentials in web form and clicks &#8220;Login&#8221;</li>
-<li>App/site POSTs data to the server for authentication</li>
-<li>Server authenticates request</li>
-<li>200 OK is returned, and a session is spawned on the server</li>
-</ul>
-
-
-<p>Pretty standard workflow. Now what happens if the session expires and the user is presented with the login form again?</p>
-
-<ul>
-<li>User enters credentials in web form and clicks &#8220;Login&#8221;</li>
-<li>App/site POSTs data to the server for authentication</li>
-<li>The request is cached because the users data (credentials) are the same as before</li>
-</ul>
-
-
-<p>So in this scenario the request never actually gets sent to the server.  Your app/site is now broken, the user cannot login. This sort of issue can of course have huge consequences for any number of websites/applications.</p>
-
-<p>It&#8217;s worth noting that the <a href="http://www.faqs.org/rfcs/rfc2616.html">HTTP/1.1 RFC</a> states (thanks <a href="http://stackoverflow.com/a/626083/1448058">Diomidis Spinellis</a>):</p>
-
-<blockquote><p>Responses to this method are not cacheable, unless the response includes appropriate Cache-Control or Expires header fields.</p></blockquote>
-
-<p>and:</p>
-
-<blockquote><p>Some HTTP methods MUST cause a cache to invalidate an entity. This is either the entity referred to by the Request-URI, or by the Location or Content-Location headers (if present). These methods are:</p>
-
-<ul>
-<li>PUT</li>
-<li>DELETE</li>
-<li>POST</li>
-</ul>
-</blockquote>
-
-<h2>Solution</h2>
-
-<p>People have listed fixes like jQuery&#8217;s <em>{cache: false}</em> in the ajax params, to adding a random token to your payload. These methods seem a intrusive to me though as you need to change every form on every page in every app. So we went for a different approach, a simple Apache rule in your conf:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>&lt;Limit POST&gt;
-</span><span class='line'>  Header <span class="nb">set </span>Cache-Control no-cache
-</span><span class='line'>&lt;/Limit&gt;
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>All that&#8217;s saying is, if the incoming request is using the HTTP POST method, set a <em>no-cache</em> header. Nice and simple. Note that <em>mod_headers</em> needs to be enabled in Apache for this to work.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-09T14:28:00+10:00" pubdate data-updated="true">May 9<span>th</span>, 2013</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/apache/'>apache</a>, <a class='category' href='/categories/apple/'>apple</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2013/05/09/ios-6-caching-post-requests//index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

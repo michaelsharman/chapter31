@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="The other day Nathan Strutz wrote a great post on finding and replacing text in your IDE (in my case I&#8217;m using Aptana/cfeclipse) using regular &hellip;">
+	<meta name="description" content="A lot ColdFusion developers are moving (or already there) towards a more OOP style of development. They have an understanding of and use several &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,107 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2007/12/08/enforcing-your-service-as-an-api/">
+		
+			Enforcing Your Service as an API</a>
+	</h2>
+	<div class="entry-content">
+		<p>A lot ColdFusion developers are moving (or already there) towards a more OOP style of development. They have an understanding of and use several techniques and design patterns when building applications, particularly when it relates to things such as MVC and n-tiered development.</p>
+
+<p>A small part of this is grouping related files withing separate directories in you application. Take &#8216;User&#8217; related files as an example where you&#8217;ll probably need some kind of a business object (User.cfc), something to store business/application logic (service or manager) and typically some files to handle database access.</p>
+
+<p>With that in mind most will recognise the following CFC types (as they pertain at least to the ColdFusion community):</p>
+
+<ul>
+<li><p>Bean</p></li>
+<li><p>Service (or manager)</p></li>
+<li><p>Gateway</p></li>
+<li><p>DAO</p></li>
+</ul>
+
+
+<p>This is not to get into whether you should use 5:1 components for every different &#8216;thing&#8217; in your application (the 5th might be a controller), or whether you should have a &#8216;Gateway&#8217; AND a &#8216;DAO&#8217; for data access. Instead I&#8217;m talking about how you might layout your files and control access to the methods contained within them.</p>
+
+<p>A typical structure people use is the reverse domain naming (which can prevent naming conflicts with other similarly named files), so for me I might have the following:</p>
+
+<p>/com/chapter31/myApp/user</p>
+
+<p>The &#8216;user&#8217; directory could hold the following cfc&#8217;s:</p>
+
+<ul>
+<li><p>User.cfc</p></li>
+<li><p>UserService.cfc</p></li>
+<li><p>UserGateway.cfc</p></li>
+<li><p>UserDAO.cfc</p></li>
+</ul>
+
+
+<p>How do I manage access to methods contained within the Gateway or DAO? Often you may not want developers being able to access the getUsers() method inside UserGateway.cfc directly. This might be for different reasons, typically there may be some business logic required or a bean which is to be returned instead of a query etc. Either way, developers shouldn&#8217;t access these data access files directly.</p>
+
+<p>A nice easy way to get around this is to make all &#8216;public&#8217; methods inside the components you want to restrict access to, &#8216;package&#8217;, which means that they are only accessible from files which reside within the same directory (/user).</p>
+
+<p>An example method within UserGateway.cfc might look like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cffunction</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;getUsers&quot;</span> <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="nx">access</span><span class="o">=</span><span class="s2">&quot;package&quot;</span> <span class="nx">returntype</span><span class="o">=</span><span class="s2">&quot;query&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="c1">//query the users table in your database below</span>
+</span><span class='line'>  
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cffunction&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you tried to access this method from outside the &#8216;user&#8217; directory (say index.cfm within the webroot) you will get an error saying something like</p>
+
+<p><em>&#8220;The package method &#8216;getUsers&#8217; in component /user/UserGateway.cfc cannot be accessed from /index.cfm.&#8221;</em></p>
+
+<p>This is because index.cfm does not reside within the &#8216;user&#8217; directory and because the method&#8217;s access modifier is set to &#8216;package&#8217;, access is restricted.</p>
+
+<p>So how do we now get access to this method?</p>
+
+<p>A common approach is to have your Service act as an API to the other cfc&#8217;s within the &#8216;user&#8217; directory by setting the access modifier to &#8216;public&#8217; inside your UserService.cfc. Now whenever you need to call Gateway or DAO methods, you need to go through UserService.cfc which will hold your business logic and application rules etc.</p>
+
+<p>This is a nice way to store related files and control access to them to ensure your application rules are kept intact.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-12-08T17:36:35+11:00" pubdate data-updated="true">Dec 8<span>th</span>, 2007</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2007/12/08/enforcing-your-service-as-an-api//page/16/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -776,81 +877,6 @@ I&#8217;ve been annoyed many times with the whole chr(10)chr(13) on Windows vs c
 </div>
 	
 		<div class="comments"><a href="/2007/10/08/cant-set-a-scheduled-task-end-date//page/16/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2007/10/05/createodbcdate-returns-time-as-well/">
-		
-			createODBCDate() Returns &#8216;Time&#8217; as Well?</a>
-	</h2>
-	<div class="entry-content">
-		<p>Recently I was just comparing 2 dates (one from a query and the other was now()) using the <a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=functions_c-d_19.html#1102341">createODBCDate()</a> and <a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=functions_c-d_26.html">dateCompare()</a> functions.</p>
-
-<p>I was using the createODBCDate() function because I only wanted the &#8216;date&#8217; part of a date object, not the &#8216;time&#8217;. More than likely I should have been using <a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=functions-pt0_05.html#1098968">dateFormat()</a>, but that&#8217;s another story :)</p>
-
-<p>I had the following:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">dateCompare</span><span class="p">(</span><span class="nx">createODBCDate</span><span class="p">(</span><span class="nx">q</span><span class="p">.</span><span class="nx">DateTimeCreated</span><span class="p">),</span> <span class="nx">createODBCDate</span><span class="p">(</span><span class="nx">now</span><span class="p">()))</span> <span class="nx">EQ</span> <span class="mi">0</span><span class="o">&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The problem was I kept getting -1 returned, meaning that &#8216;q.DateTimeCreated&#8217; was less than &#8216;now()&#8217;. As &#8216;q.DateTimeCreated&#8217; was technically created before &#8216;now()&#8217; (same day but an earlier &#8216;time&#8217;) it <strong>is</strong> actually <em>less than</em>, but I only wanted to compare the date&#8230;not the time. When I dumped both date objects I got:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="p">{</span><span class="nx">d</span> <span class="s1">&#39;2007-10-05&#39;</span><span class="p">}</span>
-</span><span class='line'><span class="p">{</span><span class="nx">d</span> <span class="s1">&#39;2007-10-05&#39;</span><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Looks the same to me&#8230;</p>
-
-<p>I <em>think</em> that those date objects actually have the &#8216;time&#8217; in them as well, they&#8217;re just not being displayed on cfdump or cfoutput. This seems strange especially considering there is a createODBCDateTime() function as well.</p>
-
-<p>My fix was to do what I probably should have done in the first place; use dateFormat()</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">dateCompare</span><span class="p">(</span><span class="nx">dateFormat</span><span class="p">(</span><span class="nx">q</span><span class="p">.</span><span class="nx">DateTimeCreated</span><span class="p">),</span> <span class="nx">dateFormat</span><span class="p">(</span><span class="nx">now</span><span class="p">()))</span> <span class="nx">EQ</span> <span class="mi">0</span><span class="o">&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>That did the trick!</p>
-
-<p>Now the only thing bothering me is whether the createODBCDate() function actually <em>does</em> return the &#8216;time&#8217; as well&#8230;or was something else the culprit?</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2007-10-05T15:30:28+10:00" pubdate data-updated="true">Oct 5<span>th</span>, 2007</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2007/10/05/createodbcdate-returns-time-as-well//page/16/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

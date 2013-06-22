@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="How many times have you wanted to return a list of grouped values from a database, in a single column, per row of your recordset? Actually I&#8217; &hellip;">
+	<meta name="description" content="svn:ignore is a great way to exclude certain files or folders from being added to your subversion repository. Typically I&#8217;ll manage this via &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,113 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2012/07/10/editing-svnignore-on-the-terminal/">
+		
+			Editing Svn:ignore on the Terminal</a>
+	</h2>
+	<div class="entry-content">
+		<p><em>svn:ignore</em> is a great way to exclude certain files or folders from being added to your subversion repository. Typically I&#8217;ll manage this via an IDE plugin like subclipse (in Eclipse), but if you want to do it via the terminal instead (bash)&#8230;here&#8217;s how.</p>
+
+<h2>Crappy way</h2>
+
+<p>You can add single values to your svn:ignore by running this command either at the root of your project or wherever directory you want the ignore to take effect:</p>
+
+<pre><code>svn propset svn:ignore "*.project" .
+</code></pre>
+
+<p>However that command seems not only to add an ignore rule, but also it clears any rules you may have had on that directory and only inserts the single rule you just specified. No good.</p>
+
+<h2>Better way</h2>
+
+<p>There are a couple of ways to enter multiple ignore values into your ignore file, I like simply opening up the ignore editor. Try this command:</p>
+
+<pre><code>svn propedit svn:ignore .
+</code></pre>
+
+<p>If you get the following error it means you haven&#8217;t associated an editor with svn:ignore</p>
+
+<blockquote><p>svn: None of the environment variables SVN_EDITOR, VISUAL or EDITOR are set, and no &#8216;editor-cmd&#8217; run-time configuration option was found</p></blockquote>
+
+<p>You can quickly associate the editor with nano (or another editor of your choice) by running:</p>
+
+<pre><code>export SVN_EDITOR=nano
+</code></pre>
+
+<p>That&#8217;s not ideal as it&#8217;ll only work in the current bash session, when you close your terminal window that export will be lost. The best bet is to add it to your ~/.bash_profile (or ~/.bash_login).</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd ~
+</span><span class='line'>nano .bash_profile
+</span><span class='line'>export SVN_EDITOR=nano</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now you&#8217;ll always be able to edit your svn:ignore file. So let&#8217;s try again:</p>
+
+<pre><code>svn propedit svn:ignore .
+</code></pre>
+
+<p>Nano (or whatever editor you specified) should open allowing you to enter whatever you want :)</p>
+
+<p>Here&#8217;s a simple list of mine:</p>
+
+<pre><code>*.DS_Store  
+*.project  
+*.sublime-project  
+*.sublime-workspace  
+htdocs/WEB-INF
+</code></pre>
+
+<p>If you actually want to see all your files (including those that you&#8217;ve ignored) via the terminal, run:</p>
+
+<pre><code>svn status --no-ignore
+</code></pre>
+
+<h2>Externals</h2>
+
+<p>Note that you can also edit any svn:externals using the same technique.</p>
+
+<pre><code>svn propedit svn:externals .
+</code></pre>
+
+<p>Remember that you need to be in the location of the directory that contains any externals for this to work properly.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-07-10T22:49:19+10:00" pubdate data-updated="true">Jul 10<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/svn/'>SVN</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2012/07/10/editing-svnignore-on-the-terminal//page/4/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -813,101 +920,6 @@
 </div>
 	
 		<div class="comments"><a href="/2011/08/17/customising-search-results-from-google-cse//page/4/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2011/08/17/farcry-plugin-webtop-tools/">
-		
-			FarCry Plugin - Webtop Tools</a>
-	</h2>
-	<div class="entry-content">
-		<p>We&#8217;re starting to compile a list of internal tools used when developing a FarCry application. I thought it might be simpler to create a small FarCry plugin to keep them all in the same place, makes it easier to use across multiple projects.</p>
-
-<p><a href="https://github.com/michaelsharman/lcwebtoptools">The plugin</a> currently contains 2 scripts:</p>
-
-<ul>
-<li>FarCry database diff (MySQL only at this stage)</li>
-<li>Content Object Meta</li>
-</ul>
-
-
-<p>The database diff looks for case-sensitivity differences between your ColdFusion components and the actual MySQL table names (MySQL only). Historically we&#8217;ve had issues because we are on Linux, this tool has helped quickly iron out any differences in &#8220;case&#8221;.</p>
-
-<p>The Content Object Meta assists in finding information about content of any &#8220;type&#8221; in FarCry, based on the title, objectId or friendly URL. What does this mean? Well any &#8220;content object&#8221; you want information on can be found using this tool. Whether you have an objectId and you don&#8217;t know if it belongs to dmNavigation, dmHTML, dmNews or a custom type. Or you might have part of a friendly URL or content label/title. This tool can help tell you what the content type is, whether it&#8217;s approved, where it sits in the site tree (if relevant) etc.</p>
-
-<p>For example; if I wanted to know everything in FarCry that had a label LIKE &#8216;credential&#8217; (wildcards are automatically added to your search term) I might get results like the following:</p>
-
-<p><img src="/images/uploads/2011/08/contenttitle.png" alt="" /></p>
-
-<p>From that initial resultset, if I clicked on an objectid for dmNavigation:</p>
-
-<p><img src="/images/uploads/2011/08/objectid.png" alt="" /></p>
-
-<p>Or if I clicked on an objectid for dmHTML:</p>
-
-<p><img src="/images/uploads/2011/08/objectid_dmhtml.png" alt="" /></p>
-
-<p>Note that there is a collapsed cfdump that you can expand for further info.</p>
-
-<h2>Requirements</h2>
-
-<p>Railo 3.2+ or ColdFusion 7+
-FarCry 6+
-MySQL 5+</p>
-
-<h2>Installation</h2>
-
-<p>&#8220;Official&#8221; notes on installing FarCry plugins can be found here: <a href="https://farcry.jira.com/wiki/pages/viewpage.action?pageId=12943398">https://farcry.jira.com/wiki/pages/viewpage.action?pageId=12943398</a></p>
-
-<p>It&#8217;s pretty simple though:</p>
-
-<ul>
-<li>add the &#8220;lcwebtoptools&#8221; directory from git into /farcry/plugins/</li>
-<li>add &#8220;lcwebtoptools&#8221; to THIS.plugins in farcryConstructor.cfm (in your project webroot)</li>
-</ul>
-
-
-<p>e.g.</p>
-
-<pre><code>&lt;cfset THIS.plugins = "farcrycms,lcwebtoptools"&gt;
-</code></pre>
-
-<p>Restart your app, that&#8217;s it. No coapi changes need to be made. To access the current tools, go to the &#8220;Admin&#8221; tab and choose &#8220;Webtop Tools&#8221; from the drop down.</p>
-
-<p>The plugin is <a href="https://github.com/michaelsharman/lcwebtoptools">hosted on github</a>, for a direct download to the zip <a href="https://github.com/michaelsharman/lcwebtoptools/zipball/master">click here</a>.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-08-17T10:38:33+10:00" pubdate data-updated="true">Aug 17<span>th</span>, 2011</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/farcry/'>Farcry</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2011/08/17/farcry-plugin-webtop-tools//page/4/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

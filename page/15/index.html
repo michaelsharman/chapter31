@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="If I were a betting man I&#8217;d bet a LOT of money (and perhaps even the house!) that you&#8217;ve done this before. Try to spot the error in the &hellip;">
+	<meta name="description" content="Having &#8216;tag insight&#8217; is a great part of any IDE, one which almost every developer takes advantage of irrespective of which editor they &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,66 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/02/28/changing-the-cfeclipse-tag-insight-delay-time/">
+		
+			Changing the Cfeclipse &#8216;Tag Insight&#8217; Delay Time</a>
+	</h2>
+	<div class="entry-content">
+		<p>Having &#8216;tag insight&#8217; is a great part of any IDE, one which almost every developer takes advantage of irrespective of which editor they use. Tag insight of course being when your IDE provides information (attribute or return information etc) about the tag or function you are currently typing.</p>
+
+<p>Normally when writing a function or tag like <cfhttp>, when you hit the space bar and wait a second a little popup appears detailing exactly what you can do with this tag.</p>
+
+<p><a href="/images/uploads/2008/02/cfhttp_insight.jpg"><img src="/images/uploads/2008/02/cfhttp_insight.thumbnail.jpg" alt="cfhttp tag insight" /></a></p>
+
+<p>Now this is all lovely except I find that the <em>default time</em> it takes for this to appear (which is 500ms in cfeclipse) is just a little too short for me so that it is more annoying than helpful as it constantly appears when I don&#8217;t want it to (like after pasting some code it pops up to display all local variables etc).</p>
+
+<p><a href="/images/uploads/2008/02/taginsight.jpg"><img src="/images/uploads/2008/02/taginsight.thumbnail.jpg" alt="tag insight" /></a></p>
+
+<p>Luckily it&#8217;s a snap to change these little things :)</p>
+
+<p>Window -> Preferences -> CFEclipse -> Editor</p>
+
+<p><a href="/images/uploads/2008/02/preferences.jpg"><img src="/images/uploads/2008/02/preferences.thumbnail.jpg" alt="cfeclipse preferences" /></a></p>
+
+<p>Then change the <em>Insight Delay</em> value. I now have 1500 which is working nicely.</p>
+
+<p>Don&#8217;t forget if this is too slow for you (when you actually DO want the tag insight and you find yourself waiting for it) then you can simply hit ctrl + space to launch the tag insight immediately.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-02-28T11:56:02+11:00" pubdate data-updated="true">Feb 28<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/cfeclipse/'>cfeclipse</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/02/28/changing-the-cfeclipse-tag-insight-delay-time//page/15/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -935,107 +995,6 @@
 </div>
 	
 		<div class="comments"><a href="/2007/12/18/mylyn-plugin-for-aptana//page/15/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2007/12/08/enforcing-your-service-as-an-api/">
-		
-			Enforcing Your Service as an API</a>
-	</h2>
-	<div class="entry-content">
-		<p>A lot ColdFusion developers are moving (or already there) towards a more OOP style of development. They have an understanding of and use several techniques and design patterns when building applications, particularly when it relates to things such as MVC and n-tiered development.</p>
-
-<p>A small part of this is grouping related files withing separate directories in you application. Take &#8216;User&#8217; related files as an example where you&#8217;ll probably need some kind of a business object (User.cfc), something to store business/application logic (service or manager) and typically some files to handle database access.</p>
-
-<p>With that in mind most will recognise the following CFC types (as they pertain at least to the ColdFusion community):</p>
-
-<ul>
-<li><p>Bean</p></li>
-<li><p>Service (or manager)</p></li>
-<li><p>Gateway</p></li>
-<li><p>DAO</p></li>
-</ul>
-
-
-<p>This is not to get into whether you should use 5:1 components for every different &#8216;thing&#8217; in your application (the 5th might be a controller), or whether you should have a &#8216;Gateway&#8217; AND a &#8216;DAO&#8217; for data access. Instead I&#8217;m talking about how you might layout your files and control access to the methods contained within them.</p>
-
-<p>A typical structure people use is the reverse domain naming (which can prevent naming conflicts with other similarly named files), so for me I might have the following:</p>
-
-<p>/com/chapter31/myApp/user</p>
-
-<p>The &#8216;user&#8217; directory could hold the following cfc&#8217;s:</p>
-
-<ul>
-<li><p>User.cfc</p></li>
-<li><p>UserService.cfc</p></li>
-<li><p>UserGateway.cfc</p></li>
-<li><p>UserDAO.cfc</p></li>
-</ul>
-
-
-<p>How do I manage access to methods contained within the Gateway or DAO? Often you may not want developers being able to access the getUsers() method inside UserGateway.cfc directly. This might be for different reasons, typically there may be some business logic required or a bean which is to be returned instead of a query etc. Either way, developers shouldn&#8217;t access these data access files directly.</p>
-
-<p>A nice easy way to get around this is to make all &#8216;public&#8217; methods inside the components you want to restrict access to, &#8216;package&#8217;, which means that they are only accessible from files which reside within the same directory (/user).</p>
-
-<p>An example method within UserGateway.cfc might look like this:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cffunction</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;getUsers&quot;</span> <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="nx">access</span><span class="o">=</span><span class="s2">&quot;package&quot;</span> <span class="nx">returntype</span><span class="o">=</span><span class="s2">&quot;query&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>  
-</span><span class='line'>  <span class="c1">//query the users table in your database below</span>
-</span><span class='line'>  
-</span><span class='line'><span class="o">&lt;</span><span class="err">/cffunction&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>If you tried to access this method from outside the &#8216;user&#8217; directory (say index.cfm within the webroot) you will get an error saying something like</p>
-
-<p><em>&#8220;The package method &#8216;getUsers&#8217; in component /user/UserGateway.cfc cannot be accessed from /index.cfm.&#8221;</em></p>
-
-<p>This is because index.cfm does not reside within the &#8216;user&#8217; directory and because the method&#8217;s access modifier is set to &#8216;package&#8217;, access is restricted.</p>
-
-<p>So how do we now get access to this method?</p>
-
-<p>A common approach is to have your Service act as an API to the other cfc&#8217;s within the &#8216;user&#8217; directory by setting the access modifier to &#8216;public&#8217; inside your UserService.cfc. Now whenever you need to call Gateway or DAO methods, you need to go through UserService.cfc which will hold your business logic and application rules etc.</p>
-
-<p>This is a nice way to store related files and control access to them to ensure your application rules are kept intact.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2007-12-08T17:36:35+11:00" pubdate data-updated="true">Dec 8<span>th</span>, 2007</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2007/12/08/enforcing-your-service-as-an-api//page/15/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

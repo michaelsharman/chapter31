@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Categorising content with keywords (or &#8220;tags&#8221;) is a well known concept these days and it&#8217;s good to know that FarCry has had this &hellip;">
+	<meta name="description" content="I&#8217;ve wanted to be able to control the sort order of menu and menuitems in the customadmin.xml (or equivalent) file for quite a while but hadn &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,67 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2009/05/29/setting-the-sort-order-for-custom-admin-items/">
+		
+			Setting the Sort Order for Custom Admin Items in FarCry</a>
+	</h2>
+	<div class="entry-content">
+		<p>I&#8217;ve wanted to be able to control the sort order of <em>menu</em> and <em>menuitems</em> in the customadmin.xml (or equivalent) file for quite a while but hadn&#8217;t found how to do it. Only today did I find the ability, I believe it&#8217;s a <a href="http://farcrycms.org/">FarCry</a> 5+ feature which was why I didn&#8217;t see it before.</p>
+
+<p>The answer is simple, just add a &#8220;sequence&#8221; attribute to your menu or menuitem tag:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">menu</span> <span class="nx">mergeType</span><span class="o">=</span><span class="s2">&quot;merge&quot;</span> <span class="nx">sequence</span><span class="o">=</span><span class="s2">&quot;1&quot;</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;farcry_studentsonlineadminSubSection&quot;</span> <span class="nx">label</span><span class="o">=</span><span class="s2">&quot;Homepage Content&quot;</span> <span class="nx">labelType</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">menuitem</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;boardlinks&quot;</span> <span class="nx">sequence</span><span class="o">=</span><span class="s2">&quot;1&quot;</span> <span class="nx">label</span><span class="o">=</span><span class="s2">&quot;Board Links&quot;</span> <span class="nx">link</span><span class="o">=</span><span class="s2">&quot;/admin/customadmin.cfm?module=customlists/boardlinks_data.cfm&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">menuitem</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;boardlinks_sort&quot;</span> <span class="nx">sequence</span><span class="o">=</span><span class="s2">&quot;2&quot;</span> <span class="nx">label</span><span class="o">=</span><span class="s2">&quot;Board Links Sort Order&quot;</span> <span class="nx">link</span><span class="o">=</span><span class="s2">&quot;/admin/customadmin.cfm?module=customlists/boardlinks_sort.cfm&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">menuitem</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;calendar&quot;</span> <span class="nx">sequence</span><span class="o">=</span><span class="s2">&quot;3&quot;</span> <span class="nx">label</span><span class="o">=</span><span class="s2">&quot;Calendar&quot;</span> <span class="nx">link</span><span class="o">=</span><span class="s2">&quot;/admin/customadmin.cfm?module=customlists/lu_calendar.cfm&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">menuitem</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;faq&quot;</span> <span class="nx">sequence</span><span class="o">=</span><span class="s2">&quot;4&quot;</span> <span class="nx">label</span><span class="o">=</span><span class="s2">&quot;FAQ&#39;s&quot;</span> <span class="nx">link</span><span class="o">=</span><span class="s2">&quot;/admin/customadmin.cfm?module=customlists/lu_faq.cfm&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/menu&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can <a href="http://docs.farcrycms.org/display/FCDEV50/Inline+Webtop+Documentation">read more</a> cool things you can do with your custom objectadmin on the <a href="http://docs.farcrycms.org/">FarCry docs site</a>.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-05-29T10:56:46+10:00" pubdate data-updated="true">May 29<span>th</span>, 2009</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/farcry/'>Farcry</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2009/05/29/setting-the-sort-order-for-custom-admin-items//page/8/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -964,99 +1025,6 @@
 </div>
 	
 		<div class="comments"><a href="/2008/11/22/cfqueryparam-does-not-work-in-order-by-what-are-my-options//page/8/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2008/11/19/logging-all-mysql-queries-on-mac-osx/">
-		
-			Logging All MySQL Queries on Mac OSX</a>
-	</h2>
-	<div class="entry-content">
-		<p><a href="http://www.lynchconsulting.com.au/go/blog">We&#8217;ve</a> been doing some debugging of a 3rd party application recently where we had some possible performance concerns under a certain load and/or size of data in the database. What we wanted to know was exactly which queries (and how many) where hitting the database on a specific page request.</p>
-
-<p>The simplest method was to turn on logging of all queries on the local MySQL database, this is turned off by default as like most debugging techniques it adds overhead. To do this I needed to make a small change in the config file and restart MySQL. However it seems that a Mac installation of MySQL doesn&#8217;t create this config file by default which is a little confusing.</p>
-
-<p>Here are the steps taken to turn on logging of all queries:</p>
-
-<p><strong>Create a &#8220;my.cnf&#8221; file (if it doesn&#8217;t already exist)</strong></p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>sudo touch /etc/my.cnf</span></code></pre></td></tr></table></div></figure>
-
-
-<p><strong>Add an entry to my.cnf telling MySQL where to write the log entries</strong></p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>[mysqld]
-</span><span class='line'>log=/var/log/mysqld.log</span></code></pre></td></tr></table></div></figure>
-
-
-<p><strong>Create the log file</strong></p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>sudo touch /var/log/mysqld.log</span></code></pre></td></tr></table></div></figure>
-
-
-<p><strong>Restart MySQL</strong></p>
-
-<p>To view the logs simply open mysqld.log in your favourite editor, or you can tail it in the terminal:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>tail -f /var/log/mysqld.log</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This is a really handy way to see all the database traffic from your application. We also use MySQL Adminstrator to <a href="http://www.chapter31.com/2008/02/21/using-mysql-administrator-to-view-real-time-stats/">view some real-time stats</a> in terms of the total number of queries being executed.</p>
-
-<p>Remember once you&#8217;ve finished your debugging to turn logging off in my.cnf, I just comment it out (with a #) and restart MySQL:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="err">#</span><span class="p">[</span><span class="nx">mysqld</span><span class="p">]</span>
-</span><span class='line'><span class="err">#</span><span class="nx">log</span><span class="o">=</span><span class="err">/var/log/mysqld.log</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><strong>Note:</strong> An easy way to check if you do have a my.cnf file is to open up <a href="http://dev.mysql.com/downloads/gui-tools/5.0.html">MySQL Administrator</a> and click the &#8220;Options&#8221; tab. If you get an alert saying &#8220;Configuration File not Found&#8221; then you know you need to go and create one!</p>
-
-<p><a href="/images/uploads/2008/11/picture-11.png"><img src="/images/uploads/2008/11/picture-11-300x132.png" alt="" /></a></p>
-
-<p>Once you have a my.cnf file you have access to the wide array of config options all from MySQL Administrator:</p>
-
-<p><a href="/images/uploads/2008/11/picture-3.png"><img src="/images/uploads/2008/11/picture-3-300x204.png" alt="" /></a></p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-11-19T23:19:00+11:00" pubdate data-updated="true">Nov 19<span>th</span>, 2008</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/databases/'>Databases</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2008/11/19/logging-all-mysql-queries-on-mac-osx//page/8/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

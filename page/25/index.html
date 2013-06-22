@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="bitesizestandards have a nice article on &#8216;semantic anchors&#8217; which are used to link to different areas of the current page you are &hellip;">
+	<meta name="description" content="Every wanted to truncate the transaction log of a MS SQL database? We do that all the time when moving a database from one server to the other. &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,118 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2006/07/26/truncating-mssql-transaction-log/">
+		
+			Truncating MSSQL Transaction Log</a>
+	</h2>
+	<div class="entry-content">
+		<p>Every wanted to truncate the transaction log of a MS SQL database? We do that all the time when moving a database from one server to the other. Remember that the transaction log can take up a LOT of space in the backup file which you don&#8217;t need when you are simply moving a database to a new server (and when you don&#8217;t have the option to simply DTS).</p>
+
+<p>Open up Query Analyser and run the following, substituting real database, file and log names.</p>
+
+<p>I&#8217;m using these names in the example:<br/>
+Database name: [myDatabase]<br/>
+Data file: [myDatabase_Data]<br/>
+Log file: [myDatabase_Log]</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="n">Use</span> <span class="n">Master</span>
+</span><span class='line'><span class="k">go</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">Backup</span> <span class="n">Log</span> <span class="p">[</span><span class="n">myDatabase</span><span class="p">]</span> <span class="k">with</span> <span class="n">truncate_only</span>
+</span><span class='line'><span class="k">go</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">Use</span> <span class="p">[</span><span class="n">myDatabase</span><span class="p">]</span>
+</span><span class='line'><span class="k">go</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">DBCC</span> <span class="n">shrinkfile</span> <span class="p">([</span><span class="n">myDatabase_Log</span><span class="p">],</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'><span class="k">go</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">-- data</span>
+</span><span class='line'><span class="n">Use</span> <span class="n">Master</span>
+</span><span class='line'><span class="k">go</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">Backup</span> <span class="n">Log</span> <span class="p">[</span><span class="n">myDatabase</span><span class="p">]</span> <span class="k">with</span> <span class="n">truncate_only</span>
+</span><span class='line'><span class="k">go</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">Use</span> <span class="p">[</span><span class="n">myDatabase</span><span class="p">]</span>
+</span><span class='line'><span class="k">go</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">DBCC</span> <span class="n">shrinkfile</span> <span class="p">([</span><span class="n">myDatabase_Data</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
+</span><span class='line'><span class="k">go</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">-- Get fileid</span>
+</span><span class='line'><span class="n">use</span> <span class="p">[</span><span class="n">myDatabase</span><span class="p">]</span>
+</span><span class='line'><span class="k">go</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="n">sysfiles</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-07-26T15:32:10+10:00" pubdate data-updated="true">Jul 26<span>th</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/databases/'>Databases</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2006/07/26/truncating-mssql-transaction-log//page/25/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -710,50 +822,6 @@
 </div>
 	
 		<div class="comments"><a href="/2006/03/31/how-to-find-the-size-of-a-directory//page/25/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2006/03/29/how-do-i-make-sure-a-string-is-safe-to-use-with-javascript/">
-		
-			How Do I Make Sure a String Is Safe to Use With JavaScript?</a>
-	</h2>
-	<div class="entry-content">
-		<p>An <a href="http://www.coldfusioncookbook.com/entry/78/How-do-I-make-sure-a-string-is-safe-to-use-with-JavaScript?">article</a> from <a href="http://www.coldfusioncookbook.com/">coldfusion cookbook</a> using <a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/00000543.htm#1106993">jSStringFormat()</a>:</p>
-
-<p>&#8220;If you are dynamically populating a JavaScript variable, you may find that your code breaks with &#8220;unterminated string constant&#8221; or similar error messages. This is probably a case of your JavaScript variables containing characters that are considers to be &#8220;special&#8221; characters by JavaScript. You will need to &#8220;escape&#8221; these special characters so that JavaScript can process them.&#8221;</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2006-03-29T12:45:09+11:00" pubdate data-updated="true">Mar 29<span>th</span>, 2006</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2006/03/29/how-do-i-make-sure-a-string-is-safe-to-use-with-javascript//page/25/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

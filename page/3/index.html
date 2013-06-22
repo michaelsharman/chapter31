@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="FW/1 gives you a nice, clean way to manage framework configuration properties. They&#8217;re all wrapped up inside Application.cfc in a structure &hellip;">
+	<meta name="description" content="I recently needed to generate a powerset (a set of all subsets) of 3 HTML select boxes. The idea was that a user could choose 1-many options from &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,122 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2012/10/04/generating-a-powerset-in-coldfusion/">
+		
+			Generating a Powerset in ColdFusion</a>
+	</h2>
+	<div class="entry-content">
+		<p>I recently needed to generate a <a href="http://en.wikipedia.org/wiki/Power_set">powerset</a> (a set of all subsets) of 3 HTML select boxes. The idea was that a user could choose 1-many options from each box, and they had to choose a value from all 3 boxes (none could be empty).</p>
+
+<p>Select #1 had 4 values<br/>
+Select #2 had 7 values<br/>
+Select #3 had 13 values</p>
+
+<p>Now, I needed to generate every possible permutation for these 3 select boxes based on the rules I defined above. That meant the possible number of combinations for each box was:</p>
+
+<p>Select #1 had 16<em> possible combinations<br/>
+Select #2 had 128</em> possible combinations<br/>
+Select #3 had 8192* possible combinations</p>
+
+<p>* It was actually 1 less than that, because a powerset take into consideration an empty selection, so in reality the numbers would have been 15, 127 and 8191.</p>
+
+<p>This was calculated using 2n, where <em>n</em> is an number (integer) of options in a set, so 24, 27 and 213</p>
+
+<p>Now, how did I go about calculating these powersets? I cheated :smile:</p>
+
+<p>I grabbed a JavaScript function from <a href="http://rosettacode.org/wiki/Power_set#JavaScript">Rosetta Code</a> and ported it to ColdFusion.</p>
+
+<p>Here is the function to generate a powerset from a set (array) of data:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kr">public</span> <span class="nx">array</span> <span class="kd">function</span> <span class="nx">calculate</span><span class="p">(</span><span class="nx">required</span> <span class="nx">array</span> <span class="nx">data</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">ps</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">];</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">d</span> <span class="o">=</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">data</span><span class="p">;</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">lenData</span> <span class="o">=</span> <span class="nx">arrayLen</span><span class="p">(</span><span class="nx">d</span><span class="p">);</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">lenPS</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="nx">LTE</span> <span class="nx">lenData</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>    <span class="nx">lenPS</span> <span class="o">=</span> <span class="nx">arrayLen</span><span class="p">(</span><span class="nx">ps</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">j</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">j</span> <span class="nx">LTE</span> <span class="nx">lenPS</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>      <span class="nx">arrayAppend</span><span class="p">(</span><span class="nx">ps</span><span class="p">,</span> <span class="nx">listAppend</span><span class="p">(</span><span class="nx">ps</span><span class="p">[</span><span class="nx">j</span><span class="p">],</span> <span class="nx">d</span><span class="p">[</span><span class="nx">i</span><span class="p">]));</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">return</span> <span class="nx">ps</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A sample powerset of 4 values (in this case 1,2,3,4) would be:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">Powerset</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Powerset</span><span class="p">();</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">res</span> <span class="o">=</span> <span class="nx">Powerset</span><span class="p">.</span><span class="nx">calculate</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]);</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">Outputs</span><span class="o">:</span>
+</span><span class='line'><span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="s2">&quot;1&quot;</span><span class="p">,</span><span class="s2">&quot;2&quot;</span><span class="p">,</span><span class="s2">&quot;1,2&quot;</span><span class="p">,</span><span class="s2">&quot;3&quot;</span><span class="p">,</span><span class="s2">&quot;1,3&quot;</span><span class="p">,</span><span class="s2">&quot;2,3&quot;</span><span class="p">,</span><span class="s2">&quot;1,2,3&quot;</span><span class="p">,</span><span class="s2">&quot;4&quot;</span><span class="p">,</span><span class="s2">&quot;1,4&quot;</span><span class="p">,</span><span class="s2">&quot;2,4&quot;</span><span class="p">,</span><span class="s2">&quot;1,2,4&quot;</span><span class="p">,</span><span class="s2">&quot;3,4&quot;</span><span class="p">,</span><span class="s2">&quot;1,3,4&quot;</span><span class="p">,</span><span class="s2">&quot;2,3,4&quot;</span><span class="p">,</span><span class="s2">&quot;1,2,3,4&quot;</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>By the way, my total combination across all 3 sets was a mere 16,777,216.</p>
+
+<p><a href="https://github.com/michaelsharman/Powerset">Grab from github</a> if you prefer the CFC</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-04T21:20:46+10:00" pubdate data-updated="true">Oct 4<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2012/10/04/generating-a-powerset-in-coldfusion//page/3/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -912,113 +1028,6 @@
 </div>
 	
 		<div class="comments"><a href="/2012/08/06/turning-off-sessions-for-non-https-traffic//page/3/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2012/07/10/editing-svnignore-on-the-terminal/">
-		
-			Editing Svn:ignore on the Terminal</a>
-	</h2>
-	<div class="entry-content">
-		<p><em>svn:ignore</em> is a great way to exclude certain files or folders from being added to your subversion repository. Typically I&#8217;ll manage this via an IDE plugin like subclipse (in Eclipse), but if you want to do it via the terminal instead (bash)&#8230;here&#8217;s how.</p>
-
-<h2>Crappy way</h2>
-
-<p>You can add single values to your svn:ignore by running this command either at the root of your project or wherever directory you want the ignore to take effect:</p>
-
-<pre><code>svn propset svn:ignore "*.project" .
-</code></pre>
-
-<p>However that command seems not only to add an ignore rule, but also it clears any rules you may have had on that directory and only inserts the single rule you just specified. No good.</p>
-
-<h2>Better way</h2>
-
-<p>There are a couple of ways to enter multiple ignore values into your ignore file, I like simply opening up the ignore editor. Try this command:</p>
-
-<pre><code>svn propedit svn:ignore .
-</code></pre>
-
-<p>If you get the following error it means you haven&#8217;t associated an editor with svn:ignore</p>
-
-<blockquote><p>svn: None of the environment variables SVN_EDITOR, VISUAL or EDITOR are set, and no &#8216;editor-cmd&#8217; run-time configuration option was found</p></blockquote>
-
-<p>You can quickly associate the editor with nano (or another editor of your choice) by running:</p>
-
-<pre><code>export SVN_EDITOR=nano
-</code></pre>
-
-<p>That&#8217;s not ideal as it&#8217;ll only work in the current bash session, when you close your terminal window that export will be lost. The best bet is to add it to your ~/.bash_profile (or ~/.bash_login).</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>cd ~
-</span><span class='line'>nano .bash_profile
-</span><span class='line'>export SVN_EDITOR=nano</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Now you&#8217;ll always be able to edit your svn:ignore file. So let&#8217;s try again:</p>
-
-<pre><code>svn propedit svn:ignore .
-</code></pre>
-
-<p>Nano (or whatever editor you specified) should open allowing you to enter whatever you want :)</p>
-
-<p>Here&#8217;s a simple list of mine:</p>
-
-<pre><code>*.DS_Store  
-*.project  
-*.sublime-project  
-*.sublime-workspace  
-htdocs/WEB-INF
-</code></pre>
-
-<p>If you actually want to see all your files (including those that you&#8217;ve ignored) via the terminal, run:</p>
-
-<pre><code>svn status --no-ignore
-</code></pre>
-
-<h2>Externals</h2>
-
-<p>Note that you can also edit any svn:externals using the same technique.</p>
-
-<pre><code>svn propedit svn:externals .
-</code></pre>
-
-<p>Remember that you need to be in the location of the directory that contains any externals for this to work properly.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-07-10T22:49:19+10:00" pubdate data-updated="true">Jul 10<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/svn/'>SVN</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2012/07/10/editing-svnignore-on-the-terminal//page/3/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 
