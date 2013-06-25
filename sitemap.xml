@@ -204,7 +204,7 @@
     </url>
     <url>
         <loc>http://chapter31.com/2006/11/03/blogging-problems-my-php-host/</loc>
-        <lastmod>2013-04-28T22:16:39+10:00</lastmod>
+        <lastmod>2013-06-25T12:41:39+10:00</lastmod>
     </url>
     <url>
         <loc>http://chapter31.com/2006/11/06/do-you-know-about-alexa-internet/</loc>
@@ -236,7 +236,7 @@
     </url>
     <url>
         <loc>http://chapter31.com/2006/11/15/wordpress-rss-feed-validation/</loc>
-        <lastmod>2013-04-28T22:16:39+10:00</lastmod>
+        <lastmod>2013-06-25T12:41:38+10:00</lastmod>
     </url>
     <url>
         <loc>http://chapter31.com/2006/11/15/getting-tag-functionality-in-cfscript/</loc>
@@ -470,7 +470,7 @@
         <loc>
             http://chapter31.com/2008/01/24/dont-ever-user-wwwtemplatesbrowsercom-for-wordpress-themes/
         </loc>
-        <lastmod>2013-04-28T22:16:39+10:00</lastmod>
+        <lastmod>2013-06-25T12:41:38+10:00</lastmod>
     </url>
     <url>
         <loc>http://chapter31.com/2008/02/07/the-only-valid-measurement-of-code-quality/</loc>
@@ -556,7 +556,7 @@
     </url>
     <url>
         <loc>http://chapter31.com/2008/03/24/installing-php5-with-mysql-extensions/</loc>
-        <lastmod>2013-04-28T22:16:39+10:00</lastmod>
+        <lastmod>2013-06-25T12:41:37+10:00</lastmod>
     </url>
     <url>
         <loc>http://chapter31.com/2008/03/28/evaluating-coldfusion-unscoped-query-variables/</loc>
@@ -682,7 +682,7 @@
     </url>
     <url>
         <loc>http://chapter31.com/2008/07/25/wordpress-for-mobile-devices/</loc>
-        <lastmod>2013-04-28T22:16:39+10:00</lastmod>
+        <lastmod>2013-06-25T12:41:37+10:00</lastmod>
     </url>
     <url>
         <loc>http://chapter31.com/2008/07/30/latest-firefox-breaks-farcry-3-context-menu/</loc>
@@ -702,7 +702,7 @@
         <loc>
             http://chapter31.com/2008/08/09/adding-subscriptions-to-comments-for-your-wordpress-theme/
         </loc>
-        <lastmod>2013-04-28T22:16:39+10:00</lastmod>
+        <lastmod>2013-06-25T12:41:37+10:00</lastmod>
     </url>
     <url>
         <loc>http://chapter31.com/2008/08/14/getmooh-automated-callback-service/</loc>
@@ -820,7 +820,7 @@
     </url>
     <url>
         <loc>http://chapter31.com/2008/12/13/development-configuration-tips-for-ubuntu/</loc>
-        <lastmod>2013-04-28T22:16:39+10:00</lastmod>
+        <lastmod>2013-06-25T12:41:36+10:00</lastmod>
     </url>
     <url>
         <loc>http://chapter31.com/2009/05/28/setting-a-label-property-tip-for-farcry-5/</loc>
@@ -936,11 +936,11 @@
     </url>
     <url>
         <loc>http://chapter31.com/2011/05/11/fancybox-for-wordpress-plugin-not-working/</loc>
-        <lastmod>2013-04-28T22:35:39+10:00</lastmod>
+        <lastmod>2013-06-25T12:41:36+10:00</lastmod>
     </url>
     <url>
         <loc>http://chapter31.com/2011/05/11/wordpress-detecting-the-categories-of-a-post/</loc>
-        <lastmod>2013-04-28T22:16:39+10:00</lastmod>
+        <lastmod>2013-06-25T12:41:36+10:00</lastmod>
     </url>
     <url>
         <loc>
@@ -1092,13 +1092,13 @@
         <loc>
             http://chapter31.com/2013/05/06/date-timezone-error-when-upgrading-to-php-5-dot-3-plus/
         </loc>
-        <lastmod>2013-05-09T17:56:09+10:00</lastmod>
+        <lastmod>2013-06-25T12:41:35+10:00</lastmod>
     </url>
     <url>
         <loc>
             http://chapter31.com/2013/05/06/installing-php-5-dot-4-plus-from-source-on-mac-mountain-lion/
         </loc>
-        <lastmod>2013-06-02T18:56:54+10:00</lastmod>
+        <lastmod>2013-06-25T12:41:35+10:00</lastmod>
     </url>
     <url>
         <loc>http://chapter31.com/2013/05/08/migrating-from-bitbucket-to-github/</loc>
@@ -1116,7 +1116,7 @@
         <loc>
             http://chapter31.com/2013/05/29/installing-xdebug-on-mac-mountain-lion-10-dot-8-3/
         </loc>
-        <lastmod>2013-06-03T11:26:10+10:00</lastmod>
+        <lastmod>2013-06-25T12:41:35+10:00</lastmod>
     </url>
     <url>
         <loc>http://chapter31.com/2013/06/01/base16-colour-scheme-for-hackers/</loc>
@@ -1124,11 +1124,11 @@
     </url>
     <url>
         <loc>http://chapter31.com/2013/06/02/installing-apc-in-php-5-dot-4-x-on-mac-osx/</loc>
-        <lastmod>2013-06-02T17:53:25+10:00</lastmod>
+        <lastmod>2013-06-25T12:41:34+10:00</lastmod>
     </url>
     <url>
         <loc>http://chapter31.com/2013/06/03/php-composer-error-cannot-redeclare-class/</loc>
-        <lastmod>2013-06-03T11:11:26+10:00</lastmod>
+        <lastmod>2013-06-25T12:41:34+10:00</lastmod>
     </url>
     <url>
         <loc>http://chapter31.com/2013/06/08/error-writing-git-commit-messages-with-vi/</loc>
@@ -1146,11 +1146,11 @@
     </url>
     <url>
         <loc>http://chapter31.com/2013/06/21/php-script-name-returning-empty-string/</loc>
-        <lastmod>2013-06-21T12:14:43+10:00</lastmod>
+        <lastmod>2013-06-25T12:41:33+10:00</lastmod>
     </url>
     <url>
         <loc>http://chapter31.com/2013/06/22/careful-using-php-array-merge/</loc>
-        <lastmod>2013-06-22T23:19:20+10:00</lastmod>
+        <lastmod>2013-06-25T12:41:28+10:00</lastmod>
     </url>
     <url>
         <loc>http://chapter31.com/about/</loc>
@@ -1158,11 +1158,11 @@
     </url>
     <url>
         <loc>http://chapter31.com/blog/archives/</loc>
-        <lastmod>2013-06-22T23:19:20+10:00</lastmod>
+        <lastmod>2013-06-25T12:41:39+10:00</lastmod>
     </url>
     <url>
         <loc>http://chapter31.com/</loc>
-        <lastmod>2013-06-22T23:19:20+10:00</lastmod>
+        <lastmod>2013-06-25T12:41:39+10:00</lastmod>
     </url>
     <url>
         <loc>http://chapter31.com/projects/</loc>
