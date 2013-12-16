@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Using array_merge bit me today when I merged an array (which happened to be empty) with a numerically indexed array. Because the array I was merging &hellip;">
+	<meta name="description" content="I went looking for a quick and easy way to style JSON content for display in the browser and quickly came across this answer at stack overflow with &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,230 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2013/12/16/simple-json-prettify/">
+		
+			Simple JSON Prettify</a>
+	</h2>
+	<div class="entry-content">
+		<p>I went looking for a quick and easy way to style JSON content for display in the browser and quickly came across this <a href="http://stackoverflow.com/questions/4810841/json-pretty-print-using-javascript/7220510#7220510">answer at stack overflow</a> with a <a href="http://jsfiddle.net/unLSJ/">corresponding jsfiddle entry</a>.</p>
+
+<p>However the problem is that this is kinda broken, the output isn&#8217;t valid JSON because the keys aren&#8217;t quoted. It&#8217;s just outputting a JavaScript object intead. A quick fix to the JavaScript gave me what I needed, I couldn&#8217;t post on SO as I don&#8217;t have the reputation (yeah that&#8217;s annoying) so I&#8217;m posting here for reference and I <a href="http://jsfiddle.net/michaelsharman/HLzxw/">forked the original JSFiddle</a>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">library</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">library</span> <span class="o">=</span> <span class="p">{};</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">library</span><span class="p">.</span><span class="nx">json</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>   <span class="nx">replacer</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">match</span><span class="p">,</span> <span class="nx">pIndent</span><span class="p">,</span> <span class="nx">pKey</span><span class="p">,</span> <span class="nx">pVal</span><span class="p">,</span> <span class="nx">pEnd</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">key</span> <span class="o">=</span> <span class="s1">&#39;&lt;span class=json-key&gt;&#39;</span><span class="p">;</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">val</span> <span class="o">=</span> <span class="s1">&#39;&lt;span class=json-value&gt;&#39;</span><span class="p">;</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">str</span> <span class="o">=</span> <span class="s1">&#39;&lt;span class=json-string&gt;&#39;</span><span class="p">;</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">r</span> <span class="o">=</span> <span class="nx">pIndent</span> <span class="o">||</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="nx">pKey</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">r</span> <span class="o">=</span> <span class="nx">r</span> <span class="o">+</span> <span class="nx">key</span> <span class="o">+</span> <span class="nx">pKey</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/[: ]/g</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;&lt;/span&gt;: &#39;</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="nx">pVal</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">r</span> <span class="o">=</span> <span class="nx">r</span> <span class="o">+</span> <span class="p">(</span><span class="nx">pVal</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;&quot;&#39;</span> <span class="o">?</span> <span class="nx">str</span> <span class="o">:</span> <span class="nx">val</span><span class="p">)</span> <span class="o">+</span> <span class="nx">pVal</span> <span class="o">+</span> <span class="s1">&#39;&lt;/span&gt;&#39;</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nx">r</span> <span class="o">+</span> <span class="p">(</span><span class="nx">pEnd</span> <span class="o">||</span> <span class="s1">&#39;&#39;</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">},</span>
+</span><span class='line'>    <span class="nx">prettyPrint</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">jsonLine</span> <span class="o">=</span> <span class="sr">/^( *)(&quot;[\w]+&quot;: )?(&quot;[^&quot;]*&quot;|[\w.+-]*)?([,[{])?$/mg</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+</span><span class='line'>            <span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/&amp;/g</span><span class="p">,</span> <span class="s1">&#39;&amp;amp;&#39;</span><span class="p">).</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/\\&quot;/g</span><span class="p">,</span> <span class="s1">&#39;&amp;quot;&#39;</span><span class="p">)</span>
+</span><span class='line'>            <span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/&lt;/g</span><span class="p">,</span> <span class="s1">&#39;&amp;lt;&#39;</span><span class="p">).</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/&gt;/g</span><span class="p">,</span> <span class="s1">&#39;&amp;gt;&#39;</span><span class="p">)</span>
+</span><span class='line'>            <span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="nx">jsonLine</span><span class="p">,</span> <span class="nx">library</span><span class="p">.</span><span class="nx">json</span><span class="p">.</span><span class="nx">replacer</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And the CSS that goes with it:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="nt">pre</span> <span class="p">{</span>
+</span><span class='line'>   <span class="k">background-color</span><span class="o">:</span> <span class="nb">ghostwhite</span><span class="p">;</span>
+</span><span class='line'>   <span class="k">border</span><span class="o">:</span> <span class="m">1px</span> <span class="k">solid</span> <span class="nb">silver</span><span class="p">;</span>
+</span><span class='line'>   <span class="k">padding</span><span class="o">:</span> <span class="m">10px</span> <span class="m">20px</span><span class="p">;</span>
+</span><span class='line'>   <span class="k">margin</span><span class="o">:</span> <span class="m">20px</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.json-key</span> <span class="p">{</span>
+</span><span class='line'>   <span class="k">color</span><span class="o">:</span> <span class="nb">brown</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.json-value</span> <span class="p">{</span>
+</span><span class='line'>   <span class="k">color</span><span class="o">:</span> <span class="nb">navy</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.json-string</span> <span class="p">{</span>
+</span><span class='line'>   <span class="k">color</span><span class="o">:</span> <span class="nb">olive</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>The end result</h2>
+
+<p>The original:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="p">[</span>
+</span><span class='line'>   <span class="p">{</span>
+</span><span class='line'>      <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;Earth&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="nx">order</span><span class="o">:</span> <span class="mi">3</span><span class="p">,</span>
+</span><span class='line'>      <span class="nx">stats</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>         <span class="nx">life</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+</span><span class='line'>         <span class="nx">mass</span><span class="o">:</span> <span class="mf">5.973600000000001</span><span class="nx">e</span><span class="o">+</span><span class="mi">24</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>   <span class="p">},</span>
+</span><span class='line'>   <span class="p">{</span>
+</span><span class='line'>      <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;Saturn&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="nx">order</span><span class="o">:</span> <span class="mi">6</span><span class="p">,</span>
+</span><span class='line'>      <span class="nx">stats</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>         <span class="nx">life</span><span class="o">:</span> <span class="kc">null</span><span class="p">,</span>
+</span><span class='line'>         <span class="nx">mass</span><span class="o">:</span> <span class="mf">5.6846</span><span class="nx">e</span><span class="o">+</span><span class="mi">26</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>   <span class="p">}</span>
+</span><span class='line'><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The result after a minor change:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="p">[</span>
+</span><span class='line'>   <span class="p">{</span>
+</span><span class='line'>      <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;Earth&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="s2">&quot;order&quot;</span><span class="o">:</span> <span class="mi">3</span><span class="p">,</span>
+</span><span class='line'>      <span class="s2">&quot;stats&quot;</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>         <span class="s2">&quot;life&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+</span><span class='line'>         <span class="s2">&quot;mass&quot;</span><span class="o">:</span> <span class="mf">5.973600000000001</span><span class="nx">e</span><span class="o">+</span><span class="mi">24</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>   <span class="p">},</span>
+</span><span class='line'>   <span class="p">{</span>
+</span><span class='line'>      <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;Saturn&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="s2">&quot;order&quot;</span><span class="o">:</span> <span class="mi">6</span><span class="p">,</span>
+</span><span class='line'>      <span class="s2">&quot;stats&quot;</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>         <span class="s2">&quot;life&quot;</span><span class="o">:</span> <span class="kc">null</span><span class="p">,</span>
+</span><span class='line'>         <span class="s2">&quot;mass&quot;</span><span class="o">:</span> <span class="mf">5.6846</span><span class="nx">e</span><span class="o">+</span><span class="mi">26</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>   <span class="p">}</span>
+</span><span class='line'><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-12-16T14:24:00+11:00" pubdate data-updated="true">Dec 16<span>th</span>, 2013</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/javascript/'>javascript</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2013/12/16/simple-json-prettify//index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -898,96 +1122,6 @@ Base16 is both a color scheme and a template.
 </div>
 	
 		<div class="comments"><a href="/2013/05/29/installing-xdebug-on-mac-mountain-lion-10-dot-8-3//index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2013/05/22/mysql-thread-stack-overrun-error/">
-		
-			MySQL Thread_stack Overrun Error</a>
-	</h2>
-	<div class="entry-content">
-		<p>We added a trigger to MySQL (v5.5.28) recently that was a simple UPDATE on table column, when a target table was UPDATEd. It ran fine (as expected) on our development environment but not when we pushed the changes to staging.</p>
-
-<p>The error being thrown by MySQL was:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>Thread stack overrun:  8304 bytes used of a 131072 byte stack, and 128000 bytes needed.  Use <span class="s1">&#39;mysqld --thread_stack=#&#39;</span> to specify a bigger stack.
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Querying the database told me that the current <em>thread_stack</em> setting is 128K:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>mysql&gt; show variables where <span class="sb">`</span>Variable_name<span class="sb">`</span> <span class="o">=</span> <span class="s1">&#39;thread_stack&#39;</span>;
-</span><span class='line'>+---------------+--------+
-</span><span class='line'>| Variable_name | Value  |
-</span><span class='line'>+---------------+--------+
-</span><span class='line'>| thread_stack  | 131072 |
-</span><span class='line'>+---------------+--------+
-</span><span class='line'>1 row in <span class="nb">set</span> <span class="o">(</span>0.00 sec<span class="o">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This was confirmed by looking at the <em>thread_stack</em> variable in /etc/mysql/my.cnf</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">thread_stack</span> <span class="o">=</span> 128K
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The <a href="http://dev.mysql.com/doc/refman/5.5/en/server-system-variables.html#sysvar_thread_stack">docs for MySQL 5.5</a> suggest that it should be 192K for 32-bit systems and 256K for 64-bit systems. We&#8217;re running a 64-bit platform, you can tell by running:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>me@mydbserver ~<span class="o">]</span><span class="nv">$ </span>uname -m
-</span><span class='line'>x86_64
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>If the response is <em>i686</em>, you have a 32-bit version of Linux and if the response is <em>x86_64</em> then you have a 64-bit version of Linux.</p>
-
-<p>The fix is a simple case of increasing the value to 256K (if you&#8217;re on 64-bit) or 192K if you&#8217;re on 32-bit, as per the documentation. Don&#8217;t forget that the thread_stack is an allocation of memory per connection, so don&#8217;t set it too high or you might run into memory issues on your database server.</p>
-
-<p>In case it wasn&#8217;t clear, you can make this change in your <em>my.cnf</em> file.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-22T16:28:00+10:00" pubdate data-updated="true">May 22<span>nd</span>, 2013</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/mysql/'>mysql</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2013/05/22/mysql-thread-stack-overrun-error//index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

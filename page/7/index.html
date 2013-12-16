@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Ever dealt with a client where you wanted to know their operating environment? Thinks like what operating system they are running (and version), &hellip;">
+	<meta name="description" content="Ok, a short warning to those who use underscores in their domain names. Underscores you say? Aren&#8217;t they illegal characters in domain names? &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,56 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2010/05/10/ie-and-underscores-in-domain-names/">
+		
+			IE and Underscores in Domain Names</a>
+	</h2>
+	<div class="entry-content">
+		<p>Ok, a short warning to those who use underscores in their domain names. Underscores you say? Aren&#8217;t they illegal characters in domain names? Why yes they are (but I think they&#8217;re valid in sub-domains&#8230;not sure), but you may find yourself using them in development environments, particularly if you&#8217;re doing a re-design. Think something like <em>http://mysite_v2.local/</em> etc</p>
+
+<p>Now, this works of course and everything is fine and dandy because your using your own hosts file to make it &#8220;legal&#8221;&#8230;except that Internet Explorer has this little quirk where it doesn&#8217;t persist your session (cookie) information. So your app sets some session variables, refresh the page and they&#8217;re gone. Sigh&#8230;</p>
+
+<p>Why would IE even bother to do this? Who knows. But keep this in mind next time your pulling your hair out trying to figure out why session management isn&#8217;t working for you in IE.</p>
+
+<p><strong>Rule:</strong></p>
+
+<p>Don&#8217;t ever use underscores in domain names</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-05-10T09:09:27+10:00" pubdate data-updated="true">May 10<span>th</span>, 2010</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/misc/'>Misc</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2010/05/10/ie-and-underscores-in-domain-names//page/7/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -742,109 +792,6 @@ supports.</p>
 </div>
 	
 		<div class="comments"><a href="/2009/06/15/prototypescriptaculous-issue-with-sortablecreate//page/7/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2009/06/09/setting-application-variables-in-farcry/">
-		
-			Setting Application Variables in FarCry</a>
-	</h2>
-	<div class="entry-content">
-		<p>I just thought I&#8217;d write up some quick thoughts on setting application scoped variables in FarCry as it occured to me that it could be a little confusing to non-FarCry developers.</p>
-
-<p>It doesn&#8217;t really matter which framework you use,  you can theoretically set you application variables <em>anywhere you want</em>, but ideally you want to follow some sort of methodology and consistency both with the rest of your development team and of course the <a href="http://www.farcrycms.org/">framework you happen to be using</a>.</p>
-
-<p><a href="http://www.farcrycms.org/">FarCry</a> has (somewhat) recently added a &#8220;farcryConstructor.cfm&#8221; inside the project webroot (www). A quick peek inside suggests that this is where application vars are set, this is re-inforced by checking Application.cfc which has a bascially empty OnApplicationStart() in terms of setting project application vars.</p>
-
-<p>Sample of farcryConstructor.cfm:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">THIS</span><span class="p">.</span><span class="nx">sessionmanagement</span> <span class="o">=</span> <span class="kc">true</span>  <span class="o">/&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">THIS</span><span class="p">.</span><span class="nx">sessiontimeout</span> <span class="o">=</span> <span class="nx">createTimeSpan</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="o">/&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">THIS</span><span class="p">.</span><span class="nx">applicationtimeout</span> <span class="o">=</span> <span class="nx">createTimeSpan</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="o">/&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">THIS</span><span class="p">.</span><span class="nx">clientmanagement</span> <span class="o">=</span> <span class="kc">false</span> <span class="o">/&gt;</span>
-</span><span class='line'><span class="p">...</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>There is also the <em>/config</em> directory which has been in existence for several versions and contains, you guessed it, &#8220;configuration&#8221; files. Namely:</p>
-
-<ul>
-<li>_serverSpecificRequestScope.cfm</li>
-<li>_serverSpecificVars.cfm</li>
-<li>_serverSpecificVarsAfterInit.cfm</li>
-</ul>
-
-
-<p>So where do you add your custom project application vars? The options we have so far are:</p>
-
-<ul>
-<li>www/farcryConstuctor.cfm</li>
-<li>www/Application.cfc</li>
-<li>config/_serverSpecificxxx.cfm</li>
-</ul>
-
-
-<p>Well <em>farcryConstructor.cfm</em> could seem like an ideal place, after all it&#8217;s the &#8220;constructor&#8221;. But it is generated from the installation routine and as such ignores any custom variables which are set inside it. So steer clear of this one.</p>
-
-<p>OnApplicationStart() would also be a logical place inside <em>Application.cfc</em>. After all that&#8217;s probably where all your configuration happens in non-framework applications. This will indeed work as expected, but it&#8217;s not really the ideal place for your project config information.</p>
-
-<p>It&#8217;s probably best to follow the &#8220;FarCry way&#8221; of doing things which is to utilise the files inside your <em>/config</em> directory. This should be the first place anyone in your development team goes to look for any custom project properties or application scoped variables.</p>
-
-<p>Let&#8217;s look at the 3 /config files:</p>
-
-<p><strong>_serverSpecificRequestScope.cfm</strong>
-<em>This file is run after /core/tags/farcry/</em>requestScope.cfm
-It enables us to both override the default farcry request scope variables and also add our own_</p>
-
-<p><strong>_serverSpecificVars.cfm</strong>
-<em>THIS WILL BE INCLUDED BEFORE THE FARCRY INIT IS RUN BUT ONLY ON APPLICATION INITIALISATION.</em></p>
-
-<p><strong>_serverSpecificVarsAfterInit.cfm</strong>
-<em>THIS WILL BE INCLUDED AFTER THE FARCRY INIT HAS BEEN RUN BUT ONLY ON APPLICATION INITIALISATION.</em></p>
-
-<p>I would therefore use <em>_serverSpecificVars.cfm</em> for all your application scoped variables as it is run once on application initialisation. If you need to make a change here you need to update the application.</p>
-
-<p>I&#8217;d use <em><em>serverSpecificRequestScope.cfm</em> for all your request scoped variables. This template is basically like OnRequestStart() in </em>Application.cfc_, i.e. it is executed on each page request.</p>
-
-<p>Hope that helps some people :)</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-06-09T11:59:01+10:00" pubdate data-updated="true">Jun 9<span>th</span>, 2009</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/farcry/'>Farcry</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2009/06/09/setting-application-variables-in-farcry//page/7/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

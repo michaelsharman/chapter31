@@ -7,7 +7,20 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="An article from coldfusion cookbook using jSStringFormat(): &#8220;If you are dynamically populating a JavaScript variable, you may find that your &hellip;">
+	<meta name="description" content="Here is an article from coldfusion cookbook. 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+&lt;cfdirectory directory=&quot;c:\cfusionmx&quot; action=&quot;list&quot &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +94,79 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2006/03/31/how-to-find-the-size-of-a-directory/">
+		
+			How to Find the Size of a Directory?</a>
+	</h2>
+	<div class="entry-content">
+		<p>Here is an <a href="http://www.coldfusioncookbook.com/entry/79/How-do-I-find-the-size-of-a-directory?">article</a> from <a href="http://www.coldfusioncookbook.com/">coldfusion cookbook</a>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfdirectory</span>
+</span><span class='line'>  <span class="nx">directory</span><span class="o">=</span><span class="s2">&quot;c:\cfusionmx&quot;</span>
+</span><span class='line'>  <span class="nx">action</span><span class="o">=</span><span class="s2">&quot;list&quot;</span>
+</span><span class='line'>  <span class="nx">recurse</span><span class="o">=</span><span class="s2">&quot;true&quot;</span>
+</span><span class='line'>  <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;cfDir&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfquery</span> <span class="nx">dbtype</span><span class="o">=</span><span class="s2">&quot;query&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;dirSize&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>   <span class="nx">select</span> <span class="nx">sum</span><span class="p">(</span><span class="nx">size</span><span class="p">)</span> <span class="nx">as</span> <span class="nx">size</span> <span class="nx">from</span> <span class="nx">cfDir</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfquery&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">sizemb</span><span class="o">=</span><span class="s2">&quot;dirSize.size/1000000&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfoutput</span><span class="o">&gt;</span><span class="err">#</span><span class="nx">numberFormat</span><span class="p">(</span><span class="nx">sizeMB</span><span class="p">,</span><span class="s2">&quot;,.99&quot;</span><span class="p">)</span><span class="err">#</span><span class="o">&lt;</span><span class="err">/cfoutput&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note the &#8216;recurse&#8217; option, this will get the size of the current and all sub-directories. If you only need the size of the current directory, change recurse to false.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-03-31T12:36:43+11:00" pubdate data-updated="true">Mar 31<span>st</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2006/03/31/how-to-find-the-size-of-a-directory//page/26/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">

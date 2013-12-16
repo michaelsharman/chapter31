@@ -7,7 +7,10 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="We&#8217;ve been doing some debugging of a 3rd party application recently where we had some possible performance concerns under a certain load and/ &hellip;">
+	<meta name="description" content="For those that don&#8217;t know, ColdFusion&#8217;s cfqueryparam won&#8217;t work on a SQL ORDER BY clause, so the following will not work: 1
+2
+3
+4 &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +84,137 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/11/22/cfqueryparam-does-not-work-in-order-by-what-are-my-options/">
+		
+			Cfqueryparam Does Not Work in ORDER by, What Are My Options?</a>
+	</h2>
+	<div class="entry-content">
+		<p>For those that don&#8217;t know, ColdFusion&#8217;s <a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=Tags_p-q_18.html">cfqueryparam</a> won&#8217;t work on a SQL ORDER BY clause, so the following <strong>will not work</strong>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfquery</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;qGetUsers&quot;</span> <span class="nx">datasource</span><span class="o">=</span><span class="s2">&quot;mydsn&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="nx">SELECT</span>  <span class="nx">FirstName</span><span class="p">,</span> <span class="nx">LastName</span>
+</span><span class='line'>  <span class="nx">FROM</span>        <span class="nx">Users</span>
+</span><span class='line'>  <span class="nx">ORDER</span> <span class="nx">BY</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.order#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfquery&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is really nothing new, people have been talking about this for years but with the spate of recent SQL injection attacks (<em>note that I meant to publish this around sept 08 but got sidetracked!</em>) it&#8217;s worth mentioning again because there certainly are times where you want dynamic ordering based on a URL or form value.</p>
+
+<p>So what does this mean to you? How are you to manage dynamic ORDER BY values? The most common scenario I&#8217;ve come across is to use a list of allowed <em>order by</em> column values as defined by the developer. Something like:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">lValidOrderBy</span> <span class="o">=</span> <span class="s2">&quot;firstName, lastName, dateTimeCreated&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">listFindNoCase</span><span class="p">(</span><span class="nx">lValidOrderBy</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">order</span><span class="p">)</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">orderBy</span> <span class="o">=</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">order</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfelse</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="c">&lt;!--</span><span class="o">-</span> <span class="nx">Default</span> <span class="nx">order</span> <span class="nx">by</span> <span class="nx">column</span> <span class="o">---&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">orderBy</span> <span class="o">=</span> <span class="s2">&quot;lastName&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfif&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfquery</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;qGetUsers&quot;</span> <span class="nx">dsn</span><span class="o">=</span><span class="s2">&quot;mydsn&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="nx">SELECT</span>  <span class="nx">FirstName</span><span class="p">,</span> <span class="nx">LastName</span>
+</span><span class='line'>  <span class="nx">FROM</span>    <span class="nx">Users</span>
+</span><span class='line'>  <span class="nx">ORDER</span> <span class="nx">BY</span> <span class="err">#</span><span class="nx">orderBy</span><span class="err">#</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfquery&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Another approach might be to use a switch with either a <strong>literal </strong>value or a <strong>keyword </strong>which might map to a list of options like:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">SELECT</span> <span class="nx">FirstName</span><span class="p">,</span> <span class="nx">LastName</span>
+</span><span class='line'><span class="nx">FROM</span>   <span class="nx">Users</span>
+</span><span class='line'><span class="nx">ORDER</span> <span class="nx">BY</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfswitch</span> <span class="nx">expression</span><span class="o">=</span><span class="s2">&quot;#arguments.order#&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="c">&lt;!--</span><span class="o">-</span> <span class="nx">A</span> <span class="nx">literal</span> <span class="nx">value</span> <span class="o">---&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfcase</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;lastName&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="nx">lastName</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cfcase&gt;</span>
+</span><span class='line'>  <span class="c">&lt;!--</span><span class="o">-</span> <span class="nx">A</span> <span class="nx">keyword</span> <span class="nx">defined</span> <span class="nx">by</span> <span class="nx">the</span> <span class="nx">application</span> <span class="o">---&gt;</span>  
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfcase</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;user-reverse&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="nx">lastName</span> <span class="nx">DESC</span><span class="p">,</span> <span class="nx">firstName</span> <span class="nx">ASC</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cfcase&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfdefaultcase</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="nx">lastName</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cfdefaultcase&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfswitch&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I like this approach as the &#8220;mapped&#8221; keyword allows you to use <em>order by</em> values which aren&#8217;t so simple as a basic literal.</p>
+
+<p>This means when you want to order by multiple columns, use ASC/DESC or a combination of both (which are of course perfectly valid and real-world options) you can define these keywords in your application and still benefit from the safety of possible SQL injection by utilising the <a href="http://www.cfquickdocs.com/#cfswitch">cfswitch</a> statement.</p>
+
+<p>Don&#8217;t forget to always sanitise ANY USER INPUT!!!</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-11-22T13:15:50+11:00" pubdate data-updated="true">Nov 22<span>nd</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/databases/'>Databases</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/11/22/cfqueryparam-does-not-work-in-order-by-what-are-my-options//page/9/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -817,109 +951,6 @@
 </div>
 	
 		<div class="comments"><a href="/2008/10/22/problems-submitting-a-form-via-enter-in-ie//page/9/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2008/10/14/generaterandomkey-udf-with-several-handy-options/">
-		
-			generateRandomKey() UDF With Several Handy Options</a>
-	</h2>
-	<div class="entry-content">
-		<p>Working on a ColdFusion project recently I had the need to generate a random key; the format of which was based on a specific set of business rules. I actually ended up writing a basic UDF to handle this but after the fact I went looking to see if I could find something which provided some of the features I was after.</p>
-
-<p>Although I found several through google and <a href="http://cflib.org/">cflib</a> they weren&#8217;t completely what I was after. Not finding exactly what I needed inspired me to write my own one based on the following requirements:</p>
-
-<ul>
-<li>Users can set the length of the returned key</li>
-<li>Key can be UPPER, lower or MixEd case</li>
-<li>Format can include numeric, string, alphanumeric (a-zA-Z0-9) and special characters</li>
-<li>Potentially confusing characters (e.g. o, i, l, s, O, I, L, S etc) are ignored by default and users can pass in their own list of special characters (overriding the default list) to be ignored from the returned key</li>
-<li>Users can pass a fixed prefix or suffix, handy if your business needs to generate order numbers which all start with &#8220;CF-&#8221; etc</li>
-<li>Users can specify that the first (or last) &#8216;x&#8217; characters in the key are numeric, the rest of the key follows the &#8220;format&#8221; argument</li>
-</ul>
-
-
-<p>Some examples:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">generateRandomKey</span><span class="p">();</span>
-</span><span class='line'><span class="c1">//DCE8YDEK</span>
-</span><span class='line'>
-</span><span class='line'><span class="nx">generateRandomKey</span><span class="p">(</span><span class="k">case</span><span class="o">=</span><span class="s2">&quot;mixed&quot;</span><span class="p">);</span>
-</span><span class='line'><span class="c1">//wYu3Kbaj</span>
-</span><span class='line'>
-</span><span class='line'><span class="nx">generateRandomKey</span><span class="p">(</span><span class="k">case</span><span class="o">=</span><span class="s2">&quot;mixed&quot;</span><span class="p">,</span> <span class="nx">format</span><span class="o">=</span><span class="s2">&quot;alphanumeric&quot;</span><span class="p">,</span> <span class="nx">length</span><span class="o">=</span><span class="s2">&quot;10&quot;</span><span class="p">);</span>
-</span><span class='line'><span class="c1">//7hE3hv4Yzr</span>
-</span><span class='line'>
-</span><span class='line'><span class="nx">generateRandomKey</span><span class="p">(</span><span class="nx">format</span><span class="o">=</span><span class="s2">&quot;special&quot;</span><span class="p">,</span> <span class="nx">fixedPrefix</span><span class="o">=</span><span class="s2">&quot;MPS&quot;</span><span class="p">);</span>
-</span><span class='line'><span class="c1">//MPS&gt;M_!{</span>
-</span><span class='line'>
-</span><span class='line'><span class="nx">generateRandomKey</span><span class="p">(</span><span class="k">case</span><span class="o">=</span><span class="s2">&quot;upper&quot;</span><span class="p">,</span> <span class="nx">format</span><span class="o">=</span><span class="s2">&quot;string&quot;</span><span class="p">,</span> <span class="nx">numericPrefix</span><span class="o">=</span><span class="s2">&quot;3&quot;</span><span class="p">,</span> <span class="nx">length</span><span class="o">=</span><span class="s2">&quot;12&quot;</span><span class="p">);</span>
-</span><span class='line'><span class="c1">//193TYTVDYJFZ</span>
-</span><span class='line'>
-</span><span class='line'><span class="nx">generateRandomKey</span><span class="p">(</span><span class="nx">format</span><span class="o">=</span><span class="s2">&quot;numeric&quot;</span><span class="p">,</span> <span class="nx">length</span><span class="o">=</span><span class="s2">&quot;12&quot;</span><span class="p">);</span>
-</span><span class='line'><span class="c1">//692490463609</span>
-</span><span class='line'>
-</span><span class='line'><span class="nx">generateRandomKey</span><span class="p">(</span><span class="k">case</span><span class="o">=</span><span class="s2">&quot;lower&quot;</span><span class="p">,</span> <span class="nx">format</span><span class="o">=</span><span class="s2">&quot;special&quot;</span><span class="p">,</span> <span class="nx">specialChars</span><span class="o">=</span><span class="s2">&quot;*,&amp;&quot;</span><span class="p">,</span> <span class="nx">length</span><span class="o">=</span><span class="s2">&quot;12&quot;</span><span class="p">);</span>
-</span><span class='line'><span class="c1">//fqr74mhb*cq&amp;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>If anyone is interested you can <a href="/images/uploads/2008/10/generaterandomkey1.txt">download the UDF here</a>.</p>
-
-<p>As usual comments and critiques are always welcome :)</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-10-14T00:29:14+11:00" pubdate data-updated="true">Oct 14<span>th</span>, 2008</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2008/10/14/generaterandomkey-udf-with-several-handy-options//page/9/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

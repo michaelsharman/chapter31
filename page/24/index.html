@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Let&#8217;s say you have a form or mechanism in a web application which allows users to enter content which may be displayed on a web page, a &hellip;">
+	<meta name="description" content="Charlie Arehart has an interesting post here on whether you should use the name attribute in cfcomponent. Apparently there is no &#8216;name&#8217; &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,54 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2006/09/11/cfcomponent-should-you-use-the-name-attribute/">
+		
+			Cfcomponent - Should You Use the Name=&#8221;&#8221; Attribute?</a>
+	</h2>
+	<div class="entry-content">
+		<p>Charlie Arehart has an <a href="http://carehart.org/blog/client/index.cfm/2006/9/9/Argument_against_CFCOMPONENT_NAME">interesting post here</a> on whether you should use the <strong>name</strong> attribute in cfcomponent.</p>
+
+<p>Apparently there is no &#8216;name&#8217; attrbribute in the cfdocs for &lt;cfcomponent&gt;, remember you can use displayName or hint for component introspection. And if you want to take advantage of getMetaData()? Well there already is a &#8216;name&#8217; attribute as default in ColdFusionMX! The thing is that&#8217;s it&#8217;s for internal use and even if you do use &#8216;name&#8217;, the value you specify won&#8217;t appear in getMetaData(), the internal ColdFusion value will instead!</p>
+
+<p>Most interesting that IDE&#8217;s like cfeclipse have &#8216;name&#8217; as part of the code completion, as Charlie says&#8230;it&#8217;ll be interesting to see how the community resonds to this one :)</p>
+
+<p>Note that it is actually legal to add as many non-official attributes to &lt;cfcomponent&gt; and &lt;cffunction&gt; for your own documentation (when using component introspection). Very nice!</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-09-11T09:29:28+10:00" pubdate data-updated="true">Sep 11<span>th</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2006/09/11/cfcomponent-should-you-use-the-name-attribute//page/24/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -741,95 +789,6 @@
 </div>
 	
 		<div class="comments"><a href="/2006/08/12/a-londonn-gift//page/24/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2006/08/01/swfobject/">
-		
-			SWFObject</a>
-	</h2>
-	<div class="entry-content">
-		<p>I&#8217;ve been using <a href="http://blog.deconcept.com/swfobject/">SWFObject</a> for quite a while now and it amazes me that developers out there <em>still</em> don&#8217;t know about it, especially with all the news around Microsoft&#8217;s EOLAS case late last year.</p>
-
-<p>SWFObject is a tasty method for embedding Macromedia Flash content into your web pages and has (among others) the following functionality which alone are reason to be using it!</p>
-
-<ul>
-<li>Flash detection</li>
-<li>Search engine friendly</li>
-<li>Validates to HTML and XHTML (as long as pages sent as text/html, not application/xhtml+xml.)</li>
-<li>Degrades beautifully!</li>
-</ul>
-
-
-<p>All you need to do is add your .js file in the <head>:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;swfobject.js&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span><span class="o">&gt;&lt;</span><span class="err">/script&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Then use the following code:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">div</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;flashcontent&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="nx">This</span> <span class="nx">text</span> <span class="nx">is</span> <span class="nx">replaced</span> <span class="nx">by</span> <span class="nx">the</span> <span class="nx">Flash</span> <span class="nx">movie</span><span class="p">.</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/div&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>   <span class="kd">var</span> <span class="nx">so</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SWFObject</span><span class="p">(</span><span class="s2">&quot;movie.swf&quot;</span><span class="p">,</span> <span class="s2">&quot;mymovie&quot;</span><span class="p">,</span> <span class="s2">&quot;200&quot;</span><span class="p">,</span> <span class="s2">&quot;100&quot;</span><span class="p">,</span> <span class="s2">&quot;7&quot;</span><span class="p">,</span> <span class="s2">&quot;#336699&quot;</span><span class="p">);</span>
-</span><span class='line'>   <span class="nx">so</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="s2">&quot;flashcontent&quot;</span><span class="p">);</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/script&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Note the &lt;div id=&#8221;flashcontent&#8221;&gt;? Inside this div is where you&#8217;ll store any HTML to be displayed if the user doesn&#8217;t have flash. So you can have a link to Adobe to get the latest flash player, an alternate image or simply display HTML!</p>
-
-<p>One problem I had is with users on low bandwidth seeing this HTML (non-flash) content before the Flash has a chance to load. To get around this I had the content within the non-flash div hidden (using CSS) then onload() make it visible.</p>
-
-<p><a href="http://blog.deconcept.com/swfobject/swfobject1-4.zip">Download SWFObject here</a></p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2006-08-01T13:27:29+10:00" pubdate data-updated="true">Aug 1<span>st</span>, 2006</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/x-html/'>(X)HTML</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2006/08/01/swfobject//page/24/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Apparently I&#8217;ve been living under a rock, never having been bitten (that I know of) by the pretty massive bug Apple rolled out in iOS 6 (with &hellip;">
+	<meta name="description" content="We added a trigger to MySQL (v5.5.28) recently that was a simple UPDATE on table column, when a target table was UPDATEd. It ran fine (as expected) &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,96 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2013/05/22/mysql-thread-stack-overrun-error/">
+		
+			MySQL Thread_stack Overrun Error</a>
+	</h2>
+	<div class="entry-content">
+		<p>We added a trigger to MySQL (v5.5.28) recently that was a simple UPDATE on table column, when a target table was UPDATEd. It ran fine (as expected) on our development environment but not when we pushed the changes to staging.</p>
+
+<p>The error being thrown by MySQL was:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>Thread stack overrun:  8304 bytes used of a 131072 byte stack, and 128000 bytes needed.  Use <span class="s1">&#39;mysqld --thread_stack=#&#39;</span> to specify a bigger stack.
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Querying the database told me that the current <em>thread_stack</em> setting is 128K:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>mysql&gt; show variables where <span class="sb">`</span>Variable_name<span class="sb">`</span> <span class="o">=</span> <span class="s1">&#39;thread_stack&#39;</span>;
+</span><span class='line'>+---------------+--------+
+</span><span class='line'>| Variable_name | Value  |
+</span><span class='line'>+---------------+--------+
+</span><span class='line'>| thread_stack  | 131072 |
+</span><span class='line'>+---------------+--------+
+</span><span class='line'>1 row in <span class="nb">set</span> <span class="o">(</span>0.00 sec<span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This was confirmed by looking at the <em>thread_stack</em> variable in /etc/mysql/my.cnf</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">thread_stack</span> <span class="o">=</span> 128K
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The <a href="http://dev.mysql.com/doc/refman/5.5/en/server-system-variables.html#sysvar_thread_stack">docs for MySQL 5.5</a> suggest that it should be 192K for 32-bit systems and 256K for 64-bit systems. We&#8217;re running a 64-bit platform, you can tell by running:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>me@mydbserver ~<span class="o">]</span><span class="nv">$ </span>uname -m
+</span><span class='line'>x86_64
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If the response is <em>i686</em>, you have a 32-bit version of Linux and if the response is <em>x86_64</em> then you have a 64-bit version of Linux.</p>
+
+<p>The fix is a simple case of increasing the value to 256K (if you&#8217;re on 64-bit) or 192K if you&#8217;re on 32-bit, as per the documentation. Don&#8217;t forget that the thread_stack is an allocation of memory per connection, so don&#8217;t set it too high or you might run into memory issues on your database server.</p>
+
+<p>In case it wasn&#8217;t clear, you can make this change in your <em>my.cnf</em> file.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-05-22T16:28:00+10:00" pubdate data-updated="true">May 22<span>nd</span>, 2013</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/mysql/'>mysql</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2013/05/22/mysql-thread-stack-overrun-error//page/2/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -1246,98 +1336,6 @@
 </div>
 	
 		<div class="comments"><a href="/2013/01/01/downloading-youtube-videos//page/2/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2012/11/21/json-undefined-issues-on-ie8-and-ie9/">
-		
-			JSON Undefined Issues on IE8 and IE9</a>
-	</h2>
-	<div class="entry-content">
-		<p>I had some issues today while testing in IE, where &#8220;JSON&#8221; was undefined. This was happening in IE8 and IE9, which is strange because the JSON functions are in those IE versions. The problem was IE&#8217;s compatibility view, which triggers rendering in sort-of-IE7 mode. Classy. This was making JSON undefined ;(</p>
-
-<p>The usual fix for this is to add a meta tag to force IE to use &#8220;edge&#8221; (or a specific version if you like):</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">&quot;X-UA-Compatible&quot;</span> <span class="na">content=</span><span class="s">&quot;IE=edge&quot;</span><span class="nt">&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>However we&#8217;ve had problems with this in the past where it doesn&#8217;t always seem to work, especially on corporate networks and intranets. We now use an Apache header (and not use the meta tag at all) to achieve IE=edge. Here&#8217;s the Apache header (to go in your .htaccess, note that you need mod_headers enabled for this to work):</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'>Header set X-UA-Compatible &quot;IE=edge&quot;
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Update</h3>
-
-<p>You can use the Apache header above, combined with a check to only send the header for Internet Explorer</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'>BrowserMatch MSIE ie
-</span><span class='line'>Header set X-UA-Compatible &quot;IE=edge,chrome=1&quot; env=ie
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>To be safe, if you can&#8217;t use the Apache header above (which we found to always work as opposed to the meta tag) you might want to load <a href="https://github.com/douglascrockford/JSON-js/blob/master/json2.js">json2.js</a> for IE8 and 9 because you can&#8217;t control if a user is in compatibility view. If they are, then JSON will be undefined. The cool thing about json2 is that if it detects that JSON is already defined, it won&#8217;t do anything at all. But it&#8217;s there if the older browsers need it (IE7) or you somehow have visitors in compatibility view.</p>
-
-<p>You can also load json2.js from a CDN:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'>http://cdnjs.cloudflare.com/ajax/libs/json2/20110223/json2.js
-</span><span class='line'>or minified
-</span><span class='line'>http://cdnjs.cloudflare.com/ajax/libs/json2/20110223/json2.min.js
-</span><span class='line'>
-</span><span class='line'>or
-</span><span class='line'>
-</span><span class='line'>http://ajax.cdnjs.com/ajax/libs/json2/20110223/json2.js
-</span><span class='line'>or minified
-</span><span class='line'>http://ajax.cdnjs.com/ajax/libs/json2/20110223/json2.min.js
-</span></code></pre></td></tr></table></div></figure>
-
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-11-21T16:48:57+11:00" pubdate data-updated="true">Nov 21<span>st</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/javascript/'>Javascript</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2012/11/21/json-undefined-issues-on-ie8-and-ie9//page/2/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="I&#8217;ve wanted to be able to control the sort order of menu and menuitems in the customadmin.xml (or equivalent) file for quite a while but hadn &hellip;">
+	<meta name="description" content="I just thought I&#8217;d write up some quick thoughts on setting application scoped variables in FarCry as it occured to me that it could be a &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,109 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2009/06/09/setting-application-variables-in-farcry/">
+		
+			Setting Application Variables in FarCry</a>
+	</h2>
+	<div class="entry-content">
+		<p>I just thought I&#8217;d write up some quick thoughts on setting application scoped variables in FarCry as it occured to me that it could be a little confusing to non-FarCry developers.</p>
+
+<p>It doesn&#8217;t really matter which framework you use,  you can theoretically set you application variables <em>anywhere you want</em>, but ideally you want to follow some sort of methodology and consistency both with the rest of your development team and of course the <a href="http://www.farcrycms.org/">framework you happen to be using</a>.</p>
+
+<p><a href="http://www.farcrycms.org/">FarCry</a> has (somewhat) recently added a &#8220;farcryConstructor.cfm&#8221; inside the project webroot (www). A quick peek inside suggests that this is where application vars are set, this is re-inforced by checking Application.cfc which has a bascially empty OnApplicationStart() in terms of setting project application vars.</p>
+
+<p>Sample of farcryConstructor.cfm:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">THIS</span><span class="p">.</span><span class="nx">sessionmanagement</span> <span class="o">=</span> <span class="kc">true</span>  <span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">THIS</span><span class="p">.</span><span class="nx">sessiontimeout</span> <span class="o">=</span> <span class="nx">createTimeSpan</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">THIS</span><span class="p">.</span><span class="nx">applicationtimeout</span> <span class="o">=</span> <span class="nx">createTimeSpan</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">THIS</span><span class="p">.</span><span class="nx">clientmanagement</span> <span class="o">=</span> <span class="kc">false</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="p">...</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>There is also the <em>/config</em> directory which has been in existence for several versions and contains, you guessed it, &#8220;configuration&#8221; files. Namely:</p>
+
+<ul>
+<li>_serverSpecificRequestScope.cfm</li>
+<li>_serverSpecificVars.cfm</li>
+<li>_serverSpecificVarsAfterInit.cfm</li>
+</ul>
+
+
+<p>So where do you add your custom project application vars? The options we have so far are:</p>
+
+<ul>
+<li>www/farcryConstuctor.cfm</li>
+<li>www/Application.cfc</li>
+<li>config/_serverSpecificxxx.cfm</li>
+</ul>
+
+
+<p>Well <em>farcryConstructor.cfm</em> could seem like an ideal place, after all it&#8217;s the &#8220;constructor&#8221;. But it is generated from the installation routine and as such ignores any custom variables which are set inside it. So steer clear of this one.</p>
+
+<p>OnApplicationStart() would also be a logical place inside <em>Application.cfc</em>. After all that&#8217;s probably where all your configuration happens in non-framework applications. This will indeed work as expected, but it&#8217;s not really the ideal place for your project config information.</p>
+
+<p>It&#8217;s probably best to follow the &#8220;FarCry way&#8221; of doing things which is to utilise the files inside your <em>/config</em> directory. This should be the first place anyone in your development team goes to look for any custom project properties or application scoped variables.</p>
+
+<p>Let&#8217;s look at the 3 /config files:</p>
+
+<p><strong>_serverSpecificRequestScope.cfm</strong>
+<em>This file is run after /core/tags/farcry/</em>requestScope.cfm
+It enables us to both override the default farcry request scope variables and also add our own_</p>
+
+<p><strong>_serverSpecificVars.cfm</strong>
+<em>THIS WILL BE INCLUDED BEFORE THE FARCRY INIT IS RUN BUT ONLY ON APPLICATION INITIALISATION.</em></p>
+
+<p><strong>_serverSpecificVarsAfterInit.cfm</strong>
+<em>THIS WILL BE INCLUDED AFTER THE FARCRY INIT HAS BEEN RUN BUT ONLY ON APPLICATION INITIALISATION.</em></p>
+
+<p>I would therefore use <em>_serverSpecificVars.cfm</em> for all your application scoped variables as it is run once on application initialisation. If you need to make a change here you need to update the application.</p>
+
+<p>I&#8217;d use <em><em>serverSpecificRequestScope.cfm</em> for all your request scoped variables. This template is basically like OnRequestStart() in </em>Application.cfc_, i.e. it is executed on each page request.</p>
+
+<p>Hope that helps some people :)</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-06-09T11:59:01+10:00" pubdate data-updated="true">Jun 9<span>th</span>, 2009</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/farcry/'>Farcry</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2009/06/09/setting-application-variables-in-farcry//page/8/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -894,137 +997,6 @@
 </div>
 	
 		<div class="comments"><a href="/2008/11/24/use-applicationapplicationname-careful-when-re-initing-your-app//page/8/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2008/11/22/cfqueryparam-does-not-work-in-order-by-what-are-my-options/">
-		
-			Cfqueryparam Does Not Work in ORDER by, What Are My Options?</a>
-	</h2>
-	<div class="entry-content">
-		<p>For those that don&#8217;t know, ColdFusion&#8217;s <a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=Tags_p-q_18.html">cfqueryparam</a> won&#8217;t work on a SQL ORDER BY clause, so the following <strong>will not work</strong>:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfquery</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;qGetUsers&quot;</span> <span class="nx">datasource</span><span class="o">=</span><span class="s2">&quot;mydsn&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="nx">SELECT</span>  <span class="nx">FirstName</span><span class="p">,</span> <span class="nx">LastName</span>
-</span><span class='line'>  <span class="nx">FROM</span>        <span class="nx">Users</span>
-</span><span class='line'>  <span class="nx">ORDER</span> <span class="nx">BY</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.order#&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/cfquery&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This is really nothing new, people have been talking about this for years but with the spate of recent SQL injection attacks (<em>note that I meant to publish this around sept 08 but got sidetracked!</em>) it&#8217;s worth mentioning again because there certainly are times where you want dynamic ordering based on a URL or form value.</p>
-
-<p>So what does this mean to you? How are you to manage dynamic ORDER BY values? The most common scenario I&#8217;ve come across is to use a list of allowed <em>order by</em> column values as defined by the developer. Something like:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">lValidOrderBy</span> <span class="o">=</span> <span class="s2">&quot;firstName, lastName, dateTimeCreated&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">listFindNoCase</span><span class="p">(</span><span class="nx">lValidOrderBy</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">order</span><span class="p">)</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">orderBy</span> <span class="o">=</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">order</span> <span class="o">/&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">cfelse</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="c">&lt;!--</span><span class="o">-</span> <span class="nx">Default</span> <span class="nx">order</span> <span class="nx">by</span> <span class="nx">column</span> <span class="o">---&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">orderBy</span> <span class="o">=</span> <span class="s2">&quot;lastName&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/cfif&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">cfquery</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;qGetUsers&quot;</span> <span class="nx">dsn</span><span class="o">=</span><span class="s2">&quot;mydsn&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="nx">SELECT</span>  <span class="nx">FirstName</span><span class="p">,</span> <span class="nx">LastName</span>
-</span><span class='line'>  <span class="nx">FROM</span>    <span class="nx">Users</span>
-</span><span class='line'>  <span class="nx">ORDER</span> <span class="nx">BY</span> <span class="err">#</span><span class="nx">orderBy</span><span class="err">#</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/cfquery&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Another approach might be to use a switch with either a <strong>literal </strong>value or a <strong>keyword </strong>which might map to a list of options like:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">SELECT</span> <span class="nx">FirstName</span><span class="p">,</span> <span class="nx">LastName</span>
-</span><span class='line'><span class="nx">FROM</span>   <span class="nx">Users</span>
-</span><span class='line'><span class="nx">ORDER</span> <span class="nx">BY</span>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">cfswitch</span> <span class="nx">expression</span><span class="o">=</span><span class="s2">&quot;#arguments.order#&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="c">&lt;!--</span><span class="o">-</span> <span class="nx">A</span> <span class="nx">literal</span> <span class="nx">value</span> <span class="o">---&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfcase</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;lastName&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>      <span class="nx">lastName</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cfcase&gt;</span>
-</span><span class='line'>  <span class="c">&lt;!--</span><span class="o">-</span> <span class="nx">A</span> <span class="nx">keyword</span> <span class="nx">defined</span> <span class="nx">by</span> <span class="nx">the</span> <span class="nx">application</span> <span class="o">---&gt;</span>  
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfcase</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;user-reverse&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>      <span class="nx">lastName</span> <span class="nx">DESC</span><span class="p">,</span> <span class="nx">firstName</span> <span class="nx">ASC</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cfcase&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfdefaultcase</span><span class="o">&gt;</span>
-</span><span class='line'>      <span class="nx">lastName</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cfdefaultcase&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/cfswitch&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>I like this approach as the &#8220;mapped&#8221; keyword allows you to use <em>order by</em> values which aren&#8217;t so simple as a basic literal.</p>
-
-<p>This means when you want to order by multiple columns, use ASC/DESC or a combination of both (which are of course perfectly valid and real-world options) you can define these keywords in your application and still benefit from the safety of possible SQL injection by utilising the <a href="http://www.cfquickdocs.com/#cfswitch">cfswitch</a> statement.</p>
-
-<p>Don&#8217;t forget to always sanitise ANY USER INPUT!!!</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-11-22T13:15:50+11:00" pubdate data-updated="true">Nov 22<span>nd</span>, 2008</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/databases/'>Databases</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2008/11/22/cfqueryparam-does-not-work-in-order-by-what-are-my-options//page/8/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

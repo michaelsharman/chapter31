@@ -7,8 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="I was looking for a way to do isNull() in MySQL the other day, for those that don&#8217;t know this means you can do something like: 1
-SELECT isNull &hellip;">
+	<meta name="description" content="I spent a couple of hours on a FarCry plugin for twitter yesterday based off their official API. What? This plugin basically wraps up the options &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -82,6 +81,82 @@ SELECT isNull &hellip;">
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2011/04/17/farcry-twitter-plugin/">
+		
+			FarCry Twitter Plugin</a>
+	</h2>
+	<div class="entry-content">
+		<p>I spent a couple of hours on a FarCry plugin for twitter yesterday based off their official API.</p>
+
+<h2>What?</h2>
+
+<p>This plugin basically wraps up the options that the offical twitter API gives you including:</p>
+
+<ul>
+<li>Twitter username</li>
+<li>Showing avatars, timestamps, hashtags etc</li>
+<li>Theme appearance (colours for background and text etc</li>
+<li>Dimensions of widget</li>
+</ul>
+
+
+<p>For more, visit the <a href="https://github.com/michaelsharman/farcrytwitter">project page,</a> download it and have a play.</p>
+
+<h2>Why?</h2>
+
+<p>Although the twitter API is super simple to implement, it&#8217;s always handy to have things wrapped up as a plugin so we can easily create as many widgets as we need and handle caching etc. Caching is important as the API is rate limited to 150 requests per hour, using FarCry&#8217;s object broker will get around this.</p>
+
+<p>Plus it makes it simple for non techy people to get going with the goodness of twitter.</p>
+
+<h2>Where?</h2>
+
+<p>The project is currently hosted at GitHub&#8230;where else?
+<a href="https://github.com/michaelsharman/farcrytwitter">farcrytwitter project page</a></p>
+
+<h2>Requirements?</h2>
+
+<p>FarCry 6+ (although I think it&#8217;ll work on 5+ I haven&#8217;t tested)
+Railo 3.x / ColdFusion 8+
+MySQL / MSSQL (or whatever database your version of FarCry supports)</p>
+
+<p><img src="/images/uploads/2011/04/publishingrule.png" alt="" />
+<img src="/images/uploads/2011/04/widgetsample-150x150.png" alt="" /></p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-04-17T22:04:49+10:00" pubdate data-updated="true">Apr 17<span>th</span>, 2011</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/farcry/'>Farcry</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2011/04/17/farcry-twitter-plugin//page/6/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -736,56 +811,6 @@ $ sudo ln -sf /Volumes/Learnosity/Workspaces /users/michaelsharman/Workspaces</p
 </div>
 	
 		<div class="comments"><a href="/2010/05/13/removing-duplicate-rows-in-open-office-calc//page/6/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2010/05/10/ie-and-underscores-in-domain-names/">
-		
-			IE and Underscores in Domain Names</a>
-	</h2>
-	<div class="entry-content">
-		<p>Ok, a short warning to those who use underscores in their domain names. Underscores you say? Aren&#8217;t they illegal characters in domain names? Why yes they are (but I think they&#8217;re valid in sub-domains&#8230;not sure), but you may find yourself using them in development environments, particularly if you&#8217;re doing a re-design. Think something like <em>http://mysite_v2.local/</em> etc</p>
-
-<p>Now, this works of course and everything is fine and dandy because your using your own hosts file to make it &#8220;legal&#8221;&#8230;except that Internet Explorer has this little quirk where it doesn&#8217;t persist your session (cookie) information. So your app sets some session variables, refresh the page and they&#8217;re gone. Sigh&#8230;</p>
-
-<p>Why would IE even bother to do this? Who knows. But keep this in mind next time your pulling your hair out trying to figure out why session management isn&#8217;t working for you in IE.</p>
-
-<p><strong>Rule:</strong></p>
-
-<p>Don&#8217;t ever use underscores in domain names</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-05-10T09:09:27+10:00" pubdate data-updated="true">May 10<span>th</span>, 2010</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/misc/'>Misc</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2010/05/10/ie-and-underscores-in-domain-names//page/6/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

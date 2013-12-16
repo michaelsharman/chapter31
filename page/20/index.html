@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="A colleague sent me a nice way to obtain access to ColdFusion Administrator (any instance) when you&#8217;ve lost your password. After a little &hellip;">
+	<meta name="description" content="At Daemon we often run ColdFusion in multi-server mode (on top of JRun) which enables us to cleanly separate projects which require different server &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,98 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2006/12/19/determining-which-httpproxy-ports-your-jrun-instance-is-running-on/">
+		
+			Determining Which Http/proxy Ports Your JRun Instance Is Running On</a>
+	</h2>
+	<div class="entry-content">
+		<p>At Daemon we often run ColdFusion in multi-server mode (on top of JRun) which enables us to cleanly separate projects which require different server settings from one another.</p>
+
+<p>Typically I have a ColdFusion instance per <a href="http://www.farcrycms.org/">Farcry</a> version, at the moment that would be:</p>
+
+<ul>
+<li>p300 (v3)</li>
+<li>gonzales (v4)</li>
+</ul>
+
+
+<p>When ColdFusion first installs in multi-server mode you get the default &#8216;cfusion&#8217; instance, but you also get the &#8216;admin&#8217; JRun instance which is really only used when you need to access the JRun Management Console&#8230;not very often for most people!</p>
+
+<p>That being the case I often switch it off (in Control Panel/Administrative Tools/Services) and set its start option to manual, i.e. I&#8217;ll start it if I want to use it because I don&#8217;t want it taking up any system resources when I don&#8217;t specifically need it :)</p>
+
+<p><em>Sometimes</em> this is a pain when you need to double check the http and/or proxy port of a particular ColdFusion instance, usually when I need to access ColdFusion administrator or when I&#8217;m setting a bootstrap in my apache config.</p>
+
+<p>To save me starting the &#8216;admin&#8217; JRun instance purely to see the proxy port value, I can open up the jrun.xml file in my server-inf directory and look for the <port> setting under ProxyService.</p>
+
+<p>For me this is located in C:\JRun4\servers\cfusion_gonzales\SERVER-INF</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;!-- ================================================================== --&gt;
+</span><span class='line'>&lt;!-- This is the built-in JRun Web Server --&gt;
+</span><span class='line'>&lt;!-- ================================================================== --&gt;
+</span><span class='line'>&lt;attribute name="port"&gt;8301&lt;/attribute&gt;&lt;/code&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;!-- ========================================================================= --&gt;
+</span><span class='line'>&lt;!-- This service is for communicating with a native (IIS, Apache, Netscape) --&gt;
+</span><span class='line'>&lt;!-- web server. --&gt;
+</span><span class='line'>&lt;!-- To run this service in a secure mode via SSL, set the keyStore, --&gt;
+</span><span class='line'>&lt;!-- keyStorePassWord, trustStore and socketFactoryName attributes. --&gt;
+</span><span class='line'>&lt;!-- ========================================================================= --&gt;
+</span><span class='line'>&lt;attribute name="port"&gt;51000&lt;/attribute&gt;&lt;/code&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Believe it or not this is actually easier for me than starting (and then stopping) my admin JRun instance! Now you can just add this to your folder of explorer shortcuts.</p>
+
+<p>Ah it&#8217;s the little things&#8230;</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-12-19T16:00:51+11:00" pubdate data-updated="true">Dec 19<span>th</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2006/12/19/determining-which-httpproxy-ports-your-jrun-instance-is-running-on//page/20/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -805,64 +897,6 @@
 </div>
 	
 		<div class="comments"><a href="/2006/11/15/getting-tag-functionality-in-cfscript//page/20/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2006/11/15/wordpress-rss-feed-validation/">
-		
-			Wordpress RSS Feed Validation</a>
-	</h2>
-	<div class="entry-content">
-		<p>I&#8217;ve been using <a href="http://wordpress.org/">Wordpress</a> for a while now and I&#8217;m really happy with it. Only recently have I tried to validate my RSS feed using <a href="http://www.feedvalidator.org/">feedvalidator</a>.</p>
-
-<p>Unfortunately even though the feed validated I received the following warning:</p>
-
-<blockquote><p>wfw:commentRSS should be wfw:commentRss</p></blockquote>
-
-<p>The explanation given on the site was:</p>
-
-<blockquote><p>Due to a clerical error, the element Chris Sells originally spec&#8217;ed as wfw:commentRss appeared as wfw:commentRSS (note the difference in case) on Joe Gregorio&#8217;s site. At least one product (WordPress) has implemented and deployed feeds using the spelling originally present on Joe&#8217;s site.</p></blockquote>
-
-<p>And the solution:</p>
-
-<blockquote><p>Change wfw:commentRSS to wfw:commentRss</p>
-
-<p>Wordpress users can find this in the wp-rss2.php file.</p></blockquote>
-
-<p>Gotta love nice and easy fixes :)</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2006-11-15T09:15:29+11:00" pubdate data-updated="true">Nov 15<span>th</span>, 2006</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/uncategorised/'>Uncategorised</a>, <a class='category' href='/categories/php/'>php</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2006/11/15/wordpress-rss-feed-validation//page/20/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Setting up &#8220;externals&#8221; with subversion can assist you when you want to load external libraries into an existing project. You may have a &hellip;">
+	<meta name="description" content="Yet another tip for MySQL users, INSERT DELAYED. What does it do? Well when you execute your query MySQL will return an ok immediately to your &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,101 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/05/22/insert-delayed-with-mysql/">
+		
+			INSERT DELAYED With MySQL</a>
+	</h2>
+	<div class="entry-content">
+		<p>Yet another tip for MySQL users, <a href="http://dev.mysql.com/doc/refman/5.0/en/insert-delayed.html">INSERT DELAYED</a>.</p>
+
+<p>What does it do? Well when you execute your query MySQL will return an ok immediately to your application, and the request then gets queued to be INSERTED when the table in question is not being used by any other thread. This obviously means your application doesn&#8217;t have to sit around waiting for the INSERT to be completed which can have a positive impact on performance under load.</p>
+
+<p>Another major benefit of using INSERT DELAYED is that inserts from many clients are bundled together and written in one block. This is much faster than performing many separate inserts.</p>
+
+<p>This sounds pretty cool but there are certainly some points to consider, more from the <a href="http://dev.mysql.com/doc/refman/5.0/en/insert-delayed.html">docs</a>:</p>
+
+<ul>
+<li><p>Note that INSERT DELAYED is slower than a normal INSERT if the table is not otherwise in use. There is also the additional overhead for the server to handle a separate thread for each table for which there are delayed rows. This means that you should use INSERT DELAYED only when you are really sure that you need it.</p></li>
+<li><p>INSERT DELAYED works only with MyISAM, MEMORY, and ARCHIVE tables.</p></li>
+<li><p>Because the INSERT DELAYED statement returns immediately, before the rows are inserted, you cannot use LAST_INSERT_ID() to get the AUTO_INCREMENT value that the statement might generate.</p></li>
+<li><p>DELAYED rows are not visible to SELECT statements until they actually have been inserted.</p></li>
+</ul>
+
+
+<p>There are a few other things you should read up on from the docs, but for tables which handle things like logging these restrictions really don&#8217;t come into effect therefore this can be a great solution on mid to high traffic operations.</p>
+
+<p>We&#8217;re currently using this on one of our logging tables which gets hit a lot, I&#8217;m yet to do any significant load testing for exact numbers. But so far so good.</p>
+
+<p>Syntax is simple:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfquery</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;qLogDetails&quot;</span> <span class="nx">datasource</span><span class="o">=</span><span class="s2">&quot;#getDSN()#&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="nx">INSERT</span> <span class="nx">DELAYED</span> <span class="nx">INTO</span> <span class="nx">audit</span>
+</span><span class='line'>      <span class="p">(</span>
+</span><span class='line'>          <span class="nx">Status</span>
+</span><span class='line'>          <span class="p">,</span> <span class="nx">DateTimeCreated</span>
+</span><span class='line'>          <span class="p">,</span> <span class="nx">IPAddress</span>
+</span><span class='line'>      <span class="p">)</span>
+</span><span class='line'>  <span class="nx">VALUES</span>
+</span><span class='line'>      <span class="p">(</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.status#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>          <span class="p">,</span> <span class="nx">now</span><span class="p">()</span>
+</span><span class='line'>          <span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#getUserIP()#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>      <span class="p">)</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfquery&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Thanks to Cameron Simpson, browsing his code is where I found this!</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-05-22T23:27:00+10:00" pubdate data-updated="true">May 22<span>nd</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/databases/'>Databases</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/05/22/insert-delayed-with-mysql//page/13/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -915,48 +1010,6 @@ Avg: 529</p>
 </div>
 	
 		<div class="comments"><a href="/2008/03/24/installing-php5-with-mysql-extensions//page/13/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2008/03/22/update-for-java-6/">
-		
-			Update for Java 6</a>
-	</h2>
-	<div class="entry-content">
-		<p>Sun have just released Java 6 update 5, looking at the <a href="http://java.sun.com/javase/6/webnotes/ReleaseNotes.html#160_05">release notes</a> it doesn&#8217;t look as though the <a href="http://www.compoundtheory.com/?action=displayPost&amp;ID=270">CFC</a> <a href="http://corfield.org/blog/index.cfm/do/blog.entry/entry/Java_6_and_ColdFusion_8">issues</a> for ColdFusion have been addressed yet, we can only hope though!</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-03-22T15:20:05+11:00" pubdate data-updated="true">Mar 22<span>nd</span>, 2008</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2008/03/22/update-for-java-6//page/13/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

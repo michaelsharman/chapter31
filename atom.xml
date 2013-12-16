@@ -4,7 +4,7 @@
   <title><![CDATA[chapter31 &raquo;]]></title>
   <link href="http://chapter31.com/atom.xml" rel="self"/>
   <link href="http://chapter31.com/"/>
-  <updated>2013-06-25T12:45:09+10:00</updated>
+  <updated>2013-12-16T14:42:20+11:00</updated>
   <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
@@ -12,6 +12,197 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Simple JSON prettify]]></title>
+    <link href="http://chapter31.com/2013/12/16/simple-json-prettify/"/>
+    <updated>2013-12-16T14:24:00+11:00</updated>
+    <id>http://chapter31.com/2013/12/16/simple-json-prettify</id>
+    <content type="html"><![CDATA[<p>I went looking for a quick and easy way to style JSON content for display in the browser and quickly came across this <a href="http://stackoverflow.com/questions/4810841/json-pretty-print-using-javascript/7220510#7220510">answer at stack overflow</a> with a <a href="http://jsfiddle.net/unLSJ/">corresponding jsfiddle entry</a>.</p>
+
+<p>However the problem is that this is kinda broken, the output isn&#8217;t valid JSON because the keys aren&#8217;t quoted. It&#8217;s just outputting a JavaScript object intead. A quick fix to the JavaScript gave me what I needed, I couldn&#8217;t post on SO as I don&#8217;t have the reputation (yeah that&#8217;s annoying) so I&#8217;m posting here for reference and I <a href="http://jsfiddle.net/michaelsharman/HLzxw/">forked the original JSFiddle</a>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">library</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">library</span> <span class="o">=</span> <span class="p">{};</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">library</span><span class="p">.</span><span class="nx">json</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>   <span class="nx">replacer</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">match</span><span class="p">,</span> <span class="nx">pIndent</span><span class="p">,</span> <span class="nx">pKey</span><span class="p">,</span> <span class="nx">pVal</span><span class="p">,</span> <span class="nx">pEnd</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">key</span> <span class="o">=</span> <span class="s1">&#39;&lt;span class=json-key&gt;&#39;</span><span class="p">;</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">val</span> <span class="o">=</span> <span class="s1">&#39;&lt;span class=json-value&gt;&#39;</span><span class="p">;</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">str</span> <span class="o">=</span> <span class="s1">&#39;&lt;span class=json-string&gt;&#39;</span><span class="p">;</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">r</span> <span class="o">=</span> <span class="nx">pIndent</span> <span class="o">||</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="nx">pKey</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">r</span> <span class="o">=</span> <span class="nx">r</span> <span class="o">+</span> <span class="nx">key</span> <span class="o">+</span> <span class="nx">pKey</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/[: ]/g</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;&lt;/span&gt;: &#39;</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="nx">pVal</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">r</span> <span class="o">=</span> <span class="nx">r</span> <span class="o">+</span> <span class="p">(</span><span class="nx">pVal</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;&quot;&#39;</span> <span class="o">?</span> <span class="nx">str</span> <span class="o">:</span> <span class="nx">val</span><span class="p">)</span> <span class="o">+</span> <span class="nx">pVal</span> <span class="o">+</span> <span class="s1">&#39;&lt;/span&gt;&#39;</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nx">r</span> <span class="o">+</span> <span class="p">(</span><span class="nx">pEnd</span> <span class="o">||</span> <span class="s1">&#39;&#39;</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">},</span>
+</span><span class='line'>    <span class="nx">prettyPrint</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">jsonLine</span> <span class="o">=</span> <span class="sr">/^( *)(&quot;[\w]+&quot;: )?(&quot;[^&quot;]*&quot;|[\w.+-]*)?([,[{])?$/mg</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+</span><span class='line'>            <span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/&amp;/g</span><span class="p">,</span> <span class="s1">&#39;&amp;amp;&#39;</span><span class="p">).</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/\\&quot;/g</span><span class="p">,</span> <span class="s1">&#39;&amp;quot;&#39;</span><span class="p">)</span>
+</span><span class='line'>            <span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/&lt;/g</span><span class="p">,</span> <span class="s1">&#39;&amp;lt;&#39;</span><span class="p">).</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/&gt;/g</span><span class="p">,</span> <span class="s1">&#39;&amp;gt;&#39;</span><span class="p">)</span>
+</span><span class='line'>            <span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="nx">jsonLine</span><span class="p">,</span> <span class="nx">library</span><span class="p">.</span><span class="nx">json</span><span class="p">.</span><span class="nx">replacer</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And the CSS that goes with it:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="nt">pre</span> <span class="p">{</span>
+</span><span class='line'>   <span class="k">background-color</span><span class="o">:</span> <span class="nb">ghostwhite</span><span class="p">;</span>
+</span><span class='line'>   <span class="k">border</span><span class="o">:</span> <span class="m">1px</span> <span class="k">solid</span> <span class="nb">silver</span><span class="p">;</span>
+</span><span class='line'>   <span class="k">padding</span><span class="o">:</span> <span class="m">10px</span> <span class="m">20px</span><span class="p">;</span>
+</span><span class='line'>   <span class="k">margin</span><span class="o">:</span> <span class="m">20px</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.json-key</span> <span class="p">{</span>
+</span><span class='line'>   <span class="k">color</span><span class="o">:</span> <span class="nb">brown</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.json-value</span> <span class="p">{</span>
+</span><span class='line'>   <span class="k">color</span><span class="o">:</span> <span class="nb">navy</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.json-string</span> <span class="p">{</span>
+</span><span class='line'>   <span class="k">color</span><span class="o">:</span> <span class="nb">olive</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>The end result</h2>
+
+<p>The original:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="p">[</span>
+</span><span class='line'>   <span class="p">{</span>
+</span><span class='line'>      <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;Earth&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="nx">order</span><span class="o">:</span> <span class="mi">3</span><span class="p">,</span>
+</span><span class='line'>      <span class="nx">stats</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>         <span class="nx">life</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+</span><span class='line'>         <span class="nx">mass</span><span class="o">:</span> <span class="mf">5.973600000000001</span><span class="nx">e</span><span class="o">+</span><span class="mi">24</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>   <span class="p">},</span>
+</span><span class='line'>   <span class="p">{</span>
+</span><span class='line'>      <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;Saturn&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="nx">order</span><span class="o">:</span> <span class="mi">6</span><span class="p">,</span>
+</span><span class='line'>      <span class="nx">stats</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>         <span class="nx">life</span><span class="o">:</span> <span class="kc">null</span><span class="p">,</span>
+</span><span class='line'>         <span class="nx">mass</span><span class="o">:</span> <span class="mf">5.6846</span><span class="nx">e</span><span class="o">+</span><span class="mi">26</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>   <span class="p">}</span>
+</span><span class='line'><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The result after a minor change:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="p">[</span>
+</span><span class='line'>   <span class="p">{</span>
+</span><span class='line'>      <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;Earth&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="s2">&quot;order&quot;</span><span class="o">:</span> <span class="mi">3</span><span class="p">,</span>
+</span><span class='line'>      <span class="s2">&quot;stats&quot;</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>         <span class="s2">&quot;life&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+</span><span class='line'>         <span class="s2">&quot;mass&quot;</span><span class="o">:</span> <span class="mf">5.973600000000001</span><span class="nx">e</span><span class="o">+</span><span class="mi">24</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>   <span class="p">},</span>
+</span><span class='line'>   <span class="p">{</span>
+</span><span class='line'>      <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;Saturn&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="s2">&quot;order&quot;</span><span class="o">:</span> <span class="mi">6</span><span class="p">,</span>
+</span><span class='line'>      <span class="s2">&quot;stats&quot;</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>         <span class="s2">&quot;life&quot;</span><span class="o">:</span> <span class="kc">null</span><span class="p">,</span>
+</span><span class='line'>         <span class="s2">&quot;mass&quot;</span><span class="o">:</span> <span class="mf">5.6846</span><span class="nx">e</span><span class="o">+</span><span class="mi">26</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>   <span class="p">}</span>
+</span><span class='line'><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Careful using PHP array_merge]]></title>
@@ -1471,65 +1662,6 @@ Base16 is both a color scheme and a template.
 
 
 <p>You can do other cool things like extracting the audio only (and choosing which audio format you want). There are also <a href="http://rg3.github.com/youtube-dl/documentation.html#d4">LOTS of sites</a> that are supported&#8230;not just youtube.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[JSON undefined issues on IE8 and IE9]]></title>
-    <link href="http://chapter31.com/2012/11/21/json-undefined-issues-on-ie8-and-ie9/"/>
-    <updated>2012-11-21T16:48:57+11:00</updated>
-    <id>http://chapter31.com/2012/11/21/json-undefined-issues-on-ie8-and-ie9</id>
-    <content type="html"><![CDATA[<p>I had some issues today while testing in IE, where &#8220;JSON&#8221; was undefined. This was happening in IE8 and IE9, which is strange because the JSON functions are in those IE versions. The problem was IE&#8217;s compatibility view, which triggers rendering in sort-of-IE7 mode. Classy. This was making JSON undefined ;(</p>
-
-<p>The usual fix for this is to add a meta tag to force IE to use &#8220;edge&#8221; (or a specific version if you like):</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">&quot;X-UA-Compatible&quot;</span> <span class="na">content=</span><span class="s">&quot;IE=edge&quot;</span><span class="nt">&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>However we&#8217;ve had problems with this in the past where it doesn&#8217;t always seem to work, especially on corporate networks and intranets. We now use an Apache header (and not use the meta tag at all) to achieve IE=edge. Here&#8217;s the Apache header (to go in your .htaccess, note that you need mod_headers enabled for this to work):</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'>Header set X-UA-Compatible &quot;IE=edge&quot;
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Update</h3>
-
-<p>You can use the Apache header above, combined with a check to only send the header for Internet Explorer</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'>BrowserMatch MSIE ie
-</span><span class='line'>Header set X-UA-Compatible &quot;IE=edge,chrome=1&quot; env=ie
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>To be safe, if you can&#8217;t use the Apache header above (which we found to always work as opposed to the meta tag) you might want to load <a href="https://github.com/douglascrockford/JSON-js/blob/master/json2.js">json2.js</a> for IE8 and 9 because you can&#8217;t control if a user is in compatibility view. If they are, then JSON will be undefined. The cool thing about json2 is that if it detects that JSON is already defined, it won&#8217;t do anything at all. But it&#8217;s there if the older browsers need it (IE7) or you somehow have visitors in compatibility view.</p>
-
-<p>You can also load json2.js from a CDN:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'>http://cdnjs.cloudflare.com/ajax/libs/json2/20110223/json2.js
-</span><span class='line'>or minified
-</span><span class='line'>http://cdnjs.cloudflare.com/ajax/libs/json2/20110223/json2.min.js
-</span><span class='line'>
-</span><span class='line'>or
-</span><span class='line'>
-</span><span class='line'>http://ajax.cdnjs.com/ajax/libs/json2/20110223/json2.js
-</span><span class='line'>or minified
-</span><span class='line'>http://ajax.cdnjs.com/ajax/libs/json2/20110223/json2.min.js
-</span></code></pre></td></tr></table></div></figure>
-
 ]]></content>
   </entry>
   

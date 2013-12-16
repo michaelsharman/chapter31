@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Areez Gangji has just posted on Adobe devnet an article listing the &#8221;Top 10 Adobe Flex and AIR applications for students&#8221;. I&#8217;m &hellip;">
+	<meta name="description" content="Working on a ColdFusion project recently I had the need to generate a random key; the format of which was based on a specific set of business rules &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,109 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/10/14/generaterandomkey-udf-with-several-handy-options/">
+		
+			generateRandomKey() UDF With Several Handy Options</a>
+	</h2>
+	<div class="entry-content">
+		<p>Working on a ColdFusion project recently I had the need to generate a random key; the format of which was based on a specific set of business rules. I actually ended up writing a basic UDF to handle this but after the fact I went looking to see if I could find something which provided some of the features I was after.</p>
+
+<p>Although I found several through google and <a href="http://cflib.org/">cflib</a> they weren&#8217;t completely what I was after. Not finding exactly what I needed inspired me to write my own one based on the following requirements:</p>
+
+<ul>
+<li>Users can set the length of the returned key</li>
+<li>Key can be UPPER, lower or MixEd case</li>
+<li>Format can include numeric, string, alphanumeric (a-zA-Z0-9) and special characters</li>
+<li>Potentially confusing characters (e.g. o, i, l, s, O, I, L, S etc) are ignored by default and users can pass in their own list of special characters (overriding the default list) to be ignored from the returned key</li>
+<li>Users can pass a fixed prefix or suffix, handy if your business needs to generate order numbers which all start with &#8220;CF-&#8221; etc</li>
+<li>Users can specify that the first (or last) &#8216;x&#8217; characters in the key are numeric, the rest of the key follows the &#8220;format&#8221; argument</li>
+</ul>
+
+
+<p>Some examples:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">generateRandomKey</span><span class="p">();</span>
+</span><span class='line'><span class="c1">//DCE8YDEK</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">generateRandomKey</span><span class="p">(</span><span class="k">case</span><span class="o">=</span><span class="s2">&quot;mixed&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="c1">//wYu3Kbaj</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">generateRandomKey</span><span class="p">(</span><span class="k">case</span><span class="o">=</span><span class="s2">&quot;mixed&quot;</span><span class="p">,</span> <span class="nx">format</span><span class="o">=</span><span class="s2">&quot;alphanumeric&quot;</span><span class="p">,</span> <span class="nx">length</span><span class="o">=</span><span class="s2">&quot;10&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="c1">//7hE3hv4Yzr</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">generateRandomKey</span><span class="p">(</span><span class="nx">format</span><span class="o">=</span><span class="s2">&quot;special&quot;</span><span class="p">,</span> <span class="nx">fixedPrefix</span><span class="o">=</span><span class="s2">&quot;MPS&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="c1">//MPS&gt;M_!{</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">generateRandomKey</span><span class="p">(</span><span class="k">case</span><span class="o">=</span><span class="s2">&quot;upper&quot;</span><span class="p">,</span> <span class="nx">format</span><span class="o">=</span><span class="s2">&quot;string&quot;</span><span class="p">,</span> <span class="nx">numericPrefix</span><span class="o">=</span><span class="s2">&quot;3&quot;</span><span class="p">,</span> <span class="nx">length</span><span class="o">=</span><span class="s2">&quot;12&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="c1">//193TYTVDYJFZ</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">generateRandomKey</span><span class="p">(</span><span class="nx">format</span><span class="o">=</span><span class="s2">&quot;numeric&quot;</span><span class="p">,</span> <span class="nx">length</span><span class="o">=</span><span class="s2">&quot;12&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="c1">//692490463609</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">generateRandomKey</span><span class="p">(</span><span class="k">case</span><span class="o">=</span><span class="s2">&quot;lower&quot;</span><span class="p">,</span> <span class="nx">format</span><span class="o">=</span><span class="s2">&quot;special&quot;</span><span class="p">,</span> <span class="nx">specialChars</span><span class="o">=</span><span class="s2">&quot;*,&amp;&quot;</span><span class="p">,</span> <span class="nx">length</span><span class="o">=</span><span class="s2">&quot;12&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="c1">//fqr74mhb*cq&amp;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If anyone is interested you can <a href="/images/uploads/2008/10/generaterandomkey1.txt">download the UDF here</a>.</p>
+
+<p>As usual comments and critiques are always welcome :)</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-10-14T00:29:14+11:00" pubdate data-updated="true">Oct 14<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/10/14/generaterandomkey-udf-with-several-handy-options//page/10/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -659,52 +762,6 @@ Import FLVs from your computer - including h.264 encoded videos, browse categori
 </div>
 	
 		<div class="comments"><a href="/2008/08/06/getting-inkscape-046-to-run-on-mac-leopard//page/10/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2008/08/02/server-monitoring-your-coldfusion-sites-using-an-alias/">
-		
-			Server Monitoring Your ColdFusion Sites Using an Alias</a>
-	</h2>
-	<div class="entry-content">
-		<p>I just <a href="http://sandeepp.org/blog/?p=20">read about</a> a nice feature of the ColdFusion server monitor tool (available in <a href="http://www.adobe.com/products/coldfusion/">ColdFusion 8</a>) over on <a href="http://sandeepp.org/blog/">sandeepp&#8217;s</a> blog.</p>
-
-<p>Essentially within the server monitors settings screen you can setup an &#8220;alias&#8221; for any site which uses a <a href="http://en.wikipedia.org/wiki/Front_controller">front controller</a> which a lot of sites do particularly if you are using any of the popular frameworks like <a href="http://www.farcrycms.org/">FarCry</a>, <a href="http://www.mach-ii.com/">Mach-II,</a> <a href="http://www.fusebox.org/">Fusebox</a> and <a href="http://www.model-glue.com/">Model-Glue</a> etc</p>
-
-<p>This makes your projects much easier to trouble shoot and test. I wonder if features like this will keep some of the &#8220;enterprise&#8221; community from trying out other CFML engines like <a href="http://www.railo-technologies.com/">Railo</a> and <a href="http://www.openbluedragon.org/">Open BlueDragon</a>?</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-08-02T13:19:54+10:00" pubdate data-updated="true">Aug 2<span>nd</span>, 2008</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/tools/'>Tools</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2008/08/02/server-monitoring-your-coldfusion-sites-using-an-alias//page/10/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

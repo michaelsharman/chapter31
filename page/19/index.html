@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="*Note that this example is using MSSQL with an Identity set to generate the primary key automatically. An all too common process developers go &hellip;">
+	<meta name="description" content="Here at Daemon we are looking at standardising the FarCry core codebase in an effort to reduce any case-sensitivity issues that may be found when &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,62 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2007/04/23/farcry-40-filename-standards/">
+		
+			Farcry 4.0 Filename Standards</a>
+	</h2>
+	<div class="entry-content">
+		<p>Here at Daemon we are looking at standardising the <a href="http://www.farcrycms.org/">FarCry</a> core codebase in an effort to reduce any case-sensitivity issues that may be found when running FarCry on different platforms.</p>
+
+<p>These problems usually arise when dealing with filenames of any type (.cfc, .cfm etc), indeed I ran into an issue today with an external developer who had created their own templates which weren&#8217;t showing up in the FarCry webtop. Filename case-sensitivity was the culprit :)</p>
+
+<p>The standard (which isn&#8217;t really all that new to <a href="http://www.daemon.com.au/">Daemon</a> developers) is simple and is one which many people use (although I&#8217;ve seen it referenced with different terms), all filenames which reside in the FarCry core directory should be named in a &#8220;Lower Camel Case&#8221; format.</p>
+
+<p>For example:</p>
+
+<pre><code>displayPageStandard.cfm  
+displayTeaserStandard.cfm  
+dmNews.cfc  
+myCustom.cfc
+</code></pre>
+
+<p>I know this goes against the often used standard of naming components in upper camel case (e.g. MyCustom.cfc), however this way not only is there just one standard for all files but it also helps as this happens to be the current naming style of most &#8216;core&#8217; components.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-04-23T23:21:53+10:00" pubdate data-updated="true">Apr 23<span>rd</span>, 2007</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/farcry/'>Farcry</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2007/04/23/farcry-40-filename-standards//page/19/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -1012,98 +1068,6 @@
 </div>
 	
 		<div class="comments"><a href="/2006/12/20/eclipsecfeclipse-gives-me-a-headache//page/19/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2006/12/19/determining-which-httpproxy-ports-your-jrun-instance-is-running-on/">
-		
-			Determining Which Http/proxy Ports Your JRun Instance Is Running On</a>
-	</h2>
-	<div class="entry-content">
-		<p>At Daemon we often run ColdFusion in multi-server mode (on top of JRun) which enables us to cleanly separate projects which require different server settings from one another.</p>
-
-<p>Typically I have a ColdFusion instance per <a href="http://www.farcrycms.org/">Farcry</a> version, at the moment that would be:</p>
-
-<ul>
-<li>p300 (v3)</li>
-<li>gonzales (v4)</li>
-</ul>
-
-
-<p>When ColdFusion first installs in multi-server mode you get the default &#8216;cfusion&#8217; instance, but you also get the &#8216;admin&#8217; JRun instance which is really only used when you need to access the JRun Management Console&#8230;not very often for most people!</p>
-
-<p>That being the case I often switch it off (in Control Panel/Administrative Tools/Services) and set its start option to manual, i.e. I&#8217;ll start it if I want to use it because I don&#8217;t want it taking up any system resources when I don&#8217;t specifically need it :)</p>
-
-<p><em>Sometimes</em> this is a pain when you need to double check the http and/or proxy port of a particular ColdFusion instance, usually when I need to access ColdFusion administrator or when I&#8217;m setting a bootstrap in my apache config.</p>
-
-<p>To save me starting the &#8216;admin&#8217; JRun instance purely to see the proxy port value, I can open up the jrun.xml file in my server-inf directory and look for the <port> setting under ProxyService.</p>
-
-<p>For me this is located in C:\JRun4\servers\cfusion_gonzales\SERVER-INF</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;!-- ================================================================== --&gt;
-</span><span class='line'>&lt;!-- This is the built-in JRun Web Server --&gt;
-</span><span class='line'>&lt;!-- ================================================================== --&gt;
-</span><span class='line'>&lt;attribute name="port"&gt;8301&lt;/attribute&gt;&lt;/code&gt;</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;!-- ========================================================================= --&gt;
-</span><span class='line'>&lt;!-- This service is for communicating with a native (IIS, Apache, Netscape) --&gt;
-</span><span class='line'>&lt;!-- web server. --&gt;
-</span><span class='line'>&lt;!-- To run this service in a secure mode via SSL, set the keyStore, --&gt;
-</span><span class='line'>&lt;!-- keyStorePassWord, trustStore and socketFactoryName attributes. --&gt;
-</span><span class='line'>&lt;!-- ========================================================================= --&gt;
-</span><span class='line'>&lt;attribute name="port"&gt;51000&lt;/attribute&gt;&lt;/code&gt;</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Believe it or not this is actually easier for me than starting (and then stopping) my admin JRun instance! Now you can just add this to your folder of explorer shortcuts.</p>
-
-<p>Ah it&#8217;s the little things&#8230;</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2006-12-19T16:00:51+11:00" pubdate data-updated="true">Dec 19<span>th</span>, 2006</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2006/12/19/determining-which-httpproxy-ports-your-jrun-instance-is-running-on//page/19/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 
