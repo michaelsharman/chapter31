@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Ok, a short warning to those who use underscores in their domain names. Underscores you say? Aren&#8217;t they illegal characters in domain names? &hellip;">
+	<meta name="description" content="Scenario&#8230;I&#8217;m using ColdFusion 9 and MySQL 5. I already had my DSN setup but had a requirement to get the last inserted id from a MySQL &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,238 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2010/09/08/tip-when-adding-allowmultiqueriestrue-to-your-mysql-dsn-in-coldfusion/">
+		
+			Tip When Adding &#8220;allowMultiQueries=true&#8221; to Your MySQL DSN in ColdFusion</a>
+	</h2>
+	<div class="entry-content">
+		<p>Scenario&#8230;I&#8217;m using ColdFusion 9 and MySQL 5. I already had my DSN setup but had a requirement to get the last inserted id from a MySQL INSERT statement (I&#8217;m using auto-incrementing integer&#8217;s).</p>
+
+<p>As most people know, the best way to do this (in MySQL) is using the <a href="http://dev.mysql.com/doc/refman/5.0/en/information-functions.html#function_last-insert-id">last_insert_id()</a> function. I wanted to attach this to the end of my INSERT statement for performance reasons, as I&#8217;d only be sending one query to the server instead of separate ones. Plus I&#8217;m not even sure if  I&#8217;d get the correct id back in a production environment if I sent it through as a separate query.</p>
+
+<p>Anyway&#8230;for this to happen you need to add &#8220;allowMultiQueries=true&#8221; to your DSN connection string in ColdFusion Administrator (advanced settings) which I did. However I got an error when I tried to run the code, CF didn&#8217;t like me running 2 queries at once. Hmm&#8230;restarted CF which should have reloaded the drivers. No luck. Ok&#8230;how about restarting MySQL? Nope&#8230;</p>
+
+<p>Finally took a comment from <a href="http://www.bennadel.com/blog/1209-Turning-On-Multiple-Statements-In-ColdFusion-8-MySQL-4-5-Datasource.htm">Will Tomlinson over on Ben Nadel&#8217;s blog</a> to help me out. Delete and recreate the DSN, happy days!</p>
+
+<p><img src="/images/uploads/2010/09/cfadmin.png" alt="" /></p>
+
+<p>Who want&#8217;s some sample code?</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cffunction</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;addStuff&quot;</span> <span class="nx">access</span><span class="o">=</span><span class="s2">&quot;public&quot;</span> <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="nx">returnType</span><span class="o">=</span><span class="s2">&quot;numeric&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;ref&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;string&quot;</span> <span class="nx">required</span><span class="o">=</span><span class="s2">&quot;true&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;stage&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;string&quot;</span> <span class="nx">required</span><span class="o">=</span><span class="s2">&quot;true&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfset</span> <span class="kd">var</span> <span class="nx">q</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfquery</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;q&quot;</span> <span class="nx">datasource</span><span class="o">=</span><span class="s2">&quot;#variables.instance.config.dsn#&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="nx">INSERT</span> <span class="nx">INTO</span> <span class="nx">mytable</span>
+</span><span class='line'>          <span class="p">(</span>
+</span><span class='line'>              <span class="nx">ref</span>
+</span><span class='line'>              <span class="p">,</span> <span class="nx">stage</span>
+</span><span class='line'>          <span class="p">)</span>
+</span><span class='line'>      <span class="nx">VALUES</span>
+</span><span class='line'>          <span class="p">(</span>
+</span><span class='line'>              <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.ref#&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>              <span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.stage#&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>          <span class="p">);</span><span class="nx">SELECT</span> <span class="nx">LAST_INSERT_ID</span><span class="p">()</span> <span class="nx">AS</span> <span class="nx">newId</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cfquery&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfreturn</span> <span class="nx">q</span><span class="p">.</span><span class="nx">newId</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cffunction&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-09-08T22:47:00+10:00" pubdate data-updated="true">Sep 8<span>th</span>, 2010</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/databases/'>Databases</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2010/09/08/tip-when-adding-allowmultiqueriestrue-to-your-mysql-dsn-in-coldfusion//page/7/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2010/05/27/cfml-issue-on-railo-with-the-accelerate-cache-tag/">
+		
+			CFML Issue on Railo With the Accelerate Cache Tag</a>
+	</h2>
+	<div class="entry-content">
+		<p>We&#8217;ve been using <a href="http://www.bpurcell.org">Brandon Purcell&#8217;s</a> excellent accelerate custom cache tag for a few projects. I had an issue today while testing a new app which is about to go live. It seemed that whatever I did nothing would be cached.</p>
+
+<p>Upon investigation it seemed that the caching worked fine on Adobe ColdFusion but not on Railo. A quick look at the codebase brought me to this line:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">IsDefined</span><span class="p">(</span><span class="s2">&quot;application.accelerator.#scriptName#.#primarykey#.#secondaryKey#&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Basically this was always returning false, even when I knew the key was in the application scope. I changed it to the following:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">structKeyExists</span><span class="p">(</span><span class="nx">application</span><span class="p">,</span><span class="s2">&quot;accelerator[scriptName][primarykey][secondaryKey]&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Success! (Thanks AJ for the final structKeyExists)</p>
+
+<p>Just a quick fyi to anyone else who might be using this custom tag on Railo.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-05-27T16:30:30+10:00" pubdate data-updated="true">May 27<span>th</span>, 2010</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/railo/'>Railo</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2010/05/27/cfml-issue-on-railo-with-the-accelerate-cache-tag//page/7/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2010/05/13/removing-duplicate-rows-in-open-office-calc/">
+		
+			Removing Duplicate Rows in Open Office (Calc)</a>
+	</h2>
+	<div class="entry-content">
+		<p>I needed to de-dupe a spreadsheet the other day and <a href="http://blogs.sun.com/oootnt/entry/removing_duplicate_rows_in_calc">found a great how-to</a> from google. Thought I&#8217;d post it here for my own future purposes:</p>
+
+<hr />
+
+<p>There is no automatic function to remove duplicate rows. Follow these steps to delete all rows that have duplicate values in column A:</p>
+
+<ol>
+<li><p>Select all cells of the current data range.</p>
+
+<p> On most systems, you can click any cell inside the data range, then press Ctrl+Multiplication key on the numeric keypad.</p></li>
+<li><p>Sort the data range by column A.</p>
+
+<p> Choose Data - Sort.</p></li>
+<li><p>Click an empty cell in the first row. Let&#8217;s assume it is cell C1. Enter the formula:</p>
+
+<p> =IF(A1=A2;1;0)</p>
+
+<p> This will display 1 if the current row has the same value in column A as the next row. It will display 0 if the values are different.</p></li>
+<li><p>Copy the formula down for all rows of the data range.</p>
+
+<p> Drag the lower right edge of the cell C1 down to the last row.</p></li>
+<li><p>Now the formulas must be replaced by their values to freeze the contents.</p>
+
+<p> While the column C is still highlighted, press Ctrl+C to copy all selected cells to the clipboard.</p></li>
+<li><p>Press Shift+Ctrl+V to open the Paste Special dialog box.</p>
+
+<p> In the Selection area, enable only the Numbers command; disable the other Selection commands. Click OK.</p></li>
+<li><p>Select the whole data range including the new column C and sort the range by column C.</p>
+
+<p> Choose Data - Sort.</p></li>
+<li><p>Select all rows which have a value 1 in column C, then press Del key.</p></li>
+<li><p>Optional steps: Delete column C. Select the remaining rows and sort them again by column A.</p></li>
+</ol>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-05-13T15:05:04+10:00" pubdate data-updated="true">May 13<span>th</span>, 2010</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2010/05/13/removing-duplicate-rows-in-open-office-calc//page/7/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -599,202 +831,6 @@
 	
 </div></article>
 
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2009/08/15/new-location-for-farcry-subversion-repositories/">
-		
-			New Location for FarCry Subversion Repositories</a>
-	</h2>
-	<div class="entry-content">
-		<p>The folks at <a href="http://www.daemon.com.au">Daemon</a> have completed some migrations with their subversion repositories which directly effects <a href="http://www.farcrycms.org">FarCry</a>. Notes from the <a href="http://groups.google.com/group/farcry-dev/browse_thread/thread/57e68f1dccf5861f">farcry-dev groups</a>:</p>
-
-<p>All URL&#8217;s should be replaced with this repo location:
-<a href="https://modius.svn.cvsdude.com/farcry">https://modius.svn.cvsdude.com/farcry</a></p>
-
-<p>All project folders are relative to this root.  For example, the p520
-branch for FarCry 5.2.x is available here:
-<a href="https://modius.svn.cvsdude.com/farcry/core/branches/p520/">https://modius.svn.cvsdude.com/farcry/core/branches/p520/</a></p>
-
-<p>You can re-checkout or use the &#8220;relocate&#8221; command if your SVN client
-supports.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-08-15T17:21:01+10:00" pubdate data-updated="true">Aug 15<span>th</span>, 2009</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/farcry/'>Farcry</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2009/08/15/new-location-for-farcry-subversion-repositories//page/7/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2009/07/14/hiding-the-farcry-tray-on-the-front-end/">
-		
-			Hiding the FarCry Tray on the Front End</a>
-	</h2>
-	<div class="entry-content">
-		<p>Came across <a href="http://groups.google.com/group/farcry-dev/browse_thread/thread/d9f4e16659e38e18?hl=en&amp;pli=1">this nice tip</a> a little while ago from AJ Mercer on the <a href="http://groups.google.com/group/farcry-dev/">farcry-dev group</a>.</p>
-
-<p>It hides the FarCry &#8220;tray&#8221; which is visible on the front end of your website to users who are logged in to FarCry. I happen to have a use case for this at the moment so it was good timing.</p>
-
-<p>Simply put this code snippet in any template there you don&#8217;t want the tray appearing. Personally I put this in <em>/config/</em>serverSpecificRequestScope.cfm_ so it&#8217;s picked up on every page request as I never wanted it to appear.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">request</span><span class="p">.</span><span class="nx">mode</span><span class="p">.</span><span class="nx">bAdmin</span> <span class="o">=</span> <span class="kc">false</span><span class="o">&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Thanks AJ :)</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-07-14T14:42:39+10:00" pubdate data-updated="true">Jul 14<span>th</span>, 2009</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/farcry/'>Farcry</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2009/07/14/hiding-the-farcry-tray-on-the-front-end//page/7/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2009/06/15/prototypescriptaculous-issue-with-sortablecreate/">
-		
-			Prototype/scriptaculous Issue With Sortable.create()</a>
-	</h2>
-	<div class="entry-content">
-		<p>I&#8217;ve been doing some custom sorting within FarCry using the prototype/scriptaculous libraries as they already exist in the FarCry framework by default.</p>
-
-<p>I was having trouble getting the <a href="http://wiki.github.com/madrobby/scriptaculous/sortable-create">Sortable.create()</a> to work properly and the main docs site for scriptaculous seems severely lacking in examples. Basically the &#8220;sorting&#8221; action was happening fine but no event was being fired &#8220;onUpdate&#8221;. No exception was being thrown, just that nothing was happening after the drag/drop.</p>
-
-<p>The solution came from google (where else?) on the rubyonrails groups thanks to a fellow named Chris.</p>
-
-<p><a href="http://groups.google.com/group/rubyonrails-spinoffs/browse_thread/thread/eb54b586942af4f2/d27bf870447b0584">Straight from the board</a>:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">I</span> <span class="nx">had</span> <span class="nx">the</span> <span class="nx">same</span> <span class="nx">problem</span><span class="p">,</span> <span class="nx">and</span> <span class="nx">the</span> <span class="nx">issue</span> <span class="nx">is</span> <span class="nx">probably</span> <span class="k">in</span> <span class="nx">your</span> <span class="nx">markup</span><span class="p">.</span> <span class="nx">Each</span>
-</span><span class='line'><span class="nx">item</span> <span class="nx">of</span> <span class="nx">the</span> <span class="s1">&#39;sortable&#39;</span> <span class="nx">has</span> <span class="nx">to</span> <span class="nx">be</span> <span class="nx">named</span> <span class="k">in</span> <span class="nx">the</span> <span class="nx">format</span> <span class="s1">&#39;string_integer&#39;</span><span class="p">.</span>
-</span><span class='line'><span class="nx">So</span> <span class="k">this</span> <span class="nx">will</span> <span class="nx">work</span><span class="o">:</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">ul</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;makeMeSortable&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>   <span class="o">&lt;</span><span class="nx">li</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;item_1&quot;</span><span class="o">&gt;&lt;</span><span class="err">/li&gt;</span>
-</span><span class='line'>   <span class="o">&lt;</span><span class="nx">li</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;item_2&quot;</span><span class="o">&gt;&lt;</span><span class="err">/li&gt;</span>
-</span><span class='line'>   <span class="o">&lt;</span><span class="nx">li</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;item_3&quot;</span><span class="o">&gt;&lt;</span><span class="err">/li&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/ul&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nx">and</span> <span class="k">this</span> <span class="nx">will</span> <span class="nx">NOT</span> <span class="nx">work</span><span class="o">:</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">ul</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;makeMeSortable&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>   <span class="o">&lt;</span><span class="nx">li</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;firstitem&quot;</span><span class="o">&gt;&lt;</span><span class="err">/li&gt;</span>
-</span><span class='line'>   <span class="o">&lt;</span><span class="nx">li</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;seconditem&quot;</span><span class="o">&gt;&lt;</span><span class="err">/li&gt;</span>
-</span><span class='line'>   <span class="o">&lt;</span><span class="nx">li</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;thirditem&quot;</span><span class="o">&gt;&lt;</span><span class="err">/li&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/ul&gt; </span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Wait, read that again. Are you serious?</p>
-
-<p>Yep&#8230;you have to split your &#8220;id&#8221; value with a string, then an underscore followed by an integer. This is truly the dumbest thing I&#8217;ve found in a while. Hall of famer for sure.</p>
-
-<p>Just posting here to help anyone else who spends more time than necessary getting this (simple) task working.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-06-15T15:33:29+10:00" pubdate data-updated="true">Jun 15<span>th</span>, 2009</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/javascript/'>Javascript</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2009/06/15/prototypescriptaculous-issue-with-sortablecreate//page/7/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
 <nav id="pagenavi">
     
         <a href="/page/6/" class="prev">Prev</a>
@@ -804,7 +840,7 @@ supports.</p>
     
     <div class="center"><a href="/blog/archives">Blog Archives</a></div>
 </nav></div>
-	<footer id="footer" class="inner">Copyright &copy; 2013
+	<footer id="footer" class="inner">Copyright &copy; 2015
 
     Michael Sharman
 

@@ -4,7 +4,7 @@
   <title><![CDATA[chapter31 &raquo;]]></title>
   <link href="http://chapter31.com/atom.xml" rel="self"/>
   <link href="http://chapter31.com/"/>
-  <updated>2013-12-24T13:15:33+11:00</updated>
+  <updated>2015-05-08T08:07:23+10:00</updated>
   <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
@@ -14,13 +14,36 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Opening .eml files on a mac]]></title>
+    <link href="http://chapter31.com/2015/05/06/opening-eml-files/"/>
+    <updated>2015-05-06T21:00:00+10:00</updated>
+    <id>http://chapter31.com/2015/05/06/opening-eml-files</id>
+    <content type="html"><![CDATA[<p>More and more I&#8217;m getting emails from clients with <em>.eml</em> attachments. These are generally email messages created by Microsoft Outlook and may contain their own attachments (files or images etc).</p>
+
+<p>The issue for me is that I don&#8217;t use Outlook&#8230;but I still need to find a way to open them, ideally a way that includes accessing the original attachments.</p>
+
+<p>Luckily there are a several options, including (first download the eml file):</p>
+
+<ul>
+<li>If you have <a href="http://en.wikipedia.org/wiki/Mail_(OS_X)">Apple Mail</a> setup, just double click the .eml to open the original email. This also gives you access to the attachments</li>
+<li>Open in Preview (select the file and hit the space bar). This is ok but only for the text part of the email, no attachments</li>
+<li>Download and rename the eml file it as <a href="http://en.wikipedia.org/wiki/MHTML">.mht</a> (or .mhtml) then open it in any modern browser. This is because it&#8217;s just a MIME HTML file. This is ok but only for the text part of the email, no attachments</li>
+<li>Install dedicated software like <a href="https://chrome.google.com/webstore/detail/eml-mht-viewer-with-drive/ahbjckdnggnfmchoildeljnilenlkoao">this Chrome extension</a></li>
+</ul>
+
+
+<p>Clearly using Apple Mail is the winner, for me this mean setting it up with an account I rarely use&#8230;just so I could open it.</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Simple JSON prettify]]></title>
     <link href="http://chapter31.com/2013/12/16/simple-json-prettify/"/>
     <updated>2013-12-16T14:24:00+11:00</updated>
     <id>http://chapter31.com/2013/12/16/simple-json-prettify</id>
     <content type="html"><![CDATA[<p>I went looking for a quick and easy way to style JSON content for display in the browser and quickly came across this <a href="http://stackoverflow.com/questions/4810841/json-pretty-print-using-javascript/7220510#7220510">answer at stack overflow</a> with a <a href="http://jsfiddle.net/unLSJ/">corresponding jsfiddle entry</a>.</p>
 
-<p>However the problem is that this is kinda broken, the output isn&#8217;t valid JSON because the keys aren&#8217;t quoted. It&#8217;s just outputting a JavaScript object intead. A quick fix to the JavaScript gave me what I needed, I couldn&#8217;t post on SO as I don&#8217;t have the reputation (yeah that&#8217;s annoying) so I&#8217;m posting here for reference and I <a href="http://jsfiddle.net/michaelsharman/HLzxw/">forked the original JSFiddle</a>.</p>
+<p>However the problem is that this is kinda broken, the output isn&#8217;t valid JSON because the keys aren&#8217;t quoted. It&#8217;s just outputting a JavaScript object intead. A quick fix (and slight refactor) to the JavaScript gave me what I needed, I couldn&#8217;t post on SO as I don&#8217;t have the reputation (yeah that&#8217;s annoying) so I&#8217;m posting here for reference and I <a href="http://jsfiddle.net/michaelsharman/HLzxw/3/">forked the original JSFiddle</a>.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -48,12 +71,13 @@
 <span class='line-number'>24</span>
 <span class='line-number'>25</span>
 <span class='line-number'>26</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">library</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">library</span> <span class="o">=</span> <span class="p">{};</span>
-</span><span class='line'><span class="p">}</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">prettyPrint</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
 </span><span class='line'>
-</span><span class='line'><span class="nx">library</span><span class="p">.</span><span class="nx">json</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class='line'>   <span class="nx">replacer</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">match</span><span class="p">,</span> <span class="nx">pIndent</span><span class="p">,</span> <span class="nx">pKey</span><span class="p">,</span> <span class="nx">pVal</span><span class="p">,</span> <span class="nx">pEnd</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>   <span class="kd">function</span> <span class="nx">replacer</span> <span class="p">(</span><span class="nx">match</span><span class="p">,</span> <span class="nx">pIndent</span><span class="p">,</span> <span class="nx">pKey</span><span class="p">,</span> <span class="nx">pVal</span><span class="p">,</span> <span class="nx">pEnd</span><span class="p">)</span> <span class="p">{</span>
 </span><span class='line'>        <span class="kd">var</span> <span class="nx">key</span> <span class="o">=</span> <span class="s1">&#39;&lt;span class=json-key&gt;&#39;</span><span class="p">;</span>
 </span><span class='line'>        <span class="kd">var</span> <span class="nx">val</span> <span class="o">=</span> <span class="s1">&#39;&lt;span class=json-value&gt;&#39;</span><span class="p">;</span>
 </span><span class='line'>        <span class="kd">var</span> <span class="nx">str</span> <span class="o">=</span> <span class="s1">&#39;&lt;span class=json-string&gt;&#39;</span><span class="p">;</span>
@@ -65,15 +89,20 @@
 </span><span class='line'>            <span class="nx">r</span> <span class="o">=</span> <span class="nx">r</span> <span class="o">+</span> <span class="p">(</span><span class="nx">pVal</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;&quot;&#39;</span> <span class="o">?</span> <span class="nx">str</span> <span class="o">:</span> <span class="nx">val</span><span class="p">)</span> <span class="o">+</span> <span class="nx">pVal</span> <span class="o">+</span> <span class="s1">&#39;&lt;/span&gt;&#39;</span><span class="p">;</span>
 </span><span class='line'>        <span class="p">}</span>
 </span><span class='line'>        <span class="k">return</span> <span class="nx">r</span> <span class="o">+</span> <span class="p">(</span><span class="nx">pEnd</span> <span class="o">||</span> <span class="s1">&#39;&#39;</span><span class="p">);</span>
-</span><span class='line'>    <span class="p">},</span>
-</span><span class='line'>    <span class="nx">prettyPrint</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">function</span> <span class="nx">render</span> <span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
 </span><span class='line'>        <span class="kd">var</span> <span class="nx">jsonLine</span> <span class="o">=</span> <span class="sr">/^( *)(&quot;[\w]+&quot;: )?(&quot;[^&quot;]*&quot;|[\w.+-]*)?([,[{])?$/mg</span><span class="p">;</span>
 </span><span class='line'>        <span class="k">return</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-</span><span class='line'>            <span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/&amp;/g</span><span class="p">,</span> <span class="s1">&#39;&amp;amp;&#39;</span><span class="p">).</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/\\&quot;/g</span><span class="p">,</span> <span class="s1">&#39;&amp;quot;&#39;</span><span class="p">)</span>
+</span><span class='line'>            <span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/&amp;/g</span><span class="p">,</span> <span class="s1">&#39;&amp;amp;&#39;</span><span class="p">).</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/\\&quot;/g</span><span class="p">,</span> <span class="s1">&#39;\\&amp;quot;&#39;</span><span class="p">)</span>
 </span><span class='line'>            <span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/&lt;/g</span><span class="p">,</span> <span class="s1">&#39;&amp;lt;&#39;</span><span class="p">).</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/&gt;/g</span><span class="p">,</span> <span class="s1">&#39;&amp;gt;&#39;</span><span class="p">)</span>
-</span><span class='line'>            <span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="nx">jsonLine</span><span class="p">,</span> <span class="nx">library</span><span class="p">.</span><span class="nx">json</span><span class="p">.</span><span class="nx">replacer</span><span class="p">);</span>
+</span><span class='line'>            <span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="nx">jsonLine</span><span class="p">,</span> <span class="nx">replacer</span><span class="p">);</span>
 </span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">render</span><span class="o">:</span> <span class="nx">render</span>
+</span><span class='line'>    <span class="p">};</span>
+</span><span class='line'><span class="p">}());</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -1455,213 +1484,28 @@ Base16 is both a color scheme and a template.
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Adding a global ignore file for git]]></title>
-    <link href="http://chapter31.com/2013/01/21/adding-a-global-ignore-file-for-git/"/>
-    <updated>2013-01-21T23:02:46+11:00</updated>
-    <id>http://chapter31.com/2013/01/21/adding-a-global-ignore-file-for-git</id>
-    <content type="html"><![CDATA[<p>Quick setup of ignore files for Git. You can of course set these up per repo, but that gets a little old. Instead you can setup a single ignore file and link to it so that every repo refers to it.</p>
-
-<p>For example, create a git ignore file in your home directory:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>~/.gitignore_global</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Fill it with regular files that you want to ignore:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#.gitignore</span>
-</span><span class='line'>
-</span><span class='line'><span class="c"># Railo files #</span>
-</span><span class='line'><span class="c">######################</span>
-</span><span class='line'>WEB-INF/
-</span><span class='line'>
-</span><span class='line'><span class="c"># Sublime files #</span>
-</span><span class='line'><span class="c">######################</span>
-</span><span class='line'>*.sublime-project
-</span><span class='line'>*.sublime-workspace
-</span><span class='line'>
-</span><span class='line'><span class="c"># Misc files #</span>
-</span><span class='line'><span class="c">######################</span>
-</span><span class='line'>*.yml
-</span><span class='line'>*.buildpath
-</span><span class='line'>*.settings
-</span><span class='line'>*.cache
-</span><span class='line'>
-</span><span class='line'><span class="c"># OS generated files #</span>
-</span><span class='line'><span class="c">######################</span>
-</span><span class='line'>.DS_Store
-</span><span class='line'>ehthumbs.db
-</span><span class='line'>Icon?
-</span><span class='line'>Thumbs.db
-</span><span class='line'>.project
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Edit your main git config file (~/.gitconfig) and add a reference to this new global ignore file:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>user<span class="o">]</span>
-</span><span class='line'>        <span class="nv">name</span> <span class="o">=</span> xxxx xxxx
-</span><span class='line'>        <span class="nv">email</span> <span class="o">=</span> joe@xxx.com
-</span><span class='line'>
-</span><span class='line'><span class="o">[</span>core<span class="o">]</span>
-</span><span class='line'>        <span class="nv">excludesfile</span> <span class="o">=</span> /Users/computername/.gitignore_global
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Or you can run the following command:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>git config --global core.excludesfile ~/.gitignore_global
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Now all your git projects will share the same ignore file :)</p>
+    <title type="html"><![CDATA[Managing configuration options in ColdFusion]]></title>
+    <link href="http://chapter31.com/2013/04/30/managing-configuration-options-in-coldfusion/"/>
+    <updated>2013-04-30T22:45:00+10:00</updated>
+    <id>http://chapter31.com/2013/04/30/managing-configuration-options-in-coldfusion</id>
+    <content type="html"><![CDATA[<p>Managing configuration options in ColdFusion has historically been done in Application.cfc, inside OnApplicationStart(). While this is ok, we&#8217;ve moved on to a much cleaner approach that I thought I&#8217;d share.</p>
 ]]></content>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Showing hidden files in Finder on mac osx]]></title>
-    <link href="http://chapter31.com/2013/01/21/showing-hidden-files-in-finder-on-mac-osx/"/>
-    <updated>2013-01-21T22:37:37+11:00</updated>
-    <id>http://chapter31.com/2013/01/21/showing-hidden-files-in-finder-on-mac-osx</id>
-    <content type="html"><![CDATA[<p>Short and sweet, MAC OSX has this annoying trait where hidden files (dotfiles) are not visible by default in Finder. No probs, I&#8217;ll just go to the &#8220;View&#8221; menu and turn them on. Nope&#8230;nada, zip.</p>
+    <title type="html"><![CDATA[Managing pathnames on OSX]]></title>
+    <link href="http://chapter31.com/2013/03/31/managing-pathnames-on-osx/"/>
+    <updated>2013-03-31T20:37:00+11:00</updated>
+    <id>http://chapter31.com/2013/03/31/managing-pathnames-on-osx</id>
+    <content type="html"><![CDATA[<p>You can set environment variables on your Mac in several different ways.</p>
 
-<p>Turns out you have to enter a command in the terminal, nice. Here it is for future reference:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>defaults write com.apple.finder AppleShowAllFiles TRUE</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Then kill Finder to have the changes take effect.</p>
+<p>If you want to set a PATH variable just for the current user, you can edit your ~/.bash_profile file. Eg</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>killall Finder</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class=''><span class='line'>export PATH=/usr/local/share/python:$PATH"</span></code></pre></td></tr></table></div></figure>
 
 
-<p>If you ever want to turn hidden files off?</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>defaults write com.apple.finder AppleShowAllFiles FALSE</span></code></pre></td></tr></table></div></figure>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Downloading youtube videos]]></title>
-    <link href="http://chapter31.com/2013/01/01/downloading-youtube-videos/"/>
-    <updated>2013-01-01T13:48:27+11:00</updated>
-    <id>http://chapter31.com/2013/01/01/downloading-youtube-videos</id>
-    <content type="html"><![CDATA[<p>I wanted to grab some youtube videos for the kids and found this cool <a href="http://rg3.github.com/youtube-dl/">CLI utility called youtube-dl</a> to handle it. I downloaded it from the website (you may need to chmod 755):</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>wget https://github.com/downloads/rg3/youtube-dl/youtube-dl -O /usr/local/bin/youtube-dl</span></code></pre></td></tr></table></div></figure>
-
-
-<p>However you can get it via brew if you want:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>brew install youtube-dl</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The basic process is the following:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>youtube-dl [video URL]</span></code></pre></td></tr></table></div></figure>
-
-
-<p>By default that should download the highest quality format available (in case you didn&#8217;t know, youtube usually has multiple versions of a file for different qualities etc). If you want to see what formats are available, try:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>youtube-dl -F [URL]</span></code></pre></td></tr></table></div></figure>
-
-
-<p>For example:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>youtube-dl -F http://www.youtube.com/watch?v<span class="o">=</span>iThX9rbOqXY
-</span><span class='line'><span class="o">[</span>youtube<span class="o">]</span> Setting language
-</span><span class='line'><span class="o">[</span>youtube<span class="o">]</span> iThX9rbOqXY: Downloading video webpage
-</span><span class='line'><span class="o">[</span>youtube<span class="o">]</span> iThX9rbOqXY: Downloading video info webpage
-</span><span class='line'><span class="o">[</span>youtube<span class="o">]</span> iThX9rbOqXY: Extracting video information
-</span><span class='line'>Available formats:
-</span><span class='line'>34 : flv <span class="o">[</span>360x640<span class="o">]</span>
-</span><span class='line'>18 : mp4 <span class="o">[</span>360x640<span class="o">]</span>
-</span><span class='line'>43 : webm <span class="o">[</span>360x640<span class="o">]</span>
-</span><span class='line'>5 : flv <span class="o">[</span>240x400<span class="o">]</span>
-</span><span class='line'>17 : mp4 <span class="o">[</span>144x176<span class="o">]</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Then you can select whichever you want to download by choosing the number next to the format you want:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>youtube-dl -f <span class="o">[</span>format number<span class="o">]</span> <span class="o">[</span>URL<span class="o">]</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>So if I wanted the highest quality mp4 available in the example above I&#8217;d  type (note the number corresponds to the video I want) the following, note the lowercase f:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>youtube-dl -f 18 http://www.youtube.com/watch?v<span class="o">=</span>iThX9rbOqXY
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>You can also pass in a file containing a list of URLs (one on ea to handle batch downloading:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>youtube-dl -a urls.txt
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>If you want to rename the file as you download it (by default it&#8217;s the filename on youtube which isn&#8217;t really that useful):</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>youtube-dl -f 18 -o <span class="s2">&quot;myfilename.mp4&quot;</span> <span class="o">[</span>URL<span class="o">]</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>You can do other cool things like extracting the audio only (and choosing which audio format you want). There are also <a href="http://rg3.github.com/youtube-dl/documentation.html#d4">LOTS of sites</a> that are supported&#8230;not just youtube.</p>
 ]]></content>
   </entry>
   

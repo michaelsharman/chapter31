@@ -84,7 +84,7 @@
 	<h2 class="title">Simple JSON Prettify</h2>
 	<div class="entry-content"><p>I went looking for a quick and easy way to style JSON content for display in the browser and quickly came across this <a href="http://stackoverflow.com/questions/4810841/json-pretty-print-using-javascript/7220510#7220510">answer at stack overflow</a> with a <a href="http://jsfiddle.net/unLSJ/">corresponding jsfiddle entry</a>.</p>
 
-<p>However the problem is that this is kinda broken, the output isn&#8217;t valid JSON because the keys aren&#8217;t quoted. It&#8217;s just outputting a JavaScript object intead. A quick fix to the JavaScript gave me what I needed, I couldn&#8217;t post on SO as I don&#8217;t have the reputation (yeah that&#8217;s annoying) so I&#8217;m posting here for reference and I <a href="http://jsfiddle.net/michaelsharman/HLzxw/">forked the original JSFiddle</a>.</p>
+<p>However the problem is that this is kinda broken, the output isn&#8217;t valid JSON because the keys aren&#8217;t quoted. It&#8217;s just outputting a JavaScript object intead. A quick fix (and slight refactor) to the JavaScript gave me what I needed, I couldn&#8217;t post on SO as I don&#8217;t have the reputation (yeah that&#8217;s annoying) so I&#8217;m posting here for reference and I <a href="http://jsfiddle.net/michaelsharman/HLzxw/3/">forked the original JSFiddle</a>.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -112,12 +112,13 @@
 <span class='line-number'>24</span>
 <span class='line-number'>25</span>
 <span class='line-number'>26</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">library</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">library</span> <span class="o">=</span> <span class="p">{};</span>
-</span><span class='line'><span class="p">}</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">prettyPrint</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
 </span><span class='line'>
-</span><span class='line'><span class="nx">library</span><span class="p">.</span><span class="nx">json</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class='line'>   <span class="nx">replacer</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">match</span><span class="p">,</span> <span class="nx">pIndent</span><span class="p">,</span> <span class="nx">pKey</span><span class="p">,</span> <span class="nx">pVal</span><span class="p">,</span> <span class="nx">pEnd</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>   <span class="kd">function</span> <span class="nx">replacer</span> <span class="p">(</span><span class="nx">match</span><span class="p">,</span> <span class="nx">pIndent</span><span class="p">,</span> <span class="nx">pKey</span><span class="p">,</span> <span class="nx">pVal</span><span class="p">,</span> <span class="nx">pEnd</span><span class="p">)</span> <span class="p">{</span>
 </span><span class='line'>        <span class="kd">var</span> <span class="nx">key</span> <span class="o">=</span> <span class="s1">&#39;&lt;span class=json-key&gt;&#39;</span><span class="p">;</span>
 </span><span class='line'>        <span class="kd">var</span> <span class="nx">val</span> <span class="o">=</span> <span class="s1">&#39;&lt;span class=json-value&gt;&#39;</span><span class="p">;</span>
 </span><span class='line'>        <span class="kd">var</span> <span class="nx">str</span> <span class="o">=</span> <span class="s1">&#39;&lt;span class=json-string&gt;&#39;</span><span class="p">;</span>
@@ -129,15 +130,20 @@
 </span><span class='line'>            <span class="nx">r</span> <span class="o">=</span> <span class="nx">r</span> <span class="o">+</span> <span class="p">(</span><span class="nx">pVal</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;&quot;&#39;</span> <span class="o">?</span> <span class="nx">str</span> <span class="o">:</span> <span class="nx">val</span><span class="p">)</span> <span class="o">+</span> <span class="nx">pVal</span> <span class="o">+</span> <span class="s1">&#39;&lt;/span&gt;&#39;</span><span class="p">;</span>
 </span><span class='line'>        <span class="p">}</span>
 </span><span class='line'>        <span class="k">return</span> <span class="nx">r</span> <span class="o">+</span> <span class="p">(</span><span class="nx">pEnd</span> <span class="o">||</span> <span class="s1">&#39;&#39;</span><span class="p">);</span>
-</span><span class='line'>    <span class="p">},</span>
-</span><span class='line'>    <span class="nx">prettyPrint</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">function</span> <span class="nx">render</span> <span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
 </span><span class='line'>        <span class="kd">var</span> <span class="nx">jsonLine</span> <span class="o">=</span> <span class="sr">/^( *)(&quot;[\w]+&quot;: )?(&quot;[^&quot;]*&quot;|[\w.+-]*)?([,[{])?$/mg</span><span class="p">;</span>
 </span><span class='line'>        <span class="k">return</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-</span><span class='line'>            <span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/&amp;/g</span><span class="p">,</span> <span class="s1">&#39;&amp;amp;&#39;</span><span class="p">).</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/\\&quot;/g</span><span class="p">,</span> <span class="s1">&#39;&amp;quot;&#39;</span><span class="p">)</span>
+</span><span class='line'>            <span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/&amp;/g</span><span class="p">,</span> <span class="s1">&#39;&amp;amp;&#39;</span><span class="p">).</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/\\&quot;/g</span><span class="p">,</span> <span class="s1">&#39;\\&amp;quot;&#39;</span><span class="p">)</span>
 </span><span class='line'>            <span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/&lt;/g</span><span class="p">,</span> <span class="s1">&#39;&amp;lt;&#39;</span><span class="p">).</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/&gt;/g</span><span class="p">,</span> <span class="s1">&#39;&amp;gt;&#39;</span><span class="p">)</span>
-</span><span class='line'>            <span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="nx">jsonLine</span><span class="p">,</span> <span class="nx">library</span><span class="p">.</span><span class="nx">json</span><span class="p">.</span><span class="nx">replacer</span><span class="p">);</span>
+</span><span class='line'>            <span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="nx">jsonLine</span><span class="p">,</span> <span class="nx">replacer</span><span class="p">);</span>
 </span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">render</span><span class="o">:</span> <span class="nx">render</span>
+</span><span class='line'>    <span class="p">};</span>
+</span><span class='line'><span class="p">}());</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -304,7 +310,7 @@
 </div>
 </section>
 </div>
-	<footer id="footer" class="inner">Copyright &copy; 2013
+	<footer id="footer" class="inner">Copyright &copy; 2015
 
     Michael Sharman
 

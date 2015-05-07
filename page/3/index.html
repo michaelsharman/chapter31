@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="I had some issues today while testing in IE, where &#8220;JSON&#8221; was undefined. This was happening in IE8 and IE9, which is strange because the &hellip;">
+	<meta name="description" content="Quick setup of ignore files for Git. You can of course set these up per repo, but that gets a little old. Instead you can setup a single ignore file &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,308 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2013/01/21/adding-a-global-ignore-file-for-git/">
+		
+			Adding a Global Ignore File for Git</a>
+	</h2>
+	<div class="entry-content">
+		<p>Quick setup of ignore files for Git. You can of course set these up per repo, but that gets a little old. Instead you can setup a single ignore file and link to it so that every repo refers to it.</p>
+
+<p>For example, create a git ignore file in your home directory:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>~/.gitignore_global</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Fill it with regular files that you want to ignore:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#.gitignore</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Railo files #</span>
+</span><span class='line'><span class="c">######################</span>
+</span><span class='line'>WEB-INF/
+</span><span class='line'>
+</span><span class='line'><span class="c"># Sublime files #</span>
+</span><span class='line'><span class="c">######################</span>
+</span><span class='line'>*.sublime-project
+</span><span class='line'>*.sublime-workspace
+</span><span class='line'>
+</span><span class='line'><span class="c"># Misc files #</span>
+</span><span class='line'><span class="c">######################</span>
+</span><span class='line'>*.yml
+</span><span class='line'>*.buildpath
+</span><span class='line'>*.settings
+</span><span class='line'>*.cache
+</span><span class='line'>
+</span><span class='line'><span class="c"># OS generated files #</span>
+</span><span class='line'><span class="c">######################</span>
+</span><span class='line'>.DS_Store
+</span><span class='line'>ehthumbs.db
+</span><span class='line'>Icon?
+</span><span class='line'>Thumbs.db
+</span><span class='line'>.project
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Edit your main git config file (~/.gitconfig) and add a reference to this new global ignore file:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>user<span class="o">]</span>
+</span><span class='line'>        <span class="nv">name</span> <span class="o">=</span> xxxx xxxx
+</span><span class='line'>        <span class="nv">email</span> <span class="o">=</span> joe@xxx.com
+</span><span class='line'>
+</span><span class='line'><span class="o">[</span>core<span class="o">]</span>
+</span><span class='line'>        <span class="nv">excludesfile</span> <span class="o">=</span> /Users/computername/.gitignore_global
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Or you can run the following command:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>git config --global core.excludesfile ~/.gitignore_global
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now all your git projects will share the same ignore file :)</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-21T23:02:46+11:00" pubdate data-updated="true">Jan 21<span>st</span>, 2013</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/git/'>git</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2013/01/21/adding-a-global-ignore-file-for-git//page/3/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2013/01/21/showing-hidden-files-in-finder-on-mac-osx/">
+		
+			Showing Hidden Files in Finder on Mac Osx</a>
+	</h2>
+	<div class="entry-content">
+		<p>Short and sweet, MAC OSX has this annoying trait where hidden files (dotfiles) are not visible by default in Finder. No probs, I&#8217;ll just go to the &#8220;View&#8221; menu and turn them on. Nope&#8230;nada, zip.</p>
+
+<p>Turns out you have to enter a command in the terminal, nice. Here it is for future reference:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>defaults write com.apple.finder AppleShowAllFiles TRUE</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then kill Finder to have the changes take effect.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>killall Finder</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you ever want to turn hidden files off?</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>defaults write com.apple.finder AppleShowAllFiles FALSE</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-21T22:37:37+11:00" pubdate data-updated="true">Jan 21<span>st</span>, 2013</time></div>
+	<div class="tags">
+
+</div>
+	
+		<div class="comments"><a href="/2013/01/21/showing-hidden-files-in-finder-on-mac-osx//page/3/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2013/01/01/downloading-youtube-videos/">
+		
+			Downloading Youtube Videos</a>
+	</h2>
+	<div class="entry-content">
+		<p>I wanted to grab some youtube videos for the kids and found this cool <a href="http://rg3.github.com/youtube-dl/">CLI utility called youtube-dl</a> to handle it. I downloaded it from the website (you may need to chmod 755):</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>wget https://github.com/downloads/rg3/youtube-dl/youtube-dl -O /usr/local/bin/youtube-dl</span></code></pre></td></tr></table></div></figure>
+
+
+<p>However you can get it via brew if you want:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>brew install youtube-dl</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The basic process is the following:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>youtube-dl [video URL]</span></code></pre></td></tr></table></div></figure>
+
+
+<p>By default that should download the highest quality format available (in case you didn&#8217;t know, youtube usually has multiple versions of a file for different qualities etc). If you want to see what formats are available, try:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>youtube-dl -F [URL]</span></code></pre></td></tr></table></div></figure>
+
+
+<p>For example:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>youtube-dl -F http://www.youtube.com/watch?v<span class="o">=</span>iThX9rbOqXY
+</span><span class='line'><span class="o">[</span>youtube<span class="o">]</span> Setting language
+</span><span class='line'><span class="o">[</span>youtube<span class="o">]</span> iThX9rbOqXY: Downloading video webpage
+</span><span class='line'><span class="o">[</span>youtube<span class="o">]</span> iThX9rbOqXY: Downloading video info webpage
+</span><span class='line'><span class="o">[</span>youtube<span class="o">]</span> iThX9rbOqXY: Extracting video information
+</span><span class='line'>Available formats:
+</span><span class='line'>34 : flv <span class="o">[</span>360x640<span class="o">]</span>
+</span><span class='line'>18 : mp4 <span class="o">[</span>360x640<span class="o">]</span>
+</span><span class='line'>43 : webm <span class="o">[</span>360x640<span class="o">]</span>
+</span><span class='line'>5 : flv <span class="o">[</span>240x400<span class="o">]</span>
+</span><span class='line'>17 : mp4 <span class="o">[</span>144x176<span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then you can select whichever you want to download by choosing the number next to the format you want:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>youtube-dl -f <span class="o">[</span>format number<span class="o">]</span> <span class="o">[</span>URL<span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So if I wanted the highest quality mp4 available in the example above I&#8217;d  type (note the number corresponds to the video I want) the following, note the lowercase f:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>youtube-dl -f 18 http://www.youtube.com/watch?v<span class="o">=</span>iThX9rbOqXY
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can also pass in a file containing a list of URLs (one on ea to handle batch downloading:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>youtube-dl -a urls.txt
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you want to rename the file as you download it (by default it&#8217;s the filename on youtube which isn&#8217;t really that useful):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>youtube-dl -f 18 -o <span class="s2">&quot;myfilename.mp4&quot;</span> <span class="o">[</span>URL<span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can do other cool things like extracting the audio only (and choosing which audio format you want). There are also <a href="http://rg3.github.com/youtube-dl/documentation.html#d4">LOTS of sites</a> that are supported&#8230;not just youtube.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-01T13:48:27+11:00" pubdate data-updated="true">Jan 1<span>st</span>, 2013</time></div>
+	<div class="tags">
+
+</div>
+	
+		<div class="comments"><a href="/2013/01/01/downloading-youtube-videos//page/3/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -736,272 +1038,6 @@ Select #3 had 8192* possible combinations</p>
 	
 </div></article>
 
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2012/09/14/jquery-ui-dialog-focus-on-first-tabable-element/">
-		
-			jQuery UI Dialog Focus on First Tabable Element</a>
-	</h2>
-	<div class="entry-content">
-		<p>I&#8217;ve been using the <a href="http://jqueryui.com/demos/dialog/">jQuery UI dialog</a> for a project recently, one thing that bugged me though, was that upon opening a dialog the first tabable element always gets focussed. This can be:</p>
-
-<ul>
-<li>hyperlinks</li>
-<li>input boxes</li>
-<li>select boxes</li>
-<li>buttons</li>
-<li>textareas etc</li>
-</ul>
-
-
-<p>An example of this is:</p>
-
-<p><img src="/images/uploads/2012/09/Screen-shot-2012-09-14-at-4.06.09-PM.png" alt="" /></p>
-
-<p><img src="/images/uploads/2012/09/Screen-shot-2012-09-14-at-4.06.30-PM.png" alt="" /></p>
-
-<p>A quick way around this is to fire a <a href="http://api.jquery.com/blur/">blur()</a> method, targeting the first <em>tabable</em> element type of your dialog. So if I open up a dialog window with an id of <em>dialog</em>, I can do:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#dialog&#39;</span><span class="p">).</span><span class="nx">dialog</span><span class="p">(</span><span class="s1">&#39;open&#39;</span><span class="p">);</span>
-</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#dialog&#39;</span><span class="p">).</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;a, select, input, textarea, button&#39;</span><span class="p">).</span><span class="nx">first</span><span class="p">().</span><span class="nx">blur</span><span class="p">();</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>I was hoping to put this inside the open() method of the dialog, but it doesn&#8217;t seem to parse the contents of the dialog within that method. So the following did not work for me:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#dialog&#39;</span><span class="p">).</span><span class="nx">dialog</span><span class="p">({</span>
-</span><span class='line'>  <span class="nx">autoOpen</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
-</span><span class='line'>  <span class="nx">maxWidth</span><span class="o">:</span> <span class="mi">600</span><span class="p">,</span>
-</span><span class='line'>  <span class="nx">minWidth</span><span class="o">:</span> <span class="mi">500</span><span class="p">,</span>
-</span><span class='line'>  <span class="nx">modal</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-</span><span class='line'>  <span class="nx">resizable</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
-</span><span class='line'>  <span class="nx">open</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;a, select, input, textarea, button&#39;</span><span class="p">).</span><span class="nx">first</span><span class="p">().</span><span class="nx">blur</span><span class="p">();</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">});</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-09-14T16:27:29+10:00" pubdate data-updated="true">Sep 14<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/javascript/'>Javascript</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2012/09/14/jquery-ui-dialog-focus-on-first-tabable-element//page/3/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2012/08/13/timing-synchronous-javascript-operations/">
-		
-			Timing Synchronous JavaScript Operations</a>
-	</h2>
-	<div class="entry-content">
-		<p>There&#8217;s a cool little method on the <em>console</em> object that allows you to track how long an operation took to run. It&#8217;s called <a href="https://developer.mozilla.org/en-US/docs/DOM/console.time">console.time</a>.</p>
-
-<p>Basically you just start a timer at the top of the code you want to time, like so:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">time</span><span class="p">(</span><span class="s1">&#39;timer-name&#39;</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// your javascript goes here</span>
-</span><span class='line'>
-</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">timeEnd</span><span class="p">(</span><span class="s1">&#39;timer-name&#39;</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Each <em>timer</em> block should have a unique name (in the example above I called my timer &#8216;timer-name&#8217;), and you can have up to 10,000 timers running on a single page.</p>
-
-<p>By calling <em>console.timeEnd()</em>, the browser will write to the console how long (in milliseconds) the code took to run since you first called console.time();</p>
-
-<p>This works in Chrome 2+, Firefox 10+, Opera and Safari 4+. Typically IE support is a little sketchy, however I <a href="http://stackoverflow.com/questions/3516515/console-time-in-ie8-developer-tools?answertab=active#tab-top">found a cool custom function</a> on Stack Overflow that allows you to use console.time/timeEnd in IE7/8 etc.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c1">//console.time implementation for IE</span>
-</span><span class='line'><span class="k">if</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">console</span> <span class="o">&amp;&amp;</span> <span class="k">typeof</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">console</span><span class="p">.</span><span class="nx">time</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;undefined&quot;</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">time</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">reset</span><span class="p">){</span>
-</span><span class='line'>        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span><span class="p">;</span> <span class="p">}</span>
-</span><span class='line'>        <span class="kd">var</span> <span class="nx">time</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">().</span><span class="nx">getTime</span><span class="p">();</span>
-</span><span class='line'>        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">console</span><span class="p">.</span><span class="nx">timeCounters</span><span class="p">)</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">timeCounters</span> <span class="o">=</span> <span class="p">{}</span> <span class="p">};</span>
-</span><span class='line'>        <span class="kd">var</span> <span class="nx">key</span> <span class="o">=</span> <span class="s2">&quot;KEY&quot;</span> <span class="o">+</span> <span class="nx">name</span><span class="p">.</span><span class="nx">toString</span><span class="p">();</span>
-</span><span class='line'>        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">reset</span> <span class="o">&amp;&amp;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">timeCounters</span><span class="p">[</span><span class="nx">key</span><span class="p">])</span> <span class="p">{</span> <span class="k">return</span><span class="p">;</span> <span class="p">}</span>
-</span><span class='line'>            <span class="nx">console</span><span class="p">.</span><span class="nx">timeCounters</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">time</span><span class="p">;</span>
-</span><span class='line'>        <span class="p">};</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">timeEnd</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">){</span>
-</span><span class='line'>        <span class="kd">var</span> <span class="nx">time</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">().</span><span class="nx">getTime</span><span class="p">();</span>
-</span><span class='line'>        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">console</span><span class="p">.</span><span class="nx">timeCounters</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span><span class="p">;</span> <span class="p">}</span>
-</span><span class='line'>        <span class="kd">var</span> <span class="nx">key</span> <span class="o">=</span> <span class="s2">&quot;KEY&quot;</span> <span class="o">+</span> <span class="nx">name</span><span class="p">.</span><span class="nx">toString</span><span class="p">();</span>
-</span><span class='line'>        <span class="kd">var</span> <span class="nx">timeCounter</span> <span class="o">=</span> <span class="nx">console</span><span class="p">.</span><span class="nx">timeCounters</span><span class="p">[</span><span class="nx">key</span><span class="p">];</span>
-</span><span class='line'>        <span class="k">if</span><span class="p">(</span><span class="nx">timeCounter</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="kd">var</span> <span class="nx">diff</span> <span class="o">=</span> <span class="nx">time</span> <span class="o">-</span> <span class="nx">timeCounter</span><span class="p">;</span>
-</span><span class='line'>            <span class="kd">var</span> <span class="nx">label</span> <span class="o">=</span> <span class="nx">name</span> <span class="o">+</span> <span class="s2">&quot;: &quot;</span> <span class="o">+</span> <span class="nx">diff</span> <span class="o">+</span> <span class="s2">&quot;ms&quot;</span><span class="p">;</span>
-</span><span class='line'>            <span class="nx">console</span><span class="p">.</span><span class="nx">info</span><span class="p">(</span><span class="nx">label</span><span class="p">);</span>
-</span><span class='line'>            <span class="k">delete</span> <span class="nx">console</span><span class="p">.</span><span class="nx">timeCounters</span><span class="p">[</span><span class="nx">key</span><span class="p">];</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>        <span class="k">return</span> <span class="nx">diff</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">};</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-08-13T21:24:00+10:00" pubdate data-updated="true">Aug 13<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/javascript/'>Javascript</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2012/08/13/timing-synchronous-javascript-operations//page/3/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2012/08/09/setting-font-mime-types-in-apache/">
-		
-			Setting Font MIME Types in Apache</a>
-	</h2>
-	<div class="entry-content">
-		<p>If your website is using custom fonts, you may see this line in your Chrome console:</p>
-
-<blockquote><p>Resource interpreted as Font but transferred with MIME type application/octet-stream</p></blockquote>
-
-<p>This is really kinda annoying, if you want to get rid of that warning then add the following directives to your apache conf/.htaccess:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">AddType</span> <span class="nx">application</span><span class="o">/</span><span class="nx">vnd</span><span class="p">.</span><span class="nx">ms</span><span class="o">-</span><span class="nx">fontobject</span> <span class="nx">eot</span>
-</span><span class='line'><span class="nx">AddType</span> <span class="nx">font</span><span class="o">/</span><span class="nx">opentype</span> <span class="nx">otf</span>
-</span><span class='line'><span class="nx">AddType</span> <span class="nx">font</span><span class="o">/</span><span class="nx">truetype</span> <span class="nx">ttf</span>
-</span><span class='line'><span class="nx">AddType</span> <span class="nx">application</span><span class="o">/</span><span class="nx">x</span><span class="o">-</span><span class="nx">font</span><span class="o">-</span><span class="nx">woff</span> <span class="p">.</span><span class="nx">woff</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><a href="http://www.jbarker.com/blog/2011/resource-interpreted-font-transferred-mime-type">See here for more information.</a></p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-08-09T23:40:00+10:00" pubdate data-updated="true">Aug 9<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/apache-slash-iis/'>Apache/IIS</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2012/08/09/setting-font-mime-types-in-apache//page/3/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
 <nav id="pagenavi">
     
         <a href="/page/2/" class="prev">Prev</a>
@@ -1011,7 +1047,7 @@ Select #3 had 8192* possible combinations</p>
     
     <div class="center"><a href="/blog/archives">Blog Archives</a></div>
 </nav></div>
-	<footer id="footer" class="inner">Copyright &copy; 2013
+	<footer id="footer" class="inner">Copyright &copy; 2015
 
     Michael Sharman
 

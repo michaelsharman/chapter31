@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Most developers who use Source Code Management are familiar with the fact that while you can have any directory you want in your &#8216;repositories &hellip;">
+	<meta name="description" content="I know most rave about how good hostmysite are. They do have great support and competitive plans, but even for a shared plan (CF+) I have had the &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,186 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2007/08/22/hostmysite-not-quite-as-stable-as-id-like/">
+		
+			Hostmysite Not Quite as Stable as I&#8217;d Like</a>
+	</h2>
+	<div class="entry-content">
+		<p>I know most rave about how good <a href="http://www.hostmysite.com/">hostmysite</a> are. They do have great support and competitive plans, but even for a shared plan (CF+) I have had the same issues for a few months now.</p>
+
+<p>My issue is simple, they seem to restart JRun on average 5-6 times per day. PER DAY!</p>
+
+<p>Hmm, is this not a little too frequent? I have a couple of sites on there and it seems everytime I visit the site (5-6 times a day) the application restarts. Different application, different frameworks which work fine on local and stage but not on hostmysite.</p>
+
+<p>I asked their tech team about it and they said there is a problem with some of the sites on the shared servers which means they have to restart JRun around 4 times a day (which I took to mean 8 times!).</p>
+
+<p>At the end of the day good support and price doesn&#8217;t really make a difference when your site goes up and down more than a kid on a jumping castle.</p>
+
+<p>I&#8217;ll have to monitor for a little longer, speak to tech support then consider moving the site elsewhere.</p>
+
+<p>Has anyone else experienced this with the shared plans?</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-08-22T10:45:12+10:00" pubdate data-updated="true">Aug 22<span>nd</span>, 2007</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2007/08/22/hostmysite-not-quite-as-stable-as-id-like//page/18/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2007/08/16/localurl-attribute-added-to-cfdocument-in-coldfusion-8/">
+		
+			&#8220;localURL&#8221; Attribute Added to Cfdocument in ColdFusion 8</a>
+	</h2>
+	<div class="entry-content">
+		<p>I was debugging a legacy app today which I&#8217;d just migrated to a new server running ColdFusion 8. A part of this application generates a PDF using <cfdocument>. As usual it was working fine on my development and staging environments&#8230;but not on production! Damn.</p>
+
+<p>After a bit of fiddling I found a <a href="http://coldfused.blogspot.com/2005/11/missing-images-in-cfdocument.html#8131215934099422866">related post</a> by <a href="http://coldfused.blogspot.com/">Rupesh Kumar</a> where he mentions that you may have problems if ColdFusion is behind a firewall.</p>
+
+<p><em>CF server needs to send an HTTP request for the images. If the firewall prevents any outgoing connection from the server, CF will not be able to retrieve them</em></p>
+
+<p>Now I already had outbound HTTP access, but I couldn&#8217;t call a site which was setup on the production machine from where I was browsing. Bugger, I was about to make a the necessary firewall changes when I looked at the <a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=Tags_d-e_06.html">updated docs for CF8</a> and noticed a new attribute called &#8220;localURL&#8221; which;</p>
+
+<blockquote><p>Specifies whether to retrieve image files directly from the local drive:</p>
+
+<ul>
+<li><p>yes: ColdFusion retrieves image files directly from the local drive rather than by using HTTP, HTTPS, or proxy.</p></li>
+<li><p>no: ColdFusion uses HTTP, HTTPS, or proxy to retrieve image files even if the files are stored locally.</p></li>
+</ul>
+</blockquote>
+
+<p>Nice!</p>
+
+<p>Now <cfdocument> can simply call images from a local (relative) path instead of a full HTTP request as it did before.</p>
+
+<p>I love CF8 :)</p>
+
+<p>There are a few additions to this particular tag and you can <a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=Tags_d-e_06.html">view them on the online docs</a> which have had a much needed facelift.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-08-16T19:00:12+10:00" pubdate data-updated="true">Aug 16<span>th</span>, 2007</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2007/08/16/localurl-attribute-added-to-cfdocument-in-coldfusion-8//page/18/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2007/08/14/my-aptana-ide-is-busted/">
+		
+			My Aptana IDE Is Busted</a>
+	</h2>
+	<div class="entry-content">
+		<p>Hmm, running with my past history of having that &#8216;special&#8217; touch with computers&#8230;my version of Aptana (Aptana IDE (build 0.2.8.15637)) has busted.</p>
+
+<p>Kaput.</p>
+
+<p>Not happy Jan.</p>
+
+<p>I was running an Aptana update yesterday when the network went down. Everything seemed fine until I went to restart Apatana and got the following:</p>
+
+<p><img src="/images/uploads/2007/08/aptana.jpg" alt="Aptana error" /></p>
+
+<p>Damn</p>
+
+<p>Damn</p>
+
+<p>Damn</p>
+
+<p>No fix as yet and roughly 500 lines in the .log file everytime I try to start up telling me I have a hell of a lot of missing bundles :(</p>
+
+<p>Looks like an uninstall/re-install.</p>
+
+<p>I heart computers</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-08-14T15:45:39+10:00" pubdate data-updated="true">Aug 14<span>th</span>, 2007</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/cfeclipse/'>cfeclipse</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2007/08/14/my-aptana-ide-is-busted//page/18/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -626,222 +806,6 @@
 	
 </div></article>
 
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2007/06/14/reading-blogs-on-a-mac-using-firefox/">
-		
-			Reading Blogs on a Mac Using Firefox</a>
-	</h2>
-	<div class="entry-content">
-		<p>I&#8217;ve been on a Mac (OSX) for a little while now and generally I&#8217;m having a nice time, except when it comes to reading some (but only some) blogs!</p>
-
-<p>We all know that font sizes are different across browser and platform, but Firefox on a mac occasionally makes life a little difficult particularly when it comes to reading comments and code snippets.</p>
-
-<p>Here is a screen grab of an example, certainly not to pick on this particular blog but just one of the few examples I come across on my daily travels thru <a href="http://www.fullasagoog.com/">fullasagoog</a>.</p>
-
-<p><img src="/images/uploads/2007/06/mac.jpg" alt="Fonts on mac" /></p>
-
-<p>Of course I can easily bump up the text size (apple +), but that makes the rest of the page unviewable!</p>
-
-<p>Interesting to note that I don&#8217;t have the same problem with Safari.</p>
-
-<p>The <a href="http://developer.yahoo.com/">Yahoo Developer Network</a> has some amazing tools including <a href="http://developer.yahoo.com/yui/fonts/">fonts</a> to provide consistent font sizing and line height and is well worth checking out.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2007-06-14T09:54:27+10:00" pubdate data-updated="true">Jun 14<span>th</span>, 2007</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/css/'>CSS</a>, <a class='category' href='/categories/misc/'>Misc</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2007/06/14/reading-blogs-on-a-mac-using-firefox//page/18/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2007/04/26/image-manipulation-with-imagecfc-v214/">
-		
-			Image Manipulation With imageCFC v2.14</a>
-	</h2>
-	<div class="entry-content">
-		<p><strong>Update:</strong> as of May 30th 2007 version 2.17 has been released! <a href="http://www.opensourcecf.com/imagecfc/">See the site</a> for more information</p>
-
-<p>Ok so I&#8217;m a little late on this one, but the new version of <a href="http://www.opensourcecf.com/imagecfc/">imageCFC</a> (v2.14) was released on March 7th 2007. The big feature add is exact size thumbnails using the &#8220;cropToExact&#8221; argument of the &#8220;resize()&#8221; method:</p>
-
-<blockquote><p>This argument, when combined with a specified width, specified height, and the preserveAspect argument being set to true will cause a image to be resized then cropped to fit exactly within the specified dimensions.</p></blockquote>
-
-<p>The nice thing about using imageCFC is that it leverages Java so is easily portable (you don&#8217;t need to install a cfx_ which can be painful in a shared hosting environment).</p>
-
-<p>A list of features:</p>
-
-<ul>
-<li>READ jpg, gif, and PNG files, and provide dimensions and other details.</li>
-<li>Images can be read from local files <em>OR</em> URLs.</li>
-<li>scale images to a specific width or height</li>
-<li>resize images to a specific width AND height</li>
-<li>rotate images at 90 degree angles</li>
-<li>flip images horizontally and vertically</li>
-<li>Add text overlays to images using TrueType fonts</li>
-<li>Watermark one image with another image</li>
-<li>Image filters: fast blur, gaussian blur, box blur, sharpen, posterize</li>
-<li>Control compression quality of JPG images.</li>
-<li>WRITE images in JPG and PNG format</li>
-</ul>
-
-
-<p><strong>Note:</strong> GIF files can be read and manipulated but they have to be saved as PNGs)</p>
-
-<p>Yes&#8230;make sure you read that line again. Java cannot <strong>write</strong> to gif files so you have to save as a .png instead after you resize/crop etc. Of course you can read information about a gif, just not manipulate and save as a gif.</p>
-
-<p>My initial tests with resizing a gif and saving as a png produced mixed results which unfortunately were often not great. I&#8217;ll have to keep testing and play with the compression settings etc, but at this stage it looks as though jpg gives the best results.</p>
-
-<p>Doug Hughes has a nice little workaround for the <a href="http://www.alagad.com/">alagad</a> image component (commercial but also based on Java) which you can <a href="http://www.doughughes.net/index.cfm?event=viewEntry&amp;entryId=88">see here</a>.</p>
-
-<p>I don&#8217;t know how good this work around would be for some uses as you need to extract a package to the Java class path. This would more than likely be an issue for those in a shared hosting environment.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2007-04-26T09:20:26+10:00" pubdate data-updated="true">Apr 26<span>th</span>, 2007</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2007/04/26/image-manipulation-with-imagecfc-v214//page/18/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2007/04/24/unwanted-coldfusion-form-validation/">
-		
-			Unwanted ColdFusion Form Validation</a>
-	</h2>
-	<div class="entry-content">
-		<p>I came across something strange today when developing a web form.</p>
-
-<p>Basically I had a form field with a name/id of &#8220;restoration_required&#8221; but when I submitted the form I got the following error:</p>
-
-<p><img src="/images/uploads/2007/04/formerror.gif" alt="Form Error" /></p>
-
-<p>Now <a href="http://www.daemon.com.au/">Geoff Bowers</a> happened to be standing nearby and was kind enough to point out that this looked like a <cfform> validation error, only I wasn&#8217;t using cfform!</p>
-
-<p>A quick test (on WinXP, CFMX 7.0.2) showed everything working as expected when I renamed the field as &#8220;restoration_isRequired&#8221;.</p>
-
-<p>Of course what was really strange was the fact that this was happening when using a normal <form> tag&#8230;not <cfform>.</p>
-
-<h3>Update 25th April 2007</h3>
-
-<p>In response to Todd&#8217;s last comment I did a little bit of testing, and when I create a <cfform> ColdFusion will (as expected) generate an HTML form for me.</p>
-
-<p>If I then add the validation attributes (for validateat=&#8221;onserver&#8221;) ColdFusion will validate any fields where I specify &#8220;required=&#8217;true&#8217;&#8221;. In that situation I will get the same error message as before&#8230;not that I know where you&#8217;d use this because you don&#8217;t really seem to get any control over the message!</p>
-
-<p>But&#8230;</p>
-
-<p>Even with a <cfform> if I name a field something which ends with &#8220;_required&#8221; I get that server side validation message whether I&#8217;ve entered a value or not!</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfform</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;myForm&quot;</span> <span class="nx">action</span><span class="o">=</span><span class="s2">&quot;&quot;</span> <span class="nx">format</span><span class="o">=</span><span class="s2">&quot;html&quot;</span> <span class="nx">method</span><span class="o">=</span><span class="s2">&quot;post&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfinput</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;firstName_required&quot;</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;firstName_required&quot;</span> <span class="nx">required</span><span class="o">=</span><span class="s2">&quot;true&quot;</span> <span class="nx">validateat</span><span class="o">=</span><span class="s2">&quot;onServer&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfinput</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;submit&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;Submit&quot;</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;Submit&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;Send&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/cfform&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><img src="/images/uploads/2007/04/form1.gif" alt="Sample form" /></p>
-
-<p>Submitting this gives me the following error:</p>
-
-<p><img src="/images/uploads/2007/04/formerror2.gif" alt="Form Error 2" /></p>
-
-<p>In my opinion that is a bug which basically means whether you&#8217;re using &lt;cfform&gt; or &lt;form&gt; you can&#8217;t name any fields ending with &#8220;_required&#8221;.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2007-04-24T18:06:58+10:00" pubdate data-updated="true">Apr 24<span>th</span>, 2007</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2007/04/24/unwanted-coldfusion-form-validation//page/18/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
 <nav id="pagenavi">
     
         <a href="/page/17/" class="prev">Prev</a>
@@ -851,7 +815,7 @@
     
     <div class="center"><a href="/blog/archives">Blog Archives</a></div>
 </nav></div>
-	<footer id="footer" class="inner">Copyright &copy; 2013
+	<footer id="footer" class="inner">Copyright &copy; 2015
 
     Michael Sharman
 

@@ -7,7 +7,8 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="I&#8217;ve been using Wordpress for a while now and I&#8217;m really happy with it. Only recently have I tried to validate my RSS feed using &hellip;">
+	<meta name="description" content="There are a couple of nice statements you can use to control processing within loops, namely break
+continue Break is of course used to exit the &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +82,269 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2006/11/29/will-cfmx8-have-cfcontinue/">
+		
+			Will CFMX8 Have Cfcontinue?</a>
+	</h2>
+	<div class="entry-content">
+		<p>There are a <a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/wwhelp/wwhimpl/common/html/wwhelp.htm?context=ColdFusion_Documentation&amp;file=00000977.htm">couple of nice statements</a> you can use to control processing within loops, namely</p>
+
+<ul>
+<li>break</li>
+<li>continue</li>
+</ul>
+
+
+<p>Break is of course used to exit the current loop entirely and resume page processing from the first CF statement after the end loop tag. Lovely!</p>
+
+<p>Continue has a subtle but handy difference, it ends the current loop iteration and &#8216;continues&#8217; from the beginning of the next loop iteration. Very lovely :)</p>
+
+<p>Now the problem is that there is no ColdFusion tag equivalent for continue, it&#8217;s only accessible when in a &lt;cfscript&gt; block. As far as I know this is the only statement in the CFML language which is available in &lt;cfscript&gt; but not tags :(</p>
+
+<p>For some scenarios this will be ok, especially for the cfscripters out there. But for people who don&#8217;t like (for several reasons) &lt;cfscript&gt; then this is a limitation which I hope Adobe will address (among others!) in Scorpio.</p>
+
+<p>And don&#8217;t forget that the inherent limitations of &lt;cfscript&gt; (limited cftag support) means that sometimes you won&#8217;t be able to do your logic in cfscript. For example you may want to use a &lt;cfsavecontent&gt; etc which you can&#8217;t do in &lt;cfscript&gt;.</p>
+
+<p>I know&#8230;I know that you can create your own functions <a href="http://www.chapter31.com/2006/11/15/getting-tag-functionality-in-cfscript/">simulating tag functionality in cfscript</a> but all gets a little messy doesn&#8217;t it?</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-11-29T15:13:41+11:00" pubdate data-updated="true">Nov 29<span>th</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2006/11/29/will-cfmx8-have-cfcontinue//page/21/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2006/11/16/commenting-templates-with-author-data/">
+		
+			Commenting Templates With Author Data</a>
+	</h2>
+	<div class="entry-content">
+		<p>We all know that we should liberally comment our code to allow other developers (and yourself) to quickly and easily find out what a particular section of code does. But what about a comment block at the top of the page so anybody can (at a glance) determine template specific information?</p>
+
+<p>Here is an example of what I use at the top of my pages, this is pretty standard but I know a lot of people don&#8217;t do it.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&lt;!---</span>
+</span><span class='line'>   <span class="no">Name</span>          <span class="p">:</span> <span class="n">myFile</span><span class="o">.</span><span class="n">cfm</span>
+</span><span class='line'>   <span class="no">Author</span>        <span class="p">:</span> <span class="no">Michael</span> <span class="no">Sharman</span>
+</span><span class='line'>   <span class="no">Created</span>       <span class="p">:</span> <span class="no">November</span> <span class="mo">06</span><span class="p">,</span> <span class="mi">2006</span>
+</span><span class='line'>   <span class="no">Last</span> <span class="no">Updated</span>  <span class="p">:</span> <span class="no">November</span> <span class="mo">06</span><span class="p">,</span> <span class="mi">2006</span>
+</span><span class='line'>   <span class="no">History</span>       <span class="p">:</span> <span class="no">Initial</span> <span class="n">release</span> <span class="p">(</span><span class="n">mps</span> <span class="mi">6</span><span class="o">/</span><span class="mi">11</span><span class="o">/</span><span class="mi">2006</span><span class="p">)</span>
+</span><span class='line'>   <span class="no">Purpose</span>       <span class="p">:</span> <span class="n">A</span> <span class="n">descriptive</span> <span class="n">message</span>
+</span><span class='line'><span class="o">---&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I find the best thing is to either have this as part of a template for a new <em>.cfm</em> file, or as a snippet for easy access. I actually use snippets with built-in and custom <a href="http://www.chapter31.com/2006/10/22/cfeclipse-snippets/">snippet variables</a> for the comment options.</p>
+
+<p>The snippet I use for cfeclipse is:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&lt;!---</span>
+</span><span class='line'>   <span class="no">Name</span>          <span class="p">:</span> <span class="vg">$$</span><span class="p">{</span><span class="no">CURRENTFILE</span><span class="p">}</span>
+</span><span class='line'>   <span class="no">Author</span>        <span class="p">:</span> <span class="no">Michael</span> <span class="no">Sharman</span>
+</span><span class='line'>   <span class="no">Created</span>       <span class="p">:</span> <span class="vg">$$</span><span class="p">{</span><span class="no">MONTH</span><span class="p">}</span> <span class="vg">$$</span><span class="p">{</span><span class="no">DAYOFMONTH</span><span class="p">},</span> <span class="vg">$$</span><span class="p">{</span><span class="no">YEAR</span><span class="p">}</span>
+</span><span class='line'>   <span class="no">Last</span> <span class="no">Updated</span>  <span class="p">:</span> <span class="vg">$$</span><span class="p">{</span><span class="no">MONTH</span><span class="p">}</span> <span class="vg">$$</span><span class="p">{</span><span class="no">DAYOFMONTH</span><span class="p">},</span> <span class="vg">$$</span><span class="p">{</span><span class="no">YEAR</span><span class="p">}</span>
+</span><span class='line'>   <span class="no">History</span>       <span class="p">:</span> <span class="no">Initial</span> <span class="n">release</span> <span class="p">(</span><span class="n">mps</span> <span class="vg">$$</span><span class="p">{</span><span class="no">DAYOFMONTH</span><span class="p">}</span><span class="o">/</span><span class="vg">$$</span><span class="p">{</span><span class="no">MONTHNUMBER</span><span class="p">}</span><span class="o">/</span><span class="vg">$$</span><span class="p">{</span><span class="no">YEAR</span><span class="p">})</span>
+</span><span class='line'>   <span class="no">Purpose</span>       <span class="p">:</span> <span class="vg">$$</span><span class="p">{</span><span class="ss">Purpose</span><span class="p">:}</span>
+</span><span class='line'><span class="o">---&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note the custom variable $${Purpose:} as well as the built-in snippet variables like $${CURRENTFILE}. You can read more about <a href="http://www.cfeclipse.org/go/documentation/user-docs/snippets">snippet variables here</a>.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-11-16T13:55:20+11:00" pubdate data-updated="true">Nov 16<span>th</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2006/11/16/commenting-templates-with-author-data//page/21/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2006/11/15/getting-tag-functionality-in-cfscript/">
+		
+			Getting Tag Functionality in Cfscript</a>
+	</h2>
+	<div class="entry-content">
+		<p>For some developers there is an age old argument between the use of ColdFusion tags and &lt;cfscript&gt;, I&#8217;m not going to delve too much into this argument as I believe you can use both for different scenarios.</p>
+
+<p>What I will say is that I do like many things about &lt;cfscript&gt;. It is easy to read and arguably more elegant and concise. Of course the annoying thing is that it doesn&#8217;t have the full feature set of tags&#8230;.VERY annoying. So bad in fact that I often ask myself why I bother with it and whether or not Adobe will ever update it?</p>
+
+<p>How many times have you been in the middle of coding something (in &lt;cfscript&gt;) and needed to do cfdump, cflocation, cfabort, cfsavecontent&#8230;.the list goes on. Because I do like cfscript I did what a lot of other cfscripters do, came up with some methods to add to my Utility.cfc (which I store in application scope) to simulate the functions I cannot natively use when writing cfscript.</p>
+
+<p>Here is an example method for simulating &lt;cfdump&gt;</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cffunction</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;dump&quot;</span> <span class="nx">access</span><span class="o">=</span><span class="s2">&quot;public&quot;</span> <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;true&quot;</span> <span class="nx">returntype</span><span class="o">=</span><span class="s2">&quot;void&quot;</span> <span class="nx">hint</span><span class="o">=</span><span class="s2">&quot;Simulates cfdump from a cfscript block&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;var&quot;</span> <span class="nx">required</span><span class="o">=</span><span class="s2">&quot;true&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;any&quot;</span> <span class="nx">hint</span><span class="o">=</span><span class="s2">&quot;Variable to dump&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;expand&quot;</span> <span class="nx">required</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;boolean&quot;</span> <span class="nx">hint</span><span class="o">=</span><span class="s2">&quot;Boolean to expand the dump&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;top&quot;</span> <span class="nx">required</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;numeric&quot;</span> <span class="nx">hint</span><span class="o">=</span><span class="s2">&quot;Only show the top n layers&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="o">&amp;</span><span class="nx">lt</span><span class="p">;</span><span class="nx">cfscript</span><span class="o">&amp;</span><span class="nx">gt</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="kd">var</span> <span class="nx">sOptions</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="nx">structKeyExists</span><span class="p">(</span><span class="nx">arguments</span><span class="p">,</span> <span class="s2">&quot;expand&quot;</span><span class="p">))</span>
+</span><span class='line'>          <span class="nx">sOptions</span> <span class="o">=</span> <span class="s2">&quot; expand=&quot;</span> <span class="o">&amp;</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">expand</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="nx">structKeyExists</span><span class="p">(</span><span class="nx">arguments</span><span class="p">,</span> <span class="s2">&quot;top&quot;</span><span class="p">))</span>
+</span><span class='line'>          <span class="nx">sOptions</span> <span class="o">=</span> <span class="nx">sOptions</span> <span class="o">&amp;</span> <span class="s2">&quot; top=&quot;</span> <span class="o">&amp;</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">top</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cfscript&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfdump</span> <span class="kd">var</span><span class="o">=</span><span class="s2">&quot;#arguments.var#&quot;</span><span class="nx">sOptions</span> <span class="o">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfreturn</span> <span class="o">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cffunction&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I set this up as a snippet in eclipse and use a snippet variable to enter the dump value. My trigger text in ud (for Utility Dump) and the snippet is as follows:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">application</span><span class="p">.</span><span class="nx">oUtility</span><span class="p">.</span><span class="nx">dump</span><span class="p">(</span><span class="nx">$$</span><span class="p">{</span><span class="kd">var</span><span class="o">:</span><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I&#8217;ve attached my full Utility.cfc which contains the following methods:</p>
+
+<ul>
+<li>abort</li>
+<li>dump</li>
+<li>location</li>
+<li>param</li>
+<li>sleep</li>
+</ul>
+
+
+<p><a href="/images/uploads/2006/11/utility.zip">Click here to download Utility.cfc</a></p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-11-15T19:56:49+11:00" pubdate data-updated="true">Nov 15<span>th</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2006/11/15/getting-tag-functionality-in-cfscript//page/21/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -504,222 +768,6 @@
 	
 </div></article>
 
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2006/11/06/do-you-know-about-alexa-internet/">
-		
-			Do You Know About Alexa Internet?</a>
-	</h2>
-	<div class="entry-content">
-		<blockquote><p>&#8220;Along the way Alexa has developed an installed based of millions of toolbars, one of the largest Web crawls and an infrastructure to process and serve massive amounts of data.&#8221;</p></blockquote>
-
-<p><a href="http://www.alexa.com/">Alexa Internet</a> was founded in 1996, why does this matter to anyone? Well one reason is their page rankings, often used as an indication of just how popular a web site is. Of course you need to take into account that the statistics provided by Alexa are only available from users (of which there are millions!) who have the Alexa toolbar installed on their browser, this is how the statistics are generated.</p>
-
-<p>The traffic rankings page on their site is quite interesting because it provides stats on things like:</p>
-
-<ul>
-<li><p>Daily Reach (per million)</p></li>
-<li><p>Daily Traffic Rank Trend</p></li>
-<li><p>Daily Page Views (per million)</p></li>
-</ul>
-
-
-<p>It also gives you a run-down of &#8220;where people are going&#8221; on your site, basically this breaks out all the sub-domains you may have.</p>
-
-<p>At the moment Alexa tells us that <a href="http://ray.camdenfamily.com/">Ray Camden</a> is quite popular with a ranking of 47, 076! Considering Alexa only provide information if your site makes it into the top 100,000 that&#8217;s not bad Ray (also considering that the web now has 1,000,000 web sites!) :)</p>
-
-<p><a href="/images/uploads/2006/11/ray.gif"><img src="/images/uploads/2006/11/ray.thumbnail.gif" alt="ray.camdenfamily.com screen grab from Alexa" /></a></p>
-
-<p>There is an interesting breakdown of traffic on Alexa, <a href="http://www.alexa.com/data/details/traffic_details?url=ray.camdenfamily.com%2F">see here for a breakdown of Ray&#8217;s current traffic</a></p>
-
-<p>One more thing which I found was that <a href="http://fullasagoog.com/">fullasagoog</a> ranked in at 86, 025. Being a blog aggregator I thought it would be a higher rank than Ray&#8217;s site, clearly people visit his site either directly or from other sources/aggregators!</p>
-
-<p>Oh to be a ColdFusion superstar :)</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2006-11-06T12:17:25+11:00" pubdate data-updated="true">Nov 6<span>th</span>, 2006</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2006/11/06/do-you-know-about-alexa-internet//page/21/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2006/11/03/blogging-problems-my-php-host/">
-		
-			Blogging Problems With My (PHP) Host</a>
-	</h2>
-	<div class="entry-content">
-		<p>Last week my blog software decided to stop working. I couldn&#8217;t create or edit any posts, bugger.</p>
-
-<p>It wasn&#8217;t the fault of the blog software however, it seems the host added some new &#8216;forbidden&#8217; words to their list and of course I wasn&#8217;t notified.</p>
-
-<p>Basically every time I wanted to create or edit a post I was redirected to the host&#8217;s home page! Specifically it looks like the line in question which was causing me headaches was:</p>
-
-<pre><code>$draft-&gt;post_title = sprintf(__('Post # %s'), $draft-&gt;ID);
-</code></pre>
-
-<p>I don&#8217;t have time at the moment to set a workaround so I&#8217;ve just commented it out, and as it&#8217;s only for display in my administration area this will be fine for now.</p>
-
-<p>Ah the things that waste what little time you have in a day :(</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2006-11-03T17:39:14+11:00" pubdate data-updated="true">Nov 3<span>rd</span>, 2006</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/php/'>php</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2006/11/03/blogging-problems-my-php-host//page/21/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2006/10/22/cfeclipse-snippets/">
-		
-			Cfeclipse Snippets</a>
-	</h2>
-	<div class="entry-content">
-		<p>The eclipse/cfeclipse combinations makes for a pretty powerfull developing tool for ColdFusion programmers, even those who miss the good old days of using Homesite!</p>
-
-<p>One of the cool things cfeclipse brought over from Homesite is <a href="http://www.cfeclipse.org/go/documentation/user-docs/snippets">snippets</a>, but cfeclipse has a few extra goodies to make them better than ever :)</p>
-
-<p>Whereas in Homesite you would assign a keyboard shortcut directly to a snippet, cfeclipse has an invoke/trigger key combination which stays the same while allowing you to use ANY key(s) as the actual trigger text for the snippet.</p>
-
-<p>For example I have a cfabort snippet with a trigger text of &#8216;a&#8217;. Now in eclipse 3.2 the invoke/trigger combination is ctrl + j, so if I type the letter &#8216;a&#8217;, then press ctrl + j I get a lovely cfabort tag! Doing things this way allows me to have the same invoke key (ctrl + j) then simply remember my trigger text for each snippet. Nice :)</p>
-
-<p>In common with Homesite is the idea of snippet variables, most handy if your snippet text requires or relies upon a user defined parameter value. An example here is cfinclude where you must specify the &#8216;template&#8217; attribute.</p>
-
-<p>To setup snippet variables you use the $${variable:default} format. My trigger text is &#8216;i&#8217; for cfinclude, so when I invoke the snippet I get asked to enter a parameter value as follows:</p>
-
-<p><img src="/images/uploads/2006/10/snippet.jpg" alt="cfeclipse snippet variable" /></p>
-
-<p>My entire snippet looks like this: <cfinclude template="$${template:.cfm}" />></p>
-
-<p>There are a number of built in snippet variables:</p>
-
-<p>$${DATE}
-$${MONTH}
-$${TIME}
-$${DATETIME}
-$${DAYOFWEEK}
-$${CURRENTFILE} - Current file name (just the file)
-$${CURRENTFOLDER} - Current folder (The path to the containing folder)
-$${CURRENTPATH} - Current path (full file name)
-$${CURRENTPRJPATH} - Just the folder
-$${USERNAME} - Current user
-$${MONTHNUMBER} - Month as a number
-$${DAYOFMONTH} - Day of month as a number
-$${DAYOFWEEKNUMBER} - Day of week (the week starts on Sunday)
-$${DATETIME24} - DateTime24 - a 24 hour clock version of datetime.
-$${YEAR} - Current year.
-$${YEAR2DIGIT} - Current two digit year.</p>
-
-<p>Other than those, you&#8217;re free to name your variables as you wish.</p>
-
-<p>Another SUPER cool feature is the ability to choose a default value from a range. So for my cflocation snippet I have:</p>
-
-<pre><code>&lt;cflocation url="$${url:.cfm}" addToken="$${addToken:false|true}" /&gt;
-</code></pre>
-
-<p>Note the use of the pipe (|). There is even more than this on the cfeclipse.org site so take a peek. Some of the snippets I use are:</p>
-
-<p>cfabort
-cfcomment
-cfdump
-cfinclude
-cflocation
-cfoutput
-cfquery
-cfscript
-html comment (used with xml files)</p>
-
-<p>I also use tonnes of snippets for HTML, (strong, em etc). Using snippets is easy to learn and saves you a LOT of time when you&#8217;re used to invoking them with ease!</p>
-
-<p><a href="http://www.chapter31.com/cfeclipse-snippets/">Have a look here</a> for a complete list of my snippets, you can also download them for easy use</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2006-10-22T11:13:47+10:00" pubdate data-updated="true">Oct 22<span>nd</span>, 2006</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2006/10/22/cfeclipse-snippets//page/21/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
 <nav id="pagenavi">
     
         <a href="/page/20/" class="prev">Prev</a>
@@ -729,7 +777,7 @@ html comment (used with xml files)</p>
     
     <div class="center"><a href="/blog/archives">Blog Archives</a></div>
 </nav></div>
-	<footer id="footer" class="inner">Copyright &copy; 2013
+	<footer id="footer" class="inner">Copyright &copy; 2015
 
     Michael Sharman
 

@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Charlie Arehart has an interesting post here on whether you should use the name attribute in cfcomponent. Apparently there is no &#8216;name&#8217; &hellip;">
+	<meta name="description" content="Ben Nadel has a nice post on trimming strings with javascript using regular expressions. Note that the reg exp white space character &#8216;\s&#8217 &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,301 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2006/09/20/trimming-strings-with-javascript/">
+		
+			Trimming Strings With Javascript</a>
+	</h2>
+	<div class="entry-content">
+		<p><a href="http://bennadel.com/">Ben Nadel</a> has a nice post on <a href="http://bennadel.com/resources/uploads/string_trimming1.htm">trimming strings with javascript</a> using regular expressions.</p>
+
+<p>Note that the reg exp white space character &#8216;\s&#8217; is used to match:</p>
+
+<ul>
+<li>space</li>
+<li>tab</li>
+<li>horizontal tab</li>
+<li>vertical tab</li>
+<li>line break</li>
+</ul>
+
+
+<p>Sample code below:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// Trims the beginning and trailing white space from a string.</span>
+</span><span class='line'>  <span class="kd">function</span> <span class="nx">trim</span><span class="p">(</span> <span class="nx">strText</span> <span class="p">){</span>
+</span><span class='line'>      <span class="k">return</span><span class="p">(</span> <span class="nx">strText</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="k">new</span> <span class="nb">RegExp</span><span class="p">(</span><span class="s2">&quot;^([s]+)|([s]+)$&quot;</span><span class="p">,</span> <span class="s2">&quot;gm&quot;</span><span class="p">),</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// Trims the beinning white space from a string.</span>
+</span><span class='line'>  <span class="kd">function</span> <span class="nx">leftTrim</span><span class="p">(</span> <span class="nx">strText</span> <span class="p">){</span>
+</span><span class='line'>      <span class="k">return</span><span class="p">(</span> <span class="nx">strText</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="k">new</span> <span class="nb">RegExp</span><span class="p">(</span><span class="s2">&quot;^[s]+&quot;</span><span class="p">,</span> <span class="s2">&quot;gm&quot;</span><span class="p">),</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// Trims the trailing white space from a string.</span>
+</span><span class='line'>  <span class="kd">function</span> <span class="nx">rightTrim</span><span class="p">(</span> <span class="nx">strText</span> <span class="p">){</span>
+</span><span class='line'>      <span class="k">return</span><span class="p">(</span> <span class="nx">strText</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="k">new</span> <span class="nb">RegExp</span><span class="p">(</span><span class="s2">&quot;[s]+$&quot;</span><span class="p">,</span> <span class="s2">&quot;gm&quot;</span><span class="p">),</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/script&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="/images/uploads/2006/09/trimstring.js">Javascript: trimString.js</a></p>
+
+<p>Update 25th March 2007:</p>
+
+<pre><code>    myString.replace(/^\s*|\s*$/g, "");
+</code></pre>
+
+<p>A basic breakdown:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="sr">/.../</span>
+</span><span class='line'>    <span class="nx">Regular</span> <span class="nx">expressions</span> <span class="k">in</span> <span class="nx">javascript</span> <span class="nx">are</span> <span class="nx">delimited</span> <span class="kd">with</span> <span class="nx">forward</span> <span class="nx">slashes</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">^</span>
+</span><span class='line'>    <span class="nx">Outside</span> <span class="nx">the</span> <span class="nx">usual</span> <span class="nx">square</span> <span class="nx">brackets</span><span class="p">,</span> <span class="nx">the</span> <span class="o">**</span><span class="nx">caret</span><span class="o">**</span> <span class="nx">means</span> <span class="nx">look</span> <span class="nx">only</span> <span class="nx">at</span> <span class="nx">the</span> <span class="nx">beginning</span> <span class="nx">of</span> <span class="nx">the</span> <span class="nx">target</span> <span class="nx">string</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">|</span>
+</span><span class='line'>    <span class="o">**</span><span class="nx">Alternatation</span><span class="o">**</span><span class="p">,</span> <span class="nx">meaning</span> <span class="nx">finding</span> <span class="nx">the</span> <span class="nx">left</span> <span class="nx">hand</span> <span class="nx">OR</span> <span class="nx">right</span> <span class="nx">have</span> <span class="nx">values</span>
+</span><span class='line'>
+</span><span class='line'><span class="err">\</span><span class="nx">s</span><span class="o">*</span>
+</span><span class='line'>    <span class="nx">Denotes</span> <span class="mi">0</span> <span class="nx">to</span> <span class="nx">many</span> <span class="nx">white</span> <span class="nx">space</span> <span class="nx">characters</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">$</span>
+</span><span class='line'>    <span class="nx">Means</span> <span class="nx">look</span> <span class="nx">only</span> <span class="nx">at</span> <span class="nx">the</span> <span class="nx">end</span> <span class="nx">of</span> <span class="nx">the</span> <span class="nx">target</span> <span class="nx">string</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">g</span>
+</span><span class='line'>    <span class="nx">Makes</span> <span class="nx">the</span> <span class="nx">search</span> <span class="o">**</span><span class="nx">global</span><span class="o">**</span><span class="p">;</span> <span class="nx">finding</span> <span class="nx">all</span> <span class="nx">matches</span><span class="p">,</span> <span class="nx">not</span> <span class="nx">just</span> <span class="nx">the</span> <span class="nx">first</span> <span class="nx">match</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Of course all we&#8217;re doing is replacing left and right white space with an empty string (&#8220;&#8221;).</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-09-20T09:23:59+10:00" pubdate data-updated="true">Sep 20<span>th</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/javascript/'>Javascript</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2006/09/20/trimming-strings-with-javascript//page/24/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2006/09/13/robots-meta-tag/">
+		
+			Robots META Tag</a>
+	</h2>
+	<div class="entry-content">
+		<p>The Robots META tag is a way you can tell &#8216;Robots&#8217; or &#8216;Spiders&#8217; whether a page (or pages) on your site should be indexed, or if links on the page should be followed.</p>
+
+<p>At this stage I don&#8217;t believe all &#8216;robots&#8217; out there support the use of this META tag, but some do so in the right situation it&#8217;s worth using.</p>
+
+<p>The most common examples for the robots META tags are:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">content</span><span class="o">=</span><span class="s2">&quot;index,follow&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;robots&quot;</span><span class="o">&gt;&lt;</span><span class="err">/meta&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">content</span><span class="o">=</span><span class="s2">&quot;noindex,follow&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;robots&quot;</span><span class="o">&gt;&lt;</span><span class="err">/meta&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">content</span><span class="o">=</span><span class="s2">&quot;index,nofollow&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;robots&quot;</span><span class="o">&gt;&lt;</span><span class="err">/meta&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">content</span><span class="o">=</span><span class="s2">&quot;noindex,nofollow&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;robots&quot;</span><span class="o">&gt;&lt;</span><span class="err">/meta&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">content</span><span class="o">=</span><span class="s2">&quot;noimageindex&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;robots&quot;</span><span class="o">&gt;&lt;</span><span class="err">/meta&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">content</span><span class="o">=</span><span class="s2">&quot;noimageclick&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;robots&quot;</span><span class="o">&gt;&lt;</span><span class="err">/meta&gt;&lt;/code&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&#8220;noimageindex&#8221; prevents the images on the page from being indexed but the text on the page can still be indexed.</p>
+
+<p>&#8220;noimageclick&#8221; prevents the use of links directly to the images, instead there will only be a link to the page.</p>
+
+<p>In addition to the robots META tag above, Google supports a GOOGLEBOT command. With it, you can tell Google that you do not want the page archived, but allow other search engines to do so. If you specify this command, Google will not save the page and the page will be unavailable via its cache.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">content</span><span class="o">=</span><span class="s2">&quot;noarchive&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;googlebot&quot;</span><span class="o">&gt;&lt;</span><span class="err">/meta&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A formal syntax for the Robots META tag content is:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">content</span>    <span class="o">=</span> <span class="nx">all</span> <span class="o">|</span> <span class="nx">none</span> <span class="o">|</span> <span class="nx">directives</span>
+</span><span class='line'><span class="nx">all</span>        <span class="o">=</span> <span class="s2">&quot;ALL&quot;</span>
+</span><span class='line'><span class="nx">none</span>       <span class="o">=</span> <span class="s2">&quot;NONE&quot;</span>
+</span><span class='line'><span class="nx">directives</span> <span class="o">=</span> <span class="nx">directive</span> <span class="p">[</span><span class="s2">&quot;,&quot;</span> <span class="nx">directives</span><span class="p">]</span>
+</span><span class='line'><span class="nx">directive</span>  <span class="o">=</span> <span class="nx">index</span> <span class="o">|</span> <span class="nx">follow</span>
+</span><span class='line'><span class="nx">index</span>      <span class="o">=</span> <span class="s2">&quot;INDEX&quot;</span> <span class="o">|</span> <span class="s2">&quot;NOINDEX&quot;</span>
+</span><span class='line'><span class="nx">follow</span>     <span class="o">=</span> <span class="s2">&quot;FOLLOW&quot;</span> <span class="o">|</span> <span class="s2">&quot;NOFOLLOW&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-09-13T09:35:52+10:00" pubdate data-updated="true">Sep 13<span>th</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/x-html/'>(X)HTML</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2006/09/13/robots-meta-tag//page/24/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2006/09/11/hostmysitecom-and-coldfusion-mappings/">
+		
+			hostmysite.com and ColdFusion Mappings</a>
+	</h2>
+	<div class="entry-content">
+		<p>I&#8217;ve recently gotten myself a <a href="http://www.hostmysite.com/">hostmysite</a> account on a shared server for a project I&#8217;m involved with. Everything looked fantastic and they certainly have a great reputation in the community.</p>
+
+<p>Before signing on the dotted line I wanted to make sure everything was in order including:</p>
+
+<ul>
+<li><p>ColdFusion; Enterprise or Standard?</p></li>
+<li><p>Multiple CF mappings?</p></li>
+<li><p>Web mappings?</p></li>
+<li><p>Multiple DSN&#8217;s?</p></li>
+<li><p>Are any CF tags disabled etc</p></li>
+<li><p>Server specs etc</p></li>
+</ul>
+
+
+<p>All this and more was given the green light so I was a happy camper, and don&#8217;t get me wrong&#8230;I still am! Just one small problem, any mapping you want must be appended with your account number.</p>
+
+<p>So if you&#8217;re using a framework such as MachII or Farcry and you need a ColdFusion mapping (either &#8216;MachII&#8217; or &#8216;Farcry&#8217;) then this can be a headache to get around because your mappings suddenly become &#8216;MachIIXXXX&#8217; instead of &#8216;MachII&#8217; etc. Indeed with <a href="http://www.farcrycms.org/">Farcry</a> it&#8217;s not possible to do this because you need &#8216;farcry&#8217; as your ColdFusion mapping name :(</p>
+
+<p>This is my only complaint so far but I do understand why. Ah the cons of being in a shared host environment!</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-09-11T10:31:12+10:00" pubdate data-updated="true">Sep 11<span>th</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2006/09/11/hostmysitecom-and-coldfusion-mappings//page/24/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -580,18 +875,33 @@
     <article class="post">
 	<h2 class="title">
 		
-		<a href="/2006/09/02/busy-at-the-moment/">
+		<a href="/2006/09/06/end-of-paragraph-widow/">
 		
-			Busy at the Moment?</a>
+			End of Paragraph &#8216;Widow&#8217;</a>
 	</h2>
 	<div class="entry-content">
-		<blockquote><p>&#8220;Time is the tiny bits of space between one busy moment and the next.&#8221;</p></blockquote>
+		<p><a href="http://www.petefreitag.com/">Peter Freitag</a> wrote a post today (inspired by <a href="http://www.shauninnman.com/">Shaun Innman</a>) on widows.</p>
 
-<p>A friend wrote this and got me thinking, I don&#8217;t know about you but I am always SO busy these days. I used to think that I was just having a busy week or a busy month. Nup&#8230;that&#8217;s life :)</p>
+<p>In typesetting a widow is that annoying problem of having a line wrap so that a single word hangs over to the next line. This would especially be a problem for headings as the issue would be very obvious, not cool :(</p>
 
-<p>It makes you wonder when you&#8217;ll have time to &#8216;enjoy&#8217; life, so much time is spent at work or doing chores or stuck in traffic etc. I rent at the moment and pay a lot to do it. But in my mind it&#8217;s worth it for my standard of living. I&#8217;m just not interested in spending 2 hours a day stuck in traffic or on the train. I&#8217;d rather pay more and be closer to work and life than to lose all that time on travel. After all, time is such a precious commodity and there are lots of things I want to do with it.</p>
+<p>An excerpt from Peters site:</p>
 
-<p>That being said I don&#8217;t have a family! If I did I&#8217;m sure my values and beliefs on where I lived would dramatically change.</p>
+<p>=====================================================</p>
+
+<p>For example:</p>
+
+<blockquote><p>Man Walks On
+Moon</p></blockquote>
+
+<p>Moon is the widow in the above example. Shaun fixes this by replacing the last space with an   He provides a function in PHP, but here&#8217;s a simple regular expression for ColdFusion to do the same:</p>
+
+<blockquote><p>ReReplace(headline, &#8221; ([^ ]+)$&#8221;, &#8221; 1&#8221;)</p></blockquote>
+
+<p>It can get a bit trickier to fix this at the end of paragraphs, here&#8217;s another regular expression that might work for that (need to test more):</p>
+
+<blockquote><p>ReReplace(text, &#8221; ([^ ]+r?n)&#8221;, &#8221; 1&#8221;, &#8220;ALL&#8221;)</p></blockquote>
+
+<p>=====================================================</p>
 
 		
 		
@@ -611,184 +921,16 @@
   
 
 
-<time datetime="2006-09-02T13:45:14+10:00" pubdate data-updated="true">Sep 2<span>nd</span>, 2006</time></div>
+<time datetime="2006-09-06T08:59:34+10:00" pubdate data-updated="true">Sep 6<span>th</span>, 2006</time></div>
 	<div class="tags">
 
 
-	<a class='category' href='/categories/life/'>Life</a>
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
 
 
 </div>
 	
-		<div class="comments"><a href="/2006/09/02/busy-at-the-moment//page/24/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2006/09/01/memory-lane/">
-		
-			Memory Lane</a>
-	</h2>
-	<div class="entry-content">
-		<p><img src="/images/uploads/2006/09/bottom_r2_c2.thumbnail.jpg" alt="Richard Marx" /></p>
-
-<p>So last night we went to see <a href="http://www.richardmarx.com">Richard Marx</a> at the Capitol. Yeah&#8230;I know what you&#8217;re thinking but that&#8217;s ok, I&#8217;m not afraid to say that I&#8217;m a fan and have been for a long time!</p>
-
-<p>Yes it&#8217;s true I like his voice and his songs, but what I really like is his production and studio band. He always uses the cream of the session muso pool including;</p>
-
-<ul>
-<li>Michael Thompson</li>
-<li>Michael Landau</li>
-<li>Bruce Gaitsch</li>
-<li>John Moffet</li>
-<li>Lee Sklar</li>
-<li>Jeff Porcaro</li>
-<li>Steve Lukather</li>
-</ul>
-
-
-<p>Phew&#8230;that&#8217;s quite a list! All of those players above (and many more) I LOVE and would travel miles to see at a gig, if they were to come out to Sydney which is unlikely. The great thing about using guys like this is that you get A-grade quality in touch, tone and taste. Truly memorable parts from the guitar/bass to the kit.</p>
-
-<p>Opening the night was local boy <a href="http://www.rickprice.com.au">Rick Price</a> which was fantastic (yeah I&#8217;m a fan of his as well!). Rick hasn&#8217;t been around (commercially) in this country for a while and I&#8217;ve never seen him live. His performance was pretty special, just him and his acoustic guitar. It must be daunting to be in a situation where you&#8217;re an opening act and it&#8217;s just you&#8230;no loud band to hide behind. I think he really pulled it off, nice one Rick :)</p>
-
-<p>Monsieur Marx&#8217; tour was heralded as the &#8216;Greatest Hits&#8217; tour, so as to be expected he played pretty much all the songs you&#8217;d know from him. Somebody I was with (and I bet a few others) kept saying &#8221;<em>I didn&#8217;t know he did that!</em>&#8221; and the end which was satisfying for me to hear.</p>
-
-<p>The band was quite good although (typically) I would have liked a different guitarist. It didn&#8217;t help that the sound guy buried him in the mix for the first few songs :(</p>
-
-<p>I&#8217;d give it a 7 out of 10, I really liked it but it just didn&#8217;t have that &#8216;special&#8217; something to give it an 8 or 9.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2006-09-01T23:34:09+10:00" pubdate data-updated="true">Sep 1<span>st</span>, 2006</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/life/'>Life</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2006/09/01/memory-lane//page/24/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2006/08/25/html-pre-launch-flight-check/">
-		
-			HTML Pre-launch Flight Check</a>
-	</h2>
-	<div class="entry-content">
-		<p><a href="http://www.anybrowser.com/">AnyBrowser</a> have a lot of tools for you to use when validating and preparing your website for deployment including:</p>
-
-<ul>
-<li><p><a href="http://www.anybrowser.com/ScreenSizeTest.html">Screen Size Test</a></p></li>
-<li><p><a href="http://www.anybrowser.com/MetaTagGenerator.html">Meta Tag Creator</a></p></li>
-<li><p><a href="http://www.anybrowser.com/validateit.html">HTML Validation</a></p></li>
-<li><p><a href="http://www.anybrowser.com/linkchecker.html">Link checking</a></p></li>
-<li><p><a href="http://www.anybrowser.com/EngineView.html">Engine View</a> (See how your site might get listed by search engine spiders.)</p></li>
-</ul>
-
-
-<p>Not a bad list, don&#8217;t forget that ALL web developers should validate their pages, perform link checking and test on different resolutions before going live.</p>
-
-<p>Another great site for viewing your website on any platform and/or operating system is <a href="http://www.browsercam.com/">Browser Cam</a>. I use this one all the time, it&#8217;s a paid service but invaluable unless you are in abundance of (X)HHTML/CSS greatness that you don&#8217;t need it!</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2006-08-25T12:49:28+10:00" pubdate data-updated="true">Aug 25<span>th</span>, 2006</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/x-html/'>(X)HTML</a>, <a class='category' href='/categories/css/'>CSS</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2006/08/25/html-pre-launch-flight-check//page/24/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2006/08/12/a-londonn-gift/">
-		
-			A London Gift</a>
-	</h2>
-	<div class="entry-content">
-		<p><a href="http://www.carlorr.com">Carl Orr</a> is in town but only for a few days. Carl is truly a special guitarist and an old teacher of mine. In fact I even did his original wesite waaaay back in the day (please forgive it now!). Carl has been living in London for about 10 years so it was a long time coming considering I used to see him play almost every other week in the mid 90&#8217;s.</p>
-
-<p>The gig was at the Seymour Centre and was put on my the good fellows at <a href="http://www.sima.org">SIMA</a>. It was the first time I&#8217;ve been there and it&#8217;s a really nice &#8216;club&#8217;, I liked it and will be back!</p>
-
-<p>Also I ran into a friend of mine from UNI days which was a nice surprise.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2006-08-12T23:38:36+10:00" pubdate data-updated="true">Aug 12<span>th</span>, 2006</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/life/'>Life</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2006/08/12/a-londonn-gift//page/24/index.html#disqus_thread">Comments</a></div>
+		<div class="comments"><a href="/2006/09/06/end-of-paragraph-widow//page/24/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 
@@ -801,7 +943,7 @@
     
     <div class="center"><a href="/blog/archives">Blog Archives</a></div>
 </nav></div>
-	<footer id="footer" class="inner">Copyright &copy; 2013
+	<footer id="footer" class="inner">Copyright &copy; 2015
 
     Michael Sharman
 

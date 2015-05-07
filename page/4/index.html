@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Today I wanted to configure an application to only set secure cookies. Those are cookies that are only sent back to the server if over a secure ( &hellip;">
+	<meta name="description" content="I&#8217;ve been using the jQuery UI dialog for a project recently, one thing that bugged me though, was that upon opening a dialog the first tabable &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +81,272 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2012/09/14/jquery-ui-dialog-focus-on-first-tabable-element/">
+		
+			jQuery UI Dialog Focus on First Tabable Element</a>
+	</h2>
+	<div class="entry-content">
+		<p>I&#8217;ve been using the <a href="http://jqueryui.com/demos/dialog/">jQuery UI dialog</a> for a project recently, one thing that bugged me though, was that upon opening a dialog the first tabable element always gets focussed. This can be:</p>
+
+<ul>
+<li>hyperlinks</li>
+<li>input boxes</li>
+<li>select boxes</li>
+<li>buttons</li>
+<li>textareas etc</li>
+</ul>
+
+
+<p>An example of this is:</p>
+
+<p><img src="/images/uploads/2012/09/Screen-shot-2012-09-14-at-4.06.09-PM.png" alt="" /></p>
+
+<p><img src="/images/uploads/2012/09/Screen-shot-2012-09-14-at-4.06.30-PM.png" alt="" /></p>
+
+<p>A quick way around this is to fire a <a href="http://api.jquery.com/blur/">blur()</a> method, targeting the first <em>tabable</em> element type of your dialog. So if I open up a dialog window with an id of <em>dialog</em>, I can do:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#dialog&#39;</span><span class="p">).</span><span class="nx">dialog</span><span class="p">(</span><span class="s1">&#39;open&#39;</span><span class="p">);</span>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#dialog&#39;</span><span class="p">).</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;a, select, input, textarea, button&#39;</span><span class="p">).</span><span class="nx">first</span><span class="p">().</span><span class="nx">blur</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I was hoping to put this inside the open() method of the dialog, but it doesn&#8217;t seem to parse the contents of the dialog within that method. So the following did not work for me:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#dialog&#39;</span><span class="p">).</span><span class="nx">dialog</span><span class="p">({</span>
+</span><span class='line'>  <span class="nx">autoOpen</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+</span><span class='line'>  <span class="nx">maxWidth</span><span class="o">:</span> <span class="mi">600</span><span class="p">,</span>
+</span><span class='line'>  <span class="nx">minWidth</span><span class="o">:</span> <span class="mi">500</span><span class="p">,</span>
+</span><span class='line'>  <span class="nx">modal</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+</span><span class='line'>  <span class="nx">resizable</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+</span><span class='line'>  <span class="nx">open</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;a, select, input, textarea, button&#39;</span><span class="p">).</span><span class="nx">first</span><span class="p">().</span><span class="nx">blur</span><span class="p">();</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-14T16:27:29+10:00" pubdate data-updated="true">Sep 14<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/javascript/'>Javascript</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2012/09/14/jquery-ui-dialog-focus-on-first-tabable-element//page/4/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2012/08/13/timing-synchronous-javascript-operations/">
+		
+			Timing Synchronous JavaScript Operations</a>
+	</h2>
+	<div class="entry-content">
+		<p>There&#8217;s a cool little method on the <em>console</em> object that allows you to track how long an operation took to run. It&#8217;s called <a href="https://developer.mozilla.org/en-US/docs/DOM/console.time">console.time</a>.</p>
+
+<p>Basically you just start a timer at the top of the code you want to time, like so:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">time</span><span class="p">(</span><span class="s1">&#39;timer-name&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// your javascript goes here</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">timeEnd</span><span class="p">(</span><span class="s1">&#39;timer-name&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Each <em>timer</em> block should have a unique name (in the example above I called my timer &#8216;timer-name&#8217;), and you can have up to 10,000 timers running on a single page.</p>
+
+<p>By calling <em>console.timeEnd()</em>, the browser will write to the console how long (in milliseconds) the code took to run since you first called console.time();</p>
+
+<p>This works in Chrome 2+, Firefox 10+, Opera and Safari 4+. Typically IE support is a little sketchy, however I <a href="http://stackoverflow.com/questions/3516515/console-time-in-ie8-developer-tools?answertab=active#tab-top">found a cool custom function</a> on Stack Overflow that allows you to use console.time/timeEnd in IE7/8 etc.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c1">//console.time implementation for IE</span>
+</span><span class='line'><span class="k">if</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">console</span> <span class="o">&amp;&amp;</span> <span class="k">typeof</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">console</span><span class="p">.</span><span class="nx">time</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;undefined&quot;</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">time</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">reset</span><span class="p">){</span>
+</span><span class='line'>        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span><span class="p">;</span> <span class="p">}</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">time</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">().</span><span class="nx">getTime</span><span class="p">();</span>
+</span><span class='line'>        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">console</span><span class="p">.</span><span class="nx">timeCounters</span><span class="p">)</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">timeCounters</span> <span class="o">=</span> <span class="p">{}</span> <span class="p">};</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">key</span> <span class="o">=</span> <span class="s2">&quot;KEY&quot;</span> <span class="o">+</span> <span class="nx">name</span><span class="p">.</span><span class="nx">toString</span><span class="p">();</span>
+</span><span class='line'>        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">reset</span> <span class="o">&amp;&amp;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">timeCounters</span><span class="p">[</span><span class="nx">key</span><span class="p">])</span> <span class="p">{</span> <span class="k">return</span><span class="p">;</span> <span class="p">}</span>
+</span><span class='line'>            <span class="nx">console</span><span class="p">.</span><span class="nx">timeCounters</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">time</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">timeEnd</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">){</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">time</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">().</span><span class="nx">getTime</span><span class="p">();</span>
+</span><span class='line'>        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">console</span><span class="p">.</span><span class="nx">timeCounters</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span><span class="p">;</span> <span class="p">}</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">key</span> <span class="o">=</span> <span class="s2">&quot;KEY&quot;</span> <span class="o">+</span> <span class="nx">name</span><span class="p">.</span><span class="nx">toString</span><span class="p">();</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">timeCounter</span> <span class="o">=</span> <span class="nx">console</span><span class="p">.</span><span class="nx">timeCounters</span><span class="p">[</span><span class="nx">key</span><span class="p">];</span>
+</span><span class='line'>        <span class="k">if</span><span class="p">(</span><span class="nx">timeCounter</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="kd">var</span> <span class="nx">diff</span> <span class="o">=</span> <span class="nx">time</span> <span class="o">-</span> <span class="nx">timeCounter</span><span class="p">;</span>
+</span><span class='line'>            <span class="kd">var</span> <span class="nx">label</span> <span class="o">=</span> <span class="nx">name</span> <span class="o">+</span> <span class="s2">&quot;: &quot;</span> <span class="o">+</span> <span class="nx">diff</span> <span class="o">+</span> <span class="s2">&quot;ms&quot;</span><span class="p">;</span>
+</span><span class='line'>            <span class="nx">console</span><span class="p">.</span><span class="nx">info</span><span class="p">(</span><span class="nx">label</span><span class="p">);</span>
+</span><span class='line'>            <span class="k">delete</span> <span class="nx">console</span><span class="p">.</span><span class="nx">timeCounters</span><span class="p">[</span><span class="nx">key</span><span class="p">];</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nx">diff</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">};</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-13T21:24:00+10:00" pubdate data-updated="true">Aug 13<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/javascript/'>Javascript</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2012/08/13/timing-synchronous-javascript-operations//page/4/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2012/08/09/setting-font-mime-types-in-apache/">
+		
+			Setting Font MIME Types in Apache</a>
+	</h2>
+	<div class="entry-content">
+		<p>If your website is using custom fonts, you may see this line in your Chrome console:</p>
+
+<blockquote><p>Resource interpreted as Font but transferred with MIME type application/octet-stream</p></blockquote>
+
+<p>This is really kinda annoying, if you want to get rid of that warning then add the following directives to your apache conf/.htaccess:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">AddType</span> <span class="nx">application</span><span class="o">/</span><span class="nx">vnd</span><span class="p">.</span><span class="nx">ms</span><span class="o">-</span><span class="nx">fontobject</span> <span class="nx">eot</span>
+</span><span class='line'><span class="nx">AddType</span> <span class="nx">font</span><span class="o">/</span><span class="nx">opentype</span> <span class="nx">otf</span>
+</span><span class='line'><span class="nx">AddType</span> <span class="nx">font</span><span class="o">/</span><span class="nx">truetype</span> <span class="nx">ttf</span>
+</span><span class='line'><span class="nx">AddType</span> <span class="nx">application</span><span class="o">/</span><span class="nx">x</span><span class="o">-</span><span class="nx">font</span><span class="o">-</span><span class="nx">woff</span> <span class="p">.</span><span class="nx">woff</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="http://www.jbarker.com/blog/2011/resource-interpreted-font-transferred-mime-type">See here for more information.</a></p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-09T23:40:00+10:00" pubdate data-updated="true">Aug 9<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/apache-slash-iis/'>Apache/IIS</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2012/08/09/setting-font-mime-types-in-apache//page/4/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -698,212 +964,6 @@ htdocs/WEB-INF
 	
 </div></article>
 
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2012/03/15/error-restoring-mysql-database-when-using-btree-on-indexes/">
-		
-			Error Restoring MySQL Database When USING BTREE on Indexes</a>
-	</h2>
-	<div class="entry-content">
-		<p>Occasionally when I&#8217;m restoring a database that was backed up from a different server than the one I&#8217;m restoring on I get an error along the lines of:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&gt;</span><span class="p">[</span><span class="nb">Error</span><span class="p">]</span> <span class="nx">Script</span> <span class="nx">lines</span><span class="o">:</span> <span class="mi">5</span><span class="o">-</span><span class="mi">17</span> <span class="o">-------------------------</span>
-</span><span class='line'> <span class="nx">You</span> <span class="nx">have</span> <span class="nx">an</span> <span class="nx">error</span> <span class="k">in</span> <span class="nx">your</span> <span class="nx">SQL</span> <span class="nx">syntax</span><span class="p">;</span> <span class="nx">check</span> <span class="nx">the</span> <span class="nx">manual</span> <span class="nx">that</span> <span class="nx">corresponds</span> <span class="nx">to</span> <span class="nx">your</span> <span class="nx">MySQL</span> <span class="nx">server</span> <span class="nx">version</span> <span class="k">for</span> <span class="nx">the</span> <span class="nx">right</span> <span class="nx">syntax</span> <span class="nx">to</span> <span class="nx">use</span> <span class="nx">near</span> <span class="s1">&#39;USING BTREE</span>
-</span><span class='line'><span class="s1">) ENGINE=InnoDB DEFAULT CHARSET=utf8&#39;</span> <span class="nx">at</span> <span class="nx">line</span> <span class="mi">11</span>
-</span><span class='line'>
-</span><span class='line'> <span class="nx">Warnings</span><span class="o">:</span> <span class="o">---&gt;</span>
-</span><span class='line'>   <span class="nx">W</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">:</span> <span class="nx">You</span> <span class="nx">have</span> <span class="nx">an</span> <span class="nx">error</span> <span class="k">in</span> <span class="nx">your</span> <span class="nx">SQL</span> <span class="nx">syntax</span><span class="p">;</span> <span class="nx">check</span> <span class="nx">the</span> <span class="nx">manual</span> <span class="nx">that</span> <span class="nx">corresponds</span> <span class="nx">to</span> <span class="nx">your</span> <span class="nx">MySQL</span> <span class="nx">server</span> <span class="nx">version</span> <span class="k">for</span> <span class="nx">the</span> <span class="nx">right</span> <span class="nx">syntax</span> <span class="nx">to</span> <span class="nx">use</span> <span class="nx">near</span> <span class="s1">&#39;USING BTREE</span>
-</span><span class='line'><span class="s1">) ENGINE=InnoDB DEFAULT CHARSET=utf8&#39;</span> <span class="nx">at</span> <span class="nx">line</span> <span class="mi">11</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Hmm, the docs suggest that BTREE is a valid index type for both MyISAM and InnoDB. So why is it barfing?</p>
-
-<p>Well it turns out dumping the database from a newer version of MySQL than what you are restoring onto can be bad. In my case running status at the mysql prompt told me that my source database was running on <em>5.5.9</em> but the destination version was <em>5.0.51a</em>.</p>
-
-<p>Basically the issue seems to be that MySQL 5.0.x has issues with USING BTREE. So&#8230;just remove that from your sql and you&#8217;ll be good to go. Alternatively you can use the &#8211;compatible option when running your mysqldump on the <em>newer server version</em>, something like:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">mysqldump</span> <span class="o">--</span><span class="nx">compatible</span><span class="o">=</span><span class="nx">ansi</span> <span class="o">-</span><span class="nx">h127</span><span class="p">.</span><span class="mf">0.0</span><span class="p">.</span><span class="mi">1</span> <span class="o">-</span><span class="nx">umyuser</span> <span class="o">-</span><span class="nx">p</span> <span class="nx">mydatabase</span> <span class="o">|</span> <span class="nx">gzip</span> <span class="o">&gt;</span> <span class="nx">mydatabase</span><span class="p">.</span><span class="nx">sql</span><span class="p">.</span><span class="nx">gz</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The value of &#8220;compatible&#8221; can be ansi, mysql323, mysql40, postgresql, oracle, mssql, db2, maxdb, no_key_options, no_table_options, or no_field_options.</p>
-
-<p>Nice</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-15T15:42:39+11:00" pubdate data-updated="true">Mar 15<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/databases/'>Databases</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2012/03/15/error-restoring-mysql-database-when-using-btree-on-indexes//page/4/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2012/03/14/turning-voice-over-off-permanently-on-max-osx/">
-		
-			Turning Voice Over Off Permanently on Max OSX</a>
-	</h2>
-	<div class="entry-content">
-		<p>One of the keyboard shortcuts I often use is command-F6, but I seem to accidentally hit command-F5 on most occasions :(</p>
-
-<p>Problem with this is that the god awful &#8220;voice over&#8221; starts yapping away. Well if you&#8217;re like me and know that you&#8217;ll pretty much never want this enabled (at least for now!) then here&#8217;s how you turn it off permanently.</p>
-
-<ol>
-<li>Open up system preferences</li>
-<li>Click on keyboard</li>
-<li>Go to the keyboard shortcuts tab</li>
-<li>Choose universal access from the list on the left</li>
-<li>Uncheck the &#8220;Turn voice over on or off&#8221; checkbox</li>
-</ol>
-
-
-<p>Breathe a sigh of relief :)</p>
-
-<p><img src="/images/uploads/2012/03/sys_prefs.jpg" alt="mac system preferences" /></p>
-
-<p><img src="/images/uploads/2012/03/voiceover_off.jpg" alt="Mac voice over off" /></p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-14T16:41:04+11:00" pubdate data-updated="true">Mar 14<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/mac/'>Mac</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2012/03/14/turning-voice-over-off-permanently-on-max-osx//page/4/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2011/10/27/twitter-bootstrap-modal-not-working-in-firefox/">
-		
-			Twitter Bootstrap - Modal Not Working in Firefox</a>
-	</h2>
-	<div class="entry-content">
-		<p>Quick heads up for those having issues getting the modal window in the twitter bootstrap to work in firefox, I had a problem where the overlay would show but not the actual modal window content. Seems there is a problem if you&#8217;re using animation (fade etc).</p>
-
-<p><a href="https://github.com/twitter/bootstrap/issues/240">See here for more information.</a></p>
-
-<p>For now we use no animation, so a typical modal source example might be (note: no animation as is the default in the docs):</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">div</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;preview-modal&quot;</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;modal hide&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;modal-header&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>      <span class="o">&lt;</span><span class="nx">a</span> <span class="nx">href</span><span class="o">=</span><span class="s2">&quot;#&quot;</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;close&quot;</span><span class="o">&gt;&amp;</span><span class="nx">times</span><span class="p">;</span><span class="o">&lt;</span><span class="err">/a&gt;</span>
-</span><span class='line'>      <span class="o">&lt;</span><span class="nx">h3</span><span class="o">&gt;</span><span class="nx">Modal</span> <span class="nx">Heading</span><span class="o">&lt;</span><span class="err">/h3&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="err">/div&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;modal-body&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>      <span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">One</span> <span class="nx">fine</span> <span class="nx">body</span><span class="err">…</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="err">/div&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;modal-footer&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>      <span class="o">&lt;</span><span class="nx">a</span> <span class="nx">href</span><span class="o">=</span><span class="s2">&quot;#&quot;</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;btn primary&quot;</span><span class="o">&gt;</span><span class="nx">Primary</span><span class="o">&lt;</span><span class="err">/a&gt;</span>
-</span><span class='line'>      <span class="o">&lt;</span><span class="nx">a</span> <span class="nx">href</span><span class="o">=</span><span class="s2">&quot;#&quot;</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;btn secondary&quot;</span><span class="o">&gt;</span><span class="nx">Secondary</span><span class="o">&lt;</span><span class="err">/a&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="err">/div&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/div&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Typically there is &#8220;fade&#8221; in the class of the parent div which we&#8217;ve removed.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-10-27T18:00:45+11:00" pubdate data-updated="true">Oct 27<span>th</span>, 2011</time></div>
-	<div class="tags">
-
-</div>
-	
-		<div class="comments"><a href="/2011/10/27/twitter-bootstrap-modal-not-working-in-firefox//page/4/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
 <nav id="pagenavi">
     
         <a href="/page/3/" class="prev">Prev</a>
@@ -913,7 +973,7 @@ htdocs/WEB-INF
     
     <div class="center"><a href="/blog/archives">Blog Archives</a></div>
 </nav></div>
-	<footer id="footer" class="inner">Copyright &copy; 2013
+	<footer id="footer" class="inner">Copyright &copy; 2015
 
     Michael Sharman
 

@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="I went looking for a quick and easy way to style JSON content for display in the browser and quickly came across this answer at stack overflow with &hellip;">
+	<meta name="description" content="More and more I&#8217;m getting emails from clients with .eml attachments. These are generally email messages created by Microsoft Outlook and may &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -86,6 +86,58 @@
     <article class="post">
 	<h2 class="title">
 		
+		<a href="/2015/05/06/opening-eml-files/">
+		
+			Opening .eml Files on a Mac</a>
+	</h2>
+	<div class="entry-content">
+		<p>More and more I&#8217;m getting emails from clients with <em>.eml</em> attachments. These are generally email messages created by Microsoft Outlook and may contain their own attachments (files or images etc).</p>
+
+<p>The issue for me is that I don&#8217;t use Outlook&#8230;but I still need to find a way to open them, ideally a way that includes accessing the original attachments.</p>
+
+<p>Luckily there are a several options, including (first download the eml file):</p>
+
+<ul>
+<li>If you have <a href="http://en.wikipedia.org/wiki/Mail_(OS_X)">Apple Mail</a> setup, just double click the .eml to open the original email. This also gives you access to the attachments</li>
+<li>Open in Preview (select the file and hit the space bar). This is ok but only for the text part of the email, no attachments</li>
+<li>Download and rename the eml file it as <a href="http://en.wikipedia.org/wiki/MHTML">.mht</a> (or .mhtml) then open it in any modern browser. This is because it&#8217;s just a MIME HTML file. This is ok but only for the text part of the email, no attachments</li>
+<li>Install dedicated software like <a href="https://chrome.google.com/webstore/detail/eml-mht-viewer-with-drive/ahbjckdnggnfmchoildeljnilenlkoao">this Chrome extension</a></li>
+</ul>
+
+
+<p>Clearly using Apple Mail is the winner, for me this mean setting it up with an account I rarely use&#8230;just so I could open it.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-05-06T21:00:00+10:00" pubdate data-updated="true">May 6<span>th</span>, 2015</time></div>
+	<div class="tags">
+
+</div>
+	
+		<div class="comments"><a href="/2015/05/06/opening-eml-files//index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
 		<a href="/2013/12/16/simple-json-prettify/">
 		
 			Simple JSON Prettify</a>
@@ -93,7 +145,7 @@
 	<div class="entry-content">
 		<p>I went looking for a quick and easy way to style JSON content for display in the browser and quickly came across this <a href="http://stackoverflow.com/questions/4810841/json-pretty-print-using-javascript/7220510#7220510">answer at stack overflow</a> with a <a href="http://jsfiddle.net/unLSJ/">corresponding jsfiddle entry</a>.</p>
 
-<p>However the problem is that this is kinda broken, the output isn&#8217;t valid JSON because the keys aren&#8217;t quoted. It&#8217;s just outputting a JavaScript object intead. A quick fix to the JavaScript gave me what I needed, I couldn&#8217;t post on SO as I don&#8217;t have the reputation (yeah that&#8217;s annoying) so I&#8217;m posting here for reference and I <a href="http://jsfiddle.net/michaelsharman/HLzxw/">forked the original JSFiddle</a>.</p>
+<p>However the problem is that this is kinda broken, the output isn&#8217;t valid JSON because the keys aren&#8217;t quoted. It&#8217;s just outputting a JavaScript object intead. A quick fix (and slight refactor) to the JavaScript gave me what I needed, I couldn&#8217;t post on SO as I don&#8217;t have the reputation (yeah that&#8217;s annoying) so I&#8217;m posting here for reference and I <a href="http://jsfiddle.net/michaelsharman/HLzxw/3/">forked the original JSFiddle</a>.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -121,12 +173,13 @@
 <span class='line-number'>24</span>
 <span class='line-number'>25</span>
 <span class='line-number'>26</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">library</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">library</span> <span class="o">=</span> <span class="p">{};</span>
-</span><span class='line'><span class="p">}</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">prettyPrint</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
 </span><span class='line'>
-</span><span class='line'><span class="nx">library</span><span class="p">.</span><span class="nx">json</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class='line'>   <span class="nx">replacer</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">match</span><span class="p">,</span> <span class="nx">pIndent</span><span class="p">,</span> <span class="nx">pKey</span><span class="p">,</span> <span class="nx">pVal</span><span class="p">,</span> <span class="nx">pEnd</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>   <span class="kd">function</span> <span class="nx">replacer</span> <span class="p">(</span><span class="nx">match</span><span class="p">,</span> <span class="nx">pIndent</span><span class="p">,</span> <span class="nx">pKey</span><span class="p">,</span> <span class="nx">pVal</span><span class="p">,</span> <span class="nx">pEnd</span><span class="p">)</span> <span class="p">{</span>
 </span><span class='line'>        <span class="kd">var</span> <span class="nx">key</span> <span class="o">=</span> <span class="s1">&#39;&lt;span class=json-key&gt;&#39;</span><span class="p">;</span>
 </span><span class='line'>        <span class="kd">var</span> <span class="nx">val</span> <span class="o">=</span> <span class="s1">&#39;&lt;span class=json-value&gt;&#39;</span><span class="p">;</span>
 </span><span class='line'>        <span class="kd">var</span> <span class="nx">str</span> <span class="o">=</span> <span class="s1">&#39;&lt;span class=json-string&gt;&#39;</span><span class="p">;</span>
@@ -138,15 +191,20 @@
 </span><span class='line'>            <span class="nx">r</span> <span class="o">=</span> <span class="nx">r</span> <span class="o">+</span> <span class="p">(</span><span class="nx">pVal</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;&quot;&#39;</span> <span class="o">?</span> <span class="nx">str</span> <span class="o">:</span> <span class="nx">val</span><span class="p">)</span> <span class="o">+</span> <span class="nx">pVal</span> <span class="o">+</span> <span class="s1">&#39;&lt;/span&gt;&#39;</span><span class="p">;</span>
 </span><span class='line'>        <span class="p">}</span>
 </span><span class='line'>        <span class="k">return</span> <span class="nx">r</span> <span class="o">+</span> <span class="p">(</span><span class="nx">pEnd</span> <span class="o">||</span> <span class="s1">&#39;&#39;</span><span class="p">);</span>
-</span><span class='line'>    <span class="p">},</span>
-</span><span class='line'>    <span class="nx">prettyPrint</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">function</span> <span class="nx">render</span> <span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
 </span><span class='line'>        <span class="kd">var</span> <span class="nx">jsonLine</span> <span class="o">=</span> <span class="sr">/^( *)(&quot;[\w]+&quot;: )?(&quot;[^&quot;]*&quot;|[\w.+-]*)?([,[{])?$/mg</span><span class="p">;</span>
 </span><span class='line'>        <span class="k">return</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-</span><span class='line'>            <span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/&amp;/g</span><span class="p">,</span> <span class="s1">&#39;&amp;amp;&#39;</span><span class="p">).</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/\\&quot;/g</span><span class="p">,</span> <span class="s1">&#39;&amp;quot;&#39;</span><span class="p">)</span>
+</span><span class='line'>            <span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/&amp;/g</span><span class="p">,</span> <span class="s1">&#39;&amp;amp;&#39;</span><span class="p">).</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/\\&quot;/g</span><span class="p">,</span> <span class="s1">&#39;\\&amp;quot;&#39;</span><span class="p">)</span>
 </span><span class='line'>            <span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/&lt;/g</span><span class="p">,</span> <span class="s1">&#39;&amp;lt;&#39;</span><span class="p">).</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/&gt;/g</span><span class="p">,</span> <span class="s1">&#39;&amp;gt;&#39;</span><span class="p">)</span>
-</span><span class='line'>            <span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="nx">jsonLine</span><span class="p">,</span> <span class="nx">library</span><span class="p">.</span><span class="nx">json</span><span class="p">.</span><span class="nx">replacer</span><span class="p">);</span>
+</span><span class='line'>            <span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="nx">jsonLine</span><span class="p">,</span> <span class="nx">replacer</span><span class="p">);</span>
 </span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">render</span><span class="o">:</span> <span class="nx">render</span>
+</span><span class='line'>    <span class="p">};</span>
+</span><span class='line'><span class="p">}());</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -1051,80 +1109,6 @@ Base16 is both a color scheme and a template.
 	
 </div></article>
 
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2013/05/29/installing-xdebug-on-mac-mountain-lion-10-dot-8-3/">
-		
-			Installing Xdebug on Mac Mountain Lion (10.8.3)</a>
-	</h2>
-	<div class="entry-content">
-		<p>Even though I&#8217;m running Mountain Lion (10.8.3) which comes with Xdebug I couldn&#8217;t get the PHP (5.4.14) local web server to register that Xdebug was actually installed and enabled.</p>
-
-<p>My php.ini had the already installed Xdebug extension enabled:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">zend_extension</span><span class="o">=</span><span class="s2">&quot;/usr/lib/php/extensions/no-debug-non-zts-20090626/xdebug.so&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>But whenever I inspected <code>phpinfo()</code> there wasn&#8217;t any mention of Xdebug.</p>
-
-<p>Luckily the <a href="http://xdebug.org/wizard.php">website has a wizard</a> where you can paste the output of phpinfo(). From there you get detailed instructions on how to download, configure and make the latest version of Xdebug. It&#8217;s pretty simple.</p>
-
-<p>Essentially the steps are as follows:</p>
-
-<ol>
-<li>Download <a href="http://xdebug.org/files/xdebug-2.2.3.tgz">xdebug-2.2.3.tgz</a></li>
-<li>Unpack the downloaded file with <code>tar -xvzf xdebug-2.2.3.tgz</code></li>
-<li>Run: <code>cd xdebug-2.2.3</code></li>
-<li>Run: <code>phpize</code> (Any problems…<a href="http://xdebug.org/docs/faq#phpize">see the FAQ</a>)</li>
-<li>Run: <code>./configure</code></li>
-<li>Run: <code>make</code></li>
-<li>Run: <code>sudo mkdir -p /usr/lib/php/extensions/no-debug-non-zts-20100525</code></li>
-<li>Run: <code>sudo cp modules/xdebug.so /usr/lib/php/extensions/no-debug-non-zts-20100525</code></li>
-<li>Update your /etc/php.ini and uncomment/add the line
-<code>zend_extension = /usr/lib/php/extensions/no-debug-non-zts-20100525/xdebug.so</code></li>
-<li>Restart the webserver</li>
-</ol>
-
-
-<p>Now if you check the output of phpinfo() you should see Xdebug.</p>
-
-<p>To make sure your debug output is being styled properly, make sure you have <code>html_errors = On</code> in php.ini (it defaults to <em>Off</em>).</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-29T06:31:00+10:00" pubdate data-updated="true">May 29<span>th</span>, 2013</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/php/'>php</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2013/05/29/installing-xdebug-on-mac-mountain-lion-10-dot-8-3//index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
 <nav id="pagenavi">
     
     
@@ -1132,7 +1116,7 @@ Base16 is both a color scheme and a template.
     
     <div class="center"><a href="/blog/archives">Blog Archives</a></div>
 </nav></div>
-	<footer id="footer" class="inner">Copyright &copy; 2013
+	<footer id="footer" class="inner">Copyright &copy; 2015
 
     Michael Sharman
 

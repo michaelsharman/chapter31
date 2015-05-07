@@ -7,10 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="For those that don&#8217;t know, ColdFusion&#8217;s cfqueryparam won&#8217;t work on a SQL ORDER BY clause, so the following will not work: 1
-2
-3
-4 &hellip;">
+	<meta name="description" content="There are several installation options for the latest version of FarCry (5.0.2) which makes things nice and flexible for the framework to be used by &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -84,6 +81,368 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/11/28/installing-a-new-farcry-5-project-extended-advanced-mode/">
+		
+			Installing a New FarCry 5 Project - (Extended) Advanced Mode</a>
+	</h2>
+	<div class="entry-content">
+		<p>There are several installation options for the latest version of <a href="http://www.farcrycore.org/">FarCry</a> (5.0.2) which makes things nice and flexible for the framework to be used by different people in a variety of setups.</p>
+
+<p>The <a href="http://docs.farcrycms.org/display/FCDEV50/Deployment+Configurations">deployment configurations</a> page has some easy to follow instructions for installing in &#8220;Standalone&#8221; mode. This is really the best option if you are in a shared environment where you may not have control over ColdFusion mappings, but also if you are looking to get up and running quickly (maybe you just want to evaluate the product etc).</p>
+
+<p>For <a href="http://www.lynchconsulting.com.au/">us</a> we use FarCry for many applications, but in what would be considered an &#8220;Advanced&#8221; configuration mode (using FarCry 5+ parlance). Unfortunately it looks as though we may stray a little from the &#8220;Advanced&#8221; configuration which is the point of this tutorial.</p>
+
+<p>The <a href="http://docs.farcrycms.org/display/FCDEV50/Deployment+Configurations">current advanced</a> setup may be a little confusing to some. It doesn&#8217;t really list full details for the advanced mode, but still seems to require you to have FarCry running in the following directory structure (note that in the example below &#8216;farcry_5.0.2&#8217; can really be called anything and is not a strict naming requirement, I like to use this as it is explicit as to which version I&#8217;m using):</p>
+
+<ul>
+<li>/farcry_5.0.2
+
+<ul>
+<li>/core</li>
+<li>/plugins
+
+<ul>
+<li>/farcrycms</li>
+</ul>
+</li>
+<li>/projects
+
+<ul>
+<li>/myproject1</li>
+<li>/myproject2</li>
+</ul>
+</li>
+<li>/skeletons
+
+<ul>
+<li>/mollio</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<p>This is nice and easy as it gives you the ability to have only 1 ColdFusion mapping (<em>/farcry</em> pointing to your /farcry_5.0.2 directory) which all your projects can share (i.e. all projects would share the same farcry &#8220;core&#8221; and &#8220;plugins&#8221; codebase etc). It&#8217;s this structure where our setup starts to differ.</p>
+
+<p>We typically have <em>library</em> directories to hold shared codebases and a <em>completely separate location for our vhosts</em> (projects or &#8220;web sites&#8221;). This is the main difference and means we have something like the following:</p>
+
+<ul>
+<li>/libs/farcry_5.0.2
+
+<ul>
+<li>/core</li>
+<li>/plugins
+
+<ul>
+<li>/farcrycms</li>
+</ul>
+</li>
+<li>/projects <em>(note this is only needed for our installation, we won&#8217;t be hosting projects from here)</em></li>
+<li>/skeletons <em>(note this is only needed for our installation, we won&#8217;t need this in production)</em></li>
+</ul>
+</li>
+<li>/vhosts
+
+<ul>
+<li>/myproject1</li>
+</ul>
+</li>
+</ul>
+
+
+<p><strong>Note:</strong> <em>In actual fact our vhost setup is slightly different than what I&#8217;ve listed above, but this is easier to describe for the purposes of a tutorial.</em></p>
+
+<p>This is an extremely flexible setup, but installing this way is a little tricky. I&#8217;ve done several installs for this configuration using the following steps:</p>
+
+<h3>Installation - Preparation</h3>
+
+<p>Is is assumed that your farcry files, as mentioned above, are in the following location (this location is of course an example of what you may have on a linux based machine, you could obviously use a different path like C:/libs/farcry_5.0.2):</p>
+
+<ul>
+<li>/libs/farcry_5.0.2</li>
+</ul>
+
+
+<p>It is also assumed that you want to install your project into the following location:</p>
+
+<ul>
+<li>/vhosts/myproject</li>
+</ul>
+
+
+<p>*Note: <strong>DO NOT</strong> actually create this project folder yet, we will move the folder to this location <em>after the FarCry installation</em> has completed.</p>
+
+<p>Follow the following steps:</p>
+
+<ol>
+<li>Create a blank database. This can be called anything you want, typically something which mirrors your project name is a good idea</li>
+<li>Create a new datasource in ColdFusion Administrator and verify that it is connecting to your new database</li>
+<li>Create your project vhost (i.e. http://myproject.local) in your web server of choice (Apache or IIS etc)
+
+<ul>
+<li>Point the document root to &#8216;/vhosts/myproject/www&#8217; <em>(even though this actual location doesn&#8217;t exist yet!)</em></li>
+<li>Make sure you have a &#8216;/webtop&#8217; alias (this replaces the old &#8216;farcry&#8217; alias for those familiar with prior versions of FarCry) pointing to /libs/farcry_5.0.2/core/webtop</li>
+</ul>
+</li>
+<li>Create an entry in your hosts file so myproject.local is in use on 127.0.0.1 (for production you&#8217;d obviously use different settings!)</li>
+<li>Create a &#8216;/farcry&#8217; ColdFusion mapping pointing to the directory which holds &#8220;core&#8221; (i.e. /libs/farcry_5.0.2)</li>
+<li>Create a &#8216;/farcry/projects/myproject&#8217; ColdFusion mapping
+
+<ul>
+<li>mapping: /farcry/projects/myproject</li>
+<li>path: /vhosts/myproject</li>
+</ul>
+</li>
+</ol>
+
+
+<p>*Note: You could get away with having a single ColdFusion mapping of /farcry/projects if all your projects existed under the same directory (i.e. /vhosts), otherwise create a projects mapping per project (e.g. /farcry/projects/myproject). I find it&#8217;s a good idea anyway to have a separate mapping per project.</p>
+
+<h3>Installation - Installing</h3>
+
+<p>To install FarCry we visit the &#8216;/webtop/install&#8217; sub-directory off your project URL, e.g. http://myproject.local/webtop/install/.</p>
+
+<p>You may be wondering how this works as we haven&#8217;t setup our physical project diretory yet, it works because of the web mapping (alias/virtual directory) of &#8216;/webtop&#8217; which points directly to /farcry_5.0.2/core/webtop/install.</p>
+
+<p>Ok we&#8217;re almost there! If everything is going well so far and the stars have aligned you&#8217;ll see the FarCry installation screen.</p>
+
+<p><a href="/images/uploads/2008/11/screen-1.png"><img src="/images/uploads/2008/11/screen-1-270x300.png" alt="" /></a></p>
+
+<p>The important value on this page is &#8220;Project Folder Name&#8221;. This should be &#8220;myproject&#8221; (i.e. what will become the physical name of your project directory, the same name as we added in our vhost).</p>
+
+<p>The 2nd step allows you to enter your ColdFusion datasource and database type:</p>
+
+<p><a href="/images/uploads/2008/11/screen-2.png"><img src="/images/uploads/2008/11/screen-2-300x196.png" alt="" /></a></p>
+
+<p>On the 3rd step you must choose a skeleton to install from. Just use the default &#8216;mollio&#8217;:</p>
+
+<p><a href="/images/uploads/2008/11/screen-3.png"><img src="/images/uploads/2008/11/screen-3-300x174.png" alt="" /></a></p>
+
+<p>The 4th step is for plugins, for most cases leave the default which is probably &#8216;farcry&#8217; and &#8216;farcry greybox&#8217;:</p>
+
+<p><a href="/images/uploads/2008/11/screen-4.png"><img src="/images/uploads/2008/11/screen-4-282x300.png" alt="" /></a></p>
+
+<p>The 5th step is important as the default is &#8220;Sub-Directory&#8221;. You have to change this to the last option &#8220;Advanced Configuration&#8221;:</p>
+
+<p><a href="/images/uploads/2008/11/screen-5.png"><img src="/images/uploads/2008/11/screen-5-229x300.png" alt="" /></a></p>
+
+<p>Step 6 is a confirmation step, nothing to do here except &#8220;INSTALL NOW&#8221;:</p>
+
+<p><a href="/images/uploads/2008/11/screen-6.png"><img src="/images/uploads/2008/11/screen-6-189x300.png" alt="" /></a></p>
+
+<p>After hitting &#8220;INSTALL NOW&#8221; FarCry will go off and do its magic:</p>
+
+<p><a href="/images/uploads/2008/11/installing.png"><img src="/images/uploads/2008/11/installing-300x100.png" alt="" /></a></p>
+
+<p>When the installation is complete and you can see the final screen FarCry will have successfully installed your project under the /libs/farcry_5.0.2/projects/myproject directory.</p>
+
+<p><a href="/images/uploads/2008/11/complete.png"><img src="/images/uploads/2008/11/complete-300x265.png" alt="" /></a></p>
+
+<p><strong><strong>Important</strong></strong> BEFORE you click the &#8220;VIEW SITE&#8221; or &#8220;LOGIN TO FARCY WEBTOP&#8221; buttons you must <em>move the project directory</em> to where you&#8217;ve specified in your vhost (i.e. move &#8216;myproject&#8217; from &#8216;farcry_5.0.2/projects/myproject&#8217; to &#8216;/vhosts/myproject&#8217;).</p>
+
+<p>Once you&#8217;ve moved your project directory, you can click the &#8220;Visit Site&#8221; button and/or &#8220;Login to the FarCry Webtop&#8221; and you&#8217;re ready to roll :)</p>
+
+<p>Hopefully that helps people trying to install FarCry in a slightly different configuration.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-11-28T15:07:07+11:00" pubdate data-updated="true">Nov 28<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/farcry/'>Farcry</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/11/28/installing-a-new-farcry-5-project-extended-advanced-mode//page/9/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/11/25/security-reminder-are-you-using-scriptprotect/">
+		
+			Security Reminder - Are You Using Scriptprotect?</a>
+	</h2>
+	<div class="entry-content">
+		<p>One of our applications had an entry in the ColdFusion exception logs today:</p>
+
+<blockquote><p>ScriptProtect error replacing insecure tag in scope CGI;</p></blockquote>
+
+<p>Essentially someone (via an automated process) was trying to find a weakness in our application by trying URL&#8217;s like:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">http</span><span class="o">:</span><span class="c1">//www.mysite.com/?mode=&gt;&#39;&gt;&lt;script&gt;alert(40891)&lt;/script&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Luckily we use scriptprotect (among many other defensive techniques) to prevent this type of thing from causing any damage. But I just thought I&#8217;d throw out a quick reminder to EVERYONE using CF7+ (or Railo) to make sure and use the <a href="http://www.chapter31.com/2006/12/21/scriptprotect-in-cfmx7/">scriptprotect</a> attribute of either the cfapplication tag or Application.cfc</p>
+
+<p>It is simple to do (set once and forget) and helps protect you against XSS attacks and as it&#8217;s easier to implement than cfqueryparam there really isn&#8217;t any excuse to get caught with your pants down by not using it!</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-11-25T12:30:06+11:00" pubdate data-updated="true">Nov 25<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/11/25/security-reminder-are-you-using-scriptprotect//page/9/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/11/24/use-applicationapplicationname-careful-when-re-initing-your-app/">
+		
+			Use application.applicationName? Careful When Re-initing Your App</a>
+	</h2>
+	<div class="entry-content">
+		<p>I&#8217;m sure most ColdFusion developers know that the application scope has a built-in variable called <em>application.applicationName</em> which stores the name of the application that you specify in the cfapplication tag or the <em>this.name</em> value if your using <a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=AppEvents_01.html">Application.cfc</a>. This doesn&#8217;t appear when you dump the application scope&#8230;but it&#8217;s there.</p>
+
+<p>Today I wanted to use this variable, everything was working fine until I ran into an error when I re-initialised my application via a URL variable. The error I received was:</p>
+
+<blockquote><p>Element APPLICATIONNAME is undefined in APPLICATION.</p></blockquote>
+
+<p><a href="http://www.lynchconsulting.com.au/blog/">Marko</a> helped me out with the obvious&#8230;as I had cleared my application scope the &#8220;applicationName&#8221; variable didn&#8217;t exist for the page request. Let me show you how I was re-initialising the application scope; the following 2 methods are declared in my Application.cfc, checkReInit() is called from onRequestStart():</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cffunction</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;checkReInit&quot;</span> <span class="nx">access</span><span class="o">=</span><span class="s2">&quot;private&quot;</span> <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="nx">returntype</span><span class="o">=</span><span class="s2">&quot;void&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfscript</span><span class="o">&gt;</span>      
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="nx">structKeyExists</span><span class="p">(</span><span class="nx">URL</span><span class="p">,</span> <span class="s2">&quot;reinit&quot;</span><span class="p">)</span> <span class="nx">AND</span> <span class="nx">URL</span><span class="p">.</span><span class="nx">reinit</span> <span class="nx">EQ</span> <span class="mi">101</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">{</span>
+</span><span class='line'>          <span class="nx">clearAppScope</span><span class="p">();</span>
+</span><span class='line'>      <span class="p">}</span>        
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cfscript&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cffunction&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cffunction</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;clearAppScope&quot;</span> <span class="nx">access</span><span class="o">=</span><span class="s2">&quot;private&quot;</span> <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="nx">returnType</span><span class="o">=</span><span class="s2">&quot;void&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfscript</span><span class="o">&gt;</span>      
+</span><span class='line'>      <span class="nx">structClear</span><span class="p">(</span><span class="nx">application</span><span class="p">);</span>
+</span><span class='line'>      <span class="nx">onApplicationStart</span><span class="p">();</span>        
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cfscript&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cffunction&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>As you can see in the sample code above, if a URL parameter called <em>reinit</em> exists with the value of 101 the application scope is cleared then re-inited via onApplicationStart().</p>
+
+<p><em><strong>**Note:</strong></em> I <em>really</em> don&#8217;t recommend this type of code for a production environment, in fact this is a cut down version of what the actual code is&#8230;we don&#8217;t run applications with the ability to re-initialise the application scope via the public URL from a production site.</p>
+
+<p>Anyway&#8230;clearAppScope() essentially clears whatever is in the application scope then calls onApplicationStart() to re-initialise the application. This is all good and well except <em>this.name</em> is not defined inside onApplicationStart(), it&#8217;s defined in the constructor area at the top of the file so any code in your .cfm template referencing <em>application.applicationName</em> will fail because this value won&#8217;t exist.</p>
+
+<p>I would have thought a simple page refresh would rectify any issues (as this.name would be called the next time a template was executed) but I was still getting errors.</p>
+
+<p>A simple fix is to explicitly set the application name value if and when you clear the app scope. That way it will be available to your application as expected.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&lt;</span><span class="n">cffunction</span> <span class="nb">name</span><span class="o">=</span><span class="s2">&quot;clearAppScope&quot;</span> <span class="n">access</span><span class="o">=</span><span class="s2">&quot;private&quot;</span> <span class="n">output</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="n">returnType</span><span class="o">=</span><span class="s2">&quot;void&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="n">cfscript</span><span class="o">&gt;</span>       
+</span><span class='line'>      <span class="n">structClear</span><span class="p">(</span><span class="n">application</span><span class="p">);</span>
+</span><span class='line'>      <span class="n">application</span><span class="o">.</span><span class="n">applicationName</span> <span class="o">=</span> <span class="n">this</span><span class="o">.</span><span class="n">name</span><span class="p">;</span>
+</span><span class='line'>      <span class="n">onApplicationStart</span><span class="p">();</span>     
+</span><span class='line'>  <span class="o">&lt;</span><span class="sr">/cfscript&gt;</span>
+</span><span class='line'><span class="sr">&lt;/</span><span class="n">cffunction</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-11-24T21:54:14+11:00" pubdate data-updated="true">Nov 24<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/11/24/use-applicationapplicationname-careful-when-re-initing-your-app//page/9/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -667,293 +1026,6 @@
 	
 </div></article>
 
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2008/10/27/fun-with-reserved-words-in-mysql-5/">
-		
-			Fun With Reserved Words in MySQL 5</a>
-	</h2>
-	<div class="entry-content">
-		<p>Most tools or languages you work with have words which are &#8220;reserved&#8221;, meaning you cannot use them in a variable declaration or schema definition etc as they have special treatment in the underlying system. If you try to do this you&#8217;ll usually get an immediate error.</p>
-
-<p>Today I needed to change an existing SQL query from a &#8220;SELECT *&#8221; to explicitly defining each column because I wanted to add some date formating at the SQL level.</p>
-
-<p>The query (after modifications) was as follows:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">SELECT</span>
-</span><span class='line'>  <span class="nx">id</span>
-</span><span class='line'>  <span class="p">,</span> <span class="nx">date_format</span><span class="p">(</span><span class="nx">dt_start</span><span class="p">,</span> <span class="s2">&quot;%d/%m/%Y&quot;</span><span class="p">)</span> <span class="nx">as</span> <span class="nx">dt_start</span>
-</span><span class='line'>  <span class="p">,</span> <span class="nx">date_format</span><span class="p">(</span><span class="nx">dt_end</span><span class="p">,</span> <span class="s2">&quot;%d/%m/%Y&quot;</span><span class="p">)</span> <span class="nx">as</span> <span class="nx">dt_end</span>
-</span><span class='line'>  <span class="p">,</span> <span class="nx">repeat</span>
-</span><span class='line'><span class="nx">FROM</span>
-</span><span class='line'>  <span class="nx">smsschedule</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Now remember that the code <em>used</em> to be SELECT * and was working fine. But when I changed it as above it failed and threw an error:</p>
-
-<blockquote><p>You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near&#8230;</p></blockquote>
-
-<p>The reason is that &#8220;repeat&#8221; is a <a href="http://dev.mysql.com/doc/mysqld-version-reference/en/mysqld-version-reference-reservedwords-5-0.html">MySQL reserved word</a>. The interesting part (and real reason for this post) is that it didn&#8217;t fail when the query was sent as &#8220;*&#8221;, only when I explicitly set the invalid column in the SELECT list.</p>
-
-<p>This was sent from ColdFusion but I also checked directly against the database (MySQL query browser) and had the same result.</p>
-
-<p>Might be best to <a href="http://dev.mysql.com/doc/mysqld-version-reference/en/mysqld-version-reference-reservedwords-5-0.html">check the reserved list</a>, most are obvious but a few could catch you out if you&#8217;re not aware of them.</p>
-
-<p>Also interesting to note is that the table in question contained 2 column names which I thought would have failed. Those being &#8220;hour&#8221; and &#8220;minute&#8221;.</p>
-
-<p>Not only did they not fail, but they aren&#8217;t in the reserved words list for MySQL. It would appear that function names (at least some of them) are ok to be used as column names. Still&#8230;I wouldn&#8217;t really recommend using these column names in your tables :)</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-10-27T23:21:00+11:00" pubdate data-updated="true">Oct 27<span>th</span>, 2008</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/databases/'>Databases</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2008/10/27/fun-with-reserved-words-in-mysql-5//page/9/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2008/10/22/aqua-data-studio-7-includes-an-er-modeler/">
-		
-			Aqua Data Studio 7 Includes an ER Modeler</a>
-	</h2>
-	<div class="entry-content">
-		<p>Those of you who miss diagramming support when using MySQL tools will be pleased to know that the <a href="http://www.aquafold.com/d7/docs/index.html">latest version</a> of <a href="http://www.aquafold.com/">Aqua Data Studio</a> has support for ER Modeling :)</p>
-
-<blockquote><p>The Entity-Relationship (ER) Modeler we’ve built into Aqua Data Studio 7 is as powerful as even the best standalone database diagramming tools. Use it to design a new database from scratch, understand and clean up a database nightmare in your office, or visually understand entity relationships in existing databases to write more effective SQL queries. Then share your diagram with the team through Aqua Data Studio’s integrated Subversion (SVN) and CVS source control clients.</p></blockquote>
-
-<p>I&#8217;ve really missed creating Entity Relationship diagrams when using MySQL as they are fantastic during planning and of course offer great documentation for all developers, particularly as your project (and database) grows.</p>
-
-<p>This will start filling a huge hole and help to close the gap in comparison to other vendors database tools.</p>
-
-<p>ADS is a comercial product so hopefully diagramming will be added to the free MySQL Administrator soon.</p>
-
-<p><a href="/images/uploads/2008/10/adsmodeler.jpg"><img src="/images/uploads/2008/10/adsmodeler-300x225.jpg" alt="" /></a></p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-10-22T14:23:49+11:00" pubdate data-updated="true">Oct 22<span>nd</span>, 2008</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/databases/'>Databases</a>, <a class='category' href='/categories/tools/'>Tools</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2008/10/22/aqua-data-studio-7-includes-an-er-modeler//page/9/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2008/10/22/problems-submitting-a-form-via-enter-in-ie/">
-		
-			Problems Submitting a Form via &#8216;Enter&#8217; in IE</a>
-	</h2>
-	<div class="entry-content">
-		<p>Like many things, handling form submissions with <a href="http://www.adobe.com/products/coldfusion/">ColdFusion</a> can be done many many ways. A preferred method which I&#8217;ve been using for years now is looking for a specific element in the form struct. Something like:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">structKeyExists</span><span class="p">(</span><span class="nx">form</span><span class="p">,</span> <span class="s2">&quot;myelement&quot;</span><span class="p">)</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="c">&lt;!--</span><span class="o">-</span> <span class="nx">handle</span> <span class="nx">form</span> <span class="nx">submission</span> <span class="nx">here</span> <span class="o">---&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/cfif&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Most times I use a hidden field as the form element to look for (in my <a href="http://www.cfquickdocs.com/#StructKeyExists">structKeyExists()</a>), but I came across something funny today where I happened to be looking for the <em>name</em> of a submit button.</p>
-
-<p>My form was very basic:</p>
-
-<p><a href="/images/uploads/2008/10/form.png"><img src="/images/uploads/2008/10/form.png" alt="" /></a></p>
-
-<p>If this form is submitted by clicking the submit button (&#8220;Go&#8221;) in all browsers I get the following form struct:</p>
-
-<p><a href="/images/uploads/2008/10/picture-3.png"><img src="/images/uploads/2008/10/picture-3.png" alt="" /></a></p>
-
-<p>Notice that I have <em>2 form elements</em> in the form dump, &#8220;btnSearch&#8221; which is the submit button and &#8220;searchCriteria&#8221; which is the text box. So far so good, but what happens when I submit the form by hitting the &#8220;enter&#8221; key (when I have focus in the text box)?</p>
-
-<p>In most browsers you get the same form dump as above&#8230;not so with IE where I get the following:</p>
-
-<p><a href="/images/uploads/2008/10/picture-2.png"><img src="/images/uploads/2008/10/picture-2.png" alt="" /></a></p>
-
-<p>As you can see, my submit button (btnSearch) <em><strong>does not exist in the form struct!</strong></em>.</p>
-
-<p>The submit button HTML was:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;submit&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;btnSearch&quot;</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;btnSearch&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;Go&quot;</span> <span class="o">/&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>After discussions with <a href="http://www.lynchconsulting.com.au/blog/">Mark Lynch</a> and some testing it appears that this only happens when you have <em>a single text element</em> on the page. If you have 2 or more textboxes then the form submit button appears in the form struct as expected</p>
-
-<p>For those asking whether it&#8217;s really important, after all how often will you have a form with a single text box. Ever used a search form? :)</p>
-
-<p>The easy way around this <em>bug</em> is to never look for a submit button, instead look for a hidden field or a text box.</p>
-
-<p>For those who sometimes use 2 submit buttons on the same page and take action depending on which one was clicked&#8230;the same thing happens i.e. neither submit button exists in the form struct (in IE) if you hit &#8220;enter&#8221;. In Firefox the submit button which appears first in the form markup exists in the form!</p>
-
-<p>All in all I&#8217;d recommend never using the name of a submit button to determine the action of a form submission. The only exception is if you have multiple submit buttons and you understand and are happy with the default action in IE (the first submit button existing etc).</p>
-
-<p>Some might say you could have a 2nd textbox on the form and hide it using CSS. While this would work it just feels wrong and a bit of a hack.</p>
-
-<p>If you&#8217;re curious, here&#8217;s a small compatibility table of my findings on Mac OSX (except IE of course which was on Windows XP):</p>
-
-<table>
-<thead>
-<tr>
-<th></th>
-<th> Browser </th>
-<th> Submit exists on enter </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td></td>
-<td> Firefox 3.0.3 </td>
-<td> Yes</td>
-</tr>
-<tr>
-<td></td>
-<td> </td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td> Internet Explorer 7 (7.0.5730.13) </td>
-<td> No</td>
-</tr>
-<tr>
-<td></td>
-<td> </td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td> Internet Explorer 6 SP2 (6.0.2900.2180) </td>
-<td> No</td>
-</tr>
-<tr>
-<td></td>
-<td> </td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td> Opera 9.52/9.61 </td>
-<td> Yes</td>
-</tr>
-<tr>
-<td></td>
-<td> </td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td> Safari 3.1.2 </td>
-<td> Yes</td>
-</tr>
-<tr>
-<td></td>
-<td> </td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td> Camino 1.6.4 </td>
-<td> Yes</td>
-</tr>
-</tbody>
-</table>
-
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-10-22T13:35:25+11:00" pubdate data-updated="true">Oct 22<span>nd</span>, 2008</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/x-html/'>(X)HTML</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2008/10/22/problems-submitting-a-form-via-enter-in-ie//page/9/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
 <nav id="pagenavi">
     
         <a href="/page/8/" class="prev">Prev</a>
@@ -963,7 +1035,7 @@
     
     <div class="center"><a href="/blog/archives">Blog Archives</a></div>
 </nav></div>
-	<footer id="footer" class="inner">Copyright &copy; 2013
+	<footer id="footer" class="inner">Copyright &copy; 2015
 
     Michael Sharman
 

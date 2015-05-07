@@ -4,7 +4,7 @@
   <title><![CDATA[Category: javascript | chapter31 &raquo;]]></title>
   <link href="http://chapter31.com/categories/javascript/atom.xml" rel="self"/>
   <link href="http://chapter31.com/"/>
-  <updated>2013-12-24T13:15:33+11:00</updated>
+  <updated>2015-05-08T08:07:23+10:00</updated>
   <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
@@ -20,18 +20,15 @@
     <id>http://chapter31.com/2013/12/16/simple-json-prettify</id>
     <content type="html"><![CDATA[<p>I went looking for a quick and easy way to style JSON content for display in the browser and quickly came across this <a href="http://stackoverflow.com/questions/4810841/json-pretty-print-using-javascript/7220510#7220510">answer at stack overflow</a> with a <a href="http://jsfiddle.net/unLSJ/">corresponding jsfiddle entry</a>.</p>
 
-<p>However the problem is that this is kinda broken, the output isn't valid JSON because the keys aren't quoted. It's just outputting a JavaScript object intead. A quick fix to the JavaScript gave me what I needed, I couldn't post on SO as I don't have the reputation (yeah that's annoying) so I'm posting here for reference and I <a href="http://jsfiddle.net/michaelsharman/HLzxw/">forked the original JSFiddle</a>.</p>
+<p>However the problem is that this is kinda broken, the output isn't valid JSON because the keys aren't quoted. It's just outputting a JavaScript object intead. A quick fix (and slight refactor) to the JavaScript gave me what I needed, I couldn't post on SO as I don't have the reputation (yeah that's annoying) so I'm posting here for reference and I <a href="http://jsfiddle.net/michaelsharman/HLzxw/3/">forked the original JSFiddle</a>.</p>
 
 <p>```javascript
-if (!library) {</p>
+var prettyPrint = (function () {</p>
 
-<pre><code>var library = {};
+<pre><code>'use strict';
 </code></pre>
 
-<p>}</p>
-
-<p>library.json = {
-   replacer: function(match, pIndent, pKey, pVal, pEnd) {</p>
+<p>   function replacer (match, pIndent, pKey, pVal, pEnd) {</p>
 
 <pre><code>    var key = '&lt;span class=json-key&gt;';
     var val = '&lt;span class=json-value&gt;';
@@ -44,17 +41,22 @@ if (!library) {</p>
         r = r + (pVal[0] == '"' ? str : val) + pVal + '&lt;/span&gt;';
     }
     return r + (pEnd || '');
-},
-prettyPrint: function(obj) {
+}
+
+function render (obj) {
     var jsonLine = /^( *)("[\w]+": )?("[^"]*"|[\w.+-]*)?([,[{])?$/mg;
     return JSON.stringify(obj, null, 3)
-        .replace(/&amp;/g, '&amp;amp;').replace(/\\"/g, '&amp;quot;')
+        .replace(/&amp;/g, '&amp;amp;').replace(/\\"/g, '\\&amp;quot;')
         .replace(/&lt;/g, '&amp;lt;').replace(/&gt;/g, '&amp;gt;')
-        .replace(jsonLine, library.json.replacer);
+        .replace(jsonLine, replacer);
 }
+
+return {
+    render: render
+};
 </code></pre>
 
-<p>};
+<p>}());
 ```</p>
 
 <p>And the CSS that goes with it:</p>

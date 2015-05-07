@@ -91,6 +91,10 @@
         <lastmod>2013-04-28T22:16:39+10:00</lastmod>
     </url>
     <url>
+        <loc>http://chapter31.com/2006/09/06/end-of-paragraph-widow/</loc>
+        <lastmod>2013-04-28T22:16:39+10:00</lastmod>
+    </url>
+    <url>
         <loc>http://chapter31.com/2006/09/06/multi-step-forms/</loc>
         <lastmod>2013-04-28T22:16:39+10:00</lastmod>
     </url>
@@ -1079,6 +1083,14 @@
         <lastmod>2013-04-30T22:46:49+10:00</lastmod>
     </url>
     <url>
+        <loc>http://chapter31.com/2013/03/31/managing-pathnames-on-osx/</loc>
+        <lastmod>2013-05-03T12:11:13+10:00</lastmod>
+    </url>
+    <url>
+        <loc>http://chapter31.com/2013/04/30/managing-configuration-options-in-coldfusion/</loc>
+        <lastmod>2013-05-02T23:37:15+10:00</lastmod>
+    </url>
+    <url>
         <loc>http://chapter31.com/2013/05/02/installing-sonar-source-on-mac-osx/</loc>
         <lastmod>2013-05-09T17:57:10+10:00</lastmod>
     </url>
@@ -1154,7 +1166,11 @@
     </url>
     <url>
         <loc>http://chapter31.com/2013/12/16/simple-json-prettify/</loc>
-        <lastmod>2013-12-16T14:41:07+11:00</lastmod>
+        <lastmod>2014-07-04T18:55:24+10:00</lastmod>
+    </url>
+    <url>
+        <loc>http://chapter31.com/2015/05/06/opening-eml-files/</loc>
+        <lastmod>2015-05-08T08:07:23+10:00</lastmod>
     </url>
     <url>
         <loc>http://chapter31.com/about/</loc>
@@ -1162,11 +1178,11 @@
     </url>
     <url>
         <loc>http://chapter31.com/blog/archives/</loc>
-        <lastmod>2013-12-16T14:41:07+11:00</lastmod>
+        <lastmod>2015-05-08T08:07:23+10:00</lastmod>
     </url>
     <url>
         <loc>http://chapter31.com/</loc>
-        <lastmod>2013-12-16T14:41:07+11:00</lastmod>
+        <lastmod>2015-05-08T08:07:23+10:00</lastmod>
     </url>
     <url>
         <loc>http://chapter31.com/projects/</loc>
