@@ -7,8 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="As far back as ColdFusion 6 PreserveSingleQuotes hasn&#8217;t worked with array style parameters. 1
-#preserveSingleQuotes(aWhere[i])# This was even &hellip;">
+	<meta name="description" content="We all know passwords are the bane of any internet users online experience. So many sites, each with their own authentication requirements. I came &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -44,7 +43,7 @@
 	<div class="alignright search">
 		<a class="button"></a>
 		<div class="container">
-			<form action="http://google.com/search" method="get">
+			<form action="http://www.google.com/search" method="get">
 				<input type="text" name="q" results="0">
 				<input type="hidden" name="q" value="site:chapter31.com">
 			</form>
@@ -70,9 +69,10 @@
 		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
 		
 	</div>
-	<form class="search" action="http://google.com/search" method="get">
-		<input class="alignright" type="text" name="q" results="0">
-		<input type="hidden" name="q" value="site:chapter31.com">
+	<form class="search" action="http://www.google.com/search" method="get">
+		<input class="alignright" type="text" name="query" results="0">
+        <input type="hidden" name="q" value="site:chapter31.com"
+        onkeydown="if (event.keyCode === 13 || event.which === 13) { location.href='http://www.google.com/search?q=' + site:chapter31.com + ' ' + encodeURIComponent(document.getElementById('query').value);}">
 	</form>
 </nav>
 
@@ -82,116 +82,6 @@
 
 	
 	<div id="content" class="inner">
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2008/06/11/preservesinglequotes-still-breaks-on-array-style-parameters/">
-		
-			PreserveSingleQuotes Still Breaks on Array Style Parameters</a>
-	</h2>
-	<div class="entry-content">
-		<p>As far back as <a href="http://livedocs.adobe.com/coldfusion/6.1/htmldocs/functa53.htm">ColdFusion 6 PreserveSingleQuotes</a> hasn&#8217;t worked with array style parameters.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="err">#</span><span class="nx">preserveSingleQuotes</span><span class="p">(</span><span class="nx">aWhere</span><span class="p">[</span><span class="nx">i</span><span class="p">])</span><span class="err">#</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This was even submitted as ColdFusion Bug number 53977 on the CF6 docs, a few years later and we still have no joy for ColdFusion 8 :(</p>
-
-<p>Structures will work but only when you access the value by dot notation, not using array style:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="err">#</span><span class="nx">preserveSingleQuotes</span><span class="p">(</span><span class="nx">stWhere</span><span class="p">.</span><span class="nx">i</span><span class="p">)</span><span class="err">#</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This was annoying today when I wanted to loop over an array of &#8220;WHERE&#8221; clause arguments passed into a function. I needed to either change the calling code to pass a structure instead, or set the arguments array element to a local variable inside each loop iteration to use inside the preserveSingleQuotes</p>
-
-<p>Hopefully Adobe will fix this small bug in the next (Centaur) release!</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-06-11T14:49:00+10:00" pubdate data-updated="true">Jun 11<span>th</span>, 2008</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2008/06/11/preservesinglequotes-still-breaks-on-array-style-parameters//page/13/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2008/06/09/looking-for-the-source-code-of-open-source-software-use-koders/">
-		
-			Looking for the Source Code of Open Source Software? Use Koders</a>
-	</h2>
-	<div class="entry-content">
-		<p>I came across a cool search engine the other day called <a href="http://www.koders.com/">Koders</a> which is &#8220;a free on-line search engine for open source software and other web-downloadable code.&#8221;</p>
-
-<p>The cool thing about this is you can search for just about any and every language you can think of, and quickly browse the source code of open source projects. This can be a nice way to view the API docs or just to see if the project is what you&#8217;re looking for.</p>
-
-<p>Of course a lot of (open source) projects have SVN browsing anyway, but some don&#8217;t and centralising your search with an online tool like this can be easier sometimes.</p>
-
-<p>Good news is that ColdFusion is represented, I tried looking for a few ColdFusion projects like <a href="http://www.koders.com/default.aspx?s=transfer&amp;btn=&amp;la=ColdFusion&amp;li=*">Transfer</a>, <a href="http://www.koders.com/default.aspx?s=farcry&amp;btn=&amp;la=ColdFusion&amp;li=*">FarCry</a> and <a href="http://www.koders.com/default.aspx?s=machii&amp;btn=&amp;la=ColdFusion&amp;li=*">Mach-II</a> which all brought back results. However the results returned are not always from the same repository which may be confusing unless you&#8217;re specific with your search terms.</p>
-
-<p>Could be a useful tool to add to the bag.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-06-09T15:37:08+10:00" pubdate data-updated="true">Jun 9<span>th</span>, 2008</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/misc/'>Misc</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2008/06/09/looking-for-the-source-code-of-open-source-software-use-koders//page/13/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
 
 
     <article class="post">
@@ -851,6 +741,260 @@ Avg: 529</p>
 </div>
 	
 		<div class="comments"><a href="/2008/04/07/flushing-a-cached-web-service//page/13/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/04/03/combining-multiple-insert-statements-with-mysql/">
+		
+			Combining Multiple INSERT Statements With MySQL</a>
+	</h2>
+	<div class="entry-content">
+		<p>As all developers know, one of the most common bottlenecks in a web application is the database. Database optimisation is therefore a huge part of building a streamlined application capable of handling more concurrent users.</p>
+
+<p>Often you might have the need to perform multiple INSERT&#8217;s against a database from a single user form submission.</p>
+
+<p>Let&#8217;s say you had a form allowing a user to add their own web bookmarks (think a simple <a href="http://del.icio.us/">del.icio.us</a>). To make things easier for the user they can add multiple &#8216;bookmarks&#8217; at a time.</p>
+
+<p><a href="/images/uploads/2008/04/multiple_entry_form.jpg"><img src="/images/uploads/2008/04/multiple_entry_form-300x101.jpg" alt="multiple_entry_form" /></a></p>
+
+<p>For the sake of our argument when a user submits this form we transform the data into an array of structures (but it can really be anything you can loop over) so that each bookmark <em>row</em> from the form is an element of the array.</p>
+
+<p><a href="/images/uploads/2008/04/multi_insert_struct.gif"><img src="/images/uploads/2008/04/multi_insert_struct.gif" alt="Structure" /></a></p>
+
+<p>Normally you might INSERT the data with something like the following:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfloop</span> <span class="nx">from</span><span class="o">=</span><span class="s2">&quot;1&quot;</span> <span class="nx">to</span><span class="o">=</span><span class="s2">&quot;#arrayLen(aBookmarks)#&quot;</span> <span class="nx">index</span><span class="o">=</span><span class="s2">&quot;i&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfquery</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;qAddBookmarks&quot;</span> <span class="nx">datasource</span><span class="o">=</span><span class="s2">&quot;#getDSN()#&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="nx">INSERT</span> <span class="nx">INTO</span> <span class="nx">Bookmarks</span>
+</span><span class='line'>          <span class="p">(</span>
+</span><span class='line'>              <span class="nx">BookmarkId</span>
+</span><span class='line'>              <span class="p">,</span> <span class="nx">URL</span>
+</span><span class='line'>              <span class="p">,</span> <span class="nx">Title</span>
+</span><span class='line'>              <span class="p">,</span> <span class="nx">Description</span>
+</span><span class='line'>          <span class="p">)</span>
+</span><span class='line'>      <span class="nx">VALUES</span>
+</span><span class='line'>          <span class="p">(</span>
+</span><span class='line'>              <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#createUUID()#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>              <span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#aBookmarks[i][&#39;URL&#39;]#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>              <span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#aBookmarks[i][&#39;Title&#39;]#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>              <span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#aBookmarks[i][&#39;Description&#39;]#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>          <span class="p">)</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cfquery&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfloop&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>While this works fine it certainly isn&#8217;t the best option because it sends multiple requests (INSERT&#8217;s) to the database. So if the array count is 4, MySQL will process 4 separate INSERT statements which really isn&#8217;t optimal.</p>
+
+<p>Fortunately MySQL gives you a super cool way of handling these types of <a href="http://dev.mysql.com/doc/refman/5.0/en/insert.html">INSERT</a> situations:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfquery</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;qAddBookmarks&quot;</span> <span class="nx">datasource</span><span class="o">=</span><span class="s2">&quot;#getDSN()#&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="nx">INSERT</span> <span class="nx">INTO</span> <span class="nx">Bookmarks</span>
+</span><span class='line'>      <span class="p">(</span>
+</span><span class='line'>          <span class="nx">BookmarkId</span>
+</span><span class='line'>          <span class="p">,</span> <span class="nx">URL</span>
+</span><span class='line'>          <span class="p">,</span> <span class="nx">Title</span>
+</span><span class='line'>          <span class="p">,</span> <span class="nx">Description</span>
+</span><span class='line'>      <span class="p">)</span>
+</span><span class='line'>  <span class="nx">VALUES</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfloop</span> <span class="nx">from</span><span class="o">=</span><span class="s2">&quot;1&quot;</span> <span class="nx">to</span><span class="o">=</span><span class="s2">&quot;#arrayLen(aBookmarks)#&quot;</span> <span class="nx">index</span><span class="o">=</span><span class="s2">&quot;i&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>          <span class="p">(</span>
+</span><span class='line'>              <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#createUUID()#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>              <span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#aBookmarks[i][&#39;URL&#39;]#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>              <span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#aBookmarks[i][&#39;Title&#39;]#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>              <span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#aBookmarks[i][&#39;Description&#39;]#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>          <span class="p">)</span><span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">i</span> <span class="nx">LT</span> <span class="nx">arrayLen</span><span class="p">(</span><span class="nx">aBookmarks</span><span class="p">)</span><span class="o">&gt;</span><span class="p">,</span><span class="o">&lt;</span><span class="err">/cfif&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="err">/cfloop&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfquery&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It&#8217;s quite simple, we have 1 <cfquery> tag, but we loop over the <em>VALUES</em> part of the DML statement. The best thing about this is that MySQL only processes 1 INSERT statement! That&#8217;s a huge performance increase particularly in a high traffic environment.</p>
+
+<p>The only real thing to note is that each VALUES block must be in parenthesis (as normal) and must be comma separated (except the last block). To handle this we just look to see if we are at the final array index. If not then add a comma.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">i</span> <span class="nx">LT</span> <span class="nx">arrayLen</span><span class="p">(</span><span class="nx">aBookmarks</span><span class="p">)</span><span class="o">&gt;</span><span class="p">,</span><span class="o">&lt;</span><span class="err">/cfif&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The more I use MySQL the more I&#8217;m impressed with it. I&#8217;m not sure if you can do this in other database engines though.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-04-03T23:24:26+11:00" pubdate data-updated="true">Apr 3<span>rd</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/databases/'>Databases</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/04/03/combining-multiple-insert-statements-with-mysql//page/13/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/03/28/evaluating-coldfusion-unscoped-query-variables/">
+		
+			Evaluating (ColdFusion) Unscoped Query Variables</a>
+	</h2>
+	<div class="entry-content">
+		<p>Most developers know that if you reference a variable without a scope prefix (such as variables, form, URL etc) ColdFusion will check <em>each</em> of the available scopes until it finds a variable of the name you are looking for.</p>
+
+<p>The <a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=Variables_32.html">order in which ColdFusion checks</a> is:</p>
+
+<ol>
+<li>Function local (UDFs and CFCs only)</li>
+<li>Thread local (inside threads only)</li>
+<li>Arguments</li>
+<li>Variables (local scope)</li>
+<li>Thread</li>
+<li>CGI</li>
+<li>Cffile</li>
+<li>URL</li>
+<li>Form</li>
+<li>Cookie</li>
+<li>Client</li>
+</ol>
+
+
+<p><em><strong>* Note:</strong> Although the order above came from the Adobe docs I&#8217;m not sure about &#8220;cffile&#8221;. It doesn&#8217;t seem like a scope, more like a return variable much like cfquery. But see below for that</em> :)</p>
+
+<p>Of course this means if you are trying to output #myVar#, and that variable exists in the URL as well as the form scope then #URL.myVar# is what ColdFusion will evaluate. This might not be what you want however, leading to frustrating inconsistencies.</p>
+
+<p>Another downside of not scoping your variables is performance, why make ColdFusion look behind each door (scope) for a variable? Most times you will know exactly where the variable is, so you can improve things by clearly specifying which scope you are using.</p>
+
+<p>But what about query variables either in <cfoutput query=""> or <cfloop query="">?</p>
+
+<p>&#8220;Query&#8221; isn&#8217;t a scope as such but can still be effected by the order of evaluation if you have variable naming conflicts with columns from your query.</p>
+
+<p>How often do you prefix your recordset variables with the query name? I bet most developers out there don&#8217;t prefix their query variables, instead take the easy way out with something like:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfloop</span> <span class="nx">query</span><span class="o">=</span><span class="s2">&quot;myQuery&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="err">#</span><span class="nx">firstName</span><span class="err">#</span>
+</span><span class='line'>  <span class="err">#</span><span class="nx">lastName</span><span class="err">#</span>
+</span><span class='line'>  <span class="err">#</span><span class="nx">email</span><span class="err">#</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfloop&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Most of the time this will be fine, but what if this loop was in a function which also had an argument called &#8220;firstName&#8221;? Enter a naming conflict leading to dirty data.</p>
+
+<p>I came across a similar situation today (because I didn&#8217;t prefix my query variables!) and found that my query was only outputting the value of the argument (which had the same name as one of my query columns), not the actual query value.</p>
+
+<p>Prefixing the variables with the query name of course will fix up any conflicting issues:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfloop</span> <span class="nx">query</span><span class="o">=</span><span class="s2">&quot;myQuery&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="err">#</span><span class="nx">myQuery</span><span class="p">.</span><span class="nx">firstName</span><span class="err">#</span>
+</span><span class='line'>  <span class="err">#</span><span class="nx">myQuery</span><span class="p">.</span><span class="nx">lastName</span><span class="err">#</span>
+</span><span class='line'>  <span class="err">#</span><span class="nx">myQuery</span><span class="p">.</span><span class="nx">email</span><span class="err">#</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfloop&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Although it can be convenient to take advantage of not scoping your variables, it&#8217;s really a &#8220;best practice&#8221; to scope everything unless you have a reason not to.</p>
+
+<p>Don&#8217;t forget the performance (and internal documenting for all developers) benefits which comes as well, although admittedly you would probably only notice any degradation at very high traffic levels. But that&#8217;s what we should be aiming for right? :)</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-03-28T12:29:24+11:00" pubdate data-updated="true">Mar 28<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/03/28/evaluating-coldfusion-unscoped-query-variables//page/13/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

@@ -44,7 +44,7 @@ mysqldump: Couldn&#39;t execute &# &hellip;">
 	<div class="alignright search">
 		<a class="button"></a>
 		<div class="container">
-			<form action="http://google.com/search" method="get">
+			<form action="http://www.google.com/search" method="get">
 				<input type="text" name="q" results="0">
 				<input type="hidden" name="q" value="site:chapter31.com">
 			</form>
@@ -70,9 +70,10 @@ mysqldump: Couldn&#39;t execute &# &hellip;">
 		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
 		
 	</div>
-	<form class="search" action="http://google.com/search" method="get">
-		<input class="alignright" type="text" name="q" results="0">
-		<input type="hidden" name="q" value="site:chapter31.com">
+	<form class="search" action="http://www.google.com/search" method="get">
+		<input class="alignright" type="text" name="query" results="0">
+        <input type="hidden" name="q" value="site:chapter31.com"
+        onkeydown="if (event.keyCode === 13 || event.which === 13) { location.href='http://www.google.com/search?q=' + site:chapter31.com + ' ' + encodeURIComponent(document.getElementById('query').value);}">
 	</form>
 </nav>
 

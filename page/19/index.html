@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="I&#8217;ve been on a Mac (OSX) for a little while now and generally I&#8217;m having a nice time, except when it comes to reading some (but only &hellip;">
+	<meta name="description" content="I came across something strange today when developing a web form. Basically I had a form field with a name/id of &#8220;restoration_required&#8221; &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -43,7 +43,7 @@
 	<div class="alignright search">
 		<a class="button"></a>
 		<div class="container">
-			<form action="http://google.com/search" method="get">
+			<form action="http://www.google.com/search" method="get">
 				<input type="text" name="q" results="0">
 				<input type="hidden" name="q" value="site:chapter31.com">
 			</form>
@@ -69,9 +69,10 @@
 		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
 		
 	</div>
-	<form class="search" action="http://google.com/search" method="get">
-		<input class="alignright" type="text" name="q" results="0">
-		<input type="hidden" name="q" value="site:chapter31.com">
+	<form class="search" action="http://www.google.com/search" method="get">
+		<input class="alignright" type="text" name="query" results="0">
+        <input type="hidden" name="q" value="site:chapter31.com"
+        onkeydown="if (event.keyCode === 13 || event.which === 13) { location.href='http://www.google.com/search?q=' + site:chapter31.com + ' ' + encodeURIComponent(document.getElementById('query').value);}">
 	</form>
 </nav>
 
@@ -81,135 +82,6 @@
 
 	
 	<div id="content" class="inner">
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2007/06/14/reading-blogs-on-a-mac-using-firefox/">
-		
-			Reading Blogs on a Mac Using Firefox</a>
-	</h2>
-	<div class="entry-content">
-		<p>I&#8217;ve been on a Mac (OSX) for a little while now and generally I&#8217;m having a nice time, except when it comes to reading some (but only some) blogs!</p>
-
-<p>We all know that font sizes are different across browser and platform, but Firefox on a mac occasionally makes life a little difficult particularly when it comes to reading comments and code snippets.</p>
-
-<p>Here is a screen grab of an example, certainly not to pick on this particular blog but just one of the few examples I come across on my daily travels thru <a href="http://www.fullasagoog.com/">fullasagoog</a>.</p>
-
-<p><img src="/images/uploads/2007/06/mac.jpg" alt="Fonts on mac" /></p>
-
-<p>Of course I can easily bump up the text size (apple +), but that makes the rest of the page unviewable!</p>
-
-<p>Interesting to note that I don&#8217;t have the same problem with Safari.</p>
-
-<p>The <a href="http://developer.yahoo.com/">Yahoo Developer Network</a> has some amazing tools including <a href="http://developer.yahoo.com/yui/fonts/">fonts</a> to provide consistent font sizing and line height and is well worth checking out.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2007-06-14T09:54:27+10:00" pubdate data-updated="true">Jun 14<span>th</span>, 2007</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/css/'>CSS</a>, <a class='category' href='/categories/misc/'>Misc</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2007/06/14/reading-blogs-on-a-mac-using-firefox//page/19/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2007/04/26/image-manipulation-with-imagecfc-v214/">
-		
-			Image Manipulation With imageCFC v2.14</a>
-	</h2>
-	<div class="entry-content">
-		<p><strong>Update:</strong> as of May 30th 2007 version 2.17 has been released! <a href="http://www.opensourcecf.com/imagecfc/">See the site</a> for more information</p>
-
-<p>Ok so I&#8217;m a little late on this one, but the new version of <a href="http://www.opensourcecf.com/imagecfc/">imageCFC</a> (v2.14) was released on March 7th 2007. The big feature add is exact size thumbnails using the &#8220;cropToExact&#8221; argument of the &#8220;resize()&#8221; method:</p>
-
-<blockquote><p>This argument, when combined with a specified width, specified height, and the preserveAspect argument being set to true will cause a image to be resized then cropped to fit exactly within the specified dimensions.</p></blockquote>
-
-<p>The nice thing about using imageCFC is that it leverages Java so is easily portable (you don&#8217;t need to install a cfx_ which can be painful in a shared hosting environment).</p>
-
-<p>A list of features:</p>
-
-<ul>
-<li>READ jpg, gif, and PNG files, and provide dimensions and other details.</li>
-<li>Images can be read from local files <em>OR</em> URLs.</li>
-<li>scale images to a specific width or height</li>
-<li>resize images to a specific width AND height</li>
-<li>rotate images at 90 degree angles</li>
-<li>flip images horizontally and vertically</li>
-<li>Add text overlays to images using TrueType fonts</li>
-<li>Watermark one image with another image</li>
-<li>Image filters: fast blur, gaussian blur, box blur, sharpen, posterize</li>
-<li>Control compression quality of JPG images.</li>
-<li>WRITE images in JPG and PNG format</li>
-</ul>
-
-
-<p><strong>Note:</strong> GIF files can be read and manipulated but they have to be saved as PNGs)</p>
-
-<p>Yes&#8230;make sure you read that line again. Java cannot <strong>write</strong> to gif files so you have to save as a .png instead after you resize/crop etc. Of course you can read information about a gif, just not manipulate and save as a gif.</p>
-
-<p>My initial tests with resizing a gif and saving as a png produced mixed results which unfortunately were often not great. I&#8217;ll have to keep testing and play with the compression settings etc, but at this stage it looks as though jpg gives the best results.</p>
-
-<p>Doug Hughes has a nice little workaround for the <a href="http://www.alagad.com/">alagad</a> image component (commercial but also based on Java) which you can <a href="http://www.doughughes.net/index.cfm?event=viewEntry&amp;entryId=88">see here</a>.</p>
-
-<p>I don&#8217;t know how good this work around would be for some uses as you need to extract a package to the Java class path. This would more than likely be an issue for those in a shared hosting environment.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2007-04-26T09:20:26+10:00" pubdate data-updated="true">Apr 26<span>th</span>, 2007</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2007/04/26/image-manipulation-with-imagecfc-v214//page/19/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
 
 
     <article class="post">
@@ -1033,6 +905,180 @@ myCustom.cfc
 </div>
 	
 		<div class="comments"><a href="/2007/01/30/coldfusion-uuids-and-mssql-newid//page/19/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2007/01/11/to-delete-or-not-to-delete/">
+		
+			To Delete or Not to Delete</a>
+	</h2>
+	<div class="entry-content">
+		<p>As a web developer you are constantly faced with building functionality to remove an object from an application. The object could be anything from a web page in a CMS to a user in a CRM, but generally involves a record(s) stored in a database.</p>
+
+<p>For a user &#8216;using&#8217; the application whenever they access the functionality to remove the object it disappears from view&#8230;but what happens behind the scenes?</p>
+
+<p>There are a couple of standard options available to developers:</p>
+
+<ol>
+<li><p>To actually delete the object from the database via a DELETE statement</p></li>
+<li><p>To flag the object as deleted (via an UPDATE statement) and have code to handle the &#8216;removal&#8217; in a view accordingly</p></li>
+</ol>
+
+
+<p>Deleting the record(s) is nice and easy and most likely no other code will be needed in your &#8216;view&#8217;, but there are schools of thought where people never (or rarely) physically delete a record from the database even if you do have backups to access at a later date. The main reason for this is that somebody (particularly an administrator) might be interested in all sorts of information on the history of that object, who removed it (and when) and the ability to rollback that object to an active state.</p>
+
+<p>It&#8217;s this approach to web applications which I almost always follow. I rarely delete objects from the database, opting to flag the record instead. But this <em>can</em> lead to a lot more time spent completing the project, which could mean a later &#8216;go live&#8217; date.</p>
+
+<p>Consider that a HUGE portion of your application code is (or should) be taken up by defensive programming like exception handling and safety from malicious intent etc, how much extra code might you spend on keeping these removed (so presumably no longer relevant) objects?</p>
+
+<p>Of course each scenario is different as are the business requirements of a client, but even if a client assuring you that &#8220;we&#8217;ll never need it again!&#8221;, I&#8217;d have a long and hard think before actually physically deleting anything. After all, we are professionals and need to think ahead to what the client may need in the future. Your &#8216;expert&#8217; advise should always be considered and put forward, even if it is the unpopular view.</p>
+
+<p>How much extra time spent will of course differ in each scenario but you&#8217;ll clearly need to have your SQL statements to filter out these records (eg. WHERE IsDeleted Is Null). This will most likely need to be done on any gateway type query which is run on the table(s) in question.</p>
+
+<p>Do you need to build in an audit trail for tracking which user deleted the object, when they deleted it and have mandatory comments on why they deleted it?</p>
+
+<p>Do you need to have the ability to rollback to an active state?</p>
+
+<p>In the above 2 scenarios you&#8217;ll probably need an interface to access this data as well.</p>
+
+<p>Business logic might also add another layer of complexity (the catalyst for this post) to the question which is &#8220;to delete or not to delete&#8221;.</p>
+
+<p>I&#8217;m still a fan of storing the data for most operations, but in an age of agile/extreme programming, more and more pressure to get the job done in half the time and a great mantra of &#8220;release early, release often&#8221;&#8230;sometimes you may need to ask yourself if you really need to keep this data :)</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-01-11T23:19:57+11:00" pubdate data-updated="true">Jan 11<span>th</span>, 2007</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/databases/'>Databases</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2007/01/11/to-delete-or-not-to-delete//page/19/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2006/12/21/scriptprotect-in-cfmx7/">
+		
+			Scriptprotect in CFMX7</a>
+	</h2>
+	<div class="entry-content">
+		<p>I only recently found out about <a href="http://www.chapter31.com/createTimeSpan(1,0,0,0">scriptprotect</a>) which is a cool new feature of ColdFusion MX7. Scriptprotect basically specifies whether to protect variables from cross-site scripting attacks, and can be enabled 2 ways.</p>
+
+<p>The first is a server setting in ColdFusion Administrator. Go to &#8216;Settings&#8217; and check the &#8220;Enable global script protection&#8221; checkbox. This will obviously effect all sites running on that ColdFusion instance but can be overridden in each sites Application.cfm/Application.cfc file.</p>
+
+<p>If you are using Application.cfc you&#8217;ll want to add scriptProtect at the top of the file in the constructor/initialisation code area.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfscript</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s2">&quot;myApplication&quot;</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">this</span><span class="p">.</span><span class="nx">applicationTimeout</span> <span class="o">=</span> <span class="nx">createTimeSpan</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+</span><span class='line'>  <span class="k">this</span><span class="p">.</span><span class="nx">sessionmanagement</span> <span class="o">=</span> <span class="s2">&quot;true&quot;</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">this</span><span class="p">.</span><span class="nx">sessiontimeout</span> <span class="o">=</span> <span class="nx">createTimeSpan</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+</span><span class='line'>  <span class="k">this</span><span class="p">.</span><span class="nx">scriptProtect</span> <span class="o">=</span> <span class="s2">&quot;all&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cfscript&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you are using Application.cfm you can just add scriptProtect as an attribute to the cfapplication tag.</p>
+
+<pre><code>&lt;cfapplication name="myApplication" scriptProtect="all"&gt;
+</code></pre>
+
+<p>Note that you have the following options for scriptProtect:</p>
+
+<ul>
+<li>none: do not protect variables</li>
+<li>all: protect Form, URL, CGI, and Cookie variables</li>
+<li>comma-delimited list of ColdFusion scopes: Protect variables in the specified scopes.</li>
+</ul>
+
+
+<p>But what does it actually do? With scriptProtect ColdFusion can protect variables in URL, Cookie, CGI, and Form scopes by replacing object, embed, script, applet, and meta tags with the text &#8220;InvalidTag&#8221;.</p>
+
+<p>So if I have scriptProtect enabled and a not so nice person enters something like:</p>
+
+<pre><code>&lt;script&gt;alert('hi');&lt;/script&gt;
+</code></pre>
+
+<p>or something much worse than that in a comments field of a blog for example (where all users can see the output), the end output to the screen will be:</p>
+
+<pre><code>alert('hi');
+</code></pre>
+
+<p>The actual source of the page will be:</p>
+
+<pre><code>&lt;InvalidTag&gt;alert('hi');&lt;/script&gt;
+</code></pre>
+
+<p>Although this might not be ideal for a lot of people because we don&#8217;t want to display that content to users (i.e. alert=(&#8216;hi&#8217;);), it&#8217;s better than the potentially malicious script actually running whenever a user loads the page!</p>
+
+<p>See <a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/wwhelp/wwhimpl/common/html/wwhelp.htm?context=ColdFusion_Documentation&amp;file=00001176.htm">this article</a> for more information on cross-site scripting and the protection ColdFusion offers.</p>
+
+<p>Pete Freitag also has a couple of great articles on this topic, <a href="http://www.petefreitag.com/item/362.cfm">see here</a> and <a href="http://www.petefreitag.com/item/363.cfm">here.</a></p>
+
+<p>One thing I did note which may seem obvious, but scriptProtect doesn&#8217;t work when you &#8220;Enable global script protection&#8221; in ColdFusion Administrator and you don&#8217;t have an Application.cfm or Application.cfc in your project directory or anywhere in the parent directory path. Not that this is likely to happen :)</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-12-21T15:43:11+11:00" pubdate data-updated="true">Dec 21<span>st</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2006/12/21/scriptprotect-in-cfmx7//page/19/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

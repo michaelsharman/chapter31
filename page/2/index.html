@@ -43,7 +43,7 @@
 	<div class="alignright search">
 		<a class="button"></a>
 		<div class="container">
-			<form action="http://google.com/search" method="get">
+			<form action="http://www.google.com/search" method="get">
 				<input type="text" name="q" results="0">
 				<input type="hidden" name="q" value="site:chapter31.com">
 			</form>
@@ -69,9 +69,10 @@
 		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
 		
 	</div>
-	<form class="search" action="http://google.com/search" method="get">
-		<input class="alignright" type="text" name="q" results="0">
-		<input type="hidden" name="q" value="site:chapter31.com">
+	<form class="search" action="http://www.google.com/search" method="get">
+		<input class="alignright" type="text" name="query" results="0">
+        <input type="hidden" name="q" value="site:chapter31.com"
+        onkeydown="if (event.keyCode === 13 || event.which === 13) { location.href='http://www.google.com/search?q=' + site:chapter31.com + ' ' + encodeURIComponent(document.getElementById('query').value);}">
 	</form>
 </nav>
 
@@ -1115,12 +1116,99 @@
     <article class="post">
 	<h2 class="title">
 		
-		<a href="/2013/04/30/managing-configuration-options-in-coldfusion/">
+		<a href="/2013/01/21/adding-a-global-ignore-file-for-git/">
 		
-			Managing Configuration Options in ColdFusion</a>
+			Adding a Global Ignore File for Git</a>
 	</h2>
 	<div class="entry-content">
-		<p>Managing configuration options in ColdFusion has historically been done in Application.cfc, inside OnApplicationStart(). While this is ok, we&#8217;ve moved on to a much cleaner approach that I thought I&#8217;d share.</p>
+		<p>Quick setup of ignore files for Git. You can of course set these up per repo, but that gets a little old. Instead you can setup a single ignore file and link to it so that every repo refers to it.</p>
+
+<p>For example, create a git ignore file in your home directory:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>~/.gitignore_global</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Fill it with regular files that you want to ignore:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#.gitignore</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Railo files #</span>
+</span><span class='line'><span class="c">######################</span>
+</span><span class='line'>WEB-INF/
+</span><span class='line'>
+</span><span class='line'><span class="c"># Sublime files #</span>
+</span><span class='line'><span class="c">######################</span>
+</span><span class='line'>*.sublime-project
+</span><span class='line'>*.sublime-workspace
+</span><span class='line'>
+</span><span class='line'><span class="c"># Misc files #</span>
+</span><span class='line'><span class="c">######################</span>
+</span><span class='line'>*.yml
+</span><span class='line'>*.buildpath
+</span><span class='line'>*.settings
+</span><span class='line'>*.cache
+</span><span class='line'>
+</span><span class='line'><span class="c"># OS generated files #</span>
+</span><span class='line'><span class="c">######################</span>
+</span><span class='line'>.DS_Store
+</span><span class='line'>ehthumbs.db
+</span><span class='line'>Icon?
+</span><span class='line'>Thumbs.db
+</span><span class='line'>.project
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Edit your main git config file (~/.gitconfig) and add a reference to this new global ignore file:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>user<span class="o">]</span>
+</span><span class='line'>        <span class="nv">name</span> <span class="o">=</span> xxxx xxxx
+</span><span class='line'>        <span class="nv">email</span> <span class="o">=</span> joe@xxx.com
+</span><span class='line'>
+</span><span class='line'><span class="o">[</span>core<span class="o">]</span>
+</span><span class='line'>        <span class="nv">excludesfile</span> <span class="o">=</span> /Users/computername/.gitignore_global
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Or you can run the following command:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>git config --global core.excludesfile ~/.gitignore_global
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now all your git projects will share the same ignore file :)</p>
 
 		
 		
@@ -1140,16 +1228,16 @@
   
 
 
-<time datetime="2013-04-30T22:45:00+10:00" pubdate data-updated="true">Apr 30<span>th</span>, 2013</time></div>
+<time datetime="2013-01-21T23:02:46+11:00" pubdate data-updated="true">Jan 21<span>st</span>, 2013</time></div>
 	<div class="tags">
 
 
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+	<a class='category' href='/categories/git/'>git</a>
 
 
 </div>
 	
-		<div class="comments"><a href="/2013/04/30/managing-configuration-options-in-coldfusion//page/2/index.html#disqus_thread">Comments</a></div>
+		<div class="comments"><a href="/2013/01/21/adding-a-global-ignore-file-for-git//page/2/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 
@@ -1157,19 +1245,29 @@
     <article class="post">
 	<h2 class="title">
 		
-		<a href="/2013/03/31/managing-pathnames-on-osx/">
+		<a href="/2013/01/21/showing-hidden-files-in-finder-on-mac-osx/">
 		
-			Managing Pathnames on OSX</a>
+			Showing Hidden Files in Finder on Mac Osx</a>
 	</h2>
 	<div class="entry-content">
-		<p>You can set environment variables on your Mac in several different ways.</p>
+		<p>Short and sweet, MAC OSX has this annoying trait where hidden files (dotfiles) are not visible by default in Finder. No probs, I&#8217;ll just go to the &#8220;View&#8221; menu and turn them on. Nope&#8230;nada, zip.</p>
 
-<p>If you want to set a PATH variable just for the current user, you can edit your ~/.bash_profile file. Eg</p>
+<p>Turns out you have to enter a command in the terminal, nice. Here it is for future reference:</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>export PATH=/usr/local/share/python:$PATH"</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class=''><span class='line'>defaults write com.apple.finder AppleShowAllFiles TRUE</span></code></pre></td></tr></table></div></figure>
 
 
+<p>Then kill Finder to have the changes take effect.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>killall Finder</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you ever want to turn hidden files off?</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>defaults write com.apple.finder AppleShowAllFiles FALSE</span></code></pre></td></tr></table></div></figure>
 
 
 		
@@ -1190,12 +1288,12 @@
   
 
 
-<time datetime="2013-03-31T20:37:00+11:00" pubdate data-updated="true">Mar 31<span>st</span>, 2013</time></div>
+<time datetime="2013-01-21T22:37:37+11:00" pubdate data-updated="true">Jan 21<span>st</span>, 2013</time></div>
 	<div class="tags">
 
 </div>
 	
-		<div class="comments"><a href="/2013/03/31/managing-pathnames-on-osx//page/2/index.html#disqus_thread">Comments</a></div>
+		<div class="comments"><a href="/2013/01/21/showing-hidden-files-in-finder-on-mac-osx//page/2/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

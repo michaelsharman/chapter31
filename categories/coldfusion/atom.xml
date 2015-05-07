@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ColdFusion | chapter31 &raquo;]]></title>
   <link href="http://chapter31.com/categories/coldfusion/atom.xml" rel="self"/>
   <link href="http://chapter31.com/"/>
-  <updated>2015-05-08T08:07:23+10:00</updated>
+  <updated>2015-05-08T08:54:30+10:00</updated>
   <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
@@ -12,15 +12,6 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
-  
-  <entry>
-    <title type="html"><![CDATA[Managing configuration options in ColdFusion]]></title>
-    <link href="http://chapter31.com/2013/04/30/managing-configuration-options-in-coldfusion/"/>
-    <updated>2013-04-30T22:45:00+10:00</updated>
-    <id>http://chapter31.com/2013/04/30/managing-configuration-options-in-coldfusion</id>
-    <content type="html"><![CDATA[<p>Managing configuration options in ColdFusion has historically been done in Application.cfc, inside OnApplicationStart(). While this is ok, we've moved on to a much cleaner approach that I thought I'd share.</p>
-]]></content>
-  </entry>
   
   <entry>
     <title type="html"><![CDATA[Generating a powerset in ColdFusion]]></title>
@@ -238,6 +229,61 @@ return ( !variables.framework.disableReloadApplication &amp;&amp;
 </code></p>
 
 <p>This is really handy for us as we disallow access to the Railo admin GUI.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Whitespace issues in cfscript based functions]]></title>
+    <link href="http://chapter31.com/2012/09/20/whitespace-issues-in-cfscript-based-functions/"/>
+    <updated>2012-09-20T17:28:08+10:00</updated>
+    <id>http://chapter31.com/2012/09/20/whitespace-issues-in-cfscript-based-functions</id>
+    <content type="html"><![CDATA[<p>Ok now we all know that ColdFusion is kind of lame when it comes to whitespace management, unless you specifically have "whitespace management" turned on for your server.</p>
+
+<p>I have a function that is used to build the <em>href</em> value of a hyperlink. Nothing special there. However when I viewed the source of the page I was a little surprised to see a mountain of whitespace coming back from the function.</p>
+
+<p>All I do is return a string from the function, I don't output any text from within the function.</p>
+
+<p>Here it is:</p>
+
+<p><code>javascript
+public string function getFullPageURI(required string pagename)
+{
+  var pages = new lib.services.pages();
+  var page = pages.getPageByNavURL(arguments.pagename, getId());
+  return page.getPageURI();
+}
+</code></p>
+
+<p>And the link source:</p>
+
+<p><img src="/images/uploads/2012/09/Screen-shot-2012-09-20-at-5.24.32-PM.png" alt="" /></p>
+
+<p>Hmm, could that suck any more? Now what happens if I add output="false" (not particularly intuitive) to the end of the function, like this:</p>
+
+<p><code>javascript
+public string function getFullPageURI(required string pagename) output="false"
+{
+  var pages = new lib.services.pages();
+  var page = pages.getPageByNavURL(arguments.pagename, getId());
+  return page.getPageURI();
+}
+</code></p>
+
+<p>Now I get:</p>
+
+<p><img src="/images/uploads/2012/09/Screen-shot-2012-09-20-at-5.25.54-PM.png" alt="" /></p>
+
+<p>Sorry but that's just insane. cfscript should behave like cfsilent all the time unless you specify a writeOutput();</p>
+
+<p>Hope this helps any other people out there. The lesson learned is that you can specify output="false" in a cfscript based function, but ONLY AFTER THE METHOD SIGNATAURE!</p>
+
+<p>So if you did this:</p>
+
+<p><code>javascript
+public string output="false" function getFullPageURI(required string pagename)
+</code></p>
+
+<p>If would fail. It needs to occur after the parens.</p>
 ]]></content>
   </entry>
   

@@ -43,7 +43,7 @@
 	<div class="alignright search">
 		<a class="button"></a>
 		<div class="container">
-			<form action="http://google.com/search" method="get">
+			<form action="http://www.google.com/search" method="get">
 				<input type="text" name="q" results="0">
 				<input type="hidden" name="q" value="site:chapter31.com">
 			</form>
@@ -69,9 +69,10 @@
 		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
 		
 	</div>
-	<form class="search" action="http://google.com/search" method="get">
-		<input class="alignright" type="text" name="q" results="0">
-		<input type="hidden" name="q" value="site:chapter31.com">
+	<form class="search" action="http://www.google.com/search" method="get">
+		<input class="alignright" type="text" name="query" results="0">
+        <input type="hidden" name="q" value="site:chapter31.com"
+        onkeydown="if (event.keyCode === 13 || event.which === 13) { location.href='http://www.google.com/search?q=' + site:chapter31.com + ' ' + encodeURIComponent(document.getElementById('query').value);}">
 	</form>
 </nav>
 
@@ -439,42 +440,6 @@
 </div>
 	    
 	    <div class="comments"><a href="/2013/05/02/installing-sonar-source-on-mac-osx/#disqus_thread">Comments</a></div>
-	    
-	</div>
-</article>
-
-	
-
-
-<article>
-	<h2 class="title"><a href="/2013/04/30/managing-configuration-options-in-coldfusion/">Managing configuration options in ColdFusion</a></h2>
-	<div class="meta">
-		<div class="date">Apr 30</div>
-		<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	    
-	    <div class="comments"><a href="/2013/04/30/managing-configuration-options-in-coldfusion/#disqus_thread">Comments</a></div>
-	    
-	</div>
-</article>
-
-	
-
-
-<article>
-	<h2 class="title"><a href="/2013/03/31/managing-pathnames-on-osx/">Managing pathnames on OSX</a></h2>
-	<div class="meta">
-		<div class="date">Mar 31</div>
-		<div class="tags">
-
-</div>
-	    
-	    <div class="comments"><a href="/2013/03/31/managing-pathnames-on-osx/#disqus_thread">Comments</a></div>
 	    
 	</div>
 </article>
@@ -4885,26 +4850,6 @@
 </div>
 	    
 	    <div class="comments"><a href="/2006/09/06/multi-step-forms/#disqus_thread">Comments</a></div>
-	    
-	</div>
-</article>
-
-	
-
-
-<article>
-	<h2 class="title"><a href="/2006/09/06/end-of-paragraph-widow/">End of paragraph &#8216;widow&#8217;</a></h2>
-	<div class="meta">
-		<div class="date">Sep  6</div>
-		<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	    
-	    <div class="comments"><a href="/2006/09/06/end-of-paragraph-widow/#disqus_thread">Comments</a></div>
 	    
 	</div>
 </article>

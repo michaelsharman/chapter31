@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="I know most rave about how good hostmysite are. They do have great support and competitive plans, but even for a shared plan (CF+) I have had the &hellip;">
+	<meta name="description" content="Hmm, running with my past history of having that &#8216;special&#8217; touch with computers&#8230;my version of Aptana (Aptana IDE (build 0.2.8. &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -43,7 +43,7 @@
 	<div class="alignright search">
 		<a class="button"></a>
 		<div class="container">
-			<form action="http://google.com/search" method="get">
+			<form action="http://www.google.com/search" method="get">
 				<input type="text" name="q" results="0">
 				<input type="hidden" name="q" value="site:chapter31.com">
 			</form>
@@ -69,9 +69,10 @@
 		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
 		
 	</div>
-	<form class="search" action="http://google.com/search" method="get">
-		<input class="alignright" type="text" name="q" results="0">
-		<input type="hidden" name="q" value="site:chapter31.com">
+	<form class="search" action="http://www.google.com/search" method="get">
+		<input class="alignright" type="text" name="query" results="0">
+        <input type="hidden" name="q" value="site:chapter31.com"
+        onkeydown="if (event.keyCode === 13 || event.which === 13) { location.href='http://www.google.com/search?q=' + site:chapter31.com + ' ' + encodeURIComponent(document.getElementById('query').value);}">
 	</form>
 </nav>
 
@@ -81,124 +82,6 @@
 
 	
 	<div id="content" class="inner">
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2007/08/22/hostmysite-not-quite-as-stable-as-id-like/">
-		
-			Hostmysite Not Quite as Stable as I&#8217;d Like</a>
-	</h2>
-	<div class="entry-content">
-		<p>I know most rave about how good <a href="http://www.hostmysite.com/">hostmysite</a> are. They do have great support and competitive plans, but even for a shared plan (CF+) I have had the same issues for a few months now.</p>
-
-<p>My issue is simple, they seem to restart JRun on average 5-6 times per day. PER DAY!</p>
-
-<p>Hmm, is this not a little too frequent? I have a couple of sites on there and it seems everytime I visit the site (5-6 times a day) the application restarts. Different application, different frameworks which work fine on local and stage but not on hostmysite.</p>
-
-<p>I asked their tech team about it and they said there is a problem with some of the sites on the shared servers which means they have to restart JRun around 4 times a day (which I took to mean 8 times!).</p>
-
-<p>At the end of the day good support and price doesn&#8217;t really make a difference when your site goes up and down more than a kid on a jumping castle.</p>
-
-<p>I&#8217;ll have to monitor for a little longer, speak to tech support then consider moving the site elsewhere.</p>
-
-<p>Has anyone else experienced this with the shared plans?</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2007-08-22T10:45:12+10:00" pubdate data-updated="true">Aug 22<span>nd</span>, 2007</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2007/08/22/hostmysite-not-quite-as-stable-as-id-like//page/18/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2007/08/16/localurl-attribute-added-to-cfdocument-in-coldfusion-8/">
-		
-			&#8220;localURL&#8221; Attribute Added to Cfdocument in ColdFusion 8</a>
-	</h2>
-	<div class="entry-content">
-		<p>I was debugging a legacy app today which I&#8217;d just migrated to a new server running ColdFusion 8. A part of this application generates a PDF using <cfdocument>. As usual it was working fine on my development and staging environments&#8230;but not on production! Damn.</p>
-
-<p>After a bit of fiddling I found a <a href="http://coldfused.blogspot.com/2005/11/missing-images-in-cfdocument.html#8131215934099422866">related post</a> by <a href="http://coldfused.blogspot.com/">Rupesh Kumar</a> where he mentions that you may have problems if ColdFusion is behind a firewall.</p>
-
-<p><em>CF server needs to send an HTTP request for the images. If the firewall prevents any outgoing connection from the server, CF will not be able to retrieve them</em></p>
-
-<p>Now I already had outbound HTTP access, but I couldn&#8217;t call a site which was setup on the production machine from where I was browsing. Bugger, I was about to make a the necessary firewall changes when I looked at the <a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=Tags_d-e_06.html">updated docs for CF8</a> and noticed a new attribute called &#8220;localURL&#8221; which;</p>
-
-<blockquote><p>Specifies whether to retrieve image files directly from the local drive:</p>
-
-<ul>
-<li><p>yes: ColdFusion retrieves image files directly from the local drive rather than by using HTTP, HTTPS, or proxy.</p></li>
-<li><p>no: ColdFusion uses HTTP, HTTPS, or proxy to retrieve image files even if the files are stored locally.</p></li>
-</ul>
-</blockquote>
-
-<p>Nice!</p>
-
-<p>Now <cfdocument> can simply call images from a local (relative) path instead of a full HTTP request as it did before.</p>
-
-<p>I love CF8 :)</p>
-
-<p>There are a few additions to this particular tag and you can <a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=Tags_d-e_06.html">view them on the online docs</a> which have had a much needed facelift.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2007-08-16T19:00:12+10:00" pubdate data-updated="true">Aug 16<span>th</span>, 2007</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2007/08/16/localurl-attribute-added-to-cfdocument-in-coldfusion-8//page/18/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
 
 
     <article class="post">
@@ -803,6 +686,135 @@
 </div>
 	
 		<div class="comments"><a href="/2007/06/14/using-variablesinstance-inside-your-components//page/18/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2007/06/14/reading-blogs-on-a-mac-using-firefox/">
+		
+			Reading Blogs on a Mac Using Firefox</a>
+	</h2>
+	<div class="entry-content">
+		<p>I&#8217;ve been on a Mac (OSX) for a little while now and generally I&#8217;m having a nice time, except when it comes to reading some (but only some) blogs!</p>
+
+<p>We all know that font sizes are different across browser and platform, but Firefox on a mac occasionally makes life a little difficult particularly when it comes to reading comments and code snippets.</p>
+
+<p>Here is a screen grab of an example, certainly not to pick on this particular blog but just one of the few examples I come across on my daily travels thru <a href="http://www.fullasagoog.com/">fullasagoog</a>.</p>
+
+<p><img src="/images/uploads/2007/06/mac.jpg" alt="Fonts on mac" /></p>
+
+<p>Of course I can easily bump up the text size (apple +), but that makes the rest of the page unviewable!</p>
+
+<p>Interesting to note that I don&#8217;t have the same problem with Safari.</p>
+
+<p>The <a href="http://developer.yahoo.com/">Yahoo Developer Network</a> has some amazing tools including <a href="http://developer.yahoo.com/yui/fonts/">fonts</a> to provide consistent font sizing and line height and is well worth checking out.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-06-14T09:54:27+10:00" pubdate data-updated="true">Jun 14<span>th</span>, 2007</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/css/'>CSS</a>, <a class='category' href='/categories/misc/'>Misc</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2007/06/14/reading-blogs-on-a-mac-using-firefox//page/18/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2007/04/26/image-manipulation-with-imagecfc-v214/">
+		
+			Image Manipulation With imageCFC v2.14</a>
+	</h2>
+	<div class="entry-content">
+		<p><strong>Update:</strong> as of May 30th 2007 version 2.17 has been released! <a href="http://www.opensourcecf.com/imagecfc/">See the site</a> for more information</p>
+
+<p>Ok so I&#8217;m a little late on this one, but the new version of <a href="http://www.opensourcecf.com/imagecfc/">imageCFC</a> (v2.14) was released on March 7th 2007. The big feature add is exact size thumbnails using the &#8220;cropToExact&#8221; argument of the &#8220;resize()&#8221; method:</p>
+
+<blockquote><p>This argument, when combined with a specified width, specified height, and the preserveAspect argument being set to true will cause a image to be resized then cropped to fit exactly within the specified dimensions.</p></blockquote>
+
+<p>The nice thing about using imageCFC is that it leverages Java so is easily portable (you don&#8217;t need to install a cfx_ which can be painful in a shared hosting environment).</p>
+
+<p>A list of features:</p>
+
+<ul>
+<li>READ jpg, gif, and PNG files, and provide dimensions and other details.</li>
+<li>Images can be read from local files <em>OR</em> URLs.</li>
+<li>scale images to a specific width or height</li>
+<li>resize images to a specific width AND height</li>
+<li>rotate images at 90 degree angles</li>
+<li>flip images horizontally and vertically</li>
+<li>Add text overlays to images using TrueType fonts</li>
+<li>Watermark one image with another image</li>
+<li>Image filters: fast blur, gaussian blur, box blur, sharpen, posterize</li>
+<li>Control compression quality of JPG images.</li>
+<li>WRITE images in JPG and PNG format</li>
+</ul>
+
+
+<p><strong>Note:</strong> GIF files can be read and manipulated but they have to be saved as PNGs)</p>
+
+<p>Yes&#8230;make sure you read that line again. Java cannot <strong>write</strong> to gif files so you have to save as a .png instead after you resize/crop etc. Of course you can read information about a gif, just not manipulate and save as a gif.</p>
+
+<p>My initial tests with resizing a gif and saving as a png produced mixed results which unfortunately were often not great. I&#8217;ll have to keep testing and play with the compression settings etc, but at this stage it looks as though jpg gives the best results.</p>
+
+<p>Doug Hughes has a nice little workaround for the <a href="http://www.alagad.com/">alagad</a> image component (commercial but also based on Java) which you can <a href="http://www.doughughes.net/index.cfm?event=viewEntry&amp;entryId=88">see here</a>.</p>
+
+<p>I don&#8217;t know how good this work around would be for some uses as you need to extract a package to the Java class path. This would more than likely be an issue for those in a shared hosting environment.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-04-26T09:20:26+10:00" pubdate data-updated="true">Apr 26<span>th</span>, 2007</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2007/04/26/image-manipulation-with-imagecfc-v214//page/18/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 
