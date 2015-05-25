@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Quick heads up for those having issues getting the modal window in the twitter bootstrap to work in firefox, I had a problem where the overlay would &hellip;">
+	<meta name="description" content="One of the keyboard shortcuts I often use is command-F6, but I seem to accidentally hit command-F5 on most occasions :( Problem with this is that &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -82,6 +82,65 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2012/03/14/turning-voice-over-off-permanently-on-max-osx/">
+		
+			Turning Voice Over Off Permanently on Max OSX</a>
+	</h2>
+	<div class="entry-content">
+		<p>One of the keyboard shortcuts I often use is command-F6, but I seem to accidentally hit command-F5 on most occasions :(</p>
+
+<p>Problem with this is that the god awful &#8220;voice over&#8221; starts yapping away. Well if you&#8217;re like me and know that you&#8217;ll pretty much never want this enabled (at least for now!) then here&#8217;s how you turn it off permanently.</p>
+
+<ol>
+<li>Open up system preferences</li>
+<li>Click on keyboard</li>
+<li>Go to the keyboard shortcuts tab</li>
+<li>Choose universal access from the list on the left</li>
+<li>Uncheck the &#8220;Turn voice over on or off&#8221; checkbox</li>
+</ol>
+
+
+<p>Breathe a sigh of relief :)</p>
+
+<p><img src="/images/uploads/2012/03/sys_prefs.jpg" alt="mac system preferences" /></p>
+
+<p><img src="/images/uploads/2012/03/voiceover_off.jpg" alt="Mac voice over off" /></p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-14T16:41:04+11:00" pubdate data-updated="true">Mar 14<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/mac/'>Mac</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2012/03/14/turning-voice-over-off-permanently-on-max-osx//page/5/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -1277,99 +1336,6 @@ MySQL 5+</p>
 </div>
 	
 		<div class="comments"><a href="/2011/05/29/farcry-to-mura-migrating-data-from-farcry-to-mura-cms//page/5/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2011/05/11/wordpress-detecting-the-categories-of-a-post/">
-		
-			Wordpress - Detecting the Categories of a Post</a>
-	</h2>
-	<div class="entry-content">
-		<p>I was creating a Wordpress child theme (the best way to modify/override your themes) tonight and had the need to have different display options depending on which categories the blog article had. So for example if I had a post categorised with &#8220;portfolio&#8221;, I wanted to hide the comments form which usually sits at the bottom of a post.</p>
-
-<p>The following snippet will loop over all post categories, if it finds that &#8220;portfolio&#8221; is one of the categories assigned to the current post then a local variable (boolean) is set which you can use to hide Wordpress functions anywhere in the current template.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="cp">&lt;?php</span>
-</span><span class='line'>  <span class="nv">$isPortfolio</span> <span class="o">=</span> <span class="k">false</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nv">$categories</span> <span class="o">=</span> <span class="nx">get_the_category</span><span class="p">();</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">foreach</span><span class="p">(</span><span class="nv">$categories</span> <span class="k">as</span> <span class="nv">$cat</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">{</span>
-</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="nv">$cat</span><span class="o">-&gt;</span><span class="na">cat_name</span> <span class="o">==</span> <span class="s1">&#39;portfolio&#39;</span><span class="p">)</span>
-</span><span class='line'>      <span class="p">{</span>
-</span><span class='line'>          <span class="nv">$isPortfolio</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
-</span><span class='line'>          <span class="k">break</span><span class="p">;</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="cp">?&gt;</span><span class="x"></span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>These changes were at the top of my child theme&#8217;s <em>single.php</em> template. Not displaying the comments form was as simple as:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="cp">&lt;?php</span> <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nv">$isPortfolio</span><span class="p">){</span><span class="nx">comments_template</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">);}</span> <span class="cp">?&gt;</span><span class="x"></span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Update 12th May 2011</h2>
-
-<p>Thanks to Martin in the comments below for alerting me to the fact that Wordpress already has something for this, has_category($category, $post);</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="cp">&lt;?php</span> <span class="nv">$isPortfolio</span> <span class="o">=</span> <span class="nx">has_category</span><span class="p">(</span><span class="s1">&#39;portfolio&#39;</span><span class="p">);</span> <span class="cp">?&gt;</span><span class="x"></span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Note I didn&#8217;t need the 2nd argument as it defaults to the current post.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-05-11T23:48:49+10:00" pubdate data-updated="true">May 11<span>th</span>, 2011</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/wordpress/'>Wordpress</a>, <a class='category' href='/categories/php/'>php</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2011/05/11/wordpress-detecting-the-categories-of-a-post//page/5/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

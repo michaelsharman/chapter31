@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="The eclipse/cfeclipse combinations makes for a pretty powerfull developing tool for ColdFusion programmers, even those who miss the good old days of &hellip;">
+	<meta name="description" content="Last week my blog software decided to stop working. I couldn&#8217;t create or edit any posts, bugger. It wasn&#8217;t the fault of the blog &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -82,6 +82,59 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2006/11/03/blogging-problems-my-php-host/">
+		
+			Blogging Problems With My (PHP) Host</a>
+	</h2>
+	<div class="entry-content">
+		<p>Last week my blog software decided to stop working. I couldn&#8217;t create or edit any posts, bugger.</p>
+
+<p>It wasn&#8217;t the fault of the blog software however, it seems the host added some new &#8216;forbidden&#8217; words to their list and of course I wasn&#8217;t notified.</p>
+
+<p>Basically every time I wanted to create or edit a post I was redirected to the host&#8217;s home page! Specifically it looks like the line in question which was causing me headaches was:</p>
+
+<pre><code>$draft-&gt;post_title = sprintf(__('Post # %s'), $draft-&gt;ID);
+</code></pre>
+
+<p>I don&#8217;t have time at the moment to set a workaround so I&#8217;ve just commented it out, and as it&#8217;s only for display in my administration area this will be fine for now.</p>
+
+<p>Ah the things that waste what little time you have in a day :(</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-11-03T17:39:14+11:00" pubdate data-updated="true">Nov 3<span>rd</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/php/'>php</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2006/11/03/blogging-problems-my-php-host//page/22/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -628,91 +681,6 @@ html comment (used with xml files)</p>
 </div>
 	
 		<div class="comments"><a href="/2006/10/06/google-code-search//page/22/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2006/10/06/double-checked-locking-2/">
-		
-			Double-checked Locking</a>
-	</h2>
-	<div class="entry-content">
-		<p>Mark Kruger details a concept (with a little help from <a href="http://www.corfield.org/">Sean Corfield</a>) known as &#8220;double-checked locking&#8221;, in the example as it pertains to application scoped variables.</p>
-
-<p>The basic premise is that normally you would put &lt;cfif NOT structKeyExists(application, “myVar”)&gt; logic around you setting of application variables. If the application variable(s) didn’t exist you would have a &lt;cflock&gt; within the &lt;cfif&gt; to perform locking while you write your application variables.</p>
-
-<p>However what would happen when 2 threads (2 users) hit that logic/lock at the same time? Well one would wait while the other would enter the lock and write the variables. But…when the first thread was finished, the 2nd would enter and write the variables again.</p>
-
-<p>If you were only writing generic (or atomis) values like DSN, mail server etc then this would be ok, albeit unnecessary. But if you were setting somewhat dynamic values then this would be an issue.</p>
-
-<p>Example from Mark&#8217;s post:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c">&lt;!--</span><span class="o">-</span> <span class="nx">check</span> <span class="nx">condition</span> <span class="o">---&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">NOT</span> <span class="nx">isDefined</span><span class="p">(</span><span class="s1">&#39;Application.curIps&#39;</span><span class="p">)</span> <span class="nx">OR</span> <span class="nx">IsDefined</span><span class="p">(</span><span class="s1">&#39;url.forceAp&#39;</span><span class="p">)</span><span class="o">&gt;</span>
-</span><span class='line'>   <span class="c">&lt;!--</span><span class="o">-</span> <span class="nx">Use</span> <span class="nx">a</span> <span class="nx">named</span> <span class="nx">lock</span> <span class="o">---&gt;</span>
-</span><span class='line'>   <span class="o">&lt;</span><span class="nx">cflock</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;ipInitialize&quot;</span> <span class="nx">timeout</span><span class="o">=</span><span class="s2">&quot;1&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;exclusive&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>      <span class="c">&lt;!--</span><span class="o">-</span> <span class="nx">check</span> <span class="nx">to</span> <span class="nx">make</span> <span class="nx">sure</span> <span class="nx">condition</span> <span class="nx">is</span> <span class="nx">still</span> <span class="kc">true</span> <span class="o">---&gt;</span>
-</span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">NOT</span> <span class="nx">IsDefined</span><span class="p">(</span><span class="s1">&#39;Application.curIps&#39;</span><span class="p">)</span> <span class="nx">OR</span> <span class="nx">IsDefined</span><span class="p">(</span><span class="s1">&#39;url.forceAp&#39;</span><span class="p">)</span><span class="o">&gt;</span>
-</span><span class='line'>         <span class="o">&lt;</span><span class="nx">cfscript</span><span class="o">&gt;</span>
-</span><span class='line'>            <span class="nx">curIps</span> <span class="o">=</span> <span class="nx">queryNew</span><span class="p">(</span><span class="s2">&quot;IP&quot;</span><span class="p">);</span>
-</span><span class='line'>            <span class="nx">queryAddRow</span><span class="p">(</span><span class="nx">curIps</span><span class="p">);</span>
-</span><span class='line'>            <span class="nx">querySetCell</span><span class="p">(</span><span class="nx">curIps</span><span class="p">,</span><span class="s2">&quot;IP&quot;</span><span class="p">,</span><span class="nx">cgi</span><span class="p">.</span><span class="nx">remote_addr</span><span class="p">);</span>
-</span><span class='line'>            <span class="nx">Application</span><span class="p">.</span><span class="nx">curIps</span> <span class="o">=</span> <span class="nx">curIps</span><span class="p">;</span>
-</span><span class='line'>         <span class="o">&lt;</span><span class="err">/cfscript&gt;</span>
-</span><span class='line'>      <span class="o">&lt;</span><span class="err">/cfif&gt;</span>
-</span><span class='line'>   <span class="o">&lt;</span><span class="err">/cflock&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/cfif&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Anyways, <a href="http://www.coldfusionmuse.com/index.cfm/2005/8/22/thread.safe">read the article</a></p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2006-10-06T09:09:47+10:00" pubdate data-updated="true">Oct 6<span>th</span>, 2006</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2006/10/06/double-checked-locking-2//page/22/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

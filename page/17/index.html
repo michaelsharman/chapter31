@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Today I needed a function which would return me a whole number, rounding either up or down depending on whether the value passed to the function was &hellip;">
+	<meta name="description" content="A few notes to self on generating .xls files from HTML tables, particularly with CSS. It appears that excel only has a particular &#8216;range&#8217 &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -82,6 +82,89 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2007/10/18/styling-issues-when-generating-an-xls-from-html/">
+		
+			Styling Issues When Generating an Xls From HTML</a>
+	</h2>
+	<div class="entry-content">
+		<p>A few notes to self on generating .xls files from HTML tables, particularly with CSS.</p>
+
+<p>It appears that excel only has a particular &#8216;range&#8217; of hex numbers you can use (at least for background colours). I was trying to use #eeeeee; for a while (which is obviously fine for HTML and for creating a PDF), but I couldn&#8217;t use that as a value in excel as the colours just weren&#8217;t displaying. Perhaps the colour was too close to white?</p>
+
+<p>In any event, once I chose a darker colour (#bbbbbb) the background colour appeared fine!</p>
+
+<p>Another issue was that HTML allows you to specifiy multiple CSS classes such as:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">table</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">thead</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">tr</span><span class="o">&gt;</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">th</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;sortOpt1 highlight&quot;</span><span class="o">&gt;</span><span class="nx">STUDIO</span><span class="o">&lt;</span><span class="err">/th&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This wasn&#8217;t working for me, so for that <th> I added an inline style:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">table</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">thead</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">tr</span><span class="o">&gt;</span>
+</span><span class='line'>          <span class="o">&lt;</span><span class="nx">th</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;sortOpt1&quot;</span> <span class="nx">style</span><span class="o">=</span><span class="s2">&quot;background-color:##bbbbbb;&quot;</span><span class="o">&gt;</span><span class="nx">STUDIO</span><span class="o">&lt;</span><span class="err">/th&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If anyone is interested in the code to actually launch the open/save dialogue window, here it is:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfheader</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;Content-Disposition&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;attachment; filename=studioDailyReport_#dateFormat(now(), &#39;yyyymmdd&#39;)#.xls&quot;</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfcontent</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;application/msexcel&quot;</span><span class="o">&gt;</span>
+</span><span class='line'><span class="c">&lt;!--</span><span class="o">-</span> <span class="nx">output</span> <span class="nx">HTML</span> <span class="nx">data</span> <span class="nx">here</span> <span class="o">---&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-10-18T11:31:16+10:00" pubdate data-updated="true">Oct 18<span>th</span>, 2007</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2007/10/18/styling-issues-when-generating-an-xls-from-html//page/17/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -731,70 +814,6 @@ Trace</p></blockquote>
 </div>
 	
 		<div class="comments"><a href="/2007/08/22/hostmysite-not-quite-as-stable-as-id-like//page/17/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2007/08/16/localurl-attribute-added-to-cfdocument-in-coldfusion-8/">
-		
-			&#8220;localURL&#8221; Attribute Added to Cfdocument in ColdFusion 8</a>
-	</h2>
-	<div class="entry-content">
-		<p>I was debugging a legacy app today which I&#8217;d just migrated to a new server running ColdFusion 8. A part of this application generates a PDF using <cfdocument>. As usual it was working fine on my development and staging environments&#8230;but not on production! Damn.</p>
-
-<p>After a bit of fiddling I found a <a href="http://coldfused.blogspot.com/2005/11/missing-images-in-cfdocument.html#8131215934099422866">related post</a> by <a href="http://coldfused.blogspot.com/">Rupesh Kumar</a> where he mentions that you may have problems if ColdFusion is behind a firewall.</p>
-
-<p><em>CF server needs to send an HTTP request for the images. If the firewall prevents any outgoing connection from the server, CF will not be able to retrieve them</em></p>
-
-<p>Now I already had outbound HTTP access, but I couldn&#8217;t call a site which was setup on the production machine from where I was browsing. Bugger, I was about to make a the necessary firewall changes when I looked at the <a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=Tags_d-e_06.html">updated docs for CF8</a> and noticed a new attribute called &#8220;localURL&#8221; which;</p>
-
-<blockquote><p>Specifies whether to retrieve image files directly from the local drive:</p>
-
-<ul>
-<li><p>yes: ColdFusion retrieves image files directly from the local drive rather than by using HTTP, HTTPS, or proxy.</p></li>
-<li><p>no: ColdFusion uses HTTP, HTTPS, or proxy to retrieve image files even if the files are stored locally.</p></li>
-</ul>
-</blockquote>
-
-<p>Nice!</p>
-
-<p>Now <cfdocument> can simply call images from a local (relative) path instead of a full HTTP request as it did before.</p>
-
-<p>I love CF8 :)</p>
-
-<p>There are a few additions to this particular tag and you can <a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=Tags_d-e_06.html">view them on the online docs</a> which have had a much needed facelift.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2007-08-16T19:00:12+10:00" pubdate data-updated="true">Aug 16<span>th</span>, 2007</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2007/08/16/localurl-attribute-added-to-cfdocument-in-coldfusion-8//page/17/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="I just spent some time figuring out why fancybox wasn&#8217;t working tonight (image thumbnails were just linking to the large image&#8230;not &hellip;">
+	<meta name="description" content="I was creating a Wordpress child theme (the best way to modify/override your themes) tonight and had the need to have different display options &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -82,6 +82,99 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2011/05/11/wordpress-detecting-the-categories-of-a-post/">
+		
+			Wordpress - Detecting the Categories of a Post</a>
+	</h2>
+	<div class="entry-content">
+		<p>I was creating a Wordpress child theme (the best way to modify/override your themes) tonight and had the need to have different display options depending on which categories the blog article had. So for example if I had a post categorised with &#8220;portfolio&#8221;, I wanted to hide the comments form which usually sits at the bottom of a post.</p>
+
+<p>The following snippet will loop over all post categories, if it finds that &#8220;portfolio&#8221; is one of the categories assigned to the current post then a local variable (boolean) is set which you can use to hide Wordpress functions anywhere in the current template.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="cp">&lt;?php</span>
+</span><span class='line'>  <span class="nv">$isPortfolio</span> <span class="o">=</span> <span class="k">false</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">$categories</span> <span class="o">=</span> <span class="nx">get_the_category</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">foreach</span><span class="p">(</span><span class="nv">$categories</span> <span class="k">as</span> <span class="nv">$cat</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="nv">$cat</span><span class="o">-&gt;</span><span class="na">cat_name</span> <span class="o">==</span> <span class="s1">&#39;portfolio&#39;</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">{</span>
+</span><span class='line'>          <span class="nv">$isPortfolio</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+</span><span class='line'>          <span class="k">break</span><span class="p">;</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="cp">?&gt;</span><span class="x"></span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>These changes were at the top of my child theme&#8217;s <em>single.php</em> template. Not displaying the comments form was as simple as:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="cp">&lt;?php</span> <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nv">$isPortfolio</span><span class="p">){</span><span class="nx">comments_template</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">);}</span> <span class="cp">?&gt;</span><span class="x"></span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Update 12th May 2011</h2>
+
+<p>Thanks to Martin in the comments below for alerting me to the fact that Wordpress already has something for this, has_category($category, $post);</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="cp">&lt;?php</span> <span class="nv">$isPortfolio</span> <span class="o">=</span> <span class="nx">has_category</span><span class="p">(</span><span class="s1">&#39;portfolio&#39;</span><span class="p">);</span> <span class="cp">?&gt;</span><span class="x"></span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note I didn&#8217;t need the 2nd argument as it defaults to the current post.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-05-11T23:48:49+10:00" pubdate data-updated="true">May 11<span>th</span>, 2011</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/wordpress/'>Wordpress</a>, <a class='category' href='/categories/php/'>php</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2011/05/11/wordpress-detecting-the-categories-of-a-post//page/6/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -727,66 +820,6 @@ $ sudo ln -sf /Volumes/Learnosity/Workspaces /users/michaelsharman/Workspaces</p
 </div>
 	
 		<div class="comments"><a href="/2010/09/08/tip-when-adding-allowmultiqueriestrue-to-your-mysql-dsn-in-coldfusion//page/6/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2010/05/27/cfml-issue-on-railo-with-the-accelerate-cache-tag/">
-		
-			CFML Issue on Railo With the Accelerate Cache Tag</a>
-	</h2>
-	<div class="entry-content">
-		<p>We&#8217;ve been using <a href="http://www.bpurcell.org">Brandon Purcell&#8217;s</a> excellent accelerate custom cache tag for a few projects. I had an issue today while testing a new app which is about to go live. It seemed that whatever I did nothing would be cached.</p>
-
-<p>Upon investigation it seemed that the caching worked fine on Adobe ColdFusion but not on Railo. A quick look at the codebase brought me to this line:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">IsDefined</span><span class="p">(</span><span class="s2">&quot;application.accelerator.#scriptName#.#primarykey#.#secondaryKey#&quot;</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Basically this was always returning false, even when I knew the key was in the application scope. I changed it to the following:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">structKeyExists</span><span class="p">(</span><span class="nx">application</span><span class="p">,</span><span class="s2">&quot;accelerator[scriptName][primarykey][secondaryKey]&quot;</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Success! (Thanks AJ for the final structKeyExists)</p>
-
-<p>Just a quick fyi to anyone else who might be using this custom tag on Railo.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-05-27T16:30:30+10:00" pubdate data-updated="true">May 27<span>th</span>, 2010</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/railo/'>Railo</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2010/05/27/cfml-issue-on-railo-with-the-accelerate-cache-tag//page/6/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

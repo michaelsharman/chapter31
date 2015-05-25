@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="We all know passwords are the bane of any internet users online experience. So many sites, each with their own authentication requirements. I came &hellip;">
+	<meta name="description" content="I came across a cool search engine the other day called Koders which is &#8220;a free on-line search engine for open source software and other web- &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -82,6 +82,56 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/06/09/looking-for-the-source-code-of-open-source-software-use-koders/">
+		
+			Looking for the Source Code of Open Source Software? Use Koders</a>
+	</h2>
+	<div class="entry-content">
+		<p>I came across a cool search engine the other day called <a href="http://www.koders.com/">Koders</a> which is &#8220;a free on-line search engine for open source software and other web-downloadable code.&#8221;</p>
+
+<p>The cool thing about this is you can search for just about any and every language you can think of, and quickly browse the source code of open source projects. This can be a nice way to view the API docs or just to see if the project is what you&#8217;re looking for.</p>
+
+<p>Of course a lot of (open source) projects have SVN browsing anyway, but some don&#8217;t and centralising your search with an online tool like this can be easier sometimes.</p>
+
+<p>Good news is that ColdFusion is represented, I tried looking for a few ColdFusion projects like <a href="http://www.koders.com/default.aspx?s=transfer&amp;btn=&amp;la=ColdFusion&amp;li=*">Transfer</a>, <a href="http://www.koders.com/default.aspx?s=farcry&amp;btn=&amp;la=ColdFusion&amp;li=*">FarCry</a> and <a href="http://www.koders.com/default.aspx?s=machii&amp;btn=&amp;la=ColdFusion&amp;li=*">Mach-II</a> which all brought back results. However the results returned are not always from the same repository which may be confusing unless you&#8217;re specific with your search terms.</p>
+
+<p>Could be a useful tool to add to the bag.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-06-09T15:37:08+10:00" pubdate data-updated="true">Jun 9<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/misc/'>Misc</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/06/09/looking-for-the-source-code-of-open-source-software-use-koders//page/13/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -888,113 +938,6 @@ Avg: 529</p>
 </div>
 	
 		<div class="comments"><a href="/2008/04/03/combining-multiple-insert-statements-with-mysql//page/13/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2008/03/28/evaluating-coldfusion-unscoped-query-variables/">
-		
-			Evaluating (ColdFusion) Unscoped Query Variables</a>
-	</h2>
-	<div class="entry-content">
-		<p>Most developers know that if you reference a variable without a scope prefix (such as variables, form, URL etc) ColdFusion will check <em>each</em> of the available scopes until it finds a variable of the name you are looking for.</p>
-
-<p>The <a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=Variables_32.html">order in which ColdFusion checks</a> is:</p>
-
-<ol>
-<li>Function local (UDFs and CFCs only)</li>
-<li>Thread local (inside threads only)</li>
-<li>Arguments</li>
-<li>Variables (local scope)</li>
-<li>Thread</li>
-<li>CGI</li>
-<li>Cffile</li>
-<li>URL</li>
-<li>Form</li>
-<li>Cookie</li>
-<li>Client</li>
-</ol>
-
-
-<p><em><strong>* Note:</strong> Although the order above came from the Adobe docs I&#8217;m not sure about &#8220;cffile&#8221;. It doesn&#8217;t seem like a scope, more like a return variable much like cfquery. But see below for that</em> :)</p>
-
-<p>Of course this means if you are trying to output #myVar#, and that variable exists in the URL as well as the form scope then #URL.myVar# is what ColdFusion will evaluate. This might not be what you want however, leading to frustrating inconsistencies.</p>
-
-<p>Another downside of not scoping your variables is performance, why make ColdFusion look behind each door (scope) for a variable? Most times you will know exactly where the variable is, so you can improve things by clearly specifying which scope you are using.</p>
-
-<p>But what about query variables either in <cfoutput query=""> or <cfloop query="">?</p>
-
-<p>&#8220;Query&#8221; isn&#8217;t a scope as such but can still be effected by the order of evaluation if you have variable naming conflicts with columns from your query.</p>
-
-<p>How often do you prefix your recordset variables with the query name? I bet most developers out there don&#8217;t prefix their query variables, instead take the easy way out with something like:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfloop</span> <span class="nx">query</span><span class="o">=</span><span class="s2">&quot;myQuery&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="err">#</span><span class="nx">firstName</span><span class="err">#</span>
-</span><span class='line'>  <span class="err">#</span><span class="nx">lastName</span><span class="err">#</span>
-</span><span class='line'>  <span class="err">#</span><span class="nx">email</span><span class="err">#</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/cfloop&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Most of the time this will be fine, but what if this loop was in a function which also had an argument called &#8220;firstName&#8221;? Enter a naming conflict leading to dirty data.</p>
-
-<p>I came across a similar situation today (because I didn&#8217;t prefix my query variables!) and found that my query was only outputting the value of the argument (which had the same name as one of my query columns), not the actual query value.</p>
-
-<p>Prefixing the variables with the query name of course will fix up any conflicting issues:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfloop</span> <span class="nx">query</span><span class="o">=</span><span class="s2">&quot;myQuery&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="err">#</span><span class="nx">myQuery</span><span class="p">.</span><span class="nx">firstName</span><span class="err">#</span>
-</span><span class='line'>  <span class="err">#</span><span class="nx">myQuery</span><span class="p">.</span><span class="nx">lastName</span><span class="err">#</span>
-</span><span class='line'>  <span class="err">#</span><span class="nx">myQuery</span><span class="p">.</span><span class="nx">email</span><span class="err">#</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/cfloop&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Although it can be convenient to take advantage of not scoping your variables, it&#8217;s really a &#8220;best practice&#8221; to scope everything unless you have a reason not to.</p>
-
-<p>Don&#8217;t forget the performance (and internal documenting for all developers) benefits which comes as well, although admittedly you would probably only notice any degradation at very high traffic levels. But that&#8217;s what we should be aiming for right? :)</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-03-28T12:29:24+11:00" pubdate data-updated="true">Mar 28<span>th</span>, 2008</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2008/03/28/evaluating-coldfusion-unscoped-query-variables//page/13/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

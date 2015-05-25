@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="If your website is using custom fonts, you may see this line in your Chrome console: Resource interpreted as Font but transferred with MIME type &hellip;">
+	<meta name="description" content="There&#8217;s a cool little method on the console object that allows you to track how long an operation took to run. It&#8217;s called console.time &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -82,6 +82,122 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2012/08/13/timing-synchronous-javascript-operations/">
+		
+			Timing Synchronous JavaScript Operations</a>
+	</h2>
+	<div class="entry-content">
+		<p>There&#8217;s a cool little method on the <em>console</em> object that allows you to track how long an operation took to run. It&#8217;s called <a href="https://developer.mozilla.org/en-US/docs/DOM/console.time">console.time</a>.</p>
+
+<p>Basically you just start a timer at the top of the code you want to time, like so:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">time</span><span class="p">(</span><span class="s1">&#39;timer-name&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// your javascript goes here</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">timeEnd</span><span class="p">(</span><span class="s1">&#39;timer-name&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Each <em>timer</em> block should have a unique name (in the example above I called my timer &#8216;timer-name&#8217;), and you can have up to 10,000 timers running on a single page.</p>
+
+<p>By calling <em>console.timeEnd()</em>, the browser will write to the console how long (in milliseconds) the code took to run since you first called console.time();</p>
+
+<p>This works in Chrome 2+, Firefox 10+, Opera and Safari 4+. Typically IE support is a little sketchy, however I <a href="http://stackoverflow.com/questions/3516515/console-time-in-ie8-developer-tools?answertab=active#tab-top">found a cool custom function</a> on Stack Overflow that allows you to use console.time/timeEnd in IE7/8 etc.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c1">//console.time implementation for IE</span>
+</span><span class='line'><span class="k">if</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">console</span> <span class="o">&amp;&amp;</span> <span class="k">typeof</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">console</span><span class="p">.</span><span class="nx">time</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;undefined&quot;</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">time</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">reset</span><span class="p">){</span>
+</span><span class='line'>        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span><span class="p">;</span> <span class="p">}</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">time</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">().</span><span class="nx">getTime</span><span class="p">();</span>
+</span><span class='line'>        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">console</span><span class="p">.</span><span class="nx">timeCounters</span><span class="p">)</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">timeCounters</span> <span class="o">=</span> <span class="p">{}</span> <span class="p">};</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">key</span> <span class="o">=</span> <span class="s2">&quot;KEY&quot;</span> <span class="o">+</span> <span class="nx">name</span><span class="p">.</span><span class="nx">toString</span><span class="p">();</span>
+</span><span class='line'>        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">reset</span> <span class="o">&amp;&amp;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">timeCounters</span><span class="p">[</span><span class="nx">key</span><span class="p">])</span> <span class="p">{</span> <span class="k">return</span><span class="p">;</span> <span class="p">}</span>
+</span><span class='line'>            <span class="nx">console</span><span class="p">.</span><span class="nx">timeCounters</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">time</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">timeEnd</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">){</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">time</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">().</span><span class="nx">getTime</span><span class="p">();</span>
+</span><span class='line'>        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">console</span><span class="p">.</span><span class="nx">timeCounters</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span><span class="p">;</span> <span class="p">}</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">key</span> <span class="o">=</span> <span class="s2">&quot;KEY&quot;</span> <span class="o">+</span> <span class="nx">name</span><span class="p">.</span><span class="nx">toString</span><span class="p">();</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">timeCounter</span> <span class="o">=</span> <span class="nx">console</span><span class="p">.</span><span class="nx">timeCounters</span><span class="p">[</span><span class="nx">key</span><span class="p">];</span>
+</span><span class='line'>        <span class="k">if</span><span class="p">(</span><span class="nx">timeCounter</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="kd">var</span> <span class="nx">diff</span> <span class="o">=</span> <span class="nx">time</span> <span class="o">-</span> <span class="nx">timeCounter</span><span class="p">;</span>
+</span><span class='line'>            <span class="kd">var</span> <span class="nx">label</span> <span class="o">=</span> <span class="nx">name</span> <span class="o">+</span> <span class="s2">&quot;: &quot;</span> <span class="o">+</span> <span class="nx">diff</span> <span class="o">+</span> <span class="s2">&quot;ms&quot;</span><span class="p">;</span>
+</span><span class='line'>            <span class="nx">console</span><span class="p">.</span><span class="nx">info</span><span class="p">(</span><span class="nx">label</span><span class="p">);</span>
+</span><span class='line'>            <span class="k">delete</span> <span class="nx">console</span><span class="p">.</span><span class="nx">timeCounters</span><span class="p">[</span><span class="nx">key</span><span class="p">];</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nx">diff</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">};</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-13T21:24:00+10:00" pubdate data-updated="true">Aug 13<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/javascript/'>Javascript</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2012/08/13/timing-synchronous-javascript-operations//page/4/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -829,65 +945,6 @@ htdocs/WEB-INF
 </div>
 	
 		<div class="comments"><a href="/2012/03/15/error-restoring-mysql-database-when-using-btree-on-indexes//page/4/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2012/03/14/turning-voice-over-off-permanently-on-max-osx/">
-		
-			Turning Voice Over Off Permanently on Max OSX</a>
-	</h2>
-	<div class="entry-content">
-		<p>One of the keyboard shortcuts I often use is command-F6, but I seem to accidentally hit command-F5 on most occasions :(</p>
-
-<p>Problem with this is that the god awful &#8220;voice over&#8221; starts yapping away. Well if you&#8217;re like me and know that you&#8217;ll pretty much never want this enabled (at least for now!) then here&#8217;s how you turn it off permanently.</p>
-
-<ol>
-<li>Open up system preferences</li>
-<li>Click on keyboard</li>
-<li>Go to the keyboard shortcuts tab</li>
-<li>Choose universal access from the list on the left</li>
-<li>Uncheck the &#8220;Turn voice over on or off&#8221; checkbox</li>
-</ol>
-
-
-<p>Breathe a sigh of relief :)</p>
-
-<p><img src="/images/uploads/2012/03/sys_prefs.jpg" alt="mac system preferences" /></p>
-
-<p><img src="/images/uploads/2012/03/voiceover_off.jpg" alt="Mac voice over off" /></p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-14T16:41:04+11:00" pubdate data-updated="true">Mar 14<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/mac/'>Mac</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2012/03/14/turning-voice-over-off-permanently-on-max-osx//page/4/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 
