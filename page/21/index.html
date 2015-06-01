@@ -7,7 +7,8 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="We all know that we should liberally comment our code to allow other developers (and yourself) to quickly and easily find out what a particular &hellip;">
+	<meta name="description" content="There are a couple of nice statements you can use to control processing within loops, namely break
+continue Break is of course used to exit the &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -82,6 +83,66 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2006/11/29/will-cfmx8-have-cfcontinue/">
+		
+			Will CFMX8 Have Cfcontinue?</a>
+	</h2>
+	<div class="entry-content">
+		<p>There are a <a href="http://livedocs.macromedia.com/coldfusion/7/htmldocs/wwhelp/wwhimpl/common/html/wwhelp.htm?context=ColdFusion_Documentation&amp;file=00000977.htm">couple of nice statements</a> you can use to control processing within loops, namely</p>
+
+<ul>
+<li>break</li>
+<li>continue</li>
+</ul>
+
+
+<p>Break is of course used to exit the current loop entirely and resume page processing from the first CF statement after the end loop tag. Lovely!</p>
+
+<p>Continue has a subtle but handy difference, it ends the current loop iteration and &#8216;continues&#8217; from the beginning of the next loop iteration. Very lovely :)</p>
+
+<p>Now the problem is that there is no ColdFusion tag equivalent for continue, it&#8217;s only accessible when in a &lt;cfscript&gt; block. As far as I know this is the only statement in the CFML language which is available in &lt;cfscript&gt; but not tags :(</p>
+
+<p>For some scenarios this will be ok, especially for the cfscripters out there. But for people who don&#8217;t like (for several reasons) &lt;cfscript&gt; then this is a limitation which I hope Adobe will address (among others!) in Scorpio.</p>
+
+<p>And don&#8217;t forget that the inherent limitations of &lt;cfscript&gt; (limited cftag support) means that sometimes you won&#8217;t be able to do your logic in cfscript. For example you may want to use a &lt;cfsavecontent&gt; etc which you can&#8217;t do in &lt;cfscript&gt;.</p>
+
+<p>I know&#8230;I know that you can create your own functions <a href="http://www.chapter31.com/2006/11/15/getting-tag-functionality-in-cfscript/">simulating tag functionality in cfscript</a> but all gets a little messy doesn&#8217;t it?</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-11-29T15:13:41+11:00" pubdate data-updated="true">Nov 29<span>th</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2006/11/29/will-cfmx8-have-cfcontinue//page/21/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -705,71 +766,6 @@
 </div>
 	
 		<div class="comments"><a href="/2006/11/06/adobe-alternatives-to-coldfusion-server//page/21/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2006/11/06/do-you-know-about-alexa-internet/">
-		
-			Do You Know About Alexa Internet?</a>
-	</h2>
-	<div class="entry-content">
-		<blockquote><p>&#8220;Along the way Alexa has developed an installed based of millions of toolbars, one of the largest Web crawls and an infrastructure to process and serve massive amounts of data.&#8221;</p></blockquote>
-
-<p><a href="http://www.alexa.com/">Alexa Internet</a> was founded in 1996, why does this matter to anyone? Well one reason is their page rankings, often used as an indication of just how popular a web site is. Of course you need to take into account that the statistics provided by Alexa are only available from users (of which there are millions!) who have the Alexa toolbar installed on their browser, this is how the statistics are generated.</p>
-
-<p>The traffic rankings page on their site is quite interesting because it provides stats on things like:</p>
-
-<ul>
-<li><p>Daily Reach (per million)</p></li>
-<li><p>Daily Traffic Rank Trend</p></li>
-<li><p>Daily Page Views (per million)</p></li>
-</ul>
-
-
-<p>It also gives you a run-down of &#8220;where people are going&#8221; on your site, basically this breaks out all the sub-domains you may have.</p>
-
-<p>At the moment Alexa tells us that <a href="http://ray.camdenfamily.com/">Ray Camden</a> is quite popular with a ranking of 47, 076! Considering Alexa only provide information if your site makes it into the top 100,000 that&#8217;s not bad Ray (also considering that the web now has 1,000,000 web sites!) :)</p>
-
-<p><a href="/images/uploads/2006/11/ray.gif"><img src="/images/uploads/2006/11/ray.thumbnail.gif" alt="ray.camdenfamily.com screen grab from Alexa" /></a></p>
-
-<p>There is an interesting breakdown of traffic on Alexa, <a href="http://www.alexa.com/data/details/traffic_details?url=ray.camdenfamily.com%2F">see here for a breakdown of Ray&#8217;s current traffic</a></p>
-
-<p>One more thing which I found was that <a href="http://fullasagoog.com/">fullasagoog</a> ranked in at 86, 025. Being a blog aggregator I thought it would be a higher rank than Ray&#8217;s site, clearly people visit his site either directly or from other sources/aggregators!</p>
-
-<p>Oh to be a ColdFusion superstar :)</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2006-11-06T12:17:25+11:00" pubdate data-updated="true">Nov 6<span>th</span>, 2006</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2006/11/06/do-you-know-about-alexa-internet//page/21/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

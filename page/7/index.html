@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="We&#8217;ve been using Brandon Purcell&#8217;s excellent accelerate custom cache tag for a few projects. I had an issue today while testing a new &hellip;">
+	<meta name="description" content="Scenario&#8230;I&#8217;m using ColdFusion 9 and MySQL 5. I already had my DSN setup but had a requirement to get the last inserted id from a MySQL &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -82,6 +82,103 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2010/09/08/tip-when-adding-allowmultiqueriestrue-to-your-mysql-dsn-in-coldfusion/">
+		
+			Tip When Adding &#8220;allowMultiQueries=true&#8221; to Your MySQL DSN in ColdFusion</a>
+	</h2>
+	<div class="entry-content">
+		<p>Scenario&#8230;I&#8217;m using ColdFusion 9 and MySQL 5. I already had my DSN setup but had a requirement to get the last inserted id from a MySQL INSERT statement (I&#8217;m using auto-incrementing integer&#8217;s).</p>
+
+<p>As most people know, the best way to do this (in MySQL) is using the <a href="http://dev.mysql.com/doc/refman/5.0/en/information-functions.html#function_last-insert-id">last_insert_id()</a> function. I wanted to attach this to the end of my INSERT statement for performance reasons, as I&#8217;d only be sending one query to the server instead of separate ones. Plus I&#8217;m not even sure if  I&#8217;d get the correct id back in a production environment if I sent it through as a separate query.</p>
+
+<p>Anyway&#8230;for this to happen you need to add &#8220;allowMultiQueries=true&#8221; to your DSN connection string in ColdFusion Administrator (advanced settings) which I did. However I got an error when I tried to run the code, CF didn&#8217;t like me running 2 queries at once. Hmm&#8230;restarted CF which should have reloaded the drivers. No luck. Ok&#8230;how about restarting MySQL? Nope&#8230;</p>
+
+<p>Finally took a comment from <a href="http://www.bennadel.com/blog/1209-Turning-On-Multiple-Statements-In-ColdFusion-8-MySQL-4-5-Datasource.htm">Will Tomlinson over on Ben Nadel&#8217;s blog</a> to help me out. Delete and recreate the DSN, happy days!</p>
+
+<p><img src="/images/uploads/2010/09/cfadmin.png" alt="" /></p>
+
+<p>Who want&#8217;s some sample code?</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cffunction</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;addStuff&quot;</span> <span class="nx">access</span><span class="o">=</span><span class="s2">&quot;public&quot;</span> <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="nx">returnType</span><span class="o">=</span><span class="s2">&quot;numeric&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;ref&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;string&quot;</span> <span class="nx">required</span><span class="o">=</span><span class="s2">&quot;true&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;stage&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;string&quot;</span> <span class="nx">required</span><span class="o">=</span><span class="s2">&quot;true&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfset</span> <span class="kd">var</span> <span class="nx">q</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfquery</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;q&quot;</span> <span class="nx">datasource</span><span class="o">=</span><span class="s2">&quot;#variables.instance.config.dsn#&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="nx">INSERT</span> <span class="nx">INTO</span> <span class="nx">mytable</span>
+</span><span class='line'>          <span class="p">(</span>
+</span><span class='line'>              <span class="nx">ref</span>
+</span><span class='line'>              <span class="p">,</span> <span class="nx">stage</span>
+</span><span class='line'>          <span class="p">)</span>
+</span><span class='line'>      <span class="nx">VALUES</span>
+</span><span class='line'>          <span class="p">(</span>
+</span><span class='line'>              <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.ref#&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>              <span class="p">,</span> <span class="o">&lt;</span><span class="nx">cfqueryparam</span> <span class="nx">cfsqltype</span><span class="o">=</span><span class="s2">&quot;cf_sql_varchar&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;#arguments.stage#&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>          <span class="p">);</span><span class="nx">SELECT</span> <span class="nx">LAST_INSERT_ID</span><span class="p">()</span> <span class="nx">AS</span> <span class="nx">newId</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cfquery&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfreturn</span> <span class="nx">q</span><span class="p">.</span><span class="nx">newId</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cffunction&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-09-08T22:47:00+10:00" pubdate data-updated="true">Sep 8<span>th</span>, 2010</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/databases/'>Databases</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2010/09/08/tip-when-adding-allowmultiqueriestrue-to-your-mysql-dsn-in-coldfusion//page/7/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -732,58 +829,6 @@
 </div>
 	
 		<div class="comments"><a href="/2009/08/15/firefox-changing-default-download-location//page/7/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2009/08/15/new-location-for-farcry-subversion-repositories/">
-		
-			New Location for FarCry Subversion Repositories</a>
-	</h2>
-	<div class="entry-content">
-		<p>The folks at <a href="http://www.daemon.com.au">Daemon</a> have completed some migrations with their subversion repositories which directly effects <a href="http://www.farcrycms.org">FarCry</a>. Notes from the <a href="http://groups.google.com/group/farcry-dev/browse_thread/thread/57e68f1dccf5861f">farcry-dev groups</a>:</p>
-
-<p>All URL&#8217;s should be replaced with this repo location:
-<a href="https://modius.svn.cvsdude.com/farcry">https://modius.svn.cvsdude.com/farcry</a></p>
-
-<p>All project folders are relative to this root.  For example, the p520
-branch for FarCry 5.2.x is available here:
-<a href="https://modius.svn.cvsdude.com/farcry/core/branches/p520/">https://modius.svn.cvsdude.com/farcry/core/branches/p520/</a></p>
-
-<p>You can re-checkout or use the &#8220;relocate&#8221; command if your SVN client
-supports.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-08-15T17:21:01+10:00" pubdate data-updated="true">Aug 15<span>th</span>, 2009</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/farcry/'>Farcry</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2009/08/15/new-location-for-farcry-subversion-repositories//page/7/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 
