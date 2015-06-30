@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="I know most rave about how good hostmysite are. They do have great support and competitive plans, but even for a shared plan (CF+) I have had the &hellip;">
+	<meta name="description" content="An interesting AIR app has been released in Beta for Google analytics. From the author: The Google Analytics Reporting suite is an Adobe AIR &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -82,6 +82,56 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2007/09/25/google-analytics-air-app/">
+		
+			Google Analytics AIR App</a>
+	</h2>
+	<div class="entry-content">
+		<p>An interesting AIR app has been <a href="http://www.aboutnico.be/index.php/google-analytics-air-beta-sign-up/">released in Beta</a> for <a href="http://www.google.com/analytics">Google analytics</a>.</p>
+
+<p>From the author:</p>
+
+<blockquote><p>The Google Analytics Reporting suite is an Adobe AIR application that brings Google Analytics to the desktop. It uses itâ€™s own custom API to interact with Google and nearly implements all features of Analytics.</p></blockquote>
+
+<p>You can even export the data to PDF, XLS (Excel) and XML.</p>
+
+<p>Nice :)</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-09-25T12:26:32+10:00" pubdate data-updated="true">Sep 25<span>th</span>, 2007</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/air/'>AIR</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2007/09/25/google-analytics-air-app//page/18/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -701,109 +751,6 @@
 </div>
 	
 		<div class="comments"><a href="/2007/06/18/inspirational-posts-from-the-community//page/18/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2007/06/14/using-variablesinstance-inside-your-components/">
-		
-			Using variables.instance Inside Your Components</a>
-	</h2>
-	<div class="entry-content">
-		<p>Often when creating ColdFusion components developers will create a structure to hold component instance data. This data is stored in the components &#8216;variables&#8217; scope and is therefore available to all methods.</p>
-
-<p>Here is an example from the <a href="http://rooibos.maestropublishing.com/">rooibos component generator</a>:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfcomponent</span>
-</span><span class='line'>  <span class="nx">displayname</span><span class="o">=</span><span class="s2">&quot;sample&quot;</span>
-</span><span class='line'>  <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;false&quot;</span>
-</span><span class='line'>  <span class="nx">hint</span><span class="o">=</span><span class="s2">&quot;A bean which models the form.&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c">&lt;!--</span><span class="o">-</span>
-</span><span class='line'>  <span class="nx">PROPERTIES</span>
-</span><span class='line'>  <span class="o">---&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">variables</span><span class="p">.</span><span class="nx">instance</span> <span class="o">=</span> <span class="nx">StructNew</span><span class="p">()</span> <span class="o">/&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Now some of you may be wondering why you would use the extra struct level of &#8216;instance&#8217; when we already know everything in that struct is in the components instance (variables) scope.</p>
-
-<p>A quick question to <a href="http://www.daemon.com.au/">Geoff Bowers</a> gave me a few answers.</p>
-
-<ul>
-<li><p>It&#8217;s obvious everywhere you reference this that it is instance data in the variables scope</p></li>
-<li><p>You can dump all the components instance data by using <cfdump var="#variables.instance#" />. The benefit of this is that only dumping the <em>variables</em> scope will give you a lot more than just your instance data! Think method signatures etc</p></li>
-<li><p>You can (if you want) separate &#8216;types&#8217; of instance data. e.g. you might pass in a DAO or Gateway component and assign it to the variables scope (variables.UserDAO)</p></li>
-</ul>
-
-
-<p>Another great example of dumping variables.instance quickly and easily (from the Rooibos generator):</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c">&lt;!--</span><span class="o">-</span>
-</span><span class='line'><span class="nx">DUMP</span>
-</span><span class='line'><span class="o">---&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">cffunction</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;dump&quot;</span> <span class="nx">access</span><span class="o">=</span><span class="s2">&quot;public&quot;</span> <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;true&quot;</span> <span class="k">return</span><span class="o">=</span><span class="s2">&quot;void&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;abort&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;boolean&quot;</span> <span class="k">default</span><span class="o">=</span><span class="s2">&quot;FALSE&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfdump</span> <span class="kd">var</span><span class="o">=</span><span class="s2">&quot;#variables.instance#&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">abort</span><span class="o">&gt;</span>
-</span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfabort</span> <span class="o">/&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cfif&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/cffunction&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2007-06-14T18:36:02+10:00" pubdate data-updated="true">Jun 14<span>th</span>, 2007</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2007/06/14/using-variablesinstance-inside-your-components//page/18/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

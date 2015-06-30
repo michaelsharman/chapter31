@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="I&#8217;ve been using the jQuery UI dialog for a project recently, one thing that bugged me though, was that upon opening a dialog the first tabable &hellip;">
+	<meta name="description" content="Ok now we all know that ColdFusion is kind of lame when it comes to whitespace management, unless you specifically have &#8220;whitespace management &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -82,6 +82,107 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2012/09/20/whitespace-issues-in-cfscript-based-functions/">
+		
+			Whitespace Issues in Cfscript Based Functions</a>
+	</h2>
+	<div class="entry-content">
+		<p>Ok now we all know that ColdFusion is kind of lame when it comes to whitespace management, unless you specifically have &#8220;whitespace management&#8221; turned on for your server.</p>
+
+<p>I have a function that is used to build the <em>href</em> value of a hyperlink. Nothing special there. However when I viewed the source of the page I was a little surprised to see a mountain of whitespace coming back from the function.</p>
+
+<p>All I do is return a string from the function, I don&#8217;t output any text from within the function.</p>
+
+<p>Here it is:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kr">public</span> <span class="nx">string</span> <span class="kd">function</span> <span class="nx">getFullPageURI</span><span class="p">(</span><span class="nx">required</span> <span class="nx">string</span> <span class="nx">pagename</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">pages</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">lib</span><span class="p">.</span><span class="nx">services</span><span class="p">.</span><span class="nx">pages</span><span class="p">();</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">page</span> <span class="o">=</span> <span class="nx">pages</span><span class="p">.</span><span class="nx">getPageByNavURL</span><span class="p">(</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">pagename</span><span class="p">,</span> <span class="nx">getId</span><span class="p">());</span>
+</span><span class='line'>  <span class="k">return</span> <span class="nx">page</span><span class="p">.</span><span class="nx">getPageURI</span><span class="p">();</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And the link source:</p>
+
+<p><img src="/images/uploads/2012/09/Screen-shot-2012-09-20-at-5.24.32-PM.png" alt="" /></p>
+
+<p>Hmm, could that suck any more? Now what happens if I add output=&#8221;false&#8221; (not particularly intuitive) to the end of the function, like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kr">public</span> <span class="nx">string</span> <span class="kd">function</span> <span class="nx">getFullPageURI</span><span class="p">(</span><span class="nx">required</span> <span class="nx">string</span> <span class="nx">pagename</span><span class="p">)</span> <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;false&quot;</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">pages</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">lib</span><span class="p">.</span><span class="nx">services</span><span class="p">.</span><span class="nx">pages</span><span class="p">();</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">page</span> <span class="o">=</span> <span class="nx">pages</span><span class="p">.</span><span class="nx">getPageByNavURL</span><span class="p">(</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">pagename</span><span class="p">,</span> <span class="nx">getId</span><span class="p">());</span>
+</span><span class='line'>  <span class="k">return</span> <span class="nx">page</span><span class="p">.</span><span class="nx">getPageURI</span><span class="p">();</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now I get:</p>
+
+<p><img src="/images/uploads/2012/09/Screen-shot-2012-09-20-at-5.25.54-PM.png" alt="" /></p>
+
+<p>Sorry but that&#8217;s just insane. cfscript should behave like cfsilent all the time unless you specify a writeOutput();</p>
+
+<p>Hope this helps any other people out there. The lesson learned is that you can specify output=&#8221;false&#8221; in a cfscript based function, but ONLY AFTER THE METHOD SIGNATAURE!</p>
+
+<p>So if you did this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kr">public</span> <span class="nx">string</span> <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="kd">function</span> <span class="nx">getFullPageURI</span><span class="p">(</span><span class="nx">required</span> <span class="nx">string</span> <span class="nx">pagename</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If would fail. It needs to occur after the parens.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-20T17:28:08+10:00" pubdate data-updated="true">Sep 20<span>th</span>, 2012</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2012/09/20/whitespace-issues-in-cfscript-based-functions//page/4/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -901,67 +1002,6 @@ htdocs/WEB-INF
 </div>
 	
 		<div class="comments"><a href="/2012/05/24/strange-linefeed-characters-appearing-on-mac//page/4/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2012/03/17/find-and-replace-with-line-breaks-in-eclipse/">
-		
-			Find and Replace With Line Breaks in Eclipse</a>
-	</h2>
-	<div class="entry-content">
-		<p>Often with doing a find and replace you want to use line breaks in the find (or replace) criteria. Sometimes I&#8217;ll have a column of data from a csv that I want to modify&#8230;whatever.</p>
-
-<p>You can now check the &#8220;regular expressions&#8221; checkbox while doing a file search in Eclipse and specify &#8220;\R&#8221; to find or replace line breaks (platform independent).</p>
-
-<p>Eg replace line breaks with commas:</p>
-
-<p><img src="/images/uploads/2012/03/Screen-shot-2012-03-17-at-1.54.41-PM.png" alt="" /></p>
-
-<p>Other interesting and useful options are:</p>
-
-<ul>
-<li>\t - tabs</li>
-<li>\n - newline</li>
-<li>\R - platform indepedent line delimiter</li>
-<li>\r - carriage return</li>
-<li>^ - line start</li>
-</ul>
-
-
-<p>This was introduced in Eclipse 3.4.x, <a href="http://archive.eclipse.org/eclipse/downloads/drops/R-3.4-200806172000/whatsnew3.4/eclipse-news-part1.html">read more here</a>.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-17T13:56:45+11:00" pubdate data-updated="true">Mar 17<span>th</span>, 2012</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2012/03/17/find-and-replace-with-line-breaks-in-eclipse//page/4/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="New to ColdFusion MX7 the isValid() function tests whether a value meets a validation or data type rule and returns True if the value conforms to &hellip;">
+	<meta name="description" content="One of the annoying things about cfscript is it&#8217;s lack of support for a lot of CFML tags. and are 2 tags I always use in development, &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -82,6 +82,73 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2006/04/28/dumping-and-aborting-with/">
+		
+			Dumping and Aborting With <cfscript></a>
+	</h2>
+	<div class="entry-content">
+		<p>One of the annoying things about cfscript is it&#8217;s lack of support for a lot of CFML tags.</p>
+
+<p><cfdump> and <cfabort> are 2 tags I always use in development, especially for debugging. A way to use this functionality is to create a UDF to do these types of functions.</p>
+
+<p><strong>For example</strong></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cffunction</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;dump&quot;</span> <span class="nx">access</span><span class="o">=</span><span class="s2">&quot;public&quot;</span> <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;true&quot;</span> <span class="nx">returntype</span><span class="o">=</span><span class="s2">&quot;struct&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;arg&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="nx">cfdump</span> <span class="kd">var</span><span class="o">=</span><span class="s2">&quot;#arg#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cffunction&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cffunction</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;abort&quot;</span> <span class="nx">access</span><span class="o">=</span><span class="s2">&quot;public&quot;</span> <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="nx">returntype</span><span class="o">=</span><span class="s2">&quot;void&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="nx">cfabort</span> <span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cffunction&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This function can be stored in a simple utilities component and stored in application scope, that way you can call it from anywhere.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-04-28T15:01:55+10:00" pubdate data-updated="true">Apr 28<span>th</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2006/04/28/dumping-and-aborting-with//page/26/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -766,52 +833,6 @@ The problem lies in the fact that the 2nd user is waiting for the lock to expire
 </div>
 	
 		<div class="comments"><a href="/2006/03/13/session-and-client-variable-handling-in-cfmx//page/26/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2006/03/13/what-we-need-are-better-programmers/">
-		
-			What We Need Are Better Programmers</a>
-	</h2>
-	<div class="entry-content">
-		<p>An interesting article by <a href="http://simon.coldfusionjournal.com">Simon Horwith</a> on Frameworks and OOP for ColdFusion developers.</p>
-
-<p>I agree that Frameworks could be a &#8216;crutch&#8217;, but that doesn&#8217;t mean you should stay away. I believe all developers should strive to keep their skills at the cutting edge by constant vigilence and study. Frameworks and OO design patterns can assist programmers but the choice is theirs and should be decided by the project specifications.</p>
-
-<p>Read the article <a href="http://coldfusion.sys-con.com/read/192306.htm">here</a></p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2006-03-13T10:49:10+11:00" pubdate data-updated="true">Mar 13<span>th</span>, 2006</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2006/03/13/what-we-need-are-better-programmers//page/26/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

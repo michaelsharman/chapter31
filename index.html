@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Sometimes you want to test things without the Flash plugin enabled, using Chrome this is nice and easy! Just type chrome://plugins/ in the address &hellip;">
+	<meta name="description" content="I had some notes a while ago for installing Sonar on a Mac. Recently I upgraded to a new Mac, OS X Yosemite (10.10.3), and found I needed to add a &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -82,6 +82,92 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2015/06/30/installing-sonar-source-on-mac-osx-part-2/">
+		
+			Installing Sonar Source on Mac OSX – Part 2</a>
+	</h2>
+	<div class="entry-content">
+		<p>I had some notes <a href="/2013/05/02/installing-sonar-source-on-mac-osx/">a while ago</a> for installing Sonar on a Mac. Recently I upgraded to a new Mac, OS X Yosemite (10.10.3), and found I needed to add a few steps to the install process.</p>
+
+<ul>
+<li>You need the JDK to run Sonar</li>
+<li>You need xdebug</li>
+</ul>
+
+
+<h2>xdebug</h2>
+
+<p>To install xdebug run:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sudo pecl install xdebug</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then add to your <code>php.ini</code> the following (I just added it to the bottom), replace the version in the path with whichever you installed:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>zend_extension=/usr/local/Cellar/php56/5.6.5/lib/php/extensions/no-debug-non-zts-20131226/xdebug.so
+</span><span class='line'>[xdebug]
+</span><span class='line'>xdebug.remote_enable=1
+</span><span class='line'>xdebug.remote_host=localhost
+</span><span class='line'>xdebug.remote_port=9000</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To find which php.ini you&#8217;re using (useful if you&#8217;re using multiple versions of PHP via brew as I do) run:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>php -i | grep php.ini</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then restart apache:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sudo apachectl restart</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To check that the xdebug module is loaded:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>php -m | grep xdebug</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then you should be set :)</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-06-30T11:55:00+10:00" pubdate data-updated="true">Jun 30<span>th</span>, 2015</time></div>
+	<div class="tags">
+
+</div>
+	
+		<div class="comments"><a href="/2015/06/30/installing-sonar-source-on-mac-osx-part-2//index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -867,121 +953,6 @@ GTIDs make it simple to track and compare replication across a master-slave topo
 </div>
 	
 		<div class="comments"><a href="/2013/06/08/error-writing-git-commit-messages-with-vi//index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2013/06/03/php-composer-error-cannot-redeclare-class/">
-		
-			PHP Composer Error - Cannot Redeclare Class</a>
-	</h2>
-	<div class="entry-content">
-		<p>I rebuilt PHP last night to include APC and all of a sudden composer stopped working in my project. Whenever I ran a simple update, install or dump-autoload I&#8217;d get:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>composer update
-</span><span class='line'>PHP Fatal error:  include<span class="o">()</span>: Cannot redeclare class symfony<span class="se">\c</span>omponent<span class="se">\p</span>rocess<span class="se">\p</span>rocess in phar:///usr/local/bin/composer/vendor/composer/ClassLoader.php on line 183
-</span><span class='line'>
-</span><span class='line'>Fatal error: include<span class="o">()</span>: Cannot redeclare class symfony<span class="se">\c</span>omponent<span class="se">\p</span>rocess<span class="se">\p</span>rocess in phar:///usr/local/bin/composer/vendor/composer/ClassLoader.php on line 183
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>A quick google told me <a href="https://github.com/composer/composer/issues/1432">others</a> also had the <a href="https://github.com/composer/composer/issues/264">same</a> issue.</p>
-
-<p>It seems that there&#8217;s a bug between composer.phar and APC. From one of the composer issues:</p>
-
-<pre><code>Quite weird, but then again the php docs seem to acknowledge that APC should not really be
-enabled on the CLI. It seems to be a phar+apc bug, see https://bugs.php.net/bug.php?id=59398
-https://bugs.php.net/bug.php?id=59829 https://bugs.php.net/bug.php?id=59907 as well.
-</code></pre>
-
-<p>There are a couple of things you can do to fix this, but they all involve turning off APC for php-cli. First, run <em>composer diag</em> to see whether any more information can be gleaned:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>composer diag
-</span><span class='line'>Checking platform settings: FAIL
-</span><span class='line'>
-</span><span class='line'>The apc.enable_cli setting is incorrect.
-</span><span class='line'>Add the following to the end of your <span class="sb">`</span>php.ini<span class="sb">`</span>:
-</span><span class='line'>    apc.enable_cli <span class="o">=</span> Off
-</span><span class='line'>
-</span><span class='line'>The php.ini used by your <span class="nb">command</span>-line PHP is: /opt/php-5.4.15/lib/php.ini
-</span><span class='line'>If you can not modify the ini file, you can also run <span class="sb">`</span>php -d <span class="nv">option</span><span class="o">=</span>value<span class="sb">`</span> to modify ini values on the fly. You can use -d multiple times.
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>If you get that message, you know you have the same problem as I did :) You can also check the <a href="http://getcomposer.org/doc/articles/troubleshooting.md">troubleshooting</a> page on getcomposer.org</p>
-
-<p>You can try running the <em>self-update</em> (for me I don&#8217;t reference the .phar file because I use the unix install convention).</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>php /usr/local/bin/composer self-update
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Those are really just everyday things to try if you have composer issues, to really fix this you need to disable APC for php-cli. You should set this option to <em>0</em> in your php.ini</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>apc.enable_cli<span class="o">=</span>0
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>If you don&#8217;t have access to php.ini, you can disable APC on the CLI per command:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>php -d apc.enable_cli<span class="o">=</span>0 /usr/local/bin/composer install
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Note: if you have composer.phar in your project you could just do:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>php -d apc.enable_cli<span class="o">=</span>0 composer.phar install
-</span></code></pre></td></tr></table></div></figure>
-
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-06-03T09:16:00+10:00" pubdate data-updated="true">Jun 3<span>rd</span>, 2013</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/php/'>php</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2013/06/03/php-composer-error-cannot-redeclare-class//index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

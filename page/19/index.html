@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="I&#8217;ve been on a Mac (OSX) for a little while now and generally I&#8217;m having a nice time, except when it comes to reading some (but only &hellip;">
+	<meta name="description" content="Often when creating ColdFusion components developers will create a structure to hold component instance data. This data is stored in the components &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -82,6 +82,109 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2007/06/14/using-variablesinstance-inside-your-components/">
+		
+			Using variables.instance Inside Your Components</a>
+	</h2>
+	<div class="entry-content">
+		<p>Often when creating ColdFusion components developers will create a structure to hold component instance data. This data is stored in the components &#8216;variables&#8217; scope and is therefore available to all methods.</p>
+
+<p>Here is an example from the <a href="http://rooibos.maestropublishing.com/">rooibos component generator</a>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfcomponent</span>
+</span><span class='line'>  <span class="nx">displayname</span><span class="o">=</span><span class="s2">&quot;sample&quot;</span>
+</span><span class='line'>  <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;false&quot;</span>
+</span><span class='line'>  <span class="nx">hint</span><span class="o">=</span><span class="s2">&quot;A bean which models the form.&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c">&lt;!--</span><span class="o">-</span>
+</span><span class='line'>  <span class="nx">PROPERTIES</span>
+</span><span class='line'>  <span class="o">---&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">variables</span><span class="p">.</span><span class="nx">instance</span> <span class="o">=</span> <span class="nx">StructNew</span><span class="p">()</span> <span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now some of you may be wondering why you would use the extra struct level of &#8216;instance&#8217; when we already know everything in that struct is in the components instance (variables) scope.</p>
+
+<p>A quick question to <a href="http://www.daemon.com.au/">Geoff Bowers</a> gave me a few answers.</p>
+
+<ul>
+<li><p>It&#8217;s obvious everywhere you reference this that it is instance data in the variables scope</p></li>
+<li><p>You can dump all the components instance data by using <cfdump var="#variables.instance#" />. The benefit of this is that only dumping the <em>variables</em> scope will give you a lot more than just your instance data! Think method signatures etc</p></li>
+<li><p>You can (if you want) separate &#8216;types&#8217; of instance data. e.g. you might pass in a DAO or Gateway component and assign it to the variables scope (variables.UserDAO)</p></li>
+</ul>
+
+
+<p>Another great example of dumping variables.instance quickly and easily (from the Rooibos generator):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c">&lt;!--</span><span class="o">-</span>
+</span><span class='line'><span class="nx">DUMP</span>
+</span><span class='line'><span class="o">---&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cffunction</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;dump&quot;</span> <span class="nx">access</span><span class="o">=</span><span class="s2">&quot;public&quot;</span> <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;true&quot;</span> <span class="k">return</span><span class="o">=</span><span class="s2">&quot;void&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;abort&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;boolean&quot;</span> <span class="k">default</span><span class="o">=</span><span class="s2">&quot;FALSE&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfdump</span> <span class="kd">var</span><span class="o">=</span><span class="s2">&quot;#variables.instance#&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfif</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">abort</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">cfabort</span> <span class="o">/&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cfif&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cffunction&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-06-14T18:36:02+10:00" pubdate data-updated="true">Jun 14<span>th</span>, 2007</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2007/06/14/using-variablesinstance-inside-your-components//page/19/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -942,98 +1045,6 @@ myCustom.cfc
 </div>
 	
 		<div class="comments"><a href="/2007/02/04/cfqueryparam-and-conditional-handling-of-nulls//page/19/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2007/01/30/coldfusion-uuids-and-mssql-newid/">
-		
-			ColdFusion UUID and MSSQL newID()</a>
-	</h2>
-	<div class="entry-content">
-		<p>A lot of web applications these days use a UUID as the primary key instead of the int/identity combination (speaking for MSSQL that is).</p>
-
-<p>Now there is a (valid) argument that UUID&#8217;s aren&#8217;t great for primary keys due to the fact that primary keys are clustered, meaning that integers would work much better if the table had a large amount of data. This may not effect you dramatically as you&#8217;d would most likely only see performance degradation once the database had a substantial amount of data.</p>
-
-<p>Anyway, creating a UUID is often handled by the createUUID() function in ColdFusion which produces a 35 character string in the format of:</p>
-
-<blockquote><p>xxxxxxxx-xxxx-xxxx-xxxxxxxxxxxxxxxx (8-4-4-16)</p></blockquote>
-
-<p>However you can also generate a unique id at the database level which is a slightly different format to ColdFusions UUID. The Microsoft/DCE standard uses the following:</p>
-
-<blockquote><p>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx (8-4-4-4-12)</p></blockquote>
-
-<p>Lots of developers prefer to let the database handle the creation of primary keys instead of the application (ColdFusion). Having the database create this can be done using the MSSQL <em>newID()</em> built in function. Note that this will produce a 36 character string, 1 more than ColdFusions createUUID(). You have the option to use something like char(36) or varchar(36) as the column datatype, but you could also use the <em>uniqueidentifier</em> datatype.</p>
-
-<p>This can cause a few incompatibility problems if you are expecting the ColdFusion standard in your code. So to maintain consistency and possibly prevent database/code errors you can simply convert the database level <em>newID()</em> to the ColdFusion UUID by removing the last (4th) hyphen in the SQL.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">select</span> <span class="n">left</span><span class="p">(</span><span class="n">newid</span><span class="p">(),</span> <span class="mi">23</span><span class="p">)</span> <span class="o">+</span> <span class="n">right</span><span class="p">(</span><span class="n">newid</span><span class="p">(),</span><span class="mi">12</span><span class="p">)</span> <span class="n">as</span> <span class="n">objectid</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>or in the middle of a query:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">INSERT</span> <span class="no">INTO</span> <span class="n">myTable</span> <span class="p">(</span><span class="no">ID</span><span class="p">,</span> <span class="no">FirstName</span><span class="p">)</span>
-</span><span class='line'><span class="no">VALUES</span> <span class="p">(</span><span class="n">left</span><span class="p">(</span><span class="n">newid</span><span class="p">(),</span> <span class="mi">23</span><span class="p">)</span> <span class="o">+</span> <span class="n">right</span><span class="p">(</span><span class="n">newid</span><span class="p">(),</span><span class="mi">12</span><span class="p">),</span> <span class="s2">&quot;Michael&quot;</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>In the situation where you might want to convert a ColdFusion created UUID to conform to the Microsoft standard, you can use the CreateGUID() function (by Nathan Dintenfass) from <a href="http://cflib.org/">cflib</a> as follows:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">function</span> <span class="no">CreateGUID</span><span class="p">()</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>  <span class="k">return</span> <span class="n">insert</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="no">CreateUUID</span><span class="p">(),</span> <span class="mi">23</span><span class="p">);</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>UUID&#8217;s for database keys can be very handy but just watch out how and where you are creating them and how they fit into your application. Remember that if you did an</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">IsValid</span><span class="p">(</span><span class="s2">&quot;uuid&quot;</span><span class="p">,</span> <span class="n">myNewID</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>where myNewID was created by newID() in the database&#8230;your test would fail!</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2007-01-30T11:25:38+11:00" pubdate data-updated="true">Jan 30<span>th</span>, 2007</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/databases/'>Databases</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2007/01/30/coldfusion-uuids-and-mssql-newid//page/19/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

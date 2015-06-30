@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="So last night we went to see Richard Marx at the Capitol. Yeah&#8230;I know what you&#8217;re thinking but that&#8217;s ok, I&#8217;m not afraid to &hellip;">
+	<meta name="description" content="&#8220;Time is the tiny bits of space between one busy moment and the next.&#8221; A friend wrote this and got me thinking, I don&#8217;t know about &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -82,6 +82,54 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2006/09/02/busy-at-the-moment/">
+		
+			Busy at the Moment?</a>
+	</h2>
+	<div class="entry-content">
+		<blockquote><p>&#8220;Time is the tiny bits of space between one busy moment and the next.&#8221;</p></blockquote>
+
+<p>A friend wrote this and got me thinking, I don&#8217;t know about you but I am always SO busy these days. I used to think that I was just having a busy week or a busy month. Nup&#8230;that&#8217;s life :)</p>
+
+<p>It makes you wonder when you&#8217;ll have time to &#8216;enjoy&#8217; life, so much time is spent at work or doing chores or stuck in traffic etc. I rent at the moment and pay a lot to do it. But in my mind it&#8217;s worth it for my standard of living. I&#8217;m just not interested in spending 2 hours a day stuck in traffic or on the train. I&#8217;d rather pay more and be closer to work and life than to lose all that time on travel. After all, time is such a precious commodity and there are lots of things I want to do with it.</p>
+
+<p>That being said I don&#8217;t have a family! If I did I&#8217;m sure my values and beliefs on where I lived would dramatically change.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-09-02T13:45:14+10:00" pubdate data-updated="true">Sep 2<span>nd</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/life/'>Life</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2006/09/02/busy-at-the-moment//page/25/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -695,73 +743,6 @@ Log file: [myDatabase_Log]</p>
 </div>
 	
 		<div class="comments"><a href="/2006/05/06/determining-machine-name-using-java//page/25/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2006/04/28/dumping-and-aborting-with/">
-		
-			Dumping and Aborting With <cfscript></a>
-	</h2>
-	<div class="entry-content">
-		<p>One of the annoying things about cfscript is it&#8217;s lack of support for a lot of CFML tags.</p>
-
-<p><cfdump> and <cfabort> are 2 tags I always use in development, especially for debugging. A way to use this functionality is to create a UDF to do these types of functions.</p>
-
-<p><strong>For example</strong></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cffunction</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;dump&quot;</span> <span class="nx">access</span><span class="o">=</span><span class="s2">&quot;public&quot;</span> <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;true&quot;</span> <span class="nx">returntype</span><span class="o">=</span><span class="s2">&quot;struct&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>    <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;arg&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'>    <span class="o">&lt;</span><span class="nx">cfdump</span> <span class="kd">var</span><span class="o">=</span><span class="s2">&quot;#arg#&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/cffunction&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">cffunction</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;abort&quot;</span> <span class="nx">access</span><span class="o">=</span><span class="s2">&quot;public&quot;</span> <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="nx">returntype</span><span class="o">=</span><span class="s2">&quot;void&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>    <span class="o">&lt;</span><span class="nx">cfabort</span> <span class="o">/&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/cffunction&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This function can be stored in a simple utilities component and stored in application scope, that way you can call it from anywhere.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2006-04-28T15:01:55+10:00" pubdate data-updated="true">Apr 28<span>th</span>, 2006</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2006/04/28/dumping-and-aborting-with//page/25/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

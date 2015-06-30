@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="As all developers know, one of the most common bottlenecks in a web application is the database. Database optimisation is therefore a huge part of &hellip;">
+	<meta name="description" content="When you use WebServices with ColdFusion, the WSDL &#8216;stub&#8217; is cached in CF Administrator (presumably for performance reasons). This can &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -82,6 +82,100 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/04/07/flushing-a-cached-web-service/">
+		
+			Flushing a Cached Web Service</a>
+	</h2>
+	<div class="entry-content">
+		<p>When you use WebServices with ColdFusion, the WSDL &#8216;stub&#8217; is cached in CF Administrator (presumably for performance reasons).</p>
+
+<p>This can be a pain when you need to change the WSDL and you don&#8217;t have access to CF Admin to flush the service which is the scenario I found myself in today.</p>
+
+<p>Luckily for me I sit near some ColdFusion peeps who sorted me out with a little Java method (courtesy of the ServiceFactory) to flush a WSDL from a ColdFusion template.</p>
+
+<p>Basically all you need to do is:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">wsdl</span> <span class="o">=</span> <span class="s2">&quot;yourwsdlpath.wsdl&quot;</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfobject</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;java&quot;</span> <span class="nx">action</span><span class="o">=</span><span class="s2">&quot;Create&quot;</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;factory&quot;</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;coldfusion.server.ServiceFactory&quot;</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">RpcService</span> <span class="o">=</span> <span class="nx">factory</span><span class="p">.</span><span class="nx">XmlRpcService</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">cfset</span> <span class="nx">RpcService</span><span class="p">.</span><span class="nx">refreshWebService</span><span class="p">(</span><span class="nx">wsdl</span><span class="p">)</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I also wrapped it up in a little function:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">cffunction</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;flushWebService&quot;</span> <span class="nx">access</span><span class="o">=</span><span class="s2">&quot;public&quot;</span> <span class="nx">output</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="nx">returnType</span><span class="o">=</span><span class="s2">&quot;void&quot;</span> <span class="nx">hint</span><span class="o">=</span><span class="s2">&quot;Flush a cached WebService in ColdFusion Administrator&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfargument</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;wsdlURL&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;string&quot;</span> <span class="nx">required</span><span class="o">=</span><span class="s2">&quot;false&quot;</span> <span class="k">default</span><span class="o">=</span><span class="s2">&quot;#getWSDLURL()#&quot;</span> <span class="nx">hint</span><span class="o">=</span><span class="s2">&quot;URL of the WSDL to flush&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">cfscript</span><span class="o">&gt;</span>
+</span><span class='line'>      
+</span><span class='line'>      <span class="kd">var</span> <span class="nx">oFactory</span> <span class="o">=</span> <span class="nx">createObject</span><span class="p">(</span><span class="s2">&quot;java&quot;</span><span class="p">,</span> <span class="s2">&quot;coldfusion.server.ServiceFactory&quot;</span><span class="p">);</span>
+</span><span class='line'>      
+</span><span class='line'>      <span class="nx">oFactory</span><span class="p">.</span><span class="nx">XmlRpcService</span><span class="p">.</span><span class="nx">refreshWebService</span><span class="p">(</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">wsdlURL</span><span class="p">);</span>
+</span><span class='line'>      <span class="k">return</span><span class="p">;</span>
+</span><span class='line'>      
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/cfscript&gt;</span>
+</span><span class='line'>      
+</span><span class='line'><span class="o">&lt;</span><span class="err">/cffunction&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Thanks <a href="http://www.lynchconsulting.com.au/blog/">Marko (and Mark)</a></p>
+
+<p>After the fact I did some googling and found a great read from <a href="http://www.dougboude.com/blog/">Doug Boude</a> on <a href="http://www.dougboude.com/blog/1/2006/06/Refreshing-Cached-ColdFusion-Webservices-Through-the-Back-Door.cfm">Refreshing Cached ColdFusion Webservices Through the Back Door</a> in case you&#8217;re interested.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-04-07T16:07:39+10:00" pubdate data-updated="true">Apr 7<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/04/07/flushing-a-cached-web-service//page/14/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -906,114 +1000,6 @@
 </div>
 	
 		<div class="comments"><a href="/2008/03/11/passing-extra-parameters-to-prototype-observer-handlers//page/14/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2008/03/10/showing-and-hiding-elements-with-css-and-javascript/">
-		
-			Showing and Hiding Elements With CSS and JavaScript</a>
-	</h2>
-	<div class="entry-content">
-		<p><em><strong>* Note:</strong> These examples reference the <a href="http://www.prototypejs.org/">Prototype</a> JavaScript framework.</em></p>
-
-<p>Often I find that I want to load content onto a page but have its default view state as hidden until a user defined event makes it appear.</p>
-
-<p>The problem is if I hide an element using a linked CSS file (with a class or Id style of {display:none;}) it seems I cannot show that element using either of the following JavaScript options:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c1">//uses Prototype to display:block a previously hidden element</span>
-</span><span class='line'><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;myEl&#39;</span><span class="p">).</span><span class="nx">show</span><span class="p">();</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">//adds a CSS classname to the element</span>
-</span><span class='line'><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;myEl&#39;</span><span class="p">).</span><span class="nx">addClassName</span><span class="p">(</span><span class="s1">&#39;showElement&#39;</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Where the CSS class &#8216;showElement&#8217; above is basically {display:block;}</p>
-
-<p>Now if I add the CSS to hide the element inline like so:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">div</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;myEl&quot;</span> <span class="nx">style</span><span class="o">=</span><span class="s2">&quot;display:none;&quot;</span><span class="o">&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Then everything works great, except now I have CSS embedded in my markup which I really don&#8217;t want there.</p>
-
-<p>The Prototype API for <a href="http://www.prototypejs.org/api/element/show">Element.show()</a> suggests that:</p>
-
-<blockquote><p>Element.show cannot display elements hidden via CSS stylesheets. Note that this is not a Prototype limitation but a consequence of how the CSS display property works.</p></blockquote>
-
-<p>A user on the Prototype google group <a href="http://tobielangel.com/2006/12/31/why-the-css-display-property-sucks">sent me this link</a> as an explanation. A quote from that page:</p>
-
-<blockquote><p>The problem actually only arises when you want some elements to be hidden when the page loads: there is no possible way to find out what there display should be when you show them.</p></blockquote>
-
-<p>The solution I used? Well something that I&#8217;ve been doing with Prototype and jQuery for a while (it&#8217;s just that I wanted to know if there was a cleaner solution in this case) is the <a href="http://www.chapter31.com/2008/01/23/taking-advantage-of-dom-on-ready-and-event-observers-using-prototypejs/">dom:loaded observer function</a> which will run as soon as the Dom is loaded (and before all &#8216;assets&#8217; are loaded so it&#8217;s super quick).</p>
-
-<p>Basically I use JavaScript to hide the element(s) I want hidden instead of CSS. This has the following benefits:</p>
-
-<ul>
-<li>Clean markup (no inline CSS)</li>
-<li>Being able to modify the &#8216;display&#8217; state from a user event</li>
-<li>Works if the user has no JavaScript enabled (the elements will simply always be there which is better than them not!)</li>
-</ul>
-
-
-<p>Example of the dom:loaded function:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">Event</span><span class="p">.</span><span class="nx">observe</span><span class="p">(</span><span class="nb">document</span><span class="p">,</span> <span class="s1">&#39;dom:loaded&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>  <span class="c1">//uses Prototype to hide the element</span>
-</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;myEl&#39;</span><span class="p">).</span><span class="nx">hide</span><span class="p">();</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c1">//Alternative to the above example - attach a CSS class called &#39;hide&#39; (with has {display:none;}) to the element</span>
-</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;myEl&#39;</span><span class="p">).</span><span class="nx">addClassName</span><span class="p">(</span><span class="s1">&#39;hide&#39;</span><span class="p">);</span>
-</span><span class='line'><span class="p">});</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-03-10T22:41:00+11:00" pubdate data-updated="true">Mar 10<span>th</span>, 2008</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/javascript/'>Javascript</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2008/03/10/showing-and-hiding-elements-with-css-and-javascript//page/14/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

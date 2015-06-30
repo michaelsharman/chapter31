@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Ben Nadel has a nice post on trimming strings with javascript using regular expressions. Note that the reg exp white space character &#8216;\s&#8217 &hellip;">
+	<meta name="description" content="Sometimes during development you may want to programmatically add text/content to the &lt;head&gt; area of the currently processing page. Most often &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -82,6 +82,61 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2006/09/25/cfhtmlhead/">
+		
+			Cfhtmlhead</a>
+	</h2>
+	<div class="entry-content">
+		<p>Sometimes during development you may want to programmatically add text/content to the &lt;head&gt; area of the currently processing page. Most often I do this when I want to add Javascript code or link tags dynamically.</p>
+
+<p>&lt;cfhtmlhead&gt; is a great tool to use for this as you don’t need to try and spaghetti code your header include/module.</p>
+
+<p>For example:</p>
+
+<pre><code>&lt;cfhtmlhead text="&lt;script type="text/javascript" src="/js/myScript.js"&gt;&lt;/script&gt;"&gt;
+</code></pre>
+
+<p><strong>TEXT</strong></p>
+
+<p>The text you want to add to the &lt;head&gt; area of an HTML page. Everything inside the quotation marks is placed in the &lt;head&gt; section.</p>
+
+<p>Note that if you use this tag after the cfflush tag on a page, an error is thrown.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-09-25T10:44:04+10:00" pubdate data-updated="true">Sep 25<span>th</span>, 2006</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2006/09/25/cfhtmlhead//page/24/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -869,54 +924,6 @@
 </div>
 	
 		<div class="comments"><a href="/2006/09/06/multi-step-forms//page/24/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2006/09/02/busy-at-the-moment/">
-		
-			Busy at the Moment?</a>
-	</h2>
-	<div class="entry-content">
-		<blockquote><p>&#8220;Time is the tiny bits of space between one busy moment and the next.&#8221;</p></blockquote>
-
-<p>A friend wrote this and got me thinking, I don&#8217;t know about you but I am always SO busy these days. I used to think that I was just having a busy week or a busy month. Nup&#8230;that&#8217;s life :)</p>
-
-<p>It makes you wonder when you&#8217;ll have time to &#8216;enjoy&#8217; life, so much time is spent at work or doing chores or stuck in traffic etc. I rent at the moment and pay a lot to do it. But in my mind it&#8217;s worth it for my standard of living. I&#8217;m just not interested in spending 2 hours a day stuck in traffic or on the train. I&#8217;d rather pay more and be closer to work and life than to lose all that time on travel. After all, time is such a precious commodity and there are lots of things I want to do with it.</p>
-
-<p>That being said I don&#8217;t have a family! If I did I&#8217;m sure my values and beliefs on where I lived would dramatically change.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2006-09-02T13:45:14+10:00" pubdate data-updated="true">Sep 2<span>nd</span>, 2006</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/life/'>Life</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2006/09/02/busy-at-the-moment//page/24/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

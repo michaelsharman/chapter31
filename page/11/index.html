@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="Looking to escape from a date or to get out of any sticky social situation? Try this free online automated callback service called getmooh. It is &hellip;">
+	<meta name="description" content="The CFML market is hotting up with Railo going open source (in version 3.1) and joining forces with JBoss for an end of 2008 release! With that in &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -82,6 +82,104 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/08/16/farcry-5-running-on-railo-3-windows/">
+		
+			FarCry 5 Running on Railo 3 (Windows)</a>
+	</h2>
+	<div class="entry-content">
+		<p>The CFML market is hotting up with <a href="http://www.railo-technologies.com/">Railo</a> going open source (in version 3.1) and joining forces with <a href="http://www.jboss.org/railo/">JBoss</a> for an end of 2008 release! With that in mind I figured it was time to check out Railo with the latest version of FarCry.</p>
+
+<p>My environment:</p>
+
+<ul>
+<li>Windows XP</li>
+<li>Railo 3.0.0.003</li>
+<li><del>FarCry 5.0.0 (although 5.0.2 is out, the latest distro from the site offers only 5.0.0)</del></li>
+<li>FarCry 5.0.2</li>
+<li>MySQL 5</li>
+</ul>
+
+
+<p>I&#8217;m using the &#8220;express&#8221; version of Railo which bundles with Jetty Application Server, so no need for any apache configurations as everything runs off port 8888. This is not how you would have things running in a production environment of course, but is great for evaluation purposes as you can just put the Railo files anywhere you want with no actual installation required.</p>
+
+<p>I already had MySQL installed, so I got a <a href="http://www.farcrycore.org/go/code-branch/5-0-2">fresh zip of FarCry 5.0.2</a> and the latest <a href="http://www.railo-technologies.com/en/index.cfm?treeID=361">release candidate for Railo</a>.</p>
+
+<p>I unpacked Railo into D:/ (this could be anywhere on your system) then unpacked FarCry into the &#8220;webroot&#8221; folder of Railo following the <a href="http://docs.farcrycms.org/display/FCDEV50/FarCry+Installation">standard FarCry 5 installation instructions</a>.</p>
+
+<p>Next was starting Railo, on Windows open a command prompt (cmd) and run the start.bat file which is in the Railo root directory:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">start</span><span class="p">.</span><span class="nx">bat</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now that Railo is running I needed to create a datasource to point to a fresh database created for my new FarCry app. To do this visit the admin area of Railo at http://localhost:8888/railo-context/.</p>
+
+<p>The first time you do this you&#8217;ll be asked to enter a password which will be used in the future to access the admin area.</p>
+
+<p><a href="/images/uploads/2008/08/newpassword2.png"><img src="/images/uploads/2008/08/newpassword2-300x173.png" alt="" /></a></p>
+
+<p>Create and verify a datasource just as you would in ColdFusion Administrator and you&#8217;re ready for the FarCry install.</p>
+
+<p>To install FarCry visit http://localhost:8888/farcry/ and follow the instructions. As mentioned above you first have to create an empty database for your FarCry site.</p>
+
+<p><a href="/images/uploads/2008/08/installingfarcry2.png"><img src="/images/uploads/2008/08/installingfarcry2-300x267.png" alt="" /></a></p>
+
+<p>After FarCry installed (without a hitch!) it was time to look around my new site to see if everything is working as normal (well, as it would normally under ColdFusion). Upon initial inspection everything is working fine with just a few exceptions (pun intended!).</p>
+
+<p>Firstly it seems there is a reserved word conflict with the FarCry core codebase and Railo which prevented me from viewing one of the pages (support) in the mollio skeleton site FarCry installs by default (and also some pages from the webtop).</p>
+
+<p>Railo threw the following error:</p>
+
+<p><em>invalid argument for function query, only array as value are allowed</em></p>
+
+<p>The code in question was calling a FarCry method called <em>query()</em>. I renamed the method to <em>execQuery()</em> and updated the calls to it and everything started working as expected.</p>
+
+<p>I also added this as a <a href="http://bugs.farcrycms.org/browse/FC-1459">FarCry bug</a> so hopefully it will be resolved by the <a href="http://www.daemon.com.au/">Daemon</a> guys in the next FarCry release.</p>
+
+<p>There were a couple of other small issues (with containers/publishing rules and a permission problem in the webtop) which I&#8217;ve contacted Daemon about. Hopefully they will be resolved quickly.</p>
+
+<p>All in all it looks as though FarCry is a success on Railo which great news!</p>
+
+<p>Although I was only looking at the express version of Railo, I was extremely impressed with just how simple everything was. Comparing CF8 and Railo (browsing the FarCry admin console), Railo looks a lot faster to me. Of course I did no actual load/performance testing. But it was interesting that I noticed the speed difference by simply browsing.</p>
+
+<p>I&#8217;m looking forward to playing with it further, particularly when 3.1 comes out :)</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-08-16T18:15:50+10:00" pubdate data-updated="true">Aug 16<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>, <a class='category' href='/categories/farcry/'>Farcry</a>, <a class='category' href='/categories/railo/'>Railo</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/08/16/farcry-5-running-on-railo-3-windows//page/11/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -619,97 +717,6 @@
 </div>
 	
 		<div class="comments"><a href="/2008/07/19/another-reminder-of-the-importance-of-preventing-sql-injection//page/11/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2008/07/18/coding-standards-do-you-use-them/">
-		
-			Coding Standards, Do You Use Them?</a>
-	</h2>
-	<div class="entry-content">
-		<p>Reading a <a href="http://www.mkville.com/blog/index.cfm/2008/7/16/Custom-Tag-and-CFC-Case-Issue-Followup-and-Workaround">blog entry</a> this morning got me thinking. Essentially the author had experienced problems (after installing the latest ColdFusion hotfix) with case sensitivity on a Linux server. Two of the issues where based around calling custom tags and createObject(), where the actual filename was in a different &#8220;case&#8221; to the code calling the tag or instansiating the object.</p>
-
-<p>Why did this get me thinking? Coding standards.</p>
-
-<p>What standards do you use when developing? The kind of standards which dictate the naming of methods, variables and filenames. Do you name your variables and functions <em>semantically?</em></p>
-
-<p>For instance to return information about a product do you call a method like <em>getProduct()</em> or <em>getProductById()</em> or do you use something like <em>prod()</em> (I&#8217;m hoping for the former as the latter really isn&#8217;t that descriptive).</p>
-
-<p>How about variables? ColdFusion can be a funny beast with its scoping, particularly inside component methods where local variables are actually global (in the <em>variables</em> scope) to the cfc unless you <em>var</em> scope them. This being the case a lot of people have <a href="http://www.chapter31.com/2007/06/14/using-variablesinstance-inside-your-components/">global cfc variables inside a struct</a>, often called something like variables.instance. This enables you to easily distinguish calls to global variables (like <em>variables.instance.dsn</em>) and local variables (like using <em>i</em> as a loop counter).</p>
-
-<p>What about the actual variable name? Do you use prefixes depending on the &#8220;type&#8221; of variable? Something like:</p>
-
-<ul>
-<li>a for arrays - aEmployees</li>
-<li>i for integers - iEmployeeCount</li>
-<li>o for objects - oEmployee</li>
-<li>q for queries - qEmployees</li>
-<li>st for structs - stEmployees</li>
-</ul>
-
-
-<p>How about filenames (the original topic which got me thinking)? Do you have a standard for the naming of files? You should. You might develop on Windows but is your production environment on Linux (which is usually case sensitive)? Will it ever be ported to Linux? Are you writing code which may be released as a commercial or open source offering so you really don&#8217;t know where the code will end up?</p>
-
-<p>An often used standard (at least in my experience) is thus:</p>
-
-<p>ColdFusion components use camel case;</p>
-
-<ul>
-<li>Product.cfc</li>
-<li>ProductService.cfc</li>
-</ul>
-
-
-<p>All other .cfm templates (including custom tags) use headless (mixed) camel case;</p>
-
-<ul>
-<li>displayProduct.cfm</li>
-<li>inc_Header.cfm</li>
-</ul>
-
-
-<p>Some people might totally disagree with the examples I&#8217;ve listed (perhaps their standard is that all filenames are lowercase to prevent any possible mixups with case sensitivity), however the point is that there is really no excuse for not using coding standards, whatever they may be.</p>
-
-<p>The important thing is that your entire development team follow a single agreed upon standard. This will prevent the completely unnecessary headache of your code breaking if/when you test your code in a different environment such as Linux.</p>
-
-<p>It also (imho) makes your codebase infinitely more readable as you already have expectations about naming conventions etc.</p>
-
-<p>There are of course many other topics to be discussed around coding standards, from database table names to commenting (or not!) or code. What standards do you use in your organisation?</p>
-
-<p>Some <a href="http://livedocs.adobe.com/wtg/public/coding_standards/contents.html">further reading</a> which is quite old but still relevant.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-07-18T08:52:08+10:00" pubdate data-updated="true">Jul 18<span>th</span>, 2008</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/coldfusion/'>ColdFusion</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2008/07/18/coding-standards-do-you-use-them//page/11/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 

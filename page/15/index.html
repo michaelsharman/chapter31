@@ -7,7 +7,7 @@
 	<meta name="author" content="Michael Sharman">
 
 	
-	<meta name="description" content="This is cool, a little Firefox addon from the guys at lifehacker to make your youtube experience a little richer :) It basically combines several &hellip;">
+	<meta name="description" content="* Note: These examples reference the Prototype JavaScript framework. Often I find that I want to load content onto a page but have its default view &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -82,6 +82,114 @@
 
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/2008/03/10/showing-and-hiding-elements-with-css-and-javascript/">
+		
+			Showing and Hiding Elements With CSS and JavaScript</a>
+	</h2>
+	<div class="entry-content">
+		<p><em><strong>* Note:</strong> These examples reference the <a href="http://www.prototypejs.org/">Prototype</a> JavaScript framework.</em></p>
+
+<p>Often I find that I want to load content onto a page but have its default view state as hidden until a user defined event makes it appear.</p>
+
+<p>The problem is if I hide an element using a linked CSS file (with a class or Id style of {display:none;}) it seems I cannot show that element using either of the following JavaScript options:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c1">//uses Prototype to display:block a previously hidden element</span>
+</span><span class='line'><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;myEl&#39;</span><span class="p">).</span><span class="nx">show</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//adds a CSS classname to the element</span>
+</span><span class='line'><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;myEl&#39;</span><span class="p">).</span><span class="nx">addClassName</span><span class="p">(</span><span class="s1">&#39;showElement&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Where the CSS class &#8216;showElement&#8217; above is basically {display:block;}</p>
+
+<p>Now if I add the CSS to hide the element inline like so:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">div</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;myEl&quot;</span> <span class="nx">style</span><span class="o">=</span><span class="s2">&quot;display:none;&quot;</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then everything works great, except now I have CSS embedded in my markup which I really don&#8217;t want there.</p>
+
+<p>The Prototype API for <a href="http://www.prototypejs.org/api/element/show">Element.show()</a> suggests that:</p>
+
+<blockquote><p>Element.show cannot display elements hidden via CSS stylesheets. Note that this is not a Prototype limitation but a consequence of how the CSS display property works.</p></blockquote>
+
+<p>A user on the Prototype google group <a href="http://tobielangel.com/2006/12/31/why-the-css-display-property-sucks">sent me this link</a> as an explanation. A quote from that page:</p>
+
+<blockquote><p>The problem actually only arises when you want some elements to be hidden when the page loads: there is no possible way to find out what there display should be when you show them.</p></blockquote>
+
+<p>The solution I used? Well something that I&#8217;ve been doing with Prototype and jQuery for a while (it&#8217;s just that I wanted to know if there was a cleaner solution in this case) is the <a href="http://www.chapter31.com/2008/01/23/taking-advantage-of-dom-on-ready-and-event-observers-using-prototypejs/">dom:loaded observer function</a> which will run as soon as the Dom is loaded (and before all &#8216;assets&#8217; are loaded so it&#8217;s super quick).</p>
+
+<p>Basically I use JavaScript to hide the element(s) I want hidden instead of CSS. This has the following benefits:</p>
+
+<ul>
+<li>Clean markup (no inline CSS)</li>
+<li>Being able to modify the &#8216;display&#8217; state from a user event</li>
+<li>Works if the user has no JavaScript enabled (the elements will simply always be there which is better than them not!)</li>
+</ul>
+
+
+<p>Example of the dom:loaded function:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">Event</span><span class="p">.</span><span class="nx">observe</span><span class="p">(</span><span class="nb">document</span><span class="p">,</span> <span class="s1">&#39;dom:loaded&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">//uses Prototype to hide the element</span>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;myEl&#39;</span><span class="p">).</span><span class="nx">hide</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">//Alternative to the above example - attach a CSS class called &#39;hide&#39; (with has {display:none;}) to the element</span>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;myEl&#39;</span><span class="p">).</span><span class="nx">addClassName</span><span class="p">(</span><span class="s1">&#39;hide&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-03-10T22:41:00+11:00" pubdate data-updated="true">Mar 10<span>th</span>, 2008</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/categories/javascript/'>Javascript</a>
+
+
+</div>
+	
+		<div class="comments"><a href="/2008/03/10/showing-and-hiding-elements-with-css-and-javascript//page/15/index.html#disqus_thread">Comments</a></div>
+	
+</div></article>
 
 
     <article class="post">
@@ -759,54 +867,6 @@
 </div>
 	
 		<div class="comments"><a href="/2008/02/19/a-couple-more-cool-firefox-tips//page/15/index.html#disqus_thread">Comments</a></div>
-	
-</div></article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/2008/02/07/the-only-valid-measurement-of-code-quality/">
-		
-			The Only Valid Measurement of Code Quality</a>
-	</h2>
-	<div class="entry-content">
-		<p>A friend of mine <a href="http://www.daemon.com.au/">Don</a> sent me this yesterday:</p>
-
-<p><img src="/images/uploads/2008/02/wtfm.jpg" alt="WTF Code Quality" /></p>
-
-<p>Gold!</p>
-
-<p>:)</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-02-07T11:05:17+11:00" pubdate data-updated="true">Feb 7<span>th</span>, 2008</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/categories/misc/'>Misc</a>
-
-
-</div>
-	
-		<div class="comments"><a href="/2008/02/07/the-only-valid-measurement-of-code-quality//page/15/index.html#disqus_thread">Comments</a></div>
 	
 </div></article>
 
