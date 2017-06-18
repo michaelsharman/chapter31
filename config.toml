@@ -15,8 +15,8 @@ category = "categories"
 [params]
 
 [params.highlight]
-style = "github"
-languages = ["go", "dockerfile"]
+style = "ocean"
+languages = ["JavaScript", "go", "dockerfile"]
 
 [[params.social]]
 url = "http://michaelsharman.com"
