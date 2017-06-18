@@ -1,0 +1,35 @@
+baseurl = "http://chapter31.com"
+languageCode = "en"
+title = "chapter31"
+theme = "hemingway17"
+copyright = "&copy; <a href=\"http://michaelsharman.com\">Michael Sharman</a> 2017"
+disqusShortname = ""
+googleAnalytics = "UA-306772-2"
+description = "Your personal description"
+keywords = ["keyword1", "keyword2"]
+
+[taxonomies]
+tag = "tags"
+category = "categories"
+
+[params]
+
+[params.highlight]
+style = "github"
+languages = ["go", "dockerfile"]
+
+[[params.social]]
+url = "http://michaelsharman.com"
+fa_icon = "fa-user-circle"
+
+[[params.social]]
+url = "https://github.com/michaelsharman"
+fa_icon = "fa-github"
+
+[[params.social]]
+url = "https://twitter.com/michaelsharman"
+fa_icon = "fa-twitter"
+
+[[params.social]]
+url = "/index.xml"
+fa_icon = "fa-rss"
