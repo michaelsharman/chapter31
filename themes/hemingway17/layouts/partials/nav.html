@@ -7,10 +7,11 @@
       <div class="nav-right">
         <nav class="nav-item level is-mobile">
           {{ range .Site.Params.social }}
-          <a class="level-item" href="{{ .url }}">
+          <a class="level-item" href="{{ .url }}" title="{{ .label }}">
             <span class="icon">
               <i class="fa {{ .fa_icon }}"></i>
             </span>
+            <span class="nav-item-label">{{ .label }}</span>
           </a>
           {{ end }}
         </nav>

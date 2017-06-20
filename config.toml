@@ -21,15 +21,19 @@ languages = ["javascript"]
 [[params.social]]
 url = "http://michaelsharman.com"
 fa_icon = "fa-user-circle"
+label = "michaelsharman.com"
 
 [[params.social]]
 url = "https://github.com/michaelsharman"
 fa_icon = "fa-github"
+label = "GitHub"
 
 [[params.social]]
 url = "https://twitter.com/michaelsharman"
 fa_icon = "fa-twitter"
+label = "Twitter"
 
 [[params.social]]
 url = "/index.xml"
 fa_icon = "fa-rss"
+label = "RSS"
